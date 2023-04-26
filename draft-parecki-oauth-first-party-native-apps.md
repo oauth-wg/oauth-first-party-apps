@@ -1,5 +1,6 @@
 ---
 title: "OAuth 2.0 for First-Party Native Applications"
+abbrev: "OAuth for First-Party Native Apps"
 category: std
 
 docname: draft-parecki-oauth-first-party-native-apps-latest
