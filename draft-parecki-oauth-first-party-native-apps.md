@@ -72,7 +72,7 @@ and "Token Endpoint" defined by {{RFC6749}}.
 
 # Protocol Overview
 
-TODO 
+TODO
 
 
 # Security Considerations
