@@ -43,14 +43,25 @@ informative:
 
 --- abstract
 
-TODO Abstract
+This document extends the OAuth 2.0 Authorization Framework {{RFC6749}} with
+new grant types to support first-party native applications that want to control the user experience of the process of obtaining authorization from the user.
+
+In many cases, this can provide an entirely browserless experience suited for native
+applications, only delegating to the browser in unexpected, high risk, or error conditions.
+
+While a fully-delegated approach using the redirect-based Authorization Code grant is generally
+preferred, this draft provides a mechanism for the client to directly interact
+with the user. This requires a high degree of trust between the authorization server
+and the client, as there typically is for first-party applications.
+It should only be considered when there are usability
+concerns with a redirect-based approach, such as for native mobile or desktop applications.
 
 
 --- middle
 
 # Introduction
 
-TODO Introduction
+TODO: Key points to address include problem description, the relationship to the step-up authentication spec (use of acr etc.), properties of the protocol (extensibility etc).
 
 
 ## Usage and Applicability
