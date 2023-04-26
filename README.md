@@ -2,7 +2,7 @@
 
 This is the working area for the individual Internet-Draft, "OAuth 2.0 for First-Party Native Applications".
 
-* [Editor's Copy](https://aaronpk.github.io/oauth-first-party-native-apps/#go.draft-parecki-oauth-first-party-native-apps.html)
+* [Editor's Copy](https://aaronpk.github.io/oauth-first-party-native-apps/draft-parecki-oauth-first-party-native-apps.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-parecki-oauth-first-party-native-apps)
 * [Individual Draft](https://datatracker.ietf.org/doc/html/draft-parecki-oauth-first-party-native-apps)
 * [Compare Editor's Copy to Individual Draft](https://aaronpk.github.io/oauth-first-party-native-apps/#go.draft-parecki-oauth-first-party-native-apps.diff)
