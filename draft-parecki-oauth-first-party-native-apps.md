@@ -9,19 +9,19 @@ number:
 date:
 consensus: true
 v: 3
-area: AREA
-workgroup: OAuth Working Group
+area: "Security"
+workgroup: "Web Authorization Protocol"
 keyword:
  - next generation
  - unicorn
  - sparkling distributed ledger
 venue:
-  group: OAuth
-  type: Working Group
-  mail: oauth@ietf.org
-  arch: https://oauth.net
-  github: aaronpk/oauth-first-party-native-apps
-  latest: https://example.com/LATEST
+  group: "Web Authorization Protocol"
+  type: "Working Group"
+  mail: "oauth@ietf.org"
+  arch: "https://mailarchive.ietf.org/arch/browse/oauth/"
+  github: "aaronpk/oauth-first-party-native-apps"
+  latest: "https://aaronpk.github.io/oauth-first-party-native-apps/draft-parecki-oauth-first-party-native-apps.html"
 
 author:
  -
