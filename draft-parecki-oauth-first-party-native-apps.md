@@ -95,9 +95,227 @@ This specification uses the terms "Access Token", "Authorization Code",
 "Redirection URI", "Refresh Token", "Resource Owner", "Resource Server" (RS)
 and "Token Endpoint" defined by {{RFC6749}}.
 
+TODO: Replace RFC6749 references with OAuth 2.1
+
 # Protocol Overview
 
-TODO
+1. The client initiates the authorization by making a POST request to the authorization challenge endpoint, potentially with information collected from the user (e.g. password)
+1. The authorization server determines whether the information provided to the authorization initiation endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error
+1. The client continues to collect information from the user and send it to the authorization challenge endpoint until it receives an authorization code
+1. The client exchanges the authorization code for an access token at the token endpoint
+1. When using a refresh token, the authorization server MAY respond with an error to indicate that re-authorization of the user is required
+
+
+# Protocol Endpoints
+
+## Authorization challenge endpoint
+
+The authorization challenge endpoint is a new endpoint defined by this specification which the native application uses to obtain an authorization code.
+
+The client initiates the authorization flow with or without information collected from the user (e.g. a password or MFA code).
+
+The authorization challenge endpoint response is either an authorization code or an error code, and may also contain a `device_session` which the client uses on subsequent requests to the authorization challenge endpoint.
+
+
+## Token endpoint
+
+The token endpoint is used by the client to obtain an access token by
+presenting its authorization grant or refresh token, as described in
+Section 3.2 of OAuth 2.0 {{RFC6749}}.
+
+This specification extends the token endpoint response to allow the authorization
+server to indicate that further authentication of the user is required.
+
+
+# Authorization Initiation {#authorization-initiation}
+
+A client may wish to initiate an authorization flow by first prompting the user for their user identifier or other account information. The authorization challenge endpoint is a new endpoint to collect this login hint and direct the client with the next steps, whether that is to do an MFA flow, or perform an OAuth redirect-based flow.
+
+## Authorization Challenge Request
+
+The client makes a request to the authorization challenge endpoint by adding the
+following parameters using the `application/x-www-form-urlencoded
+format with a character encoding of UTF-8 in the HTTP request body:
+
+"login_hint":
+: OPTIONAL. If the client has collected the user's username, email,
+  phone number or other identifier, it can provide this in the request.
+
+"password":
+: OPTIONAL. If the client has collected the user's password, it can provide
+  it at this stage.
+
+"scope":
+: OPTIONAL. The OAuth scope defined in {{RFC6749}}.
+
+"acr_values":
+: OPTIONAL. The acr_values requested by the client.
+
+"device_session":
+: OPTIONAL. If the client has previously obtained a device session, described in {{device-session}}.
+
+"client_id":
+: REQUIRED if the client is not authenticating with the
+  authorization server.
+
+Specific implementations as well as extensions to this specification MAY define additional parameters to be used at this endpoint.
+
+For example, the client makes the following request to initiate a flow
+given the user's phone number, line breaks shown for illustration purposes only:
+
+    POST /authorize HTTP/1.1
+    Host: server.example.com
+    Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+    Content-Type: application/x-www-form-urlencoded
+
+    login_hint=%2B1-310-123-4567&scope=profile
+
+## Authorization Challenge Response
+
+The authorization server determines whether the information provided up to this point is sufficient to issue an authorization code, and responds with an authorization code or an error message.
+
+### Authorization Code Response
+
+The authorization server issues an authorization code
+by creating an HTTP response content using the `application/json`
+media type as defined by {{RFC8259}} with the following parameters
+and an HTTP 200 (OK) status code:
+
+"authorization_code":
+:   REQUIRED. The authorization code issued by the authorization server.
+
+For example,
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json;charset=UTF-8
+    Cache-Control: no-store
+
+    {
+      "authorization_code": "uY29tL2F1dGhlbnRpY"
+    }
+
+
+### Error Response
+
+If the request contains invalid parameters or incorrect data,
+the authorization server responds with an HTTP 400 (Bad Request)
+status code (unless specified otherwise) and includes the following
+parameters with the response:
+
+"error":
+:    REQUIRED.  A single ASCII [USASCII] error code from the following:
+
+     "invalid_request":
+     :     The request is missing a required parameter, includes an
+           unsupported parameter value,
+           repeats a parameter, includes multiple credentials,
+           utilizes more than one mechanism for authenticating the
+           client, or is otherwise malformed.
+
+     "invalid_client":
+     :     Client authentication failed (e.g., unknown client, no
+           client authentication included, or unsupported
+           authentication method).  The authorization server MAY
+           return an HTTP 401 (Unauthorized) status code to indicate
+           which HTTP authentication schemes are supported.  If the
+           client attempted to authenticate via the `Authorization`
+           request header field, the authorization server MUST
+           respond with an HTTP 401 (Unauthorized) status code and
+           include the `WWW-Authenticate` response header field
+           matching the authentication scheme used by the client.
+
+     "unauthorized_client":
+     :     The authenticated client is not authorized to use this
+           authorization grant type.
+
+     "invalid_scope":
+     :     The requested scope is invalid, unknown, malformed, or
+           exceeds the scope granted by the resource owner.
+
+     Values for the `error` parameter MUST NOT include characters
+     outside the set %x20-21 / %x23-5B / %x5D-7E.
+
+"error_description":
+:    OPTIONAL.  Human-readable ASCII [USASCII] text providing
+     additional information, used to assist the client developer in
+     understanding the error that occurred.
+     Values for the `error_description` parameter MUST NOT include
+     characters outside the set %x20-21 / %x23-5B / %x5D-7E.
+
+"error_uri":
+:    OPTIONAL.  A URI identifying a human-readable web page with
+     information about the error, used to provide the client
+     developer with additional information about the error.
+     Values for the `error_uri` parameter MUST conform to the
+     URI-reference syntax and thus MUST NOT include characters
+     outside the set %x21 / %x23-5B / %x5D-7E.
+
+"device_session":
+:    OPTIONAL.  The device session allows the authorization server to
+     associate subsequent requests by this client with an ongoing
+     authorization request sequence. The client MUST include
+     the `device_session` in follow-up requests to the challenge
+     endpoint if it receives one along with the error response.
+
+The parameters are included in the content of the HTTP response
+using the `application/json` media type as defined by [RFC7159].  The
+parameters are serialized into a JSON structure by adding each
+parameter at the highest structure level.  Parameter names and string
+values are included as JSON strings.  Numerical values are included
+as JSON numbers.  The order of parameters does not matter and can
+vary.
+
+The authorization server MAY define additional parameters in the response
+depending on the implmentation.
+
+## Device Session
+
+The device session is completely opaque to the client, and as such the AS MUST adequately protect the value from inspection by the client, for example by using a JWE if the AS is not maintaining state on the backend.
+
+The client MUST include the device session in future requests to the authorization challenge endpoint for the particular authorization request.
+
+# Token Request
+
+The client makes a request to the token endpoint using the authorization code it obtained from the authorization challenge endpoint, according to Section 4.1.3 of {{RFC6749}}.
+
+TODO: Would it be better to define our own grant type instead of overloading the authorization code grant type? Probably, since there won't be a redirect_uri.
+
+TODO: In any case, document the parameters here.
+
+## Token Endpoint Error Response
+
+Upon any request to the token endpoint, including a request with a valid refresh token,
+the authorization server can respond with an authorization challenge instead of a successful access token response.
+
+An authorization challenge error response is a particular type of
+error response as defined in Section 5.2 of OAuth 2.0 {{RFC6749}} where
+the error code is set to the following value:
+
+(TODO: This value needs a better name)
+
+"authorization_required":
+: The authorization grant is insufficiently authorized, but another
+  access token request may succeed if an additional authorization
+  grant is presented.
+
+"device_session":
+:    OPTIONAL.  The device session allows the authorization server to
+     associate subsequent requests by this client with an ongoing
+     authorization request sequence. The client MUST include
+     the `device_session` in follow-up requests to the challenge
+     endpoint if it receives one along with the error response.
+
+For example:
+
+    HTTP/1.1 403 Forbidden
+    Content-Type: application/json;charset=UTF-8
+    Cache-Control: no-store
+
+    {
+      "error": "authorization_required",
+      "device_session": "uY29tL2F1dGhlbnRpY"
+    }
+
 
 
 # Security Considerations
