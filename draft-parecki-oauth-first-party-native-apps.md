@@ -138,13 +138,9 @@ The client makes a request to the authorization challenge endpoint by adding the
 following parameters using the `application/x-www-form-urlencoded
 format with a character encoding of UTF-8 in the HTTP request body:
 
-"login_hint":
-: OPTIONAL. If the client has collected the user's username, email,
-  phone number or other identifier, it can provide this in the request.
-
-"password":
-: OPTIONAL. If the client has collected the user's password, it can provide
-  it at this stage.
+"client_id":
+: REQUIRED if the client is not authenticating with the
+  authorization server.
 
 "scope":
 : OPTIONAL. The OAuth scope defined in {{RFC6749}}.
@@ -155,10 +151,6 @@ format with a character encoding of UTF-8 in the HTTP request body:
 "device_session":
 : OPTIONAL. If the client has previously obtained a device session, described in {{device-session}}.
 
-"client_id":
-: REQUIRED if the client is not authenticating with the
-  authorization server.
-
 Specific implementations as well as extensions to this specification MAY define additional parameters to be used at this endpoint.
 
 For example, the client makes the following request to initiate a flow
@@ -166,10 +158,10 @@ given the user's phone number, line breaks shown for illustration purposes only:
 
     POST /authorize HTTP/1.1
     Host: server.example.com
-    Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
     Content-Type: application/x-www-form-urlencoded
 
     login_hint=%2B1-310-123-4567&scope=profile
+    &client_id=bb16c14c73415
 
 ## Authorization Challenge Response
 
