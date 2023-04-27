@@ -37,6 +37,7 @@ author:
 
 normative:
   RFC6749:
+  RFC8259:
 
 informative:
 
