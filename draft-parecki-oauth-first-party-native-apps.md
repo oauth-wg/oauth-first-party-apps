@@ -72,7 +72,7 @@ TODO: Key points to address include problem description, the relationship to the
 TODO: Prerequisites for using this specification
 
 * MUST only be used by first-party applications, when the authorization server and application are operated by the same entity and the user understands them both as the same entity.
-* MUST NOT be used by third party applications, SHOULD take measures to prevent use by third party applications.
+* MUST NOT be used by third party applications, SHOULD take measures to prevent use by third party applications. (e.g. only enable for certain client IDs, and take measures to authenticate your apps.)
 * Designed for native applications, both mobile and desktop applications.
 * SHOULD only use this specification if there is only one native application (per platform) for the service. If there are multiple applications, then a traditional redirect-based authorization code flow SHOULD be used instead.
 
@@ -100,11 +100,22 @@ TODO: Replace RFC6749 references with OAuth 2.1
 
 # Protocol Overview
 
+Three entry points into the draft:
+
+From scratch:
+
 1. The client initiates the authorization by making a POST request to the authorization challenge endpoint, potentially with information collected from the user (e.g. password)
 1. The authorization server determines whether the information provided to the authorization initiation endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error
 1. The client continues to collect information from the user and send it to the authorization challenge endpoint until it receives an authorization code
 1. The client exchanges the authorization code for an access token at the token endpoint
+
+When sending a refresh token to the token endpoint:
+
 1. When using a refresh token, the authorization server MAY respond with an error to indicate that re-authorization of the user is required
+
+When using an access token at the resource server:
+
+1. When making a resource request to a resource server, the resource server MAY respond with an error according to OAuth 2.0 Step-Up Authentication Challenge Protocol
 
 
 # Protocol Endpoints
@@ -228,6 +239,9 @@ parameters with the response:
      Values for the `error` parameter MUST NOT include characters
      outside the set %x20-21 / %x23-5B / %x5D-7E.
 
+     TODO: The authorization server MAY extend these error codes with custom
+     messages based on the requirements of the authorization server.
+
 "error_description":
 :    OPTIONAL.  Human-readable ASCII [USASCII] text providing
      additional information, used to assist the client developer in
@@ -310,6 +324,12 @@ For example:
     }
 
 
+# Resource Server Error Response
+
+Step-Up Authentication defines a mechanism for resource servers to tell the client to start a new authorization request, including `acr_values` and `max_age`, and `scope` from RFC6750. Upon receiving this request, the client starts a new authorization request according to this specification, and includes the `acr_values`, `max_age` and `scope` returned in the error response.
+
+(No new things need to be defined by this specification in order to use this.)
+
 
 # Security Considerations
 
@@ -338,6 +358,12 @@ Because this specification is intended for first-party applications, it is likel
 
 Implementers SHOULD consider additional measures to limit the risk of client impersonation, such as using attestation APIs available from the operating system.
 
+## Proof of Possession
+
+TODO: Describe how to add proof of possession into the various parts of this flow. Describe why, because things like device session could otherwise be swapped in various types of attacks.
+
+* PoP binding of device session parameter
+* The client SHOULD use DPoP for every request, the AS SHOULD bind any artifacts returned to the DPoP key
 
 
 # IANA Considerations
