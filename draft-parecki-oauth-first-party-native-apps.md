@@ -73,8 +73,10 @@ TODO: Prerequisites for using this specification
 
 * MUST only be used by first-party applications, when the authorization server and application are operated by the same entity and the user understands them both as the same entity.
 * MUST NOT be used by third party applications, SHOULD take measures to prevent use by third party applications. (e.g. only enable for certain client IDs, and take measures to authenticate your apps.)
-* Designed for native applications, both mobile and desktop applications.
-* SHOULD only use this specification if there is only one native application (per platform) for the service. If there are multiple applications, then a traditional redirect-based authorization code flow SHOULD be used instead.
+
+This specification is designed to be used by native applications, which includes both mobile and desktop applications.
+
+If you have multiple apps, there may be better ways of sharing a user's login between the apps other than each app implementing this specification or using an SDK that implements this specification. For example, [[Native SSO]] provides a mechanism for one app to obtain new tokens by exchanging tokens from another app, without any user interaction. See {{multiple-applications}} for more details.
 
 ## Limitations of this specification
 
@@ -104,8 +106,8 @@ Three entry points into the draft:
 
 From scratch:
 
-1. The client initiates the authorization by making a POST request to the authorization challenge endpoint, potentially with information collected from the user (e.g. password)
-1. The authorization server determines whether the information provided to the authorization initiation endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error
+1. The client initiates the authorization by making a POST request to the authorization challenge endpoint, potentially with information collected from the user (e.g. username or email)
+1. The authorization server determines the most appropriate authentication mechanism to use for the given user and returns an error saying what is required next (e.g. passkey, one-time code)
 1. The client continues to collect information from the user and send it to the authorization challenge endpoint until it receives an authorization code
 1. The client exchanges the authorization code for an access token at the token endpoint
 
@@ -352,18 +354,35 @@ Because of these risks, the authorization server MAY decide to require that the 
 
 ## Client Authentication
 
-Typically, mobile and desktop applications are considered "public clients" in OAuth, since they cannot be shipped with a statically configured set of client credentials. Because of this, client impersonation should be a concern of anyone deploying this pattern. Without client authentication, a malicious user or attacker can mimick the requests the application makes to the authorization server, pretending to be the legitimate client.
+Typically, mobile and desktop applications are considered "public clients" in OAuth, since they cannot be shipped with a statically configured set of client credentials {{RFC8252}}. Because of this, client impersonation should be a concern of anyone deploying this pattern. Without client authentication, a malicious user or attacker can mimick the requests the application makes to the authorization server, pretending to be the legitimate client.
 
 Because this specification is intended for first-party applications, it is likely that the intent is to also avoid prompting the user with a consent screen as recommended by {{RFC6749}}.
 
 Implementers SHOULD consider additional measures to limit the risk of client impersonation, such as using attestation APIs available from the operating system.
+
 
 ## Proof of Possession
 
 TODO: Describe how to add proof of possession into the various parts of this flow. Describe why, because things like device session could otherwise be swapped in various types of attacks.
 
 * PoP binding of device session parameter
+
+### DPoP
+
 * The client SHOULD use DPoP for every request, the AS SHOULD bind any artifacts returned to the DPoP key
+
+### Other Proof of Possession Mechanisms
+
+Possible, but of scope of this document.
+
+
+## Multiple Applications {#multiple-applications}
+
+* Increased phishing risk
+* User confusion
+* Increased attack surface
+* Higher chance of incorrect implementations
+
 
 
 # IANA Considerations
