@@ -40,7 +40,7 @@ normative:
   RFC8259:
 
 informative:
-
+  RFC8252:
 
 --- abstract
 
