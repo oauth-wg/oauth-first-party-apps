@@ -104,12 +104,55 @@ TODO: Replace RFC6749 references with OAuth 2.1
 
 Three entry points into the draft:
 
+~~~ ascii-art
+                                                +-------------------+
+                                                |   Authorization   |
+                          (B)Authorization      |      Server       |
+             +----------+    Challenge Request  |+-----------------+|
+(A)Client+---|  Native  |---------------------->||  Authorization  ||
+   Starts|   |  Client  |                       ||   Challenge     ||
+   Flow  +-->|          |<----------------------||    Endpoint     ||
+             |          | (C)Authorization      ||                 ||
+             |          |    Error Response     ||                 ||
+             |          |         :             ||                 ||
+             |          |         :             ||                 ||
+             |          | (D)Authorization      ||                 ||
+             |          |    Challenge Request  ||                 ||
+             |          |---------------------->||                 ||
+             |          |                       ||                 ||
+             |          |<----------------------||                 ||
+             |          | (E) Authorization     |+-----------------+|
+             |          |     Code Response     |                   |
+             |          |                       |                   |
+             |          |                       |                   |
+             |          |                       |                   |
+             |          | (F) Authorization     |                   |
+             |          |     Grant             |+-----------------+|
+             |          |---------------------->||      Token      ||
+             |          |                       ||     Endpoint    ||
+             |          |<----------------------||                 ||
+             |          | (G) Access Token      |+-----------------+|
+             |          |                       |                   |
+             +----------+                       +-------------------+
+~~~
+Figure: Native Client Authorization Code Request
+
+- (A) The native client collects information from the user.
+- (B) The client initiates the authorization by making a POST request to the authorization challenge endpoint, potentially with information collected from the user (e.g. password)
+- (C) The authorization server determines whether the information provided to the Authorization Challenge Endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error. In this example, it determines that additional information is needed and responds with an error. The error may contain additional information to guide the Client on what information to collect next. This pattern of collecting information, submitting it to the Authorization Challenge Endpoint and then receing an error or authroization code may repeat several times.
+- (D) The client gathers additional information and POST a request to the authorization challenge endpoint.
+- (E) The authorization challenge endpoint returns a authorization code.
+- (F) The native client sends the authroizations code received in step (E) to obtain a token from the Token Endpoint.
+- (G) The Authroization Server returns an Access Token from the Token Endpoint.
+
 From scratch:
 
 1. The client initiates the authorization by making a POST request to the authorization challenge endpoint, potentially with information collected from the user (e.g. username or email)
 1. The authorization server determines the most appropriate authentication mechanism to use for the given user and returns an error saying what is required next (e.g. passkey, one-time code)
 1. The client continues to collect information from the user and send it to the authorization challenge endpoint until it receives an authorization code
 1. The client exchanges the authorization code for an access token at the token endpoint
+
+
 
 When sending a refresh token to the token endpoint:
 
