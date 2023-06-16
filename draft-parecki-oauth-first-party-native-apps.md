@@ -37,7 +37,11 @@ author:
 
 normative:
   RFC6749:
+  RFC7159:
+  RFC7636:
   RFC8259:
+  RFC8414:
+  RFC8707:
 
 informative:
   RFC8252:
@@ -45,7 +49,9 @@ informative:
 --- abstract
 
 This document extends the OAuth 2.0 Authorization Framework {{RFC6749}} with
-new grant types to support first-party native applications that want to control the user experience of the process of obtaining authorization from the user.
+a new endpoint `authorization_challenge_endpoint` to support first-party native
+applications that want to control the process of obtaining authorization from
+the user using a native experience.
 
 In many cases, this can provide an entirely browserless experience suited for native
 applications, only delegating to the browser in unexpected, high risk, or error conditions.
@@ -80,10 +86,7 @@ If you have multiple apps, there may be better ways of sharing a user's login be
 
 ## Limitations of this specification
 
-TODO
-
-* If the service provides multiple applications, then it creates an additional burden to build and maintain native login flows within each application. Instead, the redirect-based authorization code flow removes the burden of implementing login flows from each application by centralizing all aspects of logging in at the authorization server.
-* See {{phishing}} section below.
+It's important to remember that the scope of this specification is limited to 1st party native applications. Please review the entirety of {{security-considerations}} and when more than one 1st party native application is supported, {{multiple-applications}}.
 
 
 # Conventions and Definitions
@@ -168,6 +171,15 @@ When using an access token at the resource server:
 ## Authorization challenge endpoint
 
 The authorization challenge endpoint is a new endpoint defined by this specification which the native application uses to obtain an authorization code.
+
+Authorization servers supporting this specification SHOULD include the URL of their authorization challenge endpoint in their authorization server metadata document {{RFC8414}} using the `authorization_challenge_request_endpoint` parameter as defined in {{authorization-server-metadata}}.
+
+The endpoint accepts the authorization request parameters defined in {{RFC6749}} for the authorization endpoint as well
+as all applicable extensions defined for the authorization endpoint. Some examples of such extensions include Proof
+Key for Code Exchange (PKCE) {{RFC7636}}, Resource Indicators {{RFC8707}}, and OpenID Connect (OIDC) [OIDC]. It is
+important to note that some extension parameters have meaning in a web context but don't have meaning in a native
+mechanism (e.g. response_mode=query). It is out of scope as to what the AS does in the case that an extension
+defines a parameter that is has no meaning in this use case.
 
 The client initiates the authorization flow with or without information collected from the user (e.g. a password or MFA code).
 
@@ -375,8 +387,11 @@ Step-Up Authentication defines a mechanism for resource servers to tell the clie
 
 (No new things need to be defined by this specification in order to use this.)
 
+# Authorization Server Metadata {#authorization-server-metadata}
+The following authorization server metadata parameters {{RFC8414}} are introduced to signal the server's capability and policy with respect to 1st Party Native Applications.
 
-# Security Considerations
+
+# Security Considerations {#security-considerations}
 
 ## First-Party Applications
 
@@ -421,10 +436,18 @@ Possible, but of scope of this document.
 
 ## Multiple Applications {#multiple-applications}
 
-* Increased phishing risk
-* User confusion
-* Increased attack surface
-* Higher chance of incorrect implementations
+When there there is more than one 1st-party native applications supported by the AS, then it is important to consider a number of additional risks. These risks fall into two main categories: Experience Risk and Technical Risk which are described below.
+
+### Experience Risk
+Any time a user is asked to provide the authentication credentials in user experiences that differ, it has the effect of increasing the likelihood that the user will fall prey to a phishing attack because they are used to entering credentials in different looking experiences. When multiple native applications are support, the implementation MUST ensure the native experience is identical across all the 1st party native applications.
+
+Another experience risk is user confusion caused by different looking experiences and behaviors. This can increase the likelihood the user will not complete the authentication experience for the 1st party native application.
+
+### Technical Risk
+In addition to the experience risks, multiple implementations in 1st party native applications increases the risk of an incorrect implementation as well as increasing the attack surface as each implementation may expose it's own weaknesses.
+
+### Mitigation
+To address these risk, when multiple 1st party native applications must be supported, and other methods such as [Native SSO] are not applicable, it is RECOMMENDED that a client-side SDK be used to ensure the implementation is consistent across the different native apps and to ensure the user experience is identical for all 1st party apps.
 
 
 
