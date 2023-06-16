@@ -441,7 +441,7 @@ When there there is more than one 1st-party native applications supported by the
 ### Experience Risk
 Any time a user is asked to provide the authentication credentials in user experiences that differ, it has the effect of increasing the likelihood that the user will fall prey to a phishing attack because they are used to entering credentials in different looking experiences. When multiple native applications are support, the implementation MUST ensure the native experience is identical across all the 1st party native applications.
 
-Another experience risk is user confusion caused by different looking experiences and behaviors. This can increase the likelihood the user will fail the authentication experience for the 1st party native application.
+Another experience risk is user confusion caused by different looking experiences and behaviors. This can increase the likelihood the user will not complete the authentication experience for the 1st party native application.
 
 ### Technical Risk
 In addition to the experience risks, multiple implementations in 1st party native applications increases the risk of an incorrect implementation as well as increasing the attack surface as each implementation may expose it's own weaknesses.
