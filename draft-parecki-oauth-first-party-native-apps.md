@@ -179,7 +179,7 @@ as all applicable extensions defined for the authorization endpoint. Some exampl
 Key for Code Exchange (PKCE) {{RFC7636}}, Resource Indicators {{RFC8707}}, and OpenID Connect (OIDC) [OIDC]. It is
 important to note that some extension parameters have meaning in a web context but don't have meaning in a native
 mechanism (e.g. response_mode=query). It is out of scope as to what the AS does in the case that an extension
-defines a parameter that is invalid in this use case.
+defines a parameter that is has no meaning in this use case.
 
 The client initiates the authorization flow with or without information collected from the user (e.g. a password or MFA code).
 
