@@ -387,7 +387,7 @@ Step-Up Authentication defines a mechanism for resource servers to tell the clie
 
 (No new things need to be defined by this specification in order to use this.)
 
-# Authorization Server Metadata
+# Authorization Server Metadata {#authorization-server-metadata}
 The following authorization server metadata parameters {{RFC8414}} are introduced to signal the server's capability and policy with respect to 1st Party Native Applications.
 
 
