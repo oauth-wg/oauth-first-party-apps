@@ -172,7 +172,7 @@ When using an access token at the resource server:
 
 The authorization challenge endpoint is a new endpoint defined by this specification which the native application uses to obtain an authorization code.
 
-Authorization servers supporting this specification SHOULD include the URL of their authorization challenge endpoint in their authorization server metadata document {{RFC8414}} using the `authorization_challent_request_endpoint` parameter as defined in [TODO]
+Authorization servers supporting this specification SHOULD include the URL of their authorization challenge endpoint in their authorization server metadata document {{RFC8414}} using the `authorization_challenge_request_endpoint` parameter as defined in {{authorization-server-metadata}}.
 
 The endpoint accepts the authorization request parameters defined in {{RFC6749}} for the authorization endpoint as well
 as all applicable extensions defined for the authorization endpoint. Some examples of such extensions include Proof
