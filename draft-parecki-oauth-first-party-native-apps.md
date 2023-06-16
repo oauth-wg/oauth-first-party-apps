@@ -138,8 +138,8 @@ Three entry points into the draft:
 Figure: Native Client Authorization Code Request
 
 - (A) The native client collects information from the user.
-- (B) The client initiates the authorization by making a POST request to the authorization challenge endpoint, potentially with information collected from the user (e.g. password)
-- (C) The authorization server determines whether the information provided to the Authorization Challenge Endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error. In this example, it determines that additional information is needed and responds with an error. The error may contain additional information to guide the Client on what information to collect next. This pattern of collecting information, submitting it to the Authorization Challenge Endpoint and then receing an error or authroization code may repeat several times.
+- (B) The client initiates the authorization by making a POST request to the Authorization Challenge Endpoint, potentially with information collected from the user (e.g. password)
+- (C) The authorization server determines whether the information provided to the Authorization Challenge Endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error. In this example, it determines that additional information is needed and responds with an error. The error may contain additional information to guide the Client on what information to collect next. This pattern of collecting information, submitting it to the Authorization Challenge Endpoint and then receiving an error or authroization code may repeat several times.
 - (D) The client gathers additional information and POST a request to the authorization challenge endpoint.
 - (E) The authorization challenge endpoint returns a authorization code.
 - (F) The native client sends the authroizations code received in step (E) to obtain a token from the Token Endpoint.
@@ -404,20 +404,21 @@ Because this specification is intended for first-party applications, it is likel
 Implementers SHOULD consider additional measures to limit the risk of client impersonation, such as using attestation APIs available from the operating system.
 
 
-## Proof of Possession
+## Sender Constrained Tokens
+Tokens issued to native apps SHOULD be sender constrained to mitigate the risk of token theft and replay. 
 
-TODO: Describe how to add proof of possession into the various parts of this flow. Describe why, because things like device session could otherwise be swapped in various types of attacks.
+Proof-of-Possession techniques constrain tokens by binding them to a cryptographic key. Whenever the token is presented, it should be accompanied by a proof that the client presenting the token also controls the cryptographic key bound to the token. If a proof-of-posession sender constrained token is presented without valid proof of posession of the cryptographic key, it MUST be rejected. 
 
-* PoP binding of device session parameter
+### DPoP (Demonstrating Proof-of-Possession)
+DPoP is an application-level mechanism for sender-constraining OAuth [RFC6749] access and refresh tokens [DPoP RFC]. If DPoP is used to sender constrain tokens, the native client SHOULD use DPoP for every token request to the Authroization Server and interaction with the Resource Server.
 
-### DPoP
-
-* The client SHOULD use DPoP for every request, the AS SHOULD bind any artifacts returned to the DPoP key
+DPoP includes an optional capablity to bind the authorization code to the DPoP key to enable end-to-end binding of the entire authorization flow. This protects against attacks described in Section 11.9 in [DPoP RFC]. If authorization code binding is required, the JWK Thumbprint of the DPoP key MUST be communicated to the Authorization Server by including the dpop_jkt parameter defined in section 10 of [DPoP RFC] alongside other authorization request parameters in the POST body of the first Authorization Challenge Request. If it is included in subsequent Authorization Challenge Requests, the value of this parameter must be the same as in the initial request. If the JWK Thumbprint in the dpop_jkt differ at any point, the Authorization Server MUST reject the request. If the dpop_jkt parameter is not included in the first request, but added in subsequent requests, the Authroizations Server MUST reject the request (do we need todefine a specific error code for that?).
 
 ### Other Proof of Possession Mechanisms
+It may be possible to use other proof of posession mechanisms to sender constrain access and refresh tokens. Defining these mechanisms are out of scope for this specification.
 
-Possible, but of scope of this document.
-
+TODO: 
+* PoP binding of device session parameter
 
 ## Multiple Applications {#multiple-applications}
 
