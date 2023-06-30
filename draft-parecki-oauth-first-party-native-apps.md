@@ -422,7 +422,7 @@ Tokens issued to native apps SHOULD be sender constrained to mitigate the risk o
 Proof-of-Possession techniques constrain tokens by binding them to a cryptographic key. Whenever the token is presented, it should be accompanied by a proof that the client presenting the token also controls the cryptographic key bound to the token. If a proof-of-posession sender constrained token is presented without valid proof of posession of the cryptographic key, it MUST be rejected.
 
 ### Demonstrating Proof-of-Possession
-DPoP is an application-level mechanism for sender-constraining OAuth [RFC6749] access and refresh tokens {{I-D.ietf-oauth-dpop}}. If DPoP is used to sender constrain tokens, the native client SHOULD use DPoP for every token request to the Authroization Server and interaction with the Resource Server.
+DPoP is an application-level mechanism for sender-constraining OAuth {{RFC6749}} access and refresh tokens {{I-D.ietf-oauth-dpop}}. If DPoP is used to sender constrain tokens, the native client SHOULD use DPoP for every token request to the Authroization Server and interaction with the Resource Server.
 
 DPoP includes an optional capability to bind the authorization code to the DPoP key to enable end-to-end binding of the entire authorization flow. If an attacker can access the Authorization Code and PKCE code verifier as described in Section 11.9 of {{I-D.ietf-oauth-dpop}}, Authorization Code binding SHOULD be used.
 
@@ -431,7 +431,7 @@ To bind the authorization code using the Authorization Challenge Endpoint, the J
 ### Other Proof of Possession Mechanisms
 It may be possible to use other proof of posession mechanisms to sender constrain access and refresh tokens. Defining these mechanisms are out of scope for this specification.
 
-TODO:
+### Device Session
 * PoP binding of device session parameter
 
 ## Multiple Applications {#multiple-applications}
@@ -453,7 +453,7 @@ To address these risk, when multiple 1st party native applications must be suppo
 
 # IANA Considerations
 
-This document has no IANA actions.
+TBD
 
 
 --- back
