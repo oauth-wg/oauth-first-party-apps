@@ -60,6 +60,11 @@ normative:
       - ins: B. de Medeiros
       - ins: C. Mortimore
   IANA.OAuth.Parameters:
+  USASCII:
+    title: "Coded Character Set -- 7-bit American Standard Code for Information Interchange, ANSI X3.4"
+    author:
+      name: "American National Standards Institute"
+    date: 1986
 
 informative:
   RFC8252:
