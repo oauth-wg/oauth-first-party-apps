@@ -352,11 +352,9 @@ The client MUST include the device session in future requests to the authorizati
 
 # Token Request
 
-The client makes a request to the token endpoint using the authorization code it obtained from the authorization challenge endpoint, according to Section 4.1.3 of {{RFC6749}}.
+The client makes a request to the token endpoint using the authorization code it obtained from the authorization challenge endpoint.
 
-TODO: Would it be better to define our own grant type instead of overloading the authorization code grant type? Probably, since there won't be a redirect_uri.
-
-TODO: In any case, document the parameters here.
+This specification does not define any additional parameters beyond the token request parameters defined in  Section 4.1.3 of {{RFC6749}}. However, notably the `redirect_uri` parameter will not be included in this request, because no `redirect_uri` parameter was included in the authorization request.
 
 ## Token Endpoint Error Response
 
