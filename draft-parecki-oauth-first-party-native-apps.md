@@ -59,6 +59,7 @@ normative:
       - ins: M. Jones
       - ins: B. de Medeiros
       - ins: C. Mortimore
+  IANA.OAuth.Parameters:
 
 informative:
   RFC8252:
@@ -290,7 +291,7 @@ status code (unless specified otherwise) and includes the following
 parameters with the response:
 
 "error":
-:    REQUIRED.  A single ASCII [USASCII] error code from the following:
+:    REQUIRED.  A single ASCII {{USASCII}} error code from the following:
 
      "invalid_request":
      :     The request is missing a required parameter, includes an
@@ -326,7 +327,7 @@ parameters with the response:
      messages based on the requirements of the authorization server.
 
 "error_description":
-:    OPTIONAL.  Human-readable ASCII [USASCII] text providing
+:    OPTIONAL.  Human-readable ASCII {{USASCII}} text providing
      additional information, used to assist the client developer in
      understanding the error that occurred.
      Values for the `error_description` parameter MUST NOT include
