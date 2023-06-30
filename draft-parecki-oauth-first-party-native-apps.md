@@ -177,7 +177,7 @@ important to note that some extension parameters have meaning in a web context b
 mechanism (e.g. `response_mode=query`). It is out of scope as to what the AS does in the case that an extension
 defines a parameter that is has no meaning in this use case.
 
-The client initiates the authorization flow with or without information collected from the user (e.g. a password or MFA code).
+The client initiates the authorization flow with or without information collected from the user (e.g. a passkey or MFA code).
 
 The authorization challenge endpoint response is either an authorization code or an error code, and may also contain a `device_session` which the client uses on subsequent requests to the authorization challenge endpoint.
 
