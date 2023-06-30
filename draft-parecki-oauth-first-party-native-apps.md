@@ -43,6 +43,22 @@ normative:
   RFC8707:
   I-D.ietf-oauth-step-up-authn-challenge:
   I-D.ietf-oauth-dpop:
+  OpenID.Native-SSO:
+    title: OpenID Connect Native SSO for Mobile Apps
+    target: https://openid.net/specs/openid-connect-native-sso-1_0.html
+    author:
+      - ins: G. Fletcher
+    date: November 2022
+  OpenID:
+    title: OpenID Connect Core 1.0
+    target: https://openid.net/specs/openid-connect-core-1_0.html
+    date: November 8, 2014
+    author:
+      - ins: N. Sakimura
+      - ins: J. Bradley
+      - ins: M. Jones
+      - ins: B. de Medeiros
+      - ins: C. Mortimore
 
 informative:
   RFC8252:
@@ -83,7 +99,7 @@ TODO: Prerequisites for using this specification
 
 This specification is designed to be used by native applications, which includes both mobile and desktop applications.
 
-If you have multiple apps, there may be better ways of sharing a user's login between the apps other than each app implementing this specification or using an SDK that implements this specification. For example, [[Native SSO]] provides a mechanism for one app to obtain new tokens by exchanging tokens from another app, without any user interaction. See {{multiple-applications}} for more details.
+If you have multiple apps, there may be better ways of sharing a user's login between the apps other than each app implementing this specification or using an SDK that implements this specification. For example, {{OpenID.Native-SSO}} provides a mechanism for one app to obtain new tokens by exchanging tokens from another app, without any user interaction. See {{multiple-applications}} for more details.
 
 ## Limitations of this specification
 
@@ -172,7 +188,7 @@ Authorization servers supporting this specification SHOULD include the URL of th
 
 The endpoint accepts the authorization request parameters defined in {{RFC6749}} for the authorization endpoint as well
 as all applicable extensions defined for the authorization endpoint. Some examples of such extensions include Proof
-Key for Code Exchange (PKCE) {{RFC7636}}, Resource Indicators {{RFC8707}}, and OpenID Connect (OIDC) [OIDC]. It is
+Key for Code Exchange (PKCE) {{RFC7636}}, Resource Indicators {{RFC8707}}, and OpenID Connect {{OpenID}}. It is
 important to note that some extension parameters have meaning in a web context but don't have meaning in a native
 mechanism (e.g. `response_mode=query`). It is out of scope as to what the AS does in the case that an extension
 defines a parameter that is has no meaning in this use case.
@@ -446,7 +462,7 @@ Another experience risk is user confusion caused by different looking experience
 In addition to the experience risks, multiple implementations in 1st party native applications increases the risk of an incorrect implementation as well as increasing the attack surface as each implementation may expose it's own weaknesses.
 
 ### Mitigation
-To address these risk, when multiple 1st party native applications must be supported, and other methods such as [Native SSO] are not applicable, it is RECOMMENDED that a client-side SDK be used to ensure the implementation is consistent across the different native apps and to ensure the user experience is identical for all 1st party apps.
+To address these risk, when multiple 1st party native applications must be supported, and other methods such as {{OpenID.Native-SSO}} are not applicable, it is RECOMMENDED that a client-side SDK be used to ensure the implementation is consistent across the different native apps and to ensure the user experience is identical for all 1st party apps.
 
 
 
