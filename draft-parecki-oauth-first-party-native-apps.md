@@ -65,13 +65,32 @@ informative:
 
 --- abstract
 
+This document defines the Authorization Challenge Endpoint, which supports
+a first-party native client that wants to control the process of
+obtaining authorization from the user using a native experience.
+
+In many cases, this can provide an entirely browserless OAuth 2.0 experience suited for native
+applications, only delegating to the browser in unexpected, high risk, or error conditions.
+
+
+--- middle
+
+# Introduction
+
 This document extends the OAuth 2.0 Authorization Framework {{RFC6749}} with
-a new endpoint `authorization_challenge_endpoint` to support first-party native
+a new endpoint, `authorization_challenge_endpoint`, to support first-party native
 applications that want to control the process of obtaining authorization from
 the user using a native experience.
 
-In many cases, this can provide an entirely browserless experience suited for native
-applications, only delegating to the browser in unexpected, high risk, or error conditions.
+The client collects any initial information from the user and POSTs that information
+as well as information about the client's request to the Authorization Challenge Endpoint,
+and receives either an authorization code or an error code in response. The error code
+may indicate that the client can continue to prompt the user for more information,
+or can indicate that the client needs to launch a browser to have the user complete
+the flow in a browser.
+
+The Authorization Challenge Endpoint is used to initiate the OAuth flow in place of redirecting
+or launching a browser to the authorization endpoint.
 
 While a fully-delegated approach using the redirect-based Authorization Code grant is generally
 preferred, this draft provides a mechanism for the client to directly interact
@@ -80,23 +99,13 @@ and the client, as there typically is for first-party applications.
 It should only be considered when there are usability
 concerns with a redirect-based approach, such as for native mobile or desktop applications.
 
-
---- middle
-
-# Introduction
-
-
-
-TODO: Key points to address include problem description, the relationship to the step-up authentication spec (use of acr etc.), properties of the protocol (extensibility etc).
-
+This draft also extends the token response (typically for use in response to a refresh token request) and resource server response to allow the authorization server or resource server to indicate that the client should re-request authorization from the user. This can include requesting step-up authentication by including parameters defined in {{I-D.ietf-oauth-step-up-authn-challenge}} as well.
 
 ## Usage and Applicability
 
-This specification only applies to the situations described below.
+This specification MUST only be used by first-party applications, which is when the authorization server and application are operated by the same entity and the user understands them both as the same entity.
 
-This specification MUST only be used by first-party applications, when the authorization server and application are operated by the same entity and the user understands them both as the same entity.
-
-This specification MUST NOT be used by third party applications, and the authorization server SHOULD take measures to prevent use by third party applications. (e.g. only enable this grant for certain client IDs, and take measures to authenticate your apps when possible.)
+This specification MUST NOT be used by third party applications, and the authorization server SHOULD take measures to prevent use by third party applications. (e.g. only enable this grant for certain client IDs, and take measures to authenticate first-party apps when possible.)
 
 Using this specification in scenarios other than those described will lead to unintended security and privacy problems for users and service providers.
 
@@ -108,6 +117,8 @@ If you provide multiple apps and expect users to use multiple apps on the same d
 
 The scope of this specification is limited to first-party native applications. Please review the entirety of {{security-considerations}}, and when more than one first-party native application is supported, {{multiple-applications}}.
 
+While this draft provides the framework for a native OAuth experience, each implementation
+will need to define the specific behavior that it expects from OAuth clients interacting with the authorization server. While this lack of clearly defining the details would typically lead to less interoperability, it is acceptable in this case since we intend this specification to be deployed in a tightly coupled environment since it is only applicable to first-party applications.
 
 # Conventions and Definitions
 
@@ -176,7 +187,7 @@ When the client uses a refresh token to obtain a new access token, the authoriza
 
 ## Resource Request
 
-When making a resource request to a resource server, the resource server MAY respond with an error according to OAuth 2.0 Step-Up Authentication Challenge Protocol, indicating that re-authorization of the user is required.
+When making a resource request to a resource server, the resource server MAY respond with an error according to OAuth 2.0 Step-Up Authentication Challenge Protocol {{I-D.ietf-oauth-step-up-authn-challenge}}, indicating that re-authorization of the user is required.
 
 
 # Protocol Endpoints
@@ -311,7 +322,7 @@ parameters with the response:
      Values for the `error` parameter MUST NOT include characters
      outside the set %x20-21 / %x23-5B / %x5D-7E.
 
-     TODO: The authorization server MAY extend these error codes with custom
+     The authorization server MAY extend these error codes with custom
      messages based on the requirements of the authorization server.
 
 "error_description":
@@ -368,15 +379,13 @@ An authorization challenge error response is a particular type of
 error response as defined in Section 5.2 of OAuth 2.0 {{RFC6749}} where
 the error code is set to the following value:
 
-(TODO: This value needs a better name)
-
-"authorization_required":
+"error": "authorization_required":
 : The authorization grant is insufficiently authorized, but another
   access token request may succeed if an additional authorization
   grant is presented.
 
 "device_session":
-:    OPTIONAL.  The device session allows the authorization server to
+:    OPTIONAL.  The optional device session value allows the authorization server to
      associate subsequent requests by this client with an ongoing
      authorization request sequence. The client MUST include
      the `device_session` in follow-up requests to the challenge
@@ -396,12 +405,17 @@ For example:
 
 # Resource Server Error Response
 
-Step-Up Authentication defines a mechanism for resource servers to tell the client to start a new authorization request, including `acr_values` and `max_age`, and `scope` from RFC6750. Upon receiving this request, the client starts a new authorization request according to this specification, and includes the `acr_values`, `max_age` and `scope` returned in the error response.
+Step-Up Authentication {{I-D.ietf-oauth-step-up-authn-challenge}} defines a mechanism for resource servers to tell the client to start a new authorization request, including `acr_values` and `max_age`, and `scope` from RFC6750. Upon receiving this request, the client starts a new authorization request according to this specification, and includes the `acr_values`, `max_age` and `scope` returned in the error response.
 
-(No new things need to be defined by this specification in order to use this.)
+This specification does not define any new parameters for the resource server error response beyond those defined in {{I-D.ietf-oauth-step-up-authn-challenge}}.
 
 # Authorization Server Metadata {#authorization-server-metadata}
+
 The following authorization server metadata parameters {{RFC8414}} are introduced to signal the server's capability and policy with respect to 1st Party Native Applications.
+
+"authorization_challenge_endpoint":
+: The URL of the authorization challenge endpoint at which a client can initiate
+  an authorization request and eventually obtain an authorization code.
 
 
 # Security Considerations {#security-considerations}
@@ -469,7 +483,13 @@ To address these risk, when multiple 1st party native applications must be suppo
 
 # IANA Considerations
 
-TBD
+IANA has (TBD) registered the following values in the IANA "OAuth Authorization Server Metadata" registry of {{IANA.OAuth.Parameters}} established by {{RFC8414}}.
+
+**Metadata Name**: authorization_challenge_endpoint
+**Metadata Description**: URL of the authorization server's authorization challenge endpoint.
+**Change Controller**: IESG
+**Specification Document**: Section 4.1 of [[ this specification ]]
+
 
 
 --- back
