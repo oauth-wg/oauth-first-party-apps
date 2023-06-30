@@ -12,9 +12,8 @@ v: 3
 area: "Security"
 workgroup: "Web Authorization Protocol"
 keyword:
- - next generation
- - unicorn
- - sparkling distributed ledger
+ - native apps
+ - oauth
 venue:
   group: "Web Authorization Protocol"
   type: "Working Group"
