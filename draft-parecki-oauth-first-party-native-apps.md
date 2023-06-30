@@ -92,18 +92,21 @@ TODO: Key points to address include problem description, the relationship to the
 
 ## Usage and Applicability
 
-TODO: Prerequisites for using this specification
+This specification only applies to the situations described below.
 
-* MUST only be used by first-party applications, when the authorization server and application are operated by the same entity and the user understands them both as the same entity.
-* MUST NOT be used by third party applications, SHOULD take measures to prevent use by third party applications. (e.g. only enable for certain client IDs, and take measures to authenticate your apps.)
+This specification MUST only be used by first-party applications, when the authorization server and application are operated by the same entity and the user understands them both as the same entity.
+
+This specification MUST NOT be used by third party applications, and the authorization server SHOULD take measures to prevent use by third party applications. (e.g. only enable this grant for certain client IDs, and take measures to authenticate your apps when possible.)
+
+Using this specification in scenarios other than those described will lead to unintended security and privacy problems for users and service providers.
 
 This specification is designed to be used by native applications, which includes both mobile and desktop applications.
 
-If you have multiple apps, there may be better ways of sharing a user's login between the apps other than each app implementing this specification or using an SDK that implements this specification. For example, {{OpenID.Native-SSO}} provides a mechanism for one app to obtain new tokens by exchanging tokens from another app, without any user interaction. See {{multiple-applications}} for more details.
+If you provide multiple apps and expect users to use multiple apps on the same device, there may be better ways of sharing a user's login between the apps other than each app implementing this specification or using an SDK that implements this specification. For example, {{OpenID.Native-SSO}} provides a mechanism for one app to obtain new tokens by exchanging tokens from another app, without any user interaction. See {{multiple-applications}} for more details.
 
 ## Limitations of this specification
 
-It's important to remember that the scope of this specification is limited to 1st party native applications. Please review the entirety of {{security-considerations}} and when more than one 1st party native application is supported, {{multiple-applications}}.
+The scope of this specification is limited to first-party native applications. Please review the entirety of {{security-considerations}}, and when more than one first-party native application is supported, {{multiple-applications}}.
 
 
 # Conventions and Definitions
