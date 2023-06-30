@@ -166,13 +166,15 @@ When making a resource request to a resource server, the resource server MAY res
 
 The authorization challenge endpoint is a new endpoint defined by this specification which the native application uses to obtain an authorization code.
 
+The authorization challenge endpoint is an HTTP API at the authorization server that accepts HTTP POST requests with parameters in the HTTP request message body using the `application/x-www-form-urlencoded` format. This format has a character encoding of UTF-8, as described in Appendix B of {{RFC6749}}. The authorization challenge endpoint URL MUST use the "https" scheme.
+
 Authorization servers supporting this specification SHOULD include the URL of their authorization challenge endpoint in their authorization server metadata document {{RFC8414}} using the `authorization_challenge_request_endpoint` parameter as defined in {{authorization-server-metadata}}.
 
 The endpoint accepts the authorization request parameters defined in {{RFC6749}} for the authorization endpoint as well
 as all applicable extensions defined for the authorization endpoint. Some examples of such extensions include Proof
 Key for Code Exchange (PKCE) {{RFC7636}}, Resource Indicators {{RFC8707}}, and OpenID Connect (OIDC) [OIDC]. It is
 important to note that some extension parameters have meaning in a web context but don't have meaning in a native
-mechanism (e.g. response_mode=query). It is out of scope as to what the AS does in the case that an extension
+mechanism (e.g. `response_mode=query`). It is out of scope as to what the AS does in the case that an extension
 defines a parameter that is has no meaning in this use case.
 
 The client initiates the authorization flow with or without information collected from the user (e.g. a password or MFA code).
@@ -197,7 +199,7 @@ A client may wish to initiate an authorization flow by first prompting the user 
 ## Authorization Challenge Request
 
 The client makes a request to the authorization challenge endpoint by adding the
-following parameters using the `application/x-www-form-urlencoded
+following parameters, as well as parameters from any extensions, using the `application/x-www-form-urlencoded
 format with a character encoding of UTF-8 in the HTTP request body:
 
 "client_id":
