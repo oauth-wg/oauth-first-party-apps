@@ -232,15 +232,15 @@ server to indicate that further authentication of the user is required.
 
 A client may wish to initiate an authorization flow by first prompting the user for their user identifier or other account information. The authorization challenge endpoint is a new endpoint to collect this login hint and direct the client with the next steps, whether that is to do an MFA flow, or perform an OAuth redirect-based flow.
 
-## Authorization Challenge Request
+## Authorization Challenge Request {#challenge-request}
 
 The client makes a request to the authorization challenge endpoint by adding the
-following parameters, as well as parameters from any extensions, using the `application/x-www-form-urlencoded
+following parameters, as well as parameters from any extensions, using the `application/x-www-form-urlencoded`
 format with a character encoding of UTF-8 in the HTTP request body:
 
 "client_id":
 : REQUIRED if the client is not authenticating with the
-  authorization server.
+  authorization server and if no `device_session` is included.
 
 "scope":
 : OPTIONAL. The OAuth scope defined in {{RFC6749}}.
@@ -263,7 +263,7 @@ given the user's phone number, line breaks shown for illustration purposes only:
     login_hint=%2B1-310-123-4567&scope=profile
     &client_id=bb16c14c73415
 
-## Authorization Challenge Response
+## Authorization Challenge Response {#challenge-response}
 
 The authorization server determines whether the information provided up to this point is sufficient to issue an authorization code, and responds with an authorization code or an error message.
 
@@ -588,7 +588,97 @@ This example describes how to use the mechanisms defined in this draft to create
 * The Client sends the Authorization Code in a [Token Request](#token-request) to the Token Endpoint.
 * The Authorization Server verifies the Authorization Code and issues the requested tokens.
 
+# Example Implementation
 
+In order to successfully implement this specification, the Authorization Server will need to define its own specific requirements for what values clients are expected to send in the Authorization Challenge Request ({{challenge-request}}), as well as its own specific error codes in the Authorization Challenge Response ({{challenge-response}}).
+
+Below is an example of parameters required for a complete implementation that enables the user to log in with a username and OTP.
+
+## Authorization Challenge Request Parameters
+
+In addition to the request parameters defined in {{challenge-request}}, the authorization server defines the additional parameters below.
+
+"username":
+: REQUIRED for the initial Authorization Challenge Request.
+
+"otp":
+: The OTP collected from the user. REQUIRED when re-trying an Authorization Challenge Request in response to the `otp_required` error defined below.
+
+
+## Authorization Challenge Response Parameters
+
+In addition to the response parameters defined in {{challenge-response}}, the authorization server defines the additional value for the `error` response below.
+
+"otp_required":
+:     The client should collect an OTP from the user and send the OTP in 
+      a second request to the Authorization Challenge Endpoint. The HTTP
+      response code to use with this error value is `401 Unauthorized`.
+
+## Example Sequence
+
+The client prompts the user to enter their username, and sends the username in an initial Authorization Challenge Request.
+
+    POST /authorize HTTP/1.1
+    Host: server.example.com
+    Content-Type: application/x-www-form-urlencoded
+
+    username=alice
+    &scope=photos
+    &client_id=bb16c14c73415
+
+The Authorization Server sends an error response indicating that an OTP is required.
+
+    HTTP/1.1 401 Unauthorized
+    Content-Type: application/json
+    Cache-Control: no-store
+
+    {
+      "error": "otp_required",
+      "device_session": "ce6772f5e07bc8361572f"
+    }
+
+The client prompts the user for an OTP, and sends a new Authorization Challenge Request.
+
+    POST /authorize HTTP/1.1
+    Host: server.example.com
+    Content-Type: application/x-www-form-urlencoded
+
+    device_session=ce6772f5e07bc8361572f
+    &otp=555121
+
+The Authorization Server validates the `device_session` to find the expected user, then validates the OTP for that user, and responds with an authorization code.
+
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    Cache-Control: no-store
+
+    {
+      "authorization_code": "uY29tL2F1dGhlbnRpY"
+    }
+
+The client sends the authorization code to the token endpoint.
+
+    POST /token HTTP/1.1
+    Host: server.example.com
+    Content-Type: application/x-www-form-urlencoded
+
+    grant_type=authorization_code
+    &client_id=bb16c14c73415
+    &code=uY29tL2F1dGhlbnRpY
+
+The Authorization Server responds with an access token and refresh token.
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    Cache-Control: no-store
+
+    {
+      "token_type": "Bearer",
+      "expires_in": 3600,
+      "access_token": "d41c0692f1187fd9b326c63d",
+      "refresh_token": "e090366ac1c448b8aed84cbc07"
+    }
 
 
 # Acknowledgments
