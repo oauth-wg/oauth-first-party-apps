@@ -455,7 +455,7 @@ Implementers SHOULD consider additional measures to limit the risk of client imp
 ## Sender Constrained Tokens
 Tokens issued to native apps SHOULD be sender constrained to mitigate the risk of token theft and replay.
 
-Proof-of-Possession techniques constrain tokens by binding them to a cryptographic key. Whenever the token is presented, it should be accompanied by a proof that the client presenting the token also controls the cryptographic key bound to the token. If a proof-of-posession sender constrained token is presented without valid proof of posession of the cryptographic key, it MUST be rejected.
+Proof-of-Possession techniques constrain tokens by binding them to a cryptographic key. Whenever the token is presented, it should be accompanied by a proof that the client presenting the token also controls the cryptographic key bound to the token. If a proof-of-possession sender constrained token is presented without valid proof of possession of the cryptographic key, it MUST be rejected.
 
 ### Demonstrating Proof-of-Possession
 DPoP is an application-level mechanism for sender-constraining OAuth {{RFC6749}} access and refresh tokens {{I-D.ietf-oauth-dpop}}. If DPoP is used to sender constrain tokens, the native client SHOULD use DPoP for every token request to the authorization Server and interaction with the Resource Server.
@@ -465,7 +465,7 @@ DPoP includes an optional capability to bind the authorization code to the DPoP 
 To bind the authorization code using the Authorization Challenge Endpoint, the JWK Thumbprint of the DPoP key MUST be communicated to the Authorization Server by including the `dpop_jkt` parameter defined in section 10 of {{I-D.ietf-oauth-dpop}} alongside other authorization request parameters in the POST body of the first Authorization Challenge Request. If it is included in subsequent Authorization Challenge Requests, the value of this parameter must be the same as in the initial request. If the JWK Thumbprint in the `dpop_jkt` differ at any point, the Authorization Server MUST reject the request. If the `dpop_jkt` parameter is not included in the first request, but added in subsequent requests, the Authorization Server MUST reject the request (do we need to define a specific error code for that?).
 
 ### Other Proof of Possession Mechanisms
-It may be possible to use other proof of posession mechanisms to sender constrain access and refresh tokens. Defining these mechanisms are out of scope for this specification.
+It may be possible to use other proof of possession mechanisms to sender constrain access and refresh tokens. Defining these mechanisms are out of scope for this specification.
 
 ### Device Session
 * PoP binding of device session parameter
@@ -505,12 +505,12 @@ This section provides non-normative examples of how this specification may be us
 
 ## Passwordless One-Time Passwork (OTP)
 
-In a passwordless One-Time Password (OTP) scheme, the user is in posession of a one-time password generator. This generator may be a hardware device, or implemented as an app on a mobile phone. The user provides a user identifier and one-time password, which is verified by the Authorization Server before it issues an Authorization Code, which can be exchanged for an Access and Refresh Token.
+In a passwordless One-Time Password (OTP) scheme, the user is in possession of a one-time password generator. This generator may be a hardware device, or implemented as an app on a mobile phone. The user provides a user identifier and one-time password, which is verified by the Authorization Server before it issues an Authorization Code, which can be exchanged for an Access and Refresh Token.
 
 * The Client collects username and OTP from user.
 * The Client sends an [Authorization Challenge Request](#authorization-challenge-request) to the [Authorization challenge endpoint](#authorization-challenge-endpoint) including the username and OTP.
 * The Authorization Server verifies the username and OTP and returns an Authorization Code.
-* The Client requests an Access Token and Refresh Token by issueing a [Token Request](#token-request) to the Token Endpoint.
+* The Client requests an Access Token and Refresh Token by issuing a [Token Request](#token-request) to the Token Endpoint.
 * The Authorization Server verifies the Authorization Code and issues the requested tokens.
 
 ## E-Mail Confirmation Code
