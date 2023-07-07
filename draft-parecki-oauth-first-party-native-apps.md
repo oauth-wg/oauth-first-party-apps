@@ -610,7 +610,7 @@ In addition to the request parameters defined in {{challenge-request}}, the auth
 In addition to the response parameters defined in {{challenge-response}}, the authorization server defines the additional value for the `error` response below.
 
 "otp_required":
-:     The client should collect an OTP from the user and send the OTP in 
+:     The client should collect an OTP from the user and send the OTP in
       a second request to the Authorization Challenge Endpoint. The HTTP
       response code to use with this error value is `401 Unauthorized`.
 
