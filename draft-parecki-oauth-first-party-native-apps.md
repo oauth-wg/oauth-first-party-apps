@@ -492,15 +492,19 @@ To address these risk, when multiple 1st party native applications must be suppo
 IANA has (TBD) registered the following values in the IANA "OAuth Authorization Server Metadata" registry of {{IANA.OAuth.Parameters}} established by {{RFC8414}}.
 
 **Metadata Name**: authorization_challenge_endpoint
+
 **Metadata Description**: URL of the authorization server's authorization challenge endpoint.
+
 **Change Controller**: IESG
+
 **Specification Document**: Section 4.1 of [[ this specification ]]
 
 
 
 --- back
 
-# Examples
+# Example User Experiences
+
 This section provides non-normative examples of how this specification may be used to support specific use cases.
 
 ## Passwordless One-Time Passwork (OTP)
@@ -583,6 +587,9 @@ This example describes how to use the mechanisms defined in this draft to create
 * The Authorization Server uses the `device_session` to maintain the session context, and verifies the SMS verification code before issuing an Authorization Code to the Client.
 * The Client sends the Authorization Code in a [Token Request](#token-request) to the Token Endpoint.
 * The Authorization Server verifies the Authorization Code and issues the requested tokens.
+
+
+
 
 # Acknowledgments
 {:numbered="false"}
