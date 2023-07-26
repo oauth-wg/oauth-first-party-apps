@@ -204,7 +204,7 @@ The authorization challenge endpoint is a new endpoint defined by this specifica
 
 The authorization challenge endpoint is an HTTP API at the authorization server that accepts HTTP POST requests with parameters in the HTTP request message body using the `application/x-www-form-urlencoded` format. This format has a character encoding of UTF-8, as described in Appendix B of {{RFC6749}}. The authorization challenge endpoint URL MUST use the "https" scheme.
 
-Authorization servers supporting this specification SHOULD include the URL of their authorization challenge endpoint in their authorization server metadata document {{RFC8414}} using the `authorization_challenge_request_endpoint` parameter as defined in {{authorization-server-metadata}}.
+Authorization servers supporting this specification SHOULD include the URL of their authorization challenge endpoint in their authorization server metadata document {{RFC8414}} using the `authorization_challenge_endpoint` parameter as defined in {{authorization-server-metadata}}.
 
 The endpoint accepts the authorization request parameters defined in {{RFC6749}} for the authorization endpoint as well
 as all applicable extensions defined for the authorization endpoint. Some examples of such extensions include Proof
@@ -472,7 +472,7 @@ It may be possible to use other proof of possession mechanisms to sender constra
 
 ## Multiple Applications {#multiple-applications}
 
-When there there is more than one 1st-party native applications supported by the AS, then it is important to consider a number of additional risks. These risks fall into two main categories: Experience Risk and Technical Risk which are described below.
+When there is more than one 1st-party native applications supported by the AS, then it is important to consider a number of additional risks. These risks fall into two main categories: Experience Risk and Technical Risk which are described below.
 
 ### Experience Risk
 Any time a user is asked to provide the authentication credentials in user experiences that differ, it has the effect of increasing the likelihood that the user will fall prey to a phishing attack because they are used to entering credentials in different looking experiences. When multiple native applications are support, the implementation MUST ensure the native experience is identical across all the 1st party native applications.
