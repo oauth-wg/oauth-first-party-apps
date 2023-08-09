@@ -372,9 +372,17 @@ The client MUST include the device session in future requests to the authorizati
 
 ## Authorization Challenge Grant - Client Metadata
 
-This specification introduces a new OAuth 'grant_type' named 'authz_challenge' to the client metadata{{RFC7591}}. This grant enables the authorization server to identify if a client is authorized to use the authorization challenge flow. In order to reduce the risk of unauthorized client use, and, attackers from abusing the authorization challenge endpoint, this grant type MUST only be issued to first party app clients.
+This specification introduces a new OAuth 'grant_type' named 'authz_challenge' to the client metadata{{RFC6749}}. This grant enables the authorization server to identify if a client is authorized to use the authorization challenge flow. In order to reduce the risk of unauthorized client use, and, attackers from abusing the authorization challenge endpoint, this grant type MUST only be issued to first party app clients.
 
 When a request is made to the `authorization_challenge_endpoint`, the authorization server MUST verify that the client has the authz_challenge grant type. The authorization server MUST reject requests made by clients which have not been assigned the authz_challenge grant type. 
+
+## Authorization Challenge Grant - Dynamic Client Registration
+
+An authorization server which has enabled first party applications to use the dynamic client registration endpoint{{RFC7591}} MAY allow first party clients to register for the "authz_challenge" Grant Type. The authorization server MUST NOT allow non first party apps to register with the authz_challenge Grant Type. When possible, the authorization server SHOULD require the use of OS attestation services to provide a level of confidence to the AS that the registration request is being made by an application owned by the first party. 
+
+Mechanisms for issuing this grant to existing clients are outside of the scope of this specification. 
+
+The security mechanisms to protect the dynamic client registration endpoint are outside of the scope of this specification. 
 
 # Token Request {#token-request}
 
