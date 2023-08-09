@@ -370,6 +370,12 @@ The device session is completely opaque to the client, and as such the AS MUST a
 
 The client MUST include the device session in future requests to the authorization challenge endpoint for the particular authorization request.
 
+## Authorization Challenge Grant - Client Metadata
+
+This specification introduces a new OAuth 'grant_type' named 'authz_challenge' to the client metadata{{RFC7591}}. This grant enables the authorization server to identify if a client is authorized to use the authorization challenge flow. In order to reduce the risk of unauthorized client use, and, attackers from abusing the authorization challenge endpoint, this grant type MUST only be issued to first party app clients.
+
+When a request is made to the `authorization_challenge_endpoint`, the authorization server MUST verify that the client has the authz_challenge grant type. The authorization server MUST reject requests made by clients which have not been assigned the authz_challenge grant type. 
+
 # Token Request {#token-request}
 
 The client makes a request to the token endpoint using the authorization code it obtained from the authorization challenge endpoint.
