@@ -459,9 +459,9 @@ Because of these risks, the authorization server MAY decide to require that the 
 
 ## Credential Attacks {#credential-attacks}
 
-The nature of moving from browser-based authentication to a backend API capable of directly receiving user credentials exposes a risk to attacks, such as credential stuffing and brute forcing credentails in an attempt to receive an authorization code. An authorization server may already have a combination of built-in or 3rd party security tools in place to monitor and reduce this risk in the browser-based authentication.  
+The authorization challenge endpoint is capable of directly receiving user credentials and returning authorization codes. This exposes a new vector to perform credential attacks. 
 
-Implementors SHOULD consider additional security measures to reduce this risk in the authorization challenge endpoint such as monitoringing for suspicious activity. Additionally, the attestation APIs SHOULD be used when possible to assert a level of confidence to the authorization server that the request is originating from an application owned by the same party.
+An authorization server may already have a combination of built-in or 3rd party security tools in place to monitor and reduce this risk in browser-based authentication flows. Implementors SHOULD consider similar security measures to reduce this risk in the authorization challenge endpoint. Additionally, the attestation APIs SHOULD be used when possible to assert a level of confidence to the authorization server that the request is originating from an application owned by the same party.
 
 ## Client Authentication
 
