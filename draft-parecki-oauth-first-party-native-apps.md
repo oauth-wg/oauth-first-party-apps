@@ -374,7 +374,7 @@ The client MUST include the device session in future requests to the authorizati
 
 This specification introduces a new OAuth 'grant_type' named 'authz_challenge' to the client metadata{{RFC6749}}. This grant enables the authorization server to identify if a client is authorized to use the authorization challenge flow. In order to reduce the risk of unauthorized client use, and, attackers from abusing the authorization challenge endpoint, this grant type MUST only be issued to first party app clients.
 
-When a request is made to the `authorization_challenge_endpoint`, the authorization server MUST verify that the client has the authz_challenge grant type. The authorization server MUST reject requests made by clients which have not been assigned the authz_challenge grant type. 
+When a request is made to the `authorization_challenge_endpoint`, the authorization server MUST validate that the client has been granted the authz_challenge grant type. The authorization server MUST reject requests made to the authorization challenge endpoint by clients which have not been assigned the authz_challenge grant type. 
 
 ## Authorization Challenge Grant - Dynamic Client Registration
 
@@ -459,9 +459,9 @@ Because of these risks, the authorization server MAY decide to require that the 
 
 ## Credential Attacks {#credential-attacks}
 
-The nature of moving from browser-based authentication to a backend API which is capable of directly receiving user credentials exposes a risk to attacks such as credential stuffing and brute forcing credentails to see if an authorization code is returned by the authorization challenge endpoint. An authorization server may already have a combination of built-in or 3rd party security tools in place to monitor and reduce this risk in the browser-based authentication.  
+The nature of moving from browser-based authentication to a backend API capable of directly receiving user credentials exposes a risk to attacks, such as credential stuffing and brute forcing credentails in an attempt to receive an authorization code. An authorization server may already have a combination of built-in or 3rd party security tools in place to monitor and reduce this risk in the browser-based authentication.  
 
-Implementors SHOULD consider additional security measures to reduce this risk in the authorization challenge endpoint such as monitoringing for suspicious activity. Additionally, the attestation APIs SHOUOLD be used when possible to assert a level of confidence to the authorization server that the request is originating from an application owned by the same party.
+Implementors SHOULD consider additional security measures to reduce this risk in the authorization challenge endpoint such as monitoringing for suspicious activity. Additionally, the attestation APIs SHOULD be used when possible to assert a level of confidence to the authorization server that the request is originating from an application owned by the same party.
 
 ## Client Authentication
 
