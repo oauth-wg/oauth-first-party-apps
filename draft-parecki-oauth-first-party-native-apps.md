@@ -1,9 +1,9 @@
 ---
-title: "OAuth 2.0 for First-Party Native Applications"
-abbrev: "OAuth for First-Party Native Apps"
+title: "OAuth 2.0 for First-Party Applications"
+abbrev: "OAuth for First-Party Apps"
 category: std
 
-docname: draft-parecki-oauth-first-party-native-apps-latest
+docname: draft-parecki-oauth-first-party-apps-latest
 submissiontype: IETF
 number:
 date:
@@ -13,14 +13,15 @@ area: "Security"
 workgroup: "Web Authorization Protocol"
 keyword:
  - native apps
+ - first-party
  - oauth
 venue:
   group: "Web Authorization Protocol"
   type: "Working Group"
   mail: "oauth@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/oauth/"
-  github: "aaronpk/oauth-first-party-native-apps"
-  latest: "https://aaronpk.github.io/oauth-first-party-native-apps/draft-parecki-oauth-first-party-native-apps.html"
+  github: "aaronpk/oauth-first-party-apps"
+  latest: "https://aaronpk.github.io/oauth-first-party-apps/draft-parecki-oauth-first-party-apps.html"
 
 author:
  -
@@ -72,7 +73,7 @@ informative:
 --- abstract
 
 This document defines the Authorization Challenge Endpoint, which supports
-a first-party native client that wants to control the process of
+a first-party client that wants to control the process of
 obtaining authorization from the user using a native experience.
 
 In many cases, this can provide an entirely browserless OAuth 2.0 experience suited for native
@@ -84,7 +85,7 @@ applications, only delegating to the browser in unexpected, high risk, or error 
 # Introduction
 
 This document extends the OAuth 2.0 Authorization Framework {{RFC6749}} with
-a new endpoint, `authorization_challenge_endpoint`, to support first-party native
+a new endpoint, `authorization_challenge_endpoint`, to support first-party
 applications that want to control the process of obtaining authorization from
 the user using a native experience.
 
@@ -115,13 +116,13 @@ This specification MUST NOT be used by third party applications, and the authori
 
 Using this specification in scenarios other than those described will lead to unintended security and privacy problems for users and service providers.
 
-This specification is designed to be used by native applications, which includes both mobile and desktop applications.
+This specification is designed to be used by first-party native applications, which includes both mobile and desktop applications.
 
 If you provide multiple apps and expect users to use multiple apps on the same device, there may be better ways of sharing a user's login between the apps other than each app implementing this specification or using an SDK that implements this specification. For example, {{OpenID.Native-SSO}} provides a mechanism for one app to obtain new tokens by exchanging tokens from another app, without any user interaction. See {{multiple-applications}} for more details.
 
 ## Limitations of this specification
 
-The scope of this specification is limited to first-party native applications. Please review the entirety of {{security-considerations}}, and when more than one first-party native application is supported, {{multiple-applications}}.
+The scope of this specification is limited to first-party applications. Please review the entirety of {{security-considerations}}, and when more than one first-party application is supported, {{multiple-applications}}.
 
 While this draft provides the framework for a native OAuth experience, each implementation
 will need to define the specific behavior that it expects from OAuth clients interacting with the authorization server. While this lack of clearly defining the details would typically lead to less interoperability, it is acceptable in this case since we intend this specification to be deployed in a tightly coupled environment since it is only applicable to first-party applications.
@@ -151,9 +152,9 @@ There are three primary ways this specification extends various parts of an OAut
                                                 |   Authorization   |
                           (B)Authorization      |      Server       |
              +----------+    Challenge Request  |+-----------------+|
-(A)Client+---|  Native  |---------------------->||  Authorization  ||
-   Starts|   |  Client  |                       ||   Challenge     ||
-   Flow  +-->|          |<----------------------||    Endpoint     ||
+(A)Client+---|  First-  |---------------------->||  Authorization  ||
+   Starts|   |  Party   |                       ||   Challenge     ||
+   Flow  +-->|  Client  |<----------------------||    Endpoint     ||
              |          | (C)Authorization      ||                 ||
              |          |    Error Response     ||                 ||
              |          |         :             ||                 ||
@@ -177,14 +178,14 @@ There are three primary ways this specification extends various parts of an OAut
              |          |                       |                   |
              +----------+                       +-------------------+
 ~~~
-Figure: Native Client Authorization Code Request
+Figure: First-Party Client Authorization Code Request
 
-- (A) The native client starts the flow, by presenting the user with a "sign in" button, or collecting information from the user, such as their email address or username.
+- (A) The first-party client starts the flow, by presenting the user with a "sign in" button, or collecting information from the user, such as their email address or username.
 - (B) The client initiates the authorization request by making a POST request to the Authorization Challenge Endpoint, optionally with information collected from the user (e.g. email or username)
 - (C) The authorization server determines whether the information provided to the Authorization Challenge Endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error. In this example, it determines that additional information is needed and responds with an error. The error may contain additional information to guide the Client on what information to collect next. This pattern of collecting information, submitting it to the Authorization Challenge Endpoint and then receing an error or authorization code may repeat several times.
 - (D) The client gathers additional information (e.g. passkey, or one-time code from email) and makes a POST request to the Authorization Challenge Endpoint.
 - (E) The Authorization Challenge Endpoint returns an authorization code.
-- (F) The native client sends the authorization code received in step (E) to obtain a token from the Token Endpoint.
+- (F) The client sends the authorization code received in step (E) to obtain a token from the Token Endpoint.
 - (G) The Authorization Server returns an Access Token from the Token Endpoint.
 
 ## Refresh Token Request
@@ -200,7 +201,7 @@ When making a resource request to a resource server, the resource server MAY res
 
 ## Authorization Challenge Endpoint {#authorization-challenge-endpoint}
 
-The authorization challenge endpoint is a new endpoint defined by this specification which the native application uses to obtain an authorization code.
+The authorization challenge endpoint is a new endpoint defined by this specification which the first-party application uses to obtain an authorization code.
 
 The authorization challenge endpoint is an HTTP API at the authorization server that accepts HTTP POST requests with parameters in the HTTP request message body using the `application/x-www-form-urlencoded` format. This format has a character encoding of UTF-8, as described in Appendix B of {{RFC6749}}. The authorization challenge endpoint URL MUST use the "https" scheme.
 
@@ -417,7 +418,7 @@ This specification does not define any new parameters for the resource server er
 
 # Authorization Server Metadata {#authorization-server-metadata}
 
-The following authorization server metadata parameters {{RFC8414}} are introduced to signal the server's capability and policy with respect to 1st Party Native Applications.
+The following authorization server metadata parameters {{RFC8414}} are introduced to signal the server's capability and policy with respect to first-party applications.
 
 "authorization_challenge_endpoint":
 : The URL of the authorization challenge endpoint at which a client can initiate
@@ -459,12 +460,12 @@ Implementers SHOULD consider additional measures to limit the risk of client imp
 
 
 ## Sender Constrained Tokens
-Tokens issued to native apps SHOULD be sender constrained to mitigate the risk of token theft and replay.
+Tokens issued in response to an authorization challenge request SHOULD be sender constrained to mitigate the risk of token theft and replay.
 
 Proof-of-Possession techniques constrain tokens by binding them to a cryptographic key. Whenever the token is presented, it should be accompanied by a proof that the client presenting the token also controls the cryptographic key bound to the token. If a proof-of-possession sender constrained token is presented without valid proof of possession of the cryptographic key, it MUST be rejected.
 
 ### Demonstrating Proof-of-Possession
-DPoP ({{RFC9449}}) is an application-level mechanism for sender-constraining OAuth {{RFC6749}} access and refresh tokens. If DPoP is used to sender constrain tokens, the native client SHOULD use DPoP for every token request to the authorization Server and interaction with the Resource Server.
+DPoP ({{RFC9449}}) is an application-level mechanism for sender-constraining OAuth {{RFC6749}} access and refresh tokens. If DPoP is used to sender constrain tokens, the client SHOULD use DPoP for every token request to the authorization Server and interaction with the Resource Server.
 
 DPoP includes an optional capability to bind the authorization code to the DPoP key to enable end-to-end binding of the entire authorization flow. If an attacker can access the Authorization Code and PKCE code verifier as described in Section 11.9 of DPoP ({{RFC9449}}), Authorization Code binding SHOULD be used.
 
@@ -478,18 +479,18 @@ It may be possible to use other proof of possession mechanisms to sender constra
 
 ## Multiple Applications {#multiple-applications}
 
-When there is more than one 1st-party native applications supported by the AS, then it is important to consider a number of additional risks. These risks fall into two main categories: Experience Risk and Technical Risk which are described below.
+When there is more than one first-party applications supported by the AS, then it is important to consider a number of additional risks. These risks fall into two main categories: Experience Risk and Technical Risk which are described below.
 
 ### Experience Risk
-Any time a user is asked to provide the authentication credentials in user experiences that differ, it has the effect of increasing the likelihood that the user will fall prey to a phishing attack because they are used to entering credentials in different looking experiences. When multiple native applications are supported, the implementation MUST ensure the native experience is identical across all the 1st party native applications.
+Any time a user is asked to provide the authentication credentials in user experiences that differ, it has the effect of increasing the likelihood that the user will fall prey to a phishing attack because they are used to entering credentials in different looking experiences. When multiple first-party applications are supported, the implementation MUST ensure the native experience is identical across all the first-party applications.
 
-Another experience risk is user confusion caused by different looking experiences and behaviors. This can increase the likelihood the user will not complete the authentication experience for the 1st party native application.
+Another experience risk is user confusion caused by different looking experiences and behaviors. This can increase the likelihood the user will not complete the authentication experience for the first-party application.
 
 ### Technical Risk
-In addition to the experience risks, multiple implementations in 1st party native applications increases the risk of an incorrect implementation as well as increasing the attack surface as each implementation may expose it's own weaknesses.
+In addition to the experience risks, multiple implementations in first-party applications increases the risk of an incorrect implementation as well as increasing the attack surface as each implementation may expose it's own weaknesses.
 
 ### Mitigation
-To address these risk, when multiple 1st party native applications must be supported, and other methods such as {{OpenID.Native-SSO}} are not applicable, it is RECOMMENDED that a client-side SDK be used to ensure the implementation is consistent across the different native apps and to ensure the user experience is identical for all 1st party apps.
+To address these risk, when multiple first-party applications must be supported, and other methods such as {{OpenID.Native-SSO}} are not applicable, it is RECOMMENDED that a client-side SDK be used to ensure the implementation is consistent across the different applications and to ensure the user experience is identical for all first-party apps.
 
 
 
