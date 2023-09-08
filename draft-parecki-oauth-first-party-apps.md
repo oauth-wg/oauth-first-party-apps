@@ -446,7 +446,7 @@ Because of these risks, the authorization server MAY decide to require that the 
 
 ## Credential Stuffing Attacks {#credential-attacks}
 
-The authorization challenge endpoint is capable of directly receiving user credentials and returning authorization codes. This exposes a new vector to perform credential stuffing attacks, if additional measures are not taken to ensure the authenticity of the application. 
+The authorization challenge endpoint is capable of directly receiving user credentials and returning authorization codes. This exposes a new vector to perform credential stuffing attacks, if additional measures are not taken to ensure the authenticity of the application.
 
 An authorization server may already have a combination of built-in or 3rd party security tools in place to monitor and reduce this risk in browser-based authentication flows. Implementors SHOULD consider similar security measures to reduce this risk in the authorization challenge endpoint. Additionally, the attestation APIs SHOULD be used when possible to assert a level of confidence to the authorization server that the request is originating from an application owned by the same party.
 
