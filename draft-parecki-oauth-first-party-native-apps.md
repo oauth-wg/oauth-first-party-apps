@@ -41,8 +41,8 @@ normative:
   RFC8259:
   RFC8414:
   RFC8707:
+  RFC9449:
   I-D.ietf-oauth-step-up-authn-challenge:
-  I-D.ietf-oauth-dpop:
   OpenID.Native-SSO:
     title: OpenID Connect Native SSO for Mobile Apps
     target: https://openid.net/specs/openid-connect-native-sso-1_0.html
@@ -458,11 +458,11 @@ Tokens issued to native apps SHOULD be sender constrained to mitigate the risk o
 Proof-of-Possession techniques constrain tokens by binding them to a cryptographic key. Whenever the token is presented, it should be accompanied by a proof that the client presenting the token also controls the cryptographic key bound to the token. If a proof-of-possession sender constrained token is presented without valid proof of possession of the cryptographic key, it MUST be rejected.
 
 ### Demonstrating Proof-of-Possession
-DPoP is an application-level mechanism for sender-constraining OAuth {{RFC6749}} access and refresh tokens {{I-D.ietf-oauth-dpop}}. If DPoP is used to sender constrain tokens, the native client SHOULD use DPoP for every token request to the authorization Server and interaction with the Resource Server.
+DPoP ({{RFC9449}}) is an application-level mechanism for sender-constraining OAuth {{RFC6749}} access and refresh tokens. If DPoP is used to sender constrain tokens, the native client SHOULD use DPoP for every token request to the authorization Server and interaction with the Resource Server.
 
-DPoP includes an optional capability to bind the authorization code to the DPoP key to enable end-to-end binding of the entire authorization flow. If an attacker can access the Authorization Code and PKCE code verifier as described in Section 11.9 of {{I-D.ietf-oauth-dpop}}, Authorization Code binding SHOULD be used.
+DPoP includes an optional capability to bind the authorization code to the DPoP key to enable end-to-end binding of the entire authorization flow. If an attacker can access the Authorization Code and PKCE code verifier as described in Section 11.9 of DPoP ({{RFC9449}}), Authorization Code binding SHOULD be used.
 
-To bind the authorization code using the Authorization Challenge Endpoint, the JWK Thumbprint of the DPoP key MUST be communicated to the Authorization Server by including the `dpop_jkt` parameter defined in section 10 of {{I-D.ietf-oauth-dpop}} alongside other authorization request parameters in the POST body of the first Authorization Challenge Request. If it is included in subsequent Authorization Challenge Requests, the value of this parameter must be the same as in the initial request. If the JWK Thumbprint in the `dpop_jkt` differ at any point, the Authorization Server MUST reject the request. If the `dpop_jkt` parameter is not included in the first request, but added in subsequent requests, the Authorization Server MUST reject the request (do we need to define a specific error code for that?).
+To bind the authorization code using the Authorization Challenge Endpoint, the JWK Thumbprint of the DPoP key MUST be communicated to the Authorization Server by including the `dpop_jkt` parameter defined in section 10 of {{RFC9449}} alongside other authorization request parameters in the POST body of the first Authorization Challenge Request. If it is included in subsequent Authorization Challenge Requests, the value of this parameter must be the same as in the initial request. If the JWK Thumbprint in the `dpop_jkt` differ at any point, the Authorization Server MUST reject the request. If the `dpop_jkt` parameter is not included in the first request, but added in subsequent requests, the Authorization Server MUST reject the request (do we need to define a specific error code for that?).
 
 ### Other Proof of Possession Mechanisms
 It may be possible to use other proof of possession mechanisms to sender constrain access and refresh tokens. Defining these mechanisms are out of scope for this specification.
