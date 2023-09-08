@@ -443,7 +443,7 @@ In a traditional OAuth deployment using the redirect-based authorization code fl
 Because of these risks, the authorization server MAY decide to require that the user go through a redirect-based flow at any stage of the process based on its own risk assessment.
 
 
-## Credential Attacks {#credential-attacks}
+## Credential Stuffing Attacks {#credential-attacks}
 
 The authorization challenge endpoint is capable of directly receiving user credentials and returning authorization codes. This exposes a new vector to perform credential attacks. 
 
