@@ -288,6 +288,20 @@ For example,
       "authorization_code": "uY29tL2F1dGhlbnRpY"
     }
 
+### Redirect Response
+
+In the case where the authorization server wishes to interact with the 
+user directly, it can return the redirect response. The authorization 
+server may choose to interact directly with the user based on a risk 
+assesment, the introduction of a new authentication method not supported
+in the applicatio, or to handle an exception flow like account recovery.
+In this case the client is expected to initiate a traditional OAuth 
+Authorization Code flow with PKCE according to {{RFC6749}} and {{RFC7636}}.
+
+"redirect":
+: REQUIRED. A Pushed Authroization Request (PAR) response as defined in 
+Section 2.2 of {{RFC9126}}. The request_uri parameter contains the URI that
+the native client should redirect the user to.
 
 ### Error Response {#challenge-error-response}
 
@@ -513,6 +527,17 @@ IANA has (TBD) registered the following values in the IANA "OAuth Authorization 
 # Example User Experiences
 
 This section provides non-normative examples of how this specification may be used to support specific use cases.
+
+## Redirect to Authorization Server
+
+A user may be redirected to the Authorization Server to perfrom an account reset.
+
+* The Client collects username from the user.
+* The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the username.
+* The Authorization Server verifies the username and determines that the account is locked and returns a Redirect message.
+* The Client parses the redirect message, opens a browser and redirects the user to the Authorization Server performing an OAuth 2.0 flow with PKCE.
+* The user resets their account by performing a multi-step authentication flow with the Authorization Server.
+* The Authorization Server issues an Authorizaton Code, which is exchanged for an access and refresh token bfore returning control to the Client.
 
 ## Passwordless One-Time Passwork (OTP)
 
