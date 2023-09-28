@@ -290,16 +290,16 @@ For example,
 
 ### Redirect Response
 
-In the case where the authorization server wishes to interact with the 
-user directly, it can return the redirect response. The authorization 
-server may choose to interact directly with the user based on a risk 
+In the case where the authorization server wishes to interact with the
+user directly, it can return the redirect response. The authorization
+server may choose to interact directly with the user based on a risk
 assesment, the introduction of a new authentication method not supported
 in the applicatio, or to handle an exception flow like account recovery.
-In this case the client is expected to initiate a traditional OAuth 
+In this case the client is expected to initiate a traditional OAuth
 Authorization Code flow with PKCE according to {{RFC6749}} and {{RFC7636}}.
 
 "redirect":
-: REQUIRED. A Pushed Authroization Request (PAR) response as defined in 
+: REQUIRED. A Pushed Authroization Request (PAR) response as defined in
 Section 2.2 of {{RFC9126}}. The request_uri parameter contains the URI that
 the native client should redirect the user to.
 
