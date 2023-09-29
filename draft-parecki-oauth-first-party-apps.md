@@ -42,6 +42,7 @@ normative:
   RFC8259:
   RFC8414:
   RFC8707:
+  RFC9126:
   RFC9449:
   I-D.ietf-oauth-step-up-authn-challenge:
   OpenID.Native-SSO:
