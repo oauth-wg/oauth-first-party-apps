@@ -357,10 +357,10 @@ parameters with the response:
      the `device_session` in follow-up requests to the challenge
      endpoint if it receives one along with the error response.
 
-This specification requires the authorization server to define new 
+This specification requires the authorization server to define new
 error codes that relate to the actions the client must take in order
-to properly authenticate the user. These new error codes are specific 
-to the authorization server's implementation of this specification and are 
+to properly authenticate the user. These new error codes are specific
+to the authorization server's implementation of this specification and are
 intentionally left out of scope.
 
 The parameters are included in the content of the HTTP response
@@ -372,8 +372,8 @@ as JSON numbers.  The order of parameters does not matter and can
 vary.
 
 The authorization server MAY define additional parameters in the response
-depending on the implmentation. The authorization server MAY also define 
-more specific content types for the error responses as long as the response 
+depending on the implmentation. The authorization server MAY also define
+more specific content types for the error responses as long as the response
 is JSON and conforms to `application/<as-defined>+json`.
 
 ## Device Session
