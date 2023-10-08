@@ -492,6 +492,9 @@ In addition to the experience risks, multiple implementations in first-party app
 ### Mitigation
 To address these risk, when multiple first-party applications must be supported, and other methods such as {{OpenID.Native-SSO}} are not applicable, it is RECOMMENDED that a client-side SDK be used to ensure the implementation is consistent across the different applications and to ensure the user experience is identical for all first-party apps.
 
+## Single Page Applications {#single-page-apps}
+Single Page Applications (SPA) run inside the context of a browser instance. Due to the inability to securely attest to the first-partyness of a browser based application, it is NOT RECOMMENDED to use this specification in a browser-based application.
+
 
 
 # IANA Considerations
