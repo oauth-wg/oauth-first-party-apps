@@ -38,6 +38,7 @@ author:
 normative:
   RFC6749:
   RFC7159:
+  RFC7591:
   RFC7636:
   RFC8259:
   RFC8414:
@@ -233,6 +234,8 @@ server to indicate that further authentication of the user is required.
 
 A client may wish to initiate an authorization flow by first prompting the user for their user identifier or other account information. The authorization challenge endpoint is a new endpoint to collect this login hint and direct the client with the next steps, whether that is to do an MFA flow, or perform an OAuth redirect-based flow.
 
+In order to preserve the security of this specification, the Authorization Server MUST verify the "first-partyness" of the client before continuing with the authentication flow. Please see {{first-party-applications}} for additional considerations.
+
 ## Authorization Challenge Request {#challenge-request}
 
 The client makes a request to the authorization challenge endpoint by adding the
@@ -427,11 +430,13 @@ The following authorization server metadata parameters {{RFC8414}} are introduce
 
 # Security Considerations {#security-considerations}
 
-## First-Party Applications
+## First-Party Applications {#first-party-applications}
+
+First-party applications are applications that the user recognizes as belonging to the same brand as the authorization server. For example, a bank publishing their own mobile application.
 
 Because this specification enables a client application to interact directly with the end user, and the application handles sending any information collected from the user to the authorization server, it is expected to be used only for first-party applications when the authorization server also has a high degree of trust of the client.
 
-First-party applications are applications that the user recognizes as belonging to the same brand as the authorization server. For example, a bank publishing their own mobile application.
+This specification is not prescriptive on how the Authorization Server establishes it's trust in the first-partyness of the application. For mobile platforms, most support some mechanism for application attestation that can be used to identify the entity that created/signed/uploaded the app to the app store. App attestation can be combined with other mechanisms like Dynamic Client Registration {{RFC7591}} to enable strong client authentication in addition to client verification (first-partyness). The exact steps required are out of scope for this specification. Note that applications running inside a browser (e.g. Single Page Apps) context it is much more difficult to verify the first-partyness of the client. Please see {{single-page-applications}} for additional details.
 
 ## Phishing {#phishing}
 
