@@ -63,6 +63,7 @@ normative:
       - ins: B. de Medeiros
       - ins: C. Mortimore
   IANA.OAuth.Parameters:
+  IANA.JWT:
   USASCII:
     title: "Coded Character Set -- 7-bit American Standard Code for Information Interchange, ANSI X3.4"
     author:
@@ -71,6 +72,7 @@ normative:
 
 informative:
   RFC8252:
+  RFC7519:
 
 --- abstract
 
@@ -529,20 +531,30 @@ Tokens issued in response to an authorization challenge request SHOULD be sender
 Proof-of-Possession techniques constrain tokens by binding them to a cryptographic key. Whenever the token is presented, it MUST be accompanied by a proof that the client presenting the token also controls the cryptographic key bound to the token. If a proof-of-possession sender constrained token is presented without valid proof of possession of the cryptographic key, it MUST be rejected.
 
 ### DPoP: Demonstrating Proof-of-Possession
-DPoP ({{RFC9449}}) is an application-level mechanism for sender-constraining OAuth {{RFC6749}} access and refresh tokens. If DPoP is used to sender constrain tokens, the client SHOULD use DPoP for every token request to the authorization Server and interaction with the Resource Server.
 
-DPoP includes an optional capability to bind the authorization code to the DPoP key to enable end-to-end binding of the entire authorization flow. If an attacker can access the Authorization Code and PKCE code verifier as described in Section 11.9 of DPoP ({{RFC9449}}), Authorization Code binding SHOULD be used.
+DPoP ({{RFC9449}}) is an application-level mechanism for sender-constraining OAuth {{RFC6749}} access and refresh tokens. If DPoP is used to sender constrain tokens, the client SHOULD use DPoP for every token request to the Authorization Server and interaction with the Resource Server.
+
+DPoP includes an optional capability to bind the authorization code to the DPoP key to enable end-to-end binding of the entire authorization flow. Given the back-channel nature of this specification, there are far fewer opportunities for an attacker to access the authorization code and PKCE code verifier compared to the redirect-based Authorization Code Flow. In this specification, the Authorization Code is obtained via a back-channel request. Despite this, omitting Authorization Code binding leaves a gap in the end-to-end protection that DPoP provides, so DPoP Authorization Code binding SHOULD be used.
 
 To bind the authorization code using the Authorization Challenge Endpoint, the JWK Thumbprint of the DPoP key MUST be communicated to the Authorization Server by including the `dpop_jkt` parameter defined in section 10 of {{RFC9449}} alongside other authorization request parameters in the POST body of the first Authorization Challenge Request. If it is included in subsequent Authorization Challenge Requests, the value of this parameter must be the same as in the initial request. If the JWK Thumbprint in the `dpop_jkt` differ at any point, the Authorization Server MUST reject the request. If the `dpop_jkt` parameter is not included in the first request, but added in subsequent requests, the Authorization Server MUST reject the request (do we need to define a specific error code for that?).
 
 ### Other Proof of Possession Mechanisms
+
 It may be possible to use other proof of possession mechanisms to sender constrain access and refresh tokens. Defining these mechanisms are out of scope for this specification.
 
 ## Auth Session {#auth-session-security}
 
 ### Auth Session DPoP Binding
 
-TODO: Describe DPoP binding of auth session parameter
+If the client and authorization server are using DPoP binding of access tokens and/or authorization codes, then they SHOULD also require DPoP binding of the `auth_session` value as well.
+
+DPoP binding of the `auth_session` value ensures that the context referenced by the `auth_session` cannot be stolen and reused by another device.
+
+This specification defines an additional claim in the DPoP Proof JWT Syntax defined in Section 4.2 of {{RFC9449}}:
+
+"ash":
+: The hash of the `auth_session`. The value MUST be the result of a base64url encoding (as defined in Section 2 of {{RFC7515}}) the SHA-256 {{SHS}} hash of the ASCII encoding of the `auth_session` value.
+
 
 ### Auth Session Lifetime
 
@@ -577,6 +589,8 @@ Single Page Applications (SPA) run inside the context of a browser instance. Due
 
 # IANA Considerations
 
+## OAuth Parameters Registration
+
 IANA has (TBD) registered the following values in the IANA "OAuth Parameters" registry of {{IANA.OAuth.Parameters}} established by {{RFC6749}}.
 
 **Parameter name**: `auth_session`
@@ -587,6 +601,7 @@ IANA has (TBD) registered the following values in the IANA "OAuth Parameters" re
 
 **Specification Document**: Section 5.4 of this specification
 
+## OAuth Server Metadata Registration
 
 IANA has (TBD) registered the following values in the IANA "OAuth Authorization Server Metadata" registry of {{IANA.OAuth.Parameters}} established by {{RFC8414}}.
 
@@ -597,6 +612,20 @@ IANA has (TBD) registered the following values in the IANA "OAuth Authorization 
 **Change Controller**: IESG
 
 **Specification Document**: Section 4.1 of [[ this specification ]]
+
+## JSON Web Token Claims Registration
+
+IANA has (TBD) registered the following Claims in the "JSON Web Token Claims" registry {{IANA.JWT}} established by {{RFC7519}}.
+
+**Auth Session Hash**
+
+**Claim Name**: `ath`
+
+**Claim Description**: The base64url-encoded SHA-256 hash of the ASCII encoding of the `auth_session` value
+
+**Change Controller**: IETF
+
+**Reference**: Section 9.6.1 of this specification
 
 
 --- back
@@ -790,7 +819,20 @@ The Authorization Server responds with an access token and refresh token.
     }
 
 
+# Document History
+
+-01
+
+* Renamed `device_session` to `auth_session`
+* Added explicit method to indicate the client should restart the flow in a browser
+* Described how to use DPoP in conjunction with this spec
+
+
 # Acknowledgments
 {:numbered="false"}
 
-TODO acknowledge.
+The authors would like to thank the attendees of the OAuth Security Workshop 2023 session in which this was discussed, as well as the following individuals who contributed ideas, feedback, and wording that shaped and formed the final specification:
+
+Brian Campbell, Dick Hardt, Dmitry Telegin, John Bradley, Justin Richer, Mike Jones, Orie Steele, Tobias Looker.
+
+
