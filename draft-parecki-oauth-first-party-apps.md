@@ -862,7 +862,7 @@ These design decisions should enable authorization server implementations to iso
 
 # Document History
 
--01
+-00
 
 * Renamed `device_session` to `auth_session`
 * Added explicit method to indicate the client should restart the flow in a browser
