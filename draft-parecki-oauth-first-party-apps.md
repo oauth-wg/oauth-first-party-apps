@@ -555,18 +555,22 @@ Clients MUST NOT make any assumptions or depend on any particular lifetime of th
 
 When there is more than one first-party applications supported by the AS, then it is important to consider a number of additional risks. These risks fall into two main categories: Experience Risk and Technical Risk which are described below.
 
-### Experience Risk
+### User Experience Risk
+
 Any time a user is asked to provide the authentication credentials in user experiences that differ, it has the effect of increasing the likelihood that the user will fall prey to a phishing attack because they are used to entering credentials in different looking experiences. When multiple first-party applications are supported, the implementation MUST ensure the native experience is identical across all the first-party applications.
 
 Another experience risk is user confusion caused by different looking experiences and behaviors. This can increase the likelihood the user will not complete the authentication experience for the first-party application.
 
 ### Technical Risk
+
 In addition to the experience risks, multiple implementations in first-party applications increases the risk of an incorrect implementation as well as increasing the attack surface as each implementation may expose it's own weaknesses.
 
 ### Mitigation
+
 To address these risk, when multiple first-party applications must be supported, and other methods such as {{OpenID.Native-SSO}} are not applicable, it is RECOMMENDED that a client-side SDK be used to ensure the implementation is consistent across the different applications and to ensure the user experience is identical for all first-party apps.
 
 ## Single Page Applications {#single-page-apps}
+
 Single Page Applications (SPA) run inside the context of a browser instance. Due to the inability to securely attest to the first-partyness of a browser based application, it is NOT RECOMMENDED to use this specification in a browser-based application.
 
 
