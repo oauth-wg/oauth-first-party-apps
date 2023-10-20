@@ -292,7 +292,7 @@ For example,
 ### Redirect Response
 
 In the case where the authorization server wishes to interact with the
-user directly, it can return the redirect response. The authorization
+user directly, it can return the `redirect` response. The authorization
 server may choose to interact directly with the user based on a risk
 assesment, the introduction of a new authentication method not supported
 in the application, or to handle an exception flow like account recovery.
