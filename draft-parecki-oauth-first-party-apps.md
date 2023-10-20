@@ -206,7 +206,7 @@ Figure: First-Party Client Authorization Code Request
 - (A) The first-party client starts the flow, by presenting the user with a "sign in" button, or collecting information from the user, such as their email address or username.
 - (B) The client initiates the authorization request by making a POST request to the Authorization Challenge Endpoint, optionally with information collected from the user (e.g. email or username)
 - (C) The authorization server determines whether the information provided to the Authorization Challenge Endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error. In this example, it determines that additional information is needed and responds with an error. The error may contain additional information to guide the Client on what information to collect next. This pattern of collecting information, submitting it to the Authorization Challenge Endpoint and then receing an error or authorization code may repeat several times.
-- (D) The client gathers additional information (e.g. passkey, or one-time code from email) and makes a POST request to the Authorization Challenge Endpoint.
+- (D) The client gathers additional information (e.g. signed passkey challenge, or one-time code from email) and makes a POST request to the Authorization Challenge Endpoint.
 - (E) The Authorization Challenge Endpoint returns an authorization code.
 - (F) The client sends the authorization code received in step (E) to obtain a token from the Token Endpoint.
 - (G) The Authorization Server returns an Access Token from the Token Endpoint.
@@ -239,7 +239,7 @@ important to note that some extension parameters have meaning in a web context b
 mechanism (e.g. `response_mode=query`). It is out of scope as to what the AS does in the case that an extension
 defines a parameter that is has no meaning in this use case.
 
-The client initiates the authorization flow with or without information collected from the user (e.g. a passkey or MFA code).
+The client initiates the authorization flow with or without information collected from the user (e.g. a signed passkey challenge or MFA code).
 
 The authorization challenge endpoint response is either an authorization code or an error code, and may also contain a `auth_session` which the client uses on subsequent requests to the authorization challenge endpoint.
 
@@ -661,6 +661,19 @@ IANA has (TBD) registered the following Claims in the "JSON Web Token Claims" re
 
 This section provides non-normative examples of how this specification may be used to support specific use cases.
 
+## Passkey
+
+A user may log in with a passkey (without a password).
+
+* The Client collects the username from the user.
+* The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the username.
+* The Authorization Server verifies the username and returns a challenge
+* The Client signs the challenge using the platform authenticator, which results in the user being prompted for verification with biometrics or a PIN.
+* The Client sends the signed challenge, username, and credential ID to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
+* The Authorization Server verifies the signed challenge and returns an Authorization Code.
+* The Client requests an Access Token and Refresh Token by issuing a Token Request ({{token-request}}) to the Token Endpoint.
+* The Authorization Server verifies the Authorization Code and issues the requested tokens.
+
 ## Redirect to Authorization Server
 
 A user may be redirected to the Authorization Server to perfrom an account reset.
@@ -671,6 +684,7 @@ A user may be redirected to the Authorization Server to perfrom an account reset
 * The Client parses the redirect message, opens a browser and redirects the user to the Authorization Server performing an OAuth 2.0 flow with PKCE.
 * The user resets their account by performing a multi-step authentication flow with the Authorization Server.
 * The Authorization Server issues an Authorizaton Code, which is exchanged for an access and refresh token before returning control to the Client.
+
 
 ## Passwordless One-Time Passwork (OTP)
 
