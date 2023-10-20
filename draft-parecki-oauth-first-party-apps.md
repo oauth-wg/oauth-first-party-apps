@@ -302,7 +302,7 @@ Authorization Code flow with PKCE according to {{RFC6749}} and {{RFC7636}}.
 "redirect":
 : REQUIRED. A Pushed Authroization Request (PAR) response as defined in
 Section 2.2 of {{RFC9126}}. The request_uri parameter contains the URI that
-the native client should redirect the user to.
+the client should use in the authorization request.
 
 ### Error Response {#challenge-error-response}
 
