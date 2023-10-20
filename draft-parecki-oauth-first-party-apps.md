@@ -80,6 +80,7 @@ normative:
 
 informative:
   RFC8252:
+  I-D.ietf-oauth-browser-based-apps:
 
 --- abstract
 
@@ -601,8 +602,16 @@ To address these risk, when multiple first-party applications must be supported,
 
 ## Single Page Applications {#single-page-apps}
 
-Single Page Applications (SPA) run inside the context of a browser instance. Due to the inability to securely attest to the first-partyness of a browser based application, it is NOT RECOMMENDED to use this specification in a browser-based application.
+Single Page Applications (SPA) run in a scripting language inside the context of a browser instance. This environment poses several unique challenges compared to native applications, in particular:
 
+* Significant attack vectors due to the possibility of Cross-Site Scripting (XSS) attacks
+* Fewer options to securely attest to the first-partyness of a browser based application
+
+See {{ietf-oauth-browser-based-apps}} for a detailed discussion of the risks of XSS attacks in browsers.
+
+Additionally, the nature of a Single-Page App means the user is already in a browser context, so the user experience cost of doing a full page redirect or a popup window for the traditional OAuth Authorization Code Flow is much less than the cost of doing so in a native application. The complexity and risk of implementing this specification in a browser likely does not outweigh the user experience benefits that would be gained in that context.
+
+For these reasons, it is NOT RECOMMENDED to use this specification in browser-based applications.
 
 
 # IANA Considerations
