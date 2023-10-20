@@ -38,6 +38,7 @@ author:
 normative:
   RFC6749:
   RFC7159:
+  RFC7591:
   RFC7636:
   RFC8259:
   RFC8414:
@@ -233,6 +234,8 @@ server to indicate that further authentication of the user is required.
 
 A client may wish to initiate an authorization flow by first prompting the user for their user identifier or other account information. The authorization challenge endpoint is a new endpoint to collect this login hint and direct the client with the next steps, whether that is to do an MFA flow, or perform an OAuth redirect-based flow.
 
+In order to preserve the security of this specification, the Authorization Server MUST verify the "first-partyness" of the client before continuing with the authentication flow. Please see {{first-party-applications}} for additional considerations.
+
 ## Authorization Challenge Request {#challenge-request}
 
 The client makes a request to the authorization challenge endpoint by adding the
@@ -266,7 +269,7 @@ given the user's phone number, line breaks shown for illustration purposes only:
 
 ## Authorization Challenge Response {#challenge-response}
 
-The authorization server determines whether the information provided up to this point is sufficient to issue an authorization code, and responds with an authorization code or an error message.
+The authorization server determines whether the information provided up to this point is sufficient to issue an authorization code, and if so responds with an authorization code. If the information is not sufficient for issuing an authorization code, then the authorization server MUST respond with an error response.
 
 ### Authorization Code Response
 
@@ -354,6 +357,12 @@ parameters with the response:
      the `device_session` in follow-up requests to the challenge
      endpoint if it receives one along with the error response.
 
+This specification requires the authorization server to define new
+error codes that relate to the actions the client must take in order
+to properly authenticate the user. These new error codes are specific
+to the authorization server's implementation of this specification and are
+intentionally left out of scope.
+
 The parameters are included in the content of the HTTP response
 using the `application/json` media type as defined by [RFC7159].  The
 parameters are serialized into a JSON structure by adding each
@@ -363,7 +372,9 @@ as JSON numbers.  The order of parameters does not matter and can
 vary.
 
 The authorization server MAY define additional parameters in the response
-depending on the implmentation.
+depending on the implmentation. The authorization server MAY also define
+more specific content types for the error responses as long as the response
+is JSON and conforms to `application/<as-defined>+json`.
 
 ## Device Session
 
@@ -427,11 +438,13 @@ The following authorization server metadata parameters {{RFC8414}} are introduce
 
 # Security Considerations {#security-considerations}
 
-## First-Party Applications
+## First-Party Applications {#first-party-applications}
+
+First-party applications are applications that the user recognizes as belonging to the same brand as the authorization server. For example, a bank publishing their own mobile application.
 
 Because this specification enables a client application to interact directly with the end user, and the application handles sending any information collected from the user to the authorization server, it is expected to be used only for first-party applications when the authorization server also has a high degree of trust of the client.
 
-First-party applications are applications that the user recognizes as belonging to the same brand as the authorization server. For example, a bank publishing their own mobile application.
+This specification is not prescriptive on how the Authorization Server establishes it's trust in the first-partyness of the application. For mobile platforms, most support some mechanism for application attestation that can be used to identify the entity that created/signed/uploaded the app to the app store. App attestation can be combined with other mechanisms like Dynamic Client Registration {{RFC7591}} to enable strong client authentication in addition to client verification (first-partyness). The exact steps required are out of scope for this specification. Note that applications running inside a browser (e.g. Single Page Apps) context it is much more difficult to verify the first-partyness of the client. Please see {{single-page-apps}} for additional details.
 
 ## Phishing {#phishing}
 
@@ -491,6 +504,9 @@ In addition to the experience risks, multiple implementations in first-party app
 
 ### Mitigation
 To address these risk, when multiple first-party applications must be supported, and other methods such as {{OpenID.Native-SSO}} are not applicable, it is RECOMMENDED that a client-side SDK be used to ensure the implementation is consistent across the different applications and to ensure the user experience is identical for all first-party apps.
+
+## Single Page Applications {#single-page-apps}
+Single Page Applications (SPA) run inside the context of a browser instance. Due to the inability to securely attest to the first-partyness of a browser based application, it is NOT RECOMMENDED to use this specification in a browser-based application.
 
 
 
