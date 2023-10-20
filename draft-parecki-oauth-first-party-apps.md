@@ -138,6 +138,17 @@ The scope of this specification is limited to first-party applications. Please r
 While this draft provides the framework for a native OAuth experience, each implementation
 will need to define the specific behavior that it expects from OAuth clients interacting with the authorization server. While this lack of clearly defining the details would typically lead to less interoperability, it is acceptable in this case since we intend this specification to be deployed in a tightly coupled environment since it is only applicable to first-party applications.
 
+## Design Goals
+
+Rather than extend the OAuth token endpoint with additional grant types, this specification defines a new authorization flow the client can use to obtain an authorization flow. There are two primary reasons for designing the specification this way.
+
+This enables existing OAuth implementations to make fewer modifications to existing code by not needing to extend the token endpoint with new logic. Instead, the new logic can be encapsulated in entirely new endpoint, the output of which is an authorization code which can be redeemed for an access token at the existing token endpoint.
+
+This also mirrors more closely the existing architecture of the redirect-based authorization code flow. In the authorization code flow, the client first initiates a request by redirecting a browser to the authorization endpoint, at which point the authorization server takes over with its own custom logic to authenticate the user in whatever way appropriate. Afterwards, the authorization server redirects the user back to the client application with an authorization code in the query string. This specification mirrors the existing approach by having the client first make a POST request to the "authorization challenge endpoint", at which point the authorization server provides its own custom logic to authenticate the user, eventually returning an authorization code.
+
+These design decisions should enable authorization server implementations to isolate and encapsulate the changes needed to support this specification.
+
+
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
