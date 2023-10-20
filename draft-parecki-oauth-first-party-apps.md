@@ -636,7 +636,7 @@ IANA has (TBD) registered the following Claims in the "JSON Web Token Claims" re
 
 **Auth Session Hash**
 
-**Claim Name**: `ath`
+**Claim Name**: `ash`
 
 **Claim Description**: The base64url-encoded SHA-256 hash of the ASCII encoding of the `auth_session` value
 
