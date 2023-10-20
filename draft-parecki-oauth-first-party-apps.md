@@ -38,6 +38,8 @@ author:
 normative:
   RFC6749:
   RFC7159:
+  RFC7515:
+  RFC7519:
   RFC7591:
   RFC7636:
   RFC8259:
@@ -69,10 +71,15 @@ normative:
     author:
       name: "American National Standards Institute"
     date: 1986
+  SHS:
+    title: "\"Secure Hash Standard (SHS)\", FIPS PUB 180-4, DOI 10.6028/NIST.FIPS.180-4"
+    author:
+      name: "National Institute of Standards and Technology"
+    date: August 2015
+    target: http://dx.doi.org/10.6028/NIST.FIPS.180-4
 
 informative:
   RFC8252:
-  RFC7519:
 
 --- abstract
 
