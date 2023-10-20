@@ -538,7 +538,7 @@ A user may be redirected to the Authorization Server to perfrom an account reset
 * The Authorization Server verifies the username and determines that the account is locked and returns a Redirect message.
 * The Client parses the redirect message, opens a browser and redirects the user to the Authorization Server performing an OAuth 2.0 flow with PKCE.
 * The user resets their account by performing a multi-step authentication flow with the Authorization Server.
-* The Authorization Server issues an Authorizaton Code, which is exchanged for an access and refresh token bfore returning control to the Client.
+* The Authorization Server issues an Authorizaton Code, which is exchanged for an access and refresh token before returning control to the Client.
 
 ## Passwordless One-Time Passwork (OTP)
 
