@@ -415,6 +415,28 @@ The client makes a request to the token endpoint using the authorization code it
 
 This specification does not define any additional parameters beyond the token request parameters defined in  Section 4.1.3 of {{RFC6749}}. However, notably the `redirect_uri` parameter will not be included in this request, because no `redirect_uri` parameter was included in the authorization request.
 
+## Token Endpoint Successful Response
+
+This specification extends the OAuth 2.0 {{RFC6749}} token response
+defined in Section 5.1 with the additional parameter `auth_session`, defined in {{auth-session}}.
+
+The response MAY include an `auth_session` parameter which the client is expected to include on a subsequent request to the authorization challenge endpoint. The `auth_session` parameter MAY also be included even if the authorization code was obtained through a traditional OAuth authorization code flow rather than the flow defined by this specification.
+
+An example successful token response is below:
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    Cache-Control: no-store
+
+    {
+      "access_token": "2YotnFZFEjr1zCsicMWpAA",
+      "token_type": "Bearer",
+      "expires_in": 3600,
+      "refresh_token": "tGzv3JOkF0XG5Qx2TlKWIA",
+      "auth_session": "uY29tL2F1dGhlbnRpY"
+    }
+
+
 ## Token Endpoint Error Response
 
 Upon any request to the token endpoint, including a request with a valid refresh token,
@@ -429,6 +451,8 @@ the error code is set to the following value:
   access token request may succeed if an additional authorization
   grant is presented.
 
+Additionally, the response MAY contain an `auth_session` parameter which the client is expected to include on a subsequent request to the authorization challenge endpoint.
+
 "auth_session":
 :    OPTIONAL.  The optional auth session value allows the authorization server to
      associate subsequent requests by this client with an ongoing
@@ -439,7 +463,7 @@ the error code is set to the following value:
 For example:
 
     HTTP/1.1 403 Forbidden
-    Content-Type: application/json;charset=UTF-8
+    Content-Type: application/json
     Cache-Control: no-store
 
     {
@@ -549,16 +573,26 @@ Single Page Applications (SPA) run inside the context of a browser instance. Due
 
 # IANA Considerations
 
+IANA has (TBD) registered the following values in the IANA "OAuth Parameters" registry of {{IANA.OAuth.Parameters}} established by {{RFC6749}}.
+
+**Parameter name**: `auth_session`
+
+**Parameter usage location**: token request, token response
+
+**Change Controller**: IETF
+
+**Specification Document**: Section 5.4 of this specification
+
+
 IANA has (TBD) registered the following values in the IANA "OAuth Authorization Server Metadata" registry of {{IANA.OAuth.Parameters}} established by {{RFC8414}}.
 
-**Metadata Name**: authorization_challenge_endpoint
+**Metadata Name**: `authorization_challenge_endpoint`
 
 **Metadata Description**: URL of the authorization server's authorization challenge endpoint.
 
 **Change Controller**: IESG
 
 **Specification Document**: Section 4.1 of [[ this specification ]]
-
 
 
 --- back
