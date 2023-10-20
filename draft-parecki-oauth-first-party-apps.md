@@ -612,7 +612,7 @@ IANA has (TBD) registered the following values in the IANA "OAuth Parameters" re
 
 **Parameter name**: `auth_session`
 
-**Parameter usage location**: token request, token response
+**Parameter usage location**: token response
 
 **Change Controller**: IETF
 
