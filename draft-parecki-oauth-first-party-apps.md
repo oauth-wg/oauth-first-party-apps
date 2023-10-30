@@ -231,7 +231,7 @@ defines a parameter that is has no meaning in this use case.
 
 The client initiates the authorization flow with or without information collected from the user (e.g. a signed passkey challenge or MFA code).
 
-The authorization challenge endpoint response is either an authorization code or an error code, and may also contain a `auth_session` which the client uses on subsequent requests to the authorization challenge endpoint.
+The authorization challenge endpoint response is either an authorization code or an error code, and may also contain an `auth_session` which the client uses on subsequent requests to the authorization challenge endpoint.
 
 
 ## Token endpoint
@@ -267,7 +267,7 @@ format with a character encoding of UTF-8 in the HTTP request body:
 : OPTIONAL. The acr_values requested by the client.
 
 "auth_session":
-: OPTIONAL. If the client has previously obtained a auth session, described in {{auth-session}}.
+: OPTIONAL. If the client has previously obtained an auth session, described in {{auth-session}}.
 
 Specific implementations as well as extensions to this specification MAY define additional parameters to be used at this endpoint.
 
@@ -412,7 +412,7 @@ is JSON and conforms to `application/<as-defined>+json`.
 
 The `auth_session` is a value that the authorization server issues in order to be able to associate subsequent requests from the same client. It is intended to be analagous to how a browser cookie associates multiple requests by the same browser to the authorization server.
 
-The `auth_session` value is completely opaque to the client, and as such the AS MUST adequately protect the value from inspection by the client, for example by using a random stringo using a JWE if the AS is not maintaining state on the backend.
+The `auth_session` value is completely opaque to the client, and as such the AS MUST adequately protect the value from inspection by the client, for example by using a random string or using a JWE if the AS is not maintaining state on the backend.
 
 If the client has an `auth_session`, the client MUST include it in future requests to the authorization challenge endpoint. The client MUST store the `auth_session` beyond the issuance of the authorization code to be able to use it in future requests.
 
@@ -424,7 +424,7 @@ See {{auth-session-security}} for additional security considerations.
 
 The client makes a request to the token endpoint using the authorization code it obtained from the authorization challenge endpoint.
 
-This specification does not define any additional parameters beyond the token request parameters defined in  Section 4.1.3 of {{RFC6749}}. However, notably the `redirect_uri` parameter will not be included in this request, because no `redirect_uri` parameter was included in the authorization request.
+This specification does not define any additional parameters beyond the token request parameters defined in  Section 4.1.3 of {{RFC6749}}. However, notably, the `redirect_uri` parameter will not be included in this request, because no `redirect_uri` parameter was included in the authorization request.
 
 ## Token Endpoint Successful Response
 
@@ -574,7 +574,7 @@ Clients MUST NOT make any assumptions or depend on any particular lifetime of th
 
 ## Multiple Applications {#multiple-applications}
 
-When there is more than one first-party applications supported by the AS, then it is important to consider a number of additional risks. These risks fall into two main categories: Experience Risk and Technical Risk which are described below.
+When multiple first-party applications are supported by the AS, then it is important to consider a number of additional risks. These risks fall into two main categories: Experience Risk and Technical Risk which are described below.
 
 ### User Experience Risk
 
@@ -584,11 +584,11 @@ Another experience risk is user confusion caused by different looking experience
 
 ### Technical Risk
 
-In addition to the experience risks, multiple implementations in first-party applications increases the risk of an incorrect implementation as well as increasing the attack surface as each implementation may expose it's own weaknesses.
+In addition to the experience risks, multiple implementations in first-party applications increases the risk of an incorrect implementation as well as increasing the attack surface as each implementation may expose its own weaknesses.
 
 ### Mitigation
 
-To address these risk, when multiple first-party applications must be supported, and other methods such as {{OpenID.Native-SSO}} are not applicable, it is RECOMMENDED that a client-side SDK be used to ensure the implementation is consistent across the different applications and to ensure the user experience is identical for all first-party apps.
+To address these risks, when multiple first-party applications must be supported, and other methods such as {{OpenID.Native-SSO}} are not applicable, it is RECOMMENDED that a client-side SDK be used to ensure the implementation is consistent across the different applications and to ensure the user experience is identical for all first-party apps.
 
 ## Single Page Applications {#single-page-apps}
 
@@ -673,10 +673,10 @@ A user may be redirected to the Authorization Server to perfrom an account reset
 * The Authorization Server verifies the username and determines that the account is locked and returns a Redirect message.
 * The Client parses the redirect message, opens a browser and redirects the user to the Authorization Server performing an OAuth 2.0 flow with PKCE.
 * The user resets their account by performing a multi-step authentication flow with the Authorization Server.
-* The Authorization Server issues an Authorizaton Code, which is exchanged for an access and refresh token before returning control to the Client.
+* The Authorization Server issues an Authorization Code, which is exchanged for an access and refresh token before returning control to the Client.
 
 
-## Passwordless One-Time Passwork (OTP)
+## Passwordless One-Time Password (OTP)
 
 In a passwordless One-Time Password (OTP) scheme, the user is in possession of a one-time password generator. This generator may be a hardware device, or implemented as an app on a mobile phone. The user provides a user identifier and one-time password, which is verified by the Authorization Server before it issues an Authorization Code, which can be exchanged for an Access and Refresh Token.
 
@@ -688,7 +688,7 @@ In a passwordless One-Time Password (OTP) scheme, the user is in possession of a
 
 ## E-Mail Confirmation Code
 
-A user may be required to provide an e-mail confirmation code as part of an authentication ceremony to prove they control an e-mail address. The user provides an e-mail address and is then requried to enter a verification code sent to the e-mail address. If the correct verification code is returned to the Authorization Server, it issues Access and Refresh Tokens.
+A user may be required to provide an e-mail confirmation code as part of an authentication ceremony to prove they control an e-mail address. The user provides an e-mail address and is then required to enter a verification code sent to the e-mail address. If the correct verification code is returned to the Authorization Server, it issues Access and Refresh Tokens.
 
 * The Client collects an e-mail address from the user.
 * The Client sends the e-mail address in an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
@@ -699,7 +699,7 @@ A user may be required to provide an e-mail confirmation code as part of an auth
 * The Authorization Server verifies the Authorization Code and issues the Access Token and Refresh Token.
 
 ## SMS Confirmation Code
-A user may be required to provide an SMS confirmation code as part of an authentication ceremony to prove they control a mobile phone number. The user provides a phone number and is then requried to enter a SMS confirmation code sent to the phone. If the correct confirmation code is returned to the Authorization Server, it issues Access and Refresh Tokens.
+A user may be required to provide an SMS confirmation code as part of an authentication ceremony to prove they control a mobile phone number. The user provides a phone number and is then required to enter an SMS confirmation code sent to the phone. If the correct confirmation code is returned to the Authorization Server, it issues Access and Refresh Tokens.
 
 * The Client collects a mobile phone number from the user.
 * The Client sends the phone number in an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
@@ -716,7 +716,7 @@ A client may be in possession of an Access and Refresh Token as the result of a 
 * A week later, the user launches the app and tries to access a protected resource at the Resource Server.
 * The Resource Server responds with an error code indicating an invalid access token since it has expired.
 * The Client presents the refresh token to the Authorization Server to obtain a new access token (section 6 {{RFC6749}})
-* The Authorization Server responds with an error code indicating that an OTP from the user is required, as well as a `auth_session`.
+* The Authorization Server responds with an error code indicating that an OTP from the user is required, as well as an `auth_session`.
 * The Client prompts the user to enter an OTP.
 * The Client sends the OTP and `auth_session` in an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
 * The Authorization Server verifies the `auth_session` and OTP, and returns an Authorization Code.
@@ -727,7 +727,7 @@ A client may be in possession of an Access and Refresh Token as the result of a 
 ## Step-up Authentication using Confirmation SMS
 A Client previously obtained an Access and Refresh Token after the user authenticated with an OTP. When the user attempts to access a protected resource, the Resource Server determines that it needs an additional level of authentication and triggers a step-up authentication, indicating the desired level of authentication using `acr_values` and `max_age` as defined in the Step-up Authentication specification. The Client initiates an authorization request with the Authorization Server indicating the `acr_values` and `max_age` parameters. The Authorization Server responds with error messages promptng for additional authentication until the `acr_values` and `max_age` values are satisfied before issuing fresh Access and Refresh Tokens.
 
-* The Client has a short-lived access token and long-lived refresh token following the completion of an Authorization Grant Flow which included user authentication.
+* The Client has a short-lived access token and long-lived refresh token following the completion of an Authorization Code Grant Flow which included user authentication.
 * When the Client presents the Access token to the Resource Server, the Resource Server determines that the `acr` claim in the Access Token is insufficient given the resource the user wants to access and responds with an `insufficient_user_authentication` error code, along with the desired `acr_values` and desired `max_age`.
 * The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the `auth_session`, `acr_values` and `max_age` parameters.
 * The Authorization Server verifies the `auth_session` and determines which authentication methods must be satisfied based on the `acr_values`, and responds with an Error Response ({{challenge-error-response}}) including `"error": "authorization_required"` and a custom error code indicating that an OTP must be entered.
@@ -853,7 +853,7 @@ The Authorization Server responds with an access token and refresh token.
 
 Rather than extend the OAuth token endpoint with additional grant types, this specification defines a new authorization flow the client can use to obtain an authorization flow. There are two primary reasons for designing the specification this way.
 
-This enables existing OAuth implementations to make fewer modifications to existing code by not needing to extend the token endpoint with new logic. Instead, the new logic can be encapsulated in entirely new endpoint, the output of which is an authorization code which can be redeemed for an access token at the existing token endpoint.
+This enables existing OAuth implementations to make fewer modifications to existing code by not needing to extend the token endpoint with new logic. Instead, the new logic can be encapsulated in an entirely new endpoint, the output of which is an authorization code which can be redeemed for an access token at the existing token endpoint.
 
 This also mirrors more closely the existing architecture of the redirect-based authorization code flow. In the authorization code flow, the client first initiates a request by redirecting a browser to the authorization endpoint, at which point the authorization server takes over with its own custom logic to authenticate the user in whatever way appropriate. Afterwards, the authorization server redirects the user back to the client application with an authorization code in the query string. This specification mirrors the existing approach by having the client first make a POST request to the "authorization challenge endpoint", at which point the authorization server provides its own custom logic to authenticate the user, eventually returning an authorization code.
 
