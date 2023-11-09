@@ -64,7 +64,7 @@ normative:
       - ins: M. Jones
       - ins: B. de Medeiros
       - ins: C. Mortimore
-  IANA.OAuth.Parameters:
+  IANA.oauth-parameters:
   IANA.JWT:
   USASCII:
     title: "Coded Character Set -- 7-bit American Standard Code for Information Interchange, ANSI X3.4"
@@ -608,7 +608,7 @@ For these reasons, it is NOT RECOMMENDED to use this specification in browser-ba
 
 ## OAuth Parameters Registration
 
-IANA has (TBD) registered the following values in the IANA "OAuth Parameters" registry of {{IANA.OAuth.Parameters}} established by {{RFC6749}}.
+IANA has (TBD) registered the following values in the IANA "OAuth Parameters" registry of {{IANA.oauth-parameters}} established by {{RFC6749}}.
 
 **Parameter name**: `auth_session`
 
@@ -620,7 +620,7 @@ IANA has (TBD) registered the following values in the IANA "OAuth Parameters" re
 
 ## OAuth Server Metadata Registration
 
-IANA has (TBD) registered the following values in the IANA "OAuth Authorization Server Metadata" registry of {{IANA.OAuth.Parameters}} established by {{RFC8414}}.
+IANA has (TBD) registered the following values in the IANA "OAuth Authorization Server Metadata" registry of {{IANA.oauth-parameters}} established by {{RFC8414}}.
 
 **Metadata Name**: `authorization_challenge_endpoint`
 
