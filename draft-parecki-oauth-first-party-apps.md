@@ -298,7 +298,7 @@ and an HTTP 200 (OK) status code:
 For example,
 
     HTTP/1.1 200 OK
-    Content-Type: application/json;charset=UTF-8
+    Content-Type: application/json
     Cache-Control: no-store
 
     {
