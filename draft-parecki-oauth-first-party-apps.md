@@ -361,6 +361,11 @@ parameters with the response:
      :     The requested scope is invalid, unknown, malformed, or
            exceeds the scope granted by the resource owner.
 
+     "insufficient_authorization":
+     :     The presented authorization is insufficient, and the authorization
+           server is requesting the client take additional steps to
+           complete the authorization.
+
      Values for the `error` parameter MUST NOT include characters
      outside the set %x20-21 / %x23-5B / %x5D-7E.
 
@@ -457,10 +462,10 @@ An authorization challenge error response is a particular type of
 error response as defined in Section 5.2 of OAuth 2.0 {{RFC6749}} where
 the error code is set to the following value:
 
-"error": "authorization_required":
-: The authorization grant is insufficiently authorized, but another
-  access token request may succeed if an additional authorization
-  grant is presented.
+"error": "insufficient_authorization":
+: The presented authorization is insufficient, and the authorization
+  server is requesting the client take additional steps to
+  complete the authorization.
 
 Additionally, the response MAY contain an `auth_session` parameter which the client is expected to include on a subsequent request to the authorization challenge endpoint.
 
@@ -478,7 +483,7 @@ For example:
     Cache-Control: no-store
 
     {
-      "error": "authorization_required",
+      "error": "insufficient_authorization",
       "auth_session": "uY29tL2F1dGhlbnRpY"
     }
 
@@ -692,7 +697,7 @@ A user may be required to provide an e-mail confirmation code as part of an auth
 
 * The Client collects an e-mail address from the user.
 * The Client sends the e-mail address in an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
-* The Authorization Server sends a verification code to the e-mail address and returns an Error Response ({{challenge-error-response}}) including `"error": "authorization_required"`, `"auth_session"` and a custom error code indicating that an e-mail verification code must be entered.
+* The Authorization Server sends a verification code to the e-mail address and returns an Error Response ({{challenge-error-response}}) including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that an e-mail verification code must be entered.
 * The Client presents a user experience guiding the user to copy the e-mail verification code to the Client. Once the e-mail verification code is entered, the Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint, including the e-mail verification code as well as the `auth_session` parameter returned in the previous Error Response.
 * The Authorization Server uses the `auth_session` to maintain the session and verifies the e-mail verification code before issuing an Authorization Code to the Client.
 * The Client sends the Authorization Code in a Token Request ({{token-request}}) to the Token Endpoint.
@@ -703,7 +708,7 @@ A user may be required to provide an SMS confirmation code as part of an authent
 
 * The Client collects a mobile phone number from the user.
 * The Client sends the phone number in an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
-* The Authorization Server sends a confirmation code to the phone number and returns an Error Response ({{challenge-error-response}}) including `"error": "authorization_required"`, `"auth_session"` and a custom error code indicating that a SMS confirmation code must be entered.
+* The Authorization Server sends a confirmation code to the phone number and returns an Error Response ({{challenge-error-response}}) including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that a SMS confirmation code must be entered.
 * The Client presents a user experience guiding the user to enter the SMS confirmation code. Once the SMS verification code is entered, the Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint, including the confirmation code as well as the `auth_session` parameter returned in the previous Error Response.
 * The Authorization Server uses the `auth_session` to maintain the session context and verifies the SMS code before issuing an Authorization Code to the Client.
 * The Client sends the Authorization Code in a Token Request ({{token-request}}) to the Token Endpoint.
@@ -730,7 +735,7 @@ A Client previously obtained an Access and Refresh Token after the user authenti
 * The Client has a short-lived access token and long-lived refresh token following the completion of an Authorization Code Grant Flow which included user authentication.
 * When the Client presents the Access token to the Resource Server, the Resource Server determines that the `acr` claim in the Access Token is insufficient given the resource the user wants to access and responds with an `insufficient_user_authentication` error code, along with the desired `acr_values` and desired `max_age`.
 * The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the `auth_session`, `acr_values` and `max_age` parameters.
-* The Authorization Server verifies the `auth_session` and determines which authentication methods must be satisfied based on the `acr_values`, and responds with an Error Response ({{challenge-error-response}}) including `"error": "authorization_required"` and a custom error code indicating that an OTP must be entered.
+* The Authorization Server verifies the `auth_session` and determines which authentication methods must be satisfied based on the `acr_values`, and responds with an Error Response ({{challenge-error-response}}) including `"error": "insufficient_authorization"` and a custom property indicating that an OTP must be entered.
 * The Client prompts the user for an OTP, which the user obtains and enters.
 * The Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint including the `auth_session` and OTP.
 * The Authorization Server verifies the OTP and returns an Authorization Code.
@@ -743,15 +748,15 @@ This example describes how to use the mechanisms defined in this draft to create
 
 * The Client collects a username from the user.
 * The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the username.
-* The Authorization Server returns an Error Response ({{challenge-error-response}}) including `"error": "authorization_required"`, `"auth_session"`, and a custom error code indicating that an e-mail address must be collected.
+* The Authorization Server returns an Error Response ({{challenge-error-response}}) including `"error": "insufficient_authorization"`, `"auth_session"`, and a custom property indicating that an e-mail address must be collected.
 * The Client collects an e-mail address from the user.
 * The Client sends the e-mail address as part of a second Authorization Challenge Request to the Authorization Challenge Endpoint, along with the `auth_session` parameter.
-* The Authorization Server sends a verification code to the e-mail address and returns an Error Response including `"error": "authorization_required"`, `"auth_session"` and a custom error code indicating that an e-mail verification code must be entered.
+* The Authorization Server sends a verification code to the e-mail address and returns an Error Response including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that an e-mail verification code must be entered.
 * The Client presents a user experience guiding the user to copy the e-mail verification code to the Client. Once the e-mail verification code is entered, the Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint, including the e-mail verification code as well as the `auth_session` parameter returned in the previous Error Response.
-* The Authorization Server uses the `auth_session` to maintain the session context, and verifies the e-mail verification code. It determines that it also needs a phone number for account recovery purposes and returns an Error Response including `"error": "authorization_required"`, `"auth_session"` and a custom error code indicating that a phone number must be collected.
+* The Authorization Server uses the `auth_session` to maintain the session context, and verifies the e-mail verification code. It determines that it also needs a phone number for account recovery purposes and returns an Error Response including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that a phone number must be collected.
 * The Client collects a mobile phone number from the user.
 * The Client sends the phone number in an Authorization Challenge Request to the Authorization Challenge Endpoint, along with the `auth_session`.
-* The Authorization Server uses the `auth_session` parameter to link the previous requests. It sends a confirmation code to the phone number and returns an Error Response including `"error": "authorization_required"`, `"auth_session"` and a custom error code indicating that a SMS confirmation code must be entered.
+* The Authorization Server uses the `auth_session` parameter to link the previous requests. It sends a confirmation code to the phone number and returns an Error Response including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that a SMS confirmation code must be entered.
 * The Client presents a user experience guiding the user to enter the SMS confirmation code. Once the SMS verification code is entered, the Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint, including the confirmation code as well as the `auth_session` parameter returned in the previous Error Response.
 * The Authorization Server uses the `auth_session` to maintain the session context, and verifies the SMS verification code before issuing an Authorization Code to the Client.
 * The Client sends the Authorization Code in a Token Request ({{token-request}}) to the Token Endpoint.
@@ -861,6 +866,11 @@ These design decisions should enable authorization server implementations to iso
 
 
 # Document History
+
+-01
+
+* Renamed `authorization_required` to `insufficient_authorization`
+* Defined `insufficient_authorization` on the Authorization Challenge Endpoint
 
 -00
 
