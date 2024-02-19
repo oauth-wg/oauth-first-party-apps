@@ -560,15 +560,9 @@ It may be possible to use other proof of possession mechanisms to sender constra
 
 ### Auth Session DPoP Binding
 
-If the client and authorization server are using DPoP binding of access tokens and/or authorization codes, then they SHOULD also require DPoP binding of the `auth_session` value as well.
+If the client and authorization server are using DPoP binding of access tokens and/or authorization codes, then the `auth_session` value SHOULD be protected by the DPoP binding as well. The authorization server SHOULD bind the `auth_session` value to the DPoP public key. If the authorization server is binding the `auth_session` value to the DPoP public key, it MUST check that the same DPoP public key is being used and MUST verify the DPoP proof to ensure the client controls the corresponding private key whenever the client includes the `auth_session` in an Authorization Challenge Request as described in {{#challenge-request}}.
 
 DPoP binding of the `auth_session` value ensures that the context referenced by the `auth_session` cannot be stolen and reused by another device.
-
-This specification defines an additional claim in the DPoP Proof JWT Syntax defined in Section 4.2 of {{RFC9449}}:
-
-"ash":
-: The hash of the `auth_session`. The value MUST be the result of a base64url encoding (as defined in Section 2 of {{RFC7515}}) the SHA-256 {{SHS}} hash of the ASCII encoding of the `auth_session` value.
-
 
 ### Auth Session Lifetime
 
@@ -638,16 +632,6 @@ IANA has (TBD) registered the following values in the IANA "OAuth Authorization 
 ## JSON Web Token Claims Registration
 
 IANA has (TBD) registered the following Claims in the "JSON Web Token Claims" registry {{IANA.JWT}} established by {{RFC7519}}.
-
-**Auth Session Hash**
-
-**Claim Name**: `ash`
-
-**Claim Description**: The base64url-encoded SHA-256 hash of the ASCII encoding of the `auth_session` value
-
-**Change Controller**: IETF
-
-**Reference**: Section 9.6.1 of this specification
 
 
 --- back
