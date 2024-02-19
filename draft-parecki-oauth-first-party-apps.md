@@ -633,7 +633,6 @@ IANA has (TBD) registered the following values in the IANA "OAuth Authorization 
 
 IANA has (TBD) registered the following Claims in the "JSON Web Token Claims" registry {{IANA.JWT}} established by {{RFC7519}}.
 
-
 --- back
 
 # Example User Experiences
