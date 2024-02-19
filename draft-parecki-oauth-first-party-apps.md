@@ -850,6 +850,10 @@ These design decisions should enable authorization server implementations to iso
 
 # Document History
 
+-latest
+
+* Removed ash claim to simplify DPoP binding with auth_session value.
+
 -01
 
 * Renamed `authorization_required` to `insufficient_authorization`
