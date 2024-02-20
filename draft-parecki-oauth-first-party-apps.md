@@ -417,11 +417,13 @@ is JSON and conforms to `application/<as-defined>+json`.
 
 The `auth_session` is a value that the authorization server issues in order to be able to associate subsequent requests from the same client. It is intended to be analagous to how a browser cookie associates multiple requests by the same browser to the authorization server.
 
-The `auth_session` value is completely opaque to the client, and as such the AS MUST adequately protect the value from inspection by the client, for example by using a random string or using a JWE if the AS is not maintaining state on the backend.
+The `auth_session` value is completely opaque to the client, and as such the authorization server MUST adequately protect the value from inspection by the client, for example by using a random string or using a JWE if the authorization server is not maintaining state on the backend.
 
 If the client has an `auth_session`, the client MUST include it in future requests to the authorization challenge endpoint. The client MUST store the `auth_session` beyond the issuance of the authorization code to be able to use it in future requests.
 
 Every response defined by this specification may include a new `auth_session` value. Clients MUST NOT assume that `auth_session` values are static, and MUST be prepared to update the stored `auth_session` value if one is received in a response.
+
+To mitigate the risk of session hijacking, the 'auth_session' MUST be bound to the device, and the authorization server MUST reject an 'auth_session' if it is presented from a different device than the one it was bound to.
 
 See {{auth-session-security}} for additional security considerations.
 
