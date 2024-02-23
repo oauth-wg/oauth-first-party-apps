@@ -48,7 +48,7 @@ normative:
   RFC8707:
   RFC9126:
   RFC9449:
-  I-D.ietf-oauth-step-up-authn-challenge:
+  RFC9470:
   I-D.ietf-oauth-cross-device-security:
   OpenID.Native-SSO:
     title: OpenID Connect Native SSO for Mobile Apps
@@ -120,7 +120,7 @@ and the client, as there typically is for first-party applications.
 It should only be considered when there are usability
 concerns with a redirect-based approach, such as for native mobile or desktop applications.
 
-This draft also extends the token response (typically for use in response to a refresh token request) and resource server response to allow the authorization server or resource server to indicate that the client should re-request authorization from the user. This can include requesting step-up authentication by including parameters defined in {{I-D.ietf-oauth-step-up-authn-challenge}} as well.
+This draft also extends the token response (typically for use in response to a refresh token request) and resource server response to allow the authorization server or resource server to indicate that the client should re-request authorization from the user. This can include requesting step-up authentication by including parameters defined in {{RFC9470}} as well.
 
 ## Usage and Applicability
 
@@ -212,7 +212,7 @@ When the client uses a refresh token to obtain a new access token, the authoriza
 
 ## Resource Request
 
-When making a resource request to a resource server, the resource server MAY respond with an error according to OAuth 2.0 Step-Up Authentication Challenge Protocol {{I-D.ietf-oauth-step-up-authn-challenge}}, indicating that re-authorization of the user is required.
+When making a resource request to a resource server, the resource server MAY respond with an error according to OAuth 2.0 Step-Up Authentication Challenge Protocol {{RFC9470}}, indicating that re-authorization of the user is required.
 
 
 # Protocol Endpoints
@@ -497,9 +497,9 @@ For example:
 
 # Resource Server Error Response
 
-Step-Up Authentication {{I-D.ietf-oauth-step-up-authn-challenge}} defines a mechanism for resource servers to tell the client to start a new authorization request, including `acr_values` and `max_age`, and `scope` from RFC6750. Upon receiving this request, the client starts a new authorization request according to this specification, and includes the `acr_values`, `max_age` and `scope` returned in the error response.
+Step-Up Authentication {{RFC9470}} defines a mechanism for resource servers to tell the client to start a new authorization request, including `acr_values` and `max_age`, and `scope` from RFC6750. Upon receiving this request, the client starts a new authorization request according to this specification, and includes the `acr_values`, `max_age` and `scope` returned in the error response.
 
-This specification does not define any new parameters for the resource server error response beyond those defined in {{I-D.ietf-oauth-step-up-authn-challenge}}.
+This specification does not define any new parameters for the resource server error response beyond those defined in {{RFC9470}}.
 
 # Authorization Server Metadata {#authorization-server-metadata}
 
