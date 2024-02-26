@@ -417,11 +417,13 @@ is JSON and conforms to `application/<as-defined>+json`.
 
 The `auth_session` is a value that the authorization server issues in order to be able to associate subsequent requests from the same client. It is intended to be analagous to how a browser cookie associates multiple requests by the same browser to the authorization server.
 
-The `auth_session` value is completely opaque to the client, and as such the AS MUST adequately protect the value from inspection by the client, for example by using a random string or using a JWE if the AS is not maintaining state on the backend.
+The `auth_session` value is completely opaque to the client, and as such the authorization server MUST adequately protect the value from inspection by the client, for example by using a random string or using a JWE if the authorization server is not maintaining state on the backend.
 
 If the client has an `auth_session`, the client MUST include it in future requests to the authorization challenge endpoint. The client MUST store the `auth_session` beyond the issuance of the authorization code to be able to use it in future requests.
 
 Every response defined by this specification may include a new `auth_session` value. Clients MUST NOT assume that `auth_session` values are static, and MUST be prepared to update the stored `auth_session` value if one is received in a response.
+
+To mitigate the risk of session hijacking, the 'auth_session' MUST be bound to the device, and the authorization server MUST reject an 'auth_session' if it is presented from a different device than the one it was bound to.
 
 See {{auth-session-security}} for additional security considerations.
 
@@ -562,15 +564,9 @@ It may be possible to use other proof of possession mechanisms to sender constra
 
 ### Auth Session DPoP Binding
 
-If the client and authorization server are using DPoP binding of access tokens and/or authorization codes, then they SHOULD also require DPoP binding of the `auth_session` value as well.
+If the client and authorization server are using DPoP binding of access tokens and/or authorization codes, then the `auth_session` value SHOULD be protected by the DPoP binding as well. The authorization server SHOULD bind the `auth_session` value to the DPoP public key. If the authorization server is binding the `auth_session` value to the DPoP public key, it MUST check that the same DPoP public key is being used and MUST verify the DPoP proof to ensure the client controls the corresponding private key whenever the client includes the `auth_session` in an Authorization Challenge Request as described in {{challenge-request}}.
 
 DPoP binding of the `auth_session` value ensures that the context referenced by the `auth_session` cannot be stolen and reused by another device.
-
-This specification defines an additional claim in the DPoP Proof JWT Syntax defined in Section 4.2 of {{RFC9449}}:
-
-"ash":
-: The hash of the `auth_session`. The value MUST be the result of a base64url encoding (as defined in Section 2 of {{RFC7515}}) the SHA-256 {{SHS}} hash of the ASCII encoding of the `auth_session` value.
-
 
 ### Auth Session Lifetime
 
@@ -640,17 +636,6 @@ IANA has (TBD) registered the following values in the IANA "OAuth Authorization 
 ## JSON Web Token Claims Registration
 
 IANA has (TBD) registered the following Claims in the "JSON Web Token Claims" registry {{IANA.JWT}} established by {{RFC7519}}.
-
-**Auth Session Hash**
-
-**Claim Name**: `ash`
-
-**Claim Description**: The base64url-encoded SHA-256 hash of the ASCII encoding of the `auth_session` value
-
-**Change Controller**: IETF
-
-**Reference**: Section 9.6.1 of this specification
-
 
 --- back
 
@@ -872,6 +857,7 @@ These design decisions should enable authorization server implementations to iso
 -latest
 
 * Added clarification on use of authroization code binding when using DPoP with the authorization challenge endpoint.
+* Removed ash claim to simplify DPoP binding with auth_session value.
 
 -01
 
