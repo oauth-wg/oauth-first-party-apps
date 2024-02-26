@@ -44,10 +44,12 @@ normative:
   RFC7636:
   RFC8259:
   RFC8414:
+  RFC8628:
   RFC8707:
   RFC9126:
   RFC9449:
   I-D.ietf-oauth-step-up-authn-challenge:
+  I-D.ietf-oauth-cross-device-security:
   OpenID.Native-SSO:
     title: OpenID Connect Native SSO for Mobile Apps
     target: https://openid.net/specs/openid-connect-native-sso-1_0.html
@@ -139,6 +141,9 @@ The scope of this specification is limited to first-party applications. Please r
 While this draft provides the framework for a native OAuth experience, each implementation
 will need to define the specific behavior that it expects from OAuth clients interacting with the authorization server. While this lack of clearly defining the details would typically lead to less interoperability, it is acceptable in this case since we intend this specification to be deployed in a tightly coupled environment since it is only applicable to first-party applications.
 
+## User Experience Considerations
+
+It is important to consider the user experience implications of different authentication challenges as well as the device with which the user is attempting to authorize. For example, requesting a user to enter a password on a limited input device (e.g. TV) creates a lot of user friction while also exposing the user's password to anyone else in the room. On the other hand, using a challenge method that involves say a fingerprint reader on the TV remote allowing for a FIDO2 passkey authentication would be a good experience. The Authorization Server should consider the user's device when presenting authentication challenges and developers should consider whether the device implementing this specification can provide a good experience for the user. If the combination of user device and authentiation challenge methods creates a lot of friction or security risk, consider using a specification like OAuth 2.0 Device Authorization Grant {{RFC8628}}. If selecting OAuth 2.0 Device Authorization Grant {{RFC8628}} which uses a cross-device authorization mechanism, please incorporate the security best practices identified in Cross-Device Flows: Security Best Current Practice {{I-D.ietf-oauth-cross-device-security}}.
 
 # Conventions and Definitions
 
