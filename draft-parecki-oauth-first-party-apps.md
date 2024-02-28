@@ -445,7 +445,20 @@ The client then uses the `request_uri` value to build an authorization request
 as defined in {{RFC9126}} Section 4.
 
 
-## Auth Session {#auth-session}
+## Intermediate Requests
+
+If the authorization server returns an `insufficient_authorization` error as described
+above, this is an indication that there is further information the client
+should request from the user, and continue to make requests to the authorization
+server until the authorization request is fulfilled and an authorization code returned.
+
+These intermediate requests are out of scope of this specification, and are expected
+to be defined by the authorization server. The format of these requests are not required
+to conform to the format of the initial authorization challenge requests
+(e.g. the request format may be `application/json` rather than `application/x-www-form-urlencoded`).
+
+
+### Auth Session {#auth-session}
 
 The `auth_session` is a value that the authorization server issues in order to be able to associate subsequent requests from the same client. It is intended to be analagous to how a browser cookie associates multiple requests by the same browser to the authorization server.
 
@@ -891,6 +904,7 @@ These design decisions should enable authorization server implementations to iso
 * Added clarification on use of authroization code binding when using DPoP with the authorization challenge endpoint.
 * Removed ash claim to simplify DPoP binding with auth_session value.
 * Fixed how "redirect to web" mechanism works with PKCE.
+* Added "intermediate requests" section to clarify these requests are out of scope, moved "auth session" description to that section.
 
 -01
 
