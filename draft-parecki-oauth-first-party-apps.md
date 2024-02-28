@@ -707,10 +707,10 @@ A user may be redirected to the Authorization Server to perfrom an account reset
 
 * The Client collects username from the user.
 * The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the username.
-* The Authorization Server verifies the username and determines that the account is locked and returns a Redirect message.
+* The Authorization Server verifies the username and determines that the account is locked and returns a Redirect error response.
 * The Client parses the redirect message, opens a browser and redirects the user to the Authorization Server performing an OAuth 2.0 flow with PKCE.
 * The user resets their account by performing a multi-step authentication flow with the Authorization Server.
-* The Authorization Server issues an Authorization Code, which is exchanged for an access and refresh token before returning control to the Client.
+* The Authorization Server issues an Authorization Code in a redirect back to the client, which then exchanges it for an access and refresh token.
 
 
 ## Passwordless One-Time Password (OTP)
