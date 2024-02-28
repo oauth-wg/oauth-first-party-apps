@@ -274,6 +274,14 @@ format with a character encoding of UTF-8 in the HTTP request body:
 "auth_session":
 : OPTIONAL. If the client has previously obtained an auth session, described in {{auth-session}}.
 
+"code_challenge":
+: OPTIONAL. The code challenge as defined by {{RFC7636}}.
+  See {{redirect-to-web}} for details.
+
+"code_challenge_method":
+: OPTIONAL. The code challenge method as defined by {{RFC7636}}.
+  See {{redirect-to-web}} for details.
+
 Specific implementations as well as extensions to this specification MAY define additional parameters to be used at this endpoint.
 
 For example, the client makes the following request to initiate a flow
@@ -310,26 +318,12 @@ For example,
       "authorization_code": "uY29tL2F1dGhlbnRpY"
     }
 
-### Redirect Response
-
-In the case where the authorization server wishes to interact with the
-user directly, it can return the `redirect` response. The authorization
-server may choose to interact directly with the user based on a risk
-assesment, the introduction of a new authentication method not supported
-in the application, or to handle an exception flow like account recovery.
-In this case the client is expected to initiate a traditional OAuth
-Authorization Code flow with PKCE according to {{RFC6749}} and {{RFC7636}}.
-
-"redirect":
-: REQUIRED. A Pushed Authroization Request (PAR) response as defined in
-Section 2.2 of {{RFC9126}}. The request_uri parameter contains the URI that
-the client should use in the authorization request.
-
 ### Error Response {#challenge-error-response}
 
 If the request contains invalid parameters or incorrect data,
+or if the authorization server wishes to interact with the user directly,
 the authorization server responds with an HTTP 400 (Bad Request)
-status code (unless specified otherwise) and includes the following
+status code (unless specified otherwise below) and includes the following
 parameters with the response:
 
 "error":
@@ -371,6 +365,12 @@ parameters with the response:
            server is requesting the client take additional steps to
            complete the authorization.
 
+     "redirect_to_web":
+     :     The request is not able to be fulfilled with any further
+           direct interaction with the user. Instead, the client
+           should initiate a new authorization code flow so that the
+           user interacts with the authorization server in a web browser.
+
      Values for the `error` parameter MUST NOT include characters
      outside the set %x20-21 / %x23-5B / %x5D-7E.
 
@@ -399,6 +399,13 @@ parameters with the response:
      the `auth_session` in follow-up requests to the challenge
      endpoint if it receives one along with the error response.
 
+"request_uri":
+:    OPTIONAL.  A request URI as described by {{RFC9126}} Section 2.2.
+
+"expires_in":
+:    OPTIONAL.  The lifetime of the `request_uri` in seconds, as
+     described by {{RFC9126}} Section 2.2.
+
 This specification requires the authorization server to define new
 error codes that relate to the actions the client must take in order
 to properly authenticate the user. These new error codes are specific
@@ -416,7 +423,27 @@ vary.
 The authorization server MAY define additional parameters in the response
 depending on the implmentation. The authorization server MAY also define
 more specific content types for the error responses as long as the response
-is JSON and conforms to `application/<as-defined>+json`.
+is JSON and conforms to `application/<AS-defined>+json`.
+
+#### Redirect to Web Error Response {#redirect-to-web}
+
+The authorization server may choose to interact directly with the user based on a risk
+assesment, the introduction of a new authentication method not supported
+in the application, or to handle an exception flow like account recovery.
+To indicate this error to the client, the authorization server returns an
+error response as defined above with the `redirect_to_web` error code.
+
+In this case, the client is expected to initiate a new OAuth
+Authorization Code flow with PKCE according to {{RFC6749}} and {{RFC7636}}.
+
+If the client expects the frequency of this error response to be high,
+the client MAY include a PKCE ({{RFC7636}}) `code_challenge` in the initial authorization
+challenge request. This enables the authorization server to essentially treat
+the authorization challenge request as a PAR {{RFC9126}} request, and
+return the `request_uri` and `expires_in` as defined by {{RFC9126}} in the error response.
+The client then uses the `request_uri` value to build an authorization request
+as defined in {{RFC9126}} Section 4.
+
 
 ## Auth Session {#auth-session}
 
