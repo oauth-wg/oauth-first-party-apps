@@ -903,7 +903,7 @@ These design decisions should enable authorization server implementations to iso
 
 # Document History
 
--latest
+-02
 
 * Added clarification on use of authorization code binding when using DPoP with the authorization challenge endpoint.
 * Removed ash claim to simplify DPoP binding with auth_session value.
