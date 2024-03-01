@@ -905,7 +905,7 @@ These design decisions should enable authorization server implementations to iso
 
 -latest
 
-* Added clarification on use of authroization code binding when using DPoP with the authorization challenge endpoint.
+* Added clarification on use of authorization code binding when using DPoP with the authorization challenge endpoint.
 * Removed ash claim to simplify DPoP binding with auth_session value.
 * Fixed how "redirect to web" mechanism works with PKCE.
 * Added "intermediate requests" section to clarify these requests are out of scope, moved "auth session" description to that section.
