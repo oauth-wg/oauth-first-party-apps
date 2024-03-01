@@ -903,20 +903,17 @@ These design decisions should enable authorization server implementations to iso
 
 # Document History
 
--02
+-01
 
 * Added clarification on use of authorization code binding when using DPoP with the authorization challenge endpoint.
 * Removed ash claim to simplify DPoP binding with auth_session value.
 * Fixed how "redirect to web" mechanism works with PKCE.
 * Added "intermediate requests" section to clarify these requests are out of scope, moved "auth session" description to that section.
 
--01
+-00
 
 * Renamed `authorization_required` to `insufficient_authorization`
 * Defined `insufficient_authorization` on the Authorization Challenge Endpoint
-
--00
-
 * Renamed `device_session` to `auth_session`
 * Added explicit method to indicate the client should restart the flow in a browser
 * Described how to use DPoP in conjunction with this spec
