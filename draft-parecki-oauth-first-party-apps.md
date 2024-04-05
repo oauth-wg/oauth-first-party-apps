@@ -903,6 +903,10 @@ These design decisions should enable authorization server implementations to iso
 
 # Document History
 
+-02
+
+* Fixed typos
+
 -01
 
 * Added clarification on use of authorization code binding when using DPoP with the authorization challenge endpoint.
@@ -924,6 +928,6 @@ These design decisions should enable authorization server implementations to iso
 
 The authors would like to thank the attendees of the OAuth Security Workshop 2023 session in which this was discussed, as well as the following individuals who contributed ideas, feedback, and wording that shaped and formed the final specification:
 
-Brian Campbell, Dick Hardt, Dmitry Telegin, John Bradley, Justin Richer, Mike Jones, Orie Steele, Tobias Looker.
+Brian Campbell, Dick Hardt, Dmitry Telegin, John Bradley, Justin Richer, Mike Jones, Orie Steele, Tobias Looker, Yaron Sheffer.
 
 
