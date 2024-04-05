@@ -204,7 +204,7 @@ Figure: First-Party Client Authorization Code Request
 
 - (A) The first-party client starts the flow, by presenting the user with a "sign in" button, or collecting information from the user, such as their email address or username.
 - (B) The client initiates the authorization request by making a POST request to the Authorization Challenge Endpoint, optionally with information collected from the user (e.g. email or username)
-- (C) The authorization server determines whether the information provided to the Authorization Challenge Endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error. In this example, it determines that additional information is needed and responds with an error. The error may contain additional information to guide the Client on what information to collect next. This pattern of collecting information, submitting it to the Authorization Challenge Endpoint and then receing an error or authorization code may repeat several times.
+- (C) The authorization server determines whether the information provided to the Authorization Challenge Endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error. In this example, it determines that additional information is needed and responds with an error. The error may contain additional information to guide the Client on what information to collect next. This pattern of collecting information, submitting it to the Authorization Challenge Endpoint and then receving an error or authorization code may repeat several times.
 - (D) The client gathers additional information (e.g. signed passkey challenge, or one-time code from email) and makes a POST request to the Authorization Challenge Endpoint.
 - (E) The Authorization Challenge Endpoint returns an authorization code.
 - (F) The client sends the authorization code received in step (E) to obtain a token from the Token Endpoint.
@@ -236,7 +236,7 @@ as all applicable extensions defined for the authorization endpoint. Some exampl
 Key for Code Exchange (PKCE) {{RFC7636}}, Resource Indicators {{RFC8707}}, and OpenID Connect {{OpenID}}. It is
 important to note that some extension parameters have meaning in a web context but don't have meaning in a native
 mechanism (e.g. `response_mode=query`). It is out of scope as to what the AS does in the case that an extension
-defines a parameter that is has no meaning in this use case.
+defines a parameter that has no meaning in this use case.
 
 The client initiates the authorization flow with or without information collected from the user (e.g. a signed passkey challenge or MFA code).
 
@@ -457,7 +457,7 @@ should request from the user, and continue to make requests to the authorization
 server until the authorization request is fulfilled and an authorization code returned.
 
 These intermediate requests are out of scope of this specification, and are expected
-to be defined by the authorization server. The format of these requests are not required
+to be defined by the authorization server. The format of these requests is not required
 to conform to the format of the initial authorization challenge requests
 (e.g. the request format may be `application/json` rather than `application/x-www-form-urlencoded`).
 
@@ -562,7 +562,7 @@ First-party applications are applications that the user recognizes as belonging 
 
 Because this specification enables a client application to interact directly with the end user, and the application handles sending any information collected from the user to the authorization server, it is expected to be used only for first-party applications when the authorization server also has a high degree of trust of the client.
 
-This specification is not prescriptive on how the Authorization Server establishes it's trust in the first-partyness of the application. For mobile platforms, most support some mechanism for application attestation that can be used to identify the entity that created/signed/uploaded the app to the app store. App attestation can be combined with other mechanisms like Dynamic Client Registration {{RFC7591}} to enable strong client authentication in addition to client verification (first-partyness). The exact steps required are out of scope for this specification. Note that applications running inside a browser (e.g. Single Page Apps) context it is much more difficult to verify the first-partyness of the client. Please see {{single-page-apps}} for additional details.
+This specification is not prescriptive on how the Authorization Server establishes its trust in the first-partyness of the application. For mobile platforms, most support some mechanism for application attestation that can be used to identify the entity that created/signed/uploaded the app to the app store. App attestation can be combined with other mechanisms like Dynamic Client Registration {{RFC7591}} to enable strong client authentication in addition to client verification (first-partyness). The exact steps required are out of scope for this specification. Note that applications running inside a browser (e.g. Single Page Apps) context it is much more difficult to verify the first-partyness of the client. Please see {{single-page-apps}} for additional details.
 
 ## Phishing {#phishing}
 
@@ -777,7 +777,7 @@ A Client previously obtained an Access and Refresh Token after the user authenti
 * The Authorization Server verifies the OTP and returns an Authorization Code.
 * The Client sends the Authorization Code in a Token Request ({{token-request}}) to the Token Endpoint.
 * The Authorization Server verifies the Authorization Code and issues an Access Token with the updated `acr` value along with the Refresh Token.
-* The Client presents the Access Token to the Resources Server, which verifies that the `acr` value meets its requirements before granting access to the prtoected resource.
+* The Client presents the Access Token to the Resources Server, which verifies that the `acr` value meets its requirements before granting access to the protected resource.
 
 ## Registration
 This example describes how to use the mechanisms defined in this draft to create a complete user registration flow starting with an email address. In this example, it is the Authorization Server's policy to allow these challenges to be sent to email and phone number that were previously unrecognized, and creating the user account on the fly.
