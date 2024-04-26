@@ -375,6 +375,7 @@ parameters with the response:
            direct interaction with the user. Instead, the client
            should initiate a new authorization code flow so that the
            user interacts with the authorization server in a web browser.
+           See {{redirect-to-web}} for details.
 
      Values for the `error` parameter MUST NOT include characters
      outside the set %x20-21 / %x23-5B / %x5D-7E.
