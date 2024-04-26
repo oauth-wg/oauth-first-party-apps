@@ -903,6 +903,7 @@ These design decisions should enable authorization server implementations to iso
 -02
 
 * Fixed typos
+* Clarified resource server error response section
 
 -01
 
