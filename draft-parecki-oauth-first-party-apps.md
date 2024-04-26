@@ -81,6 +81,7 @@ normative:
     target: http://dx.doi.org/10.6028/NIST.FIPS.180-4
 
 informative:
+  RFC6750:
   RFC8252:
   I-D.ietf-oauth-browser-based-apps:
 
@@ -541,9 +542,9 @@ For example:
 
 # Resource Server Error Response
 
-Step-Up Authentication {{RFC9470}} defines a mechanism for resource servers to tell the client to start a new authorization request, including `acr_values` and `max_age`, and `scope` from RFC6750. Upon receiving this request, the client starts a new authorization request according to this specification, and includes the `acr_values`, `max_age` and `scope` returned in the error response.
+Step-Up Authentication {{RFC9470}} defines new error code values that a resource server can use to tell the client to start a new authorization request including `acr_values` and `max_age` from {{OpenID}}. Upon receiving this error response, the client starts a new first-party authorization request at the authorization challenge endpoint, and includes the `acr_values`, `max_age` and `scope` that were returned in the error response.
 
-This specification does not define any new parameters for the resource server error response beyond those defined in {{RFC9470}}.
+This specification does not define any new parameters for the resource server error response beyond those defined in {{RFC9470}} and {{RFC6750}}.
 
 # Authorization Server Metadata {#authorization-server-metadata}
 
