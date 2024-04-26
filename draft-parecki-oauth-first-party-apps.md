@@ -486,8 +486,6 @@ This specification does not define any additional parameters beyond the token re
 This specification extends the OAuth 2.0 {{RFC6749}} token response
 defined in Section 5.1 with the additional parameter `auth_session`, defined in {{auth-session}}.
 
-The response MAY include an `auth_session` parameter which the client is expected to include on a subsequent request to the authorization challenge endpoint. The `auth_session` parameter MAY also be included even if the authorization code was obtained through a traditional OAuth authorization code flow rather than the flow defined by this specification.
-
 An example successful token response is below:
 
     HTTP/1.1 200 OK
@@ -501,6 +499,10 @@ An example successful token response is below:
       "refresh_token": "tGzv3JOkF0XG5Qx2TlKWIA",
       "auth_session": "uY29tL2F1dGhlbnRpY"
     }
+
+The response MAY include an `auth_session` parameter which the client is expected to include on any subsequent requests to the authorization challenge endpoint, as described in {{auth-session}}. The `auth_session` parameter MAY also be included even if the authorization code was obtained through a traditional OAuth authorization code flow rather than the flow defined by this specification.
+
+Including the `auth_session` parameter in the token response enables flows such as step-up authentication {{RFC9470}}, so that the authorization server can restore the context of a previous session and prompt only for the needed step-up factors. See {{step-up-sms-example}} for an example application.
 
 
 ## Token Endpoint Error Response
@@ -760,7 +762,7 @@ A client may be in possession of an Access and Refresh Token as the result of a 
 * The Authorization Server verifies the Authorization Code and issues the requested tokens.
 * The Client presents the new Access Token to the Resource Server in order to access the protected resource.
 
-## Step-up Authentication using Confirmation SMS
+## Step-up Authentication using Confirmation SMS {#step-up-sms-example}
 A Client previously obtained an Access and Refresh Token after the user authenticated with an OTP. When the user attempts to access a protected resource, the Resource Server determines that it needs an additional level of authentication and triggers a step-up authentication, indicating the desired level of authentication using `acr_values` and `max_age` as defined in the Step-up Authentication specification. The Client initiates an authorization request with the Authorization Server indicating the `acr_values` and `max_age` parameters. The Authorization Server responds with error messages promptng for additional authentication until the `acr_values` and `max_age` values are satisfied before issuing fresh Access and Refresh Tokens.
 
 * The Client has a short-lived access token and long-lived refresh token following the completion of an Authorization Code Grant Flow which included user authentication.
