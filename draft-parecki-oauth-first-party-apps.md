@@ -273,9 +273,6 @@ format with a character encoding of UTF-8 in the HTTP request body:
 "scope":
 : OPTIONAL. The OAuth scope defined in {{RFC6749}}.
 
-"acr_values":
-: OPTIONAL. The acr_values requested by the client.
-
 "auth_session":
 : OPTIONAL. If the client has previously obtained an auth session, described in {{auth-session}}.
 
