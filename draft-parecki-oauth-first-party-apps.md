@@ -79,6 +79,11 @@ normative:
       name: "National Institute of Standards and Technology"
     date: August 2015
     target: http://dx.doi.org/10.6028/NIST.FIPS.180-4
+  WEBAUTHN-3:
+    target: https://www.w3.org/TR/webauthn-3/
+    title: Web Authentication
+    date: 2023-09-27
+    author:
 
 informative:
   RFC6750:
@@ -241,7 +246,7 @@ defines a parameter that has no meaning in this use case.
 
 The client initiates the authorization flow with or without information collected from the user (e.g. a signed passkey challenge or MFA code).
 
-The authorization challenge endpoint response is either an authorization code or an error code, and may also contain an `auth_session` which the client uses on subsequent requests to the authorization challenge endpoint.
+The authorization challenge endpoint response is either an authorization code, a set of WebAuthn parameters, or an error code, and may also contain an `auth_session` which the client uses on subsequent requests to the authorization challenge endpoint.
 
 
 ## Token endpoint
@@ -284,6 +289,12 @@ format with a character encoding of UTF-8 in the HTTP request body:
 : OPTIONAL. The code challenge method as defined by {{RFC7636}}.
   See {{redirect-to-web}} for details.
 
+"authn_params_type":
+: OPTIONAL. The string `public-key` to request a set of parameters for a WebAuthn request.
+
+"authn_response":
+: OPTIONAL. A JSON string containing the Base64URL encoded JSON object containing the properties defined in {{webauthn-authn-response}}
+
 Specific implementations as well as extensions to this specification MAY define additional parameters to be used at this endpoint.
 
 For example, the client makes the following request to initiate a flow
@@ -295,6 +306,62 @@ given the user's phone number, line breaks shown for illustration purposes only:
 
     login_hint=%2B1-310-123-4567&scope=profile
     &client_id=bb16c14c73415
+
+In another example, the client sends the response of successful WebAuthn authentication ceremony:
+
+    POST /authorize HTTP/1.1
+    Host: server.example.com
+    Content-Type: application/x-www-form-urlencoded
+
+    authn_response=eyJ0eXBlIjoicHVibGljLWtleSIsImlkIjoiSlZfYkYzdzhaSndkM200R2FxcHhabmVlN2p1T0g4X1NRcGdUTWF4R3VEMCIsInJhd0lkIjoiSlZfYkYzdzhaSndkM200R2FxcHhabmVlN2p1T0g4X1NRcGdUTWF4R3VEMCIsImF1dGhlbnRpY2F0b3JBdHRhY2htZW50IjoicGxhdGZvcm0iLCJyZXNwb25zZSI6eyJjbGllbnREYXRhSlNPTiI6ImV5SjBlWEJsSWpvaWQyVmlZWFYwYUc0dVoyVjBJaXdpWTJoaGJHeGxibWRsSWpvaU1VNXRZa2g0U0djeVRIZHBNWE5vV1RWS1YySlZXSEpIV0VkTWJsOXdhbVEzVEd4R1pEVlZRMDFuV1NJc0ltOXlhV2RwYmlJNklDSm9kSFJ3Y3pvdkwyeHZaMmx1TG1WNFlXMXdiR1V1WTI5dElpd2lZM0p2YzNOUGNtbG5hVzRpT2lCbVlXeHpaWDAiLCJhdXRoZW50aWNhdG9yRGF0YSI6Ikl0ZUVLOUIta1pGSkUtdG1lUUUwZlRiOU5Ub0V0LV9QZVhxU3EwdGxWTmNGQUFBQUFBIiwic2lnbmF0dXJlIjoiTUVVQ0lCYWVSVk9FYllzQ2xyQmljZHU4Y2ltSnI5OXl3NVVseURyRUFJSnotQkxZQWlFQThyVkt1MlNQQ2FNbTJoMEdBS2U1QzFZS1ZQWUtISk5xY1VKOERoWG16eTAiLCJ1c2VySGFuZGxlIjoiWjRLaGhQWnZUVy1Wdl8zcFJFNEo2dyJ9LCJjbGllbnRFeHRlbnNpb25SZXN1bHRzIjp7fX0
+
+### WebAuthn Authentication Response {#webauthn-authn-response}
+
+"id":
+: REQUIRED. A JSON string representing the credential identifier as defined in {{WEBAUTHN-3}}.
+
+"rawId":
+: REQUIRED. A JSON string representing the credential identifier as defined in {{WEBAUTHN-3}}.
+
+"type":
+: REQUIRED. A JSON string with value `public-key`.
+
+"response":
+: REQUIRED. A JSON object with the properties defined below:
+
+    "clientDataJSON":
+    : REQUIRED. A JSON string as defined in `AuthenticatorAssertionResponseJSON` in {{WEBAUTHN-3}}.
+
+    "authenticatorData":
+    : REQUIRED. A JSON string as defined in `AuthenticatorAssertionResponseJSON` in {{WEBAUTHN-3}}.
+
+    "signature":
+    : REQUIRED. A JSON string as defined in `AuthenticatorAssertionResponseJSON` in {{WEBAUTHN-3}}.
+
+    "userHandle":
+    : OPTIONAL. A JSON string as defined in `AuthenticatorAssertionResponseJSON` in {{WEBAUTHN-3}}.
+
+"authenticatorAttachment":
+: OPTIONAL. A JSON string representing the authenticator attachment modality as defined in {{WEBAUTHN-3}}.
+
+"clientExtensionResults":
+: OPTIONAL. A JSON object containing extension outputs from the client as defined in {{WEBAUTHN-3}}.
+
+~~~ json
+{
+    "type": "public-key",
+    "id": "JV_bF3w8ZJwd3m4GaqpxZnee7juOH8_SQpgTMaxGuD0",
+    "rawId": "JV_bF3w8ZJwd3m4GaqpxZnee7juOH8_SQpgTMaxGuD0",
+    "authenticatorAttachment": "platform",
+    "response": {
+        "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiMU5tYkh4SGcyTHdpMXNoWTVKV2JVWHJHWEdMbl9wamQ3TGxGZDVVQ01nWSIsIm9yaWdpbiI6ICJodHRwczovL2xvZ2luLmV4YW1wbGUuY29tIiwiY3Jvc3NPcmlnaW4iOiBmYWxzZX0",
+        "authenticatorData": "IteEK9B-kZFJE-tmeQE0fTb9NToEt-_PeXqSq0tlVNcFAAAAAA",
+        "signature": "MEUCIBaeRVOEbYsClrBicdu8cimJr99yw5UlyDrEAIJz-BLYAiEA8rVKu2SPCaMm2h0GAKe5C1YKVPYKHJNqcUJ8DhXmzy0",
+        "userHandle": "Z4KhhPZvTW-Vv_3pRE4J6w"
+    },
+    "clientExtensionResults": {}
+}
+~~~
 
 ## Authorization Challenge Response {#challenge-response}
 
@@ -318,6 +385,55 @@ For example,
 
     {
       "authorization_code": "uY29tL2F1dGhlbnRpY"
+    }
+
+### WebAuthn Authentication Parameters Responses
+
+The authorization server generates and returns the public key credential request options for a WebAuthn authentication ceremony by creating an HTTP response content using the `application/json` media type as defined by {{RFC8259}} with the following properties and an HTTP 200 (OK) status code:
+
+"authn_params_public_key":
+: REQUIRED. A JSON object with one or more properties defined below.
+
+"challenge":
+: REQUIRED. A JSON string
+
+"timeout":
+: OPTIONAL. A JSON number represnting the timeout value as defined in {{WEBAUTHN-3}}.
+
+"rpId":
+: OPTIONAL. A JSON string representing the WebAuthn Relying Party Identifier as defined in {{WEBAUTHN-3}}.
+
+"allowCredentials":
+: OPTIONAL. A JSON array of allowed WebAuthn credential IDs for the request as defined in {{WEBAUTHN-3}}.
+
+"userVerification":
+: OPTIONAL. A JSON string representing the desired user verification mode as defined in {{WEBAUTHN-3}}.
+
+"extensions":
+: OPTIONAL, A JSON object with one or more extensions as defined in {{WEBAUTHN-3}}.
+
+For example,
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    Cache-Control: no-store
+
+    {
+      "authn_params_public_key": {
+        "challenge": "e7kFIsthAIve4isZgTpAclt9dWVYKkl3fNm5xABJQhM",
+        "timeout": 60000,
+        "rpId": "login.example.com",
+        "allowCredentials": [
+          {
+            "id": "3qrxsBJngNp1__J-Y8Lw-y8JanKzsxpr170jreoLcc4",
+            "type": "public-key",
+            "transports": [
+              "internal"
+            ]
+          }
+        ],
+        "userVerification": "preferred"
+      }
     }
 
 ### Error Response {#challenge-error-response}
