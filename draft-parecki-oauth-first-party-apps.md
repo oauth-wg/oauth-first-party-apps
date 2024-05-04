@@ -81,7 +81,7 @@ normative:
     target: http://dx.doi.org/10.6028/NIST.FIPS.180-4
   WEBAUTHN-3:
     target: https://www.w3.org/TR/webauthn-3/
-    title: Web Authentication
+    title: Web Authentication Level 3
     date: 2023-09-27
     author:
 
@@ -394,26 +394,27 @@ The authorization server generates and returns the public key credential request
 "authn_params_public_key":
 : REQUIRED. A JSON object with one or more properties defined below.
 
-"challenge":
-: REQUIRED. A JSON string
+    "challenge":
+    : REQUIRED. A JSON string
 
-"timeout":
-: OPTIONAL. A JSON number represnting the timeout value as defined in {{WEBAUTHN-3}}.
+    "timeout":
+    : OPTIONAL. A JSON number represnting the timeout value as defined in {{WEBAUTHN-3}}.
 
-"rpId":
-: OPTIONAL. A JSON string representing the WebAuthn Relying Party Identifier as defined in {{WEBAUTHN-3}}.
+    "rpId":
+    : OPTIONAL. A JSON string representing the WebAuthn Relying Party Identifier as defined in {{WEBAUTHN-3}}.
 
-"allowCredentials":
-: OPTIONAL. A JSON array of allowed WebAuthn credential IDs for the request as defined in {{WEBAUTHN-3}}.
+    "allowCredentials":
+    : OPTIONAL. A JSON array of allowed WebAuthn credential IDs for the request as defined in {{WEBAUTHN-3}}.
 
-"userVerification":
-: OPTIONAL. A JSON string representing the desired user verification mode as defined in {{WEBAUTHN-3}}.
+    "userVerification":
+    : OPTIONAL. A JSON string representing the desired user verification mode as defined in {{WEBAUTHN-3}}.
 
-"extensions":
-: OPTIONAL, A JSON object with one or more extensions as defined in {{WEBAUTHN-3}}.
+    "extensions":
+    : OPTIONAL, A JSON object with one or more extensions as defined in {{WEBAUTHN-3}}.
 
 For example,
 
+~~~ http
     HTTP/1.1 200 OK
     Content-Type: application/json
     Cache-Control: no-store
@@ -435,6 +436,7 @@ For example,
         "userVerification": "preferred"
       }
     }
+~~~
 
 ### Error Response {#challenge-error-response}
 
