@@ -805,16 +805,30 @@ IANA has (TBD) registered the following values in the IANA "OAuth Authorization 
 
 This section provides non-normative examples of how this specification may be used to support specific use cases.
 
-## Passkey
+## Passkeys (autofill)
+
+A user may log in with a passkey (without a username or password).
+
+* The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the `authn_params_type=public-key` paramaeter
+* The Authorization Server generates the appropriate WebAuthn parameters for an authentication ceremony and returns them in the response.
+* The Client calls the platform's native WebAuthn APIs.
+* The platform interacts with the authenticator, optionally requests user verification, and signs the WebAuthn challenge.
+* The Client base64url encodes the JSON object containing the WebAuthn response and sends it to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) using the `authn_response` parameter.
+* The Authorization Server validates the WebAuthn response and returns an Authorization Code.
+* The Client requests an Access Token and Refresh Token by issuing a Token Request ({{token-request}}) to the Token Endpoint.
+* The Authorization Server verifies the Authorization Code and issues the requested tokens.
+
+## Passkeys (username first)
 
 A user may log in with a passkey (without a password).
 
 * The Client collects the username from the user.
-* The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the username.
-* The Authorization Server verifies the username and returns a challenge
-* The Client signs the challenge using the platform authenticator, which results in the user being prompted for verification with biometrics or a PIN.
-* The Client sends the signed challenge, username, and credential ID to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
-* The Authorization Server verifies the signed challenge and returns an Authorization Code.
+* The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the username and the `authn_params_type=public-key` paramaeter.
+* The Authorization Server looks up the username, generates the appropriate WebAuthn parameters for an authentication ceremony, and returns them in the response.
+* The Client calls the platform's native WebAuthn APIs.
+* The platform interacts with the authenticator, optionally requests user verification, and signs the WebAuthn challenge.
+* The Client base64url encodes the JSON object containing the WebAuthn response and sends it to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) using the `authn_response` parameter.
+* The Authorization Server validates the WebAuthn response and returns an Authorization Code.
 * The Client requests an Access Token and Refresh Token by issuing a Token Request ({{token-request}}) to the Token Endpoint.
 * The Authorization Server verifies the Authorization Code and issues the requested tokens.
 
