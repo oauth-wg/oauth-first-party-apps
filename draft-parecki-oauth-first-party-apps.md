@@ -211,7 +211,7 @@ Figure: First-Party Client Authorization Code Request
 - (A) The first-party client starts the flow, by presenting the user with a "sign in" button, or collecting information from the user, such as their email address or username.
 - (B) The client initiates the authorization request by making a POST request to the Authorization Challenge Endpoint, optionally with information collected from the user (e.g. email or username)
 - (C) The authorization server determines whether the information provided to the Authorization Challenge Endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error. In this example, it determines that additional information is needed and responds with an error. The error may contain additional information to guide the Client on what information to collect next. This pattern of collecting information, submitting it to the Authorization Challenge Endpoint and then receiving an error or authorization code may repeat several times.
-- (D) The client gathers additional information (e.g. signed passkey challenge, or one-time code from email) and makes a POST request to the Authorization Challenge Endpoint.
+- (D) The client gathers additional information (e.g. WebAuthn response, or one-time code from email) and makes a POST request to the Authorization Challenge Endpoint.
 - (E) The Authorization Challenge Endpoint returns an authorization code.
 - (F) The client sends the authorization code received in step (E) to obtain a token from the Token Endpoint.
 - (G) The Authorization Server returns an Access Token from the Token Endpoint.
@@ -244,7 +244,7 @@ important to note that some extension parameters have meaning in a web context b
 mechanism (e.g. `response_mode=query`). It is out of scope as to what the AS does in the case that an extension
 defines a parameter that has no meaning in this use case.
 
-The client initiates the authorization flow with or without information collected from the user (e.g. a signed passkey challenge or MFA code).
+The client initiates the authorization flow with or without information collected from the user (e.g. a WebAuthn response or MFA code).
 
 The authorization challenge endpoint response is either an authorization code, a set of WebAuthn parameters, or an error code, and may also contain an `auth_session` which the client uses on subsequent requests to the authorization challenge endpoint.
 
@@ -292,8 +292,11 @@ format with a character encoding of UTF-8 in the HTTP request body:
 "authn_params_type":
 : OPTIONAL. The string `public-key` to request a set of parameters for a WebAuthn request.
 
+"authn_params_op:
+: OPTIONAL. The string `get` to request a set of parameters for a WebAuthn assertion request or the string `create` for a WebAuthn credential creation request.
+
 "authn_response":
-: OPTIONAL. A JSON string containing the Base64URL encoded JSON object containing the properties defined in {{webauthn-authn-response}}
+: OPTIONAL. A JSON string containing the Base64URL encoded JSON object containing the properties defined in {{webauthn-response}}
 
 Specific implementations as well as extensions to this specification MAY define additional parameters to be used at this endpoint.
 
@@ -315,7 +318,11 @@ In another example, the client sends the response of successful WebAuthn authent
 
     authn_response=eyJ0eXBlIjoicHVibGljLWtleSIsImlkIjoiSlZfYkYzdzhaSndkM200R2FxcHhabmVlN2p1T0g4X1NRcGdUTWF4R3VEMCIsInJhd0lkIjoiSlZfYkYzdzhaSndkM200R2FxcHhabmVlN2p1T0g4X1NRcGdUTWF4R3VEMCIsImF1dGhlbnRpY2F0b3JBdHRhY2htZW50IjoicGxhdGZvcm0iLCJyZXNwb25zZSI6eyJjbGllbnREYXRhSlNPTiI6ImV5SjBlWEJsSWpvaWQyVmlZWFYwYUc0dVoyVjBJaXdpWTJoaGJHeGxibWRsSWpvaU1VNXRZa2g0U0djeVRIZHBNWE5vV1RWS1YySlZXSEpIV0VkTWJsOXdhbVEzVEd4R1pEVlZRMDFuV1NJc0ltOXlhV2RwYmlJNklDSm9kSFJ3Y3pvdkwyeHZaMmx1TG1WNFlXMXdiR1V1WTI5dElpd2lZM0p2YzNOUGNtbG5hVzRpT2lCbVlXeHpaWDAiLCJhdXRoZW50aWNhdG9yRGF0YSI6Ikl0ZUVLOUIta1pGSkUtdG1lUUUwZlRiOU5Ub0V0LV9QZVhxU3EwdGxWTmNGQUFBQUFBIiwic2lnbmF0dXJlIjoiTUVVQ0lCYWVSVk9FYllzQ2xyQmljZHU4Y2ltSnI5OXl3NVVseURyRUFJSnotQkxZQWlFQThyVkt1MlNQQ2FNbTJoMEdBS2U1QzFZS1ZQWUtISk5xY1VKOERoWG16eTAiLCJ1c2VySGFuZGxlIjoiWjRLaGhQWnZUVy1Wdl8zcFJFNEo2dyJ9LCJjbGllbnRFeHRlbnNpb25SZXN1bHRzIjp7fX0
 
-### WebAuthn Authentication Response {#webauthn-authn-response}
+### WebAuthn Response {#webauthn-response}
+
+#### WebAuthn Authentication Response
+
+The response for a WebAuthn authentication request (`authn_params_op` === `get`):
 
 "id":
 : REQUIRED. A JSON string representing the credential identifier as defined in {{WEBAUTHN-3}}.
@@ -349,17 +356,81 @@ In another example, the client sends the response of successful WebAuthn authent
 
 ~~~ json
 {
-    "type": "public-key",
-    "id": "JV_bF3w8ZJwd3m4GaqpxZnee7juOH8_SQpgTMaxGuD0",
-    "rawId": "JV_bF3w8ZJwd3m4GaqpxZnee7juOH8_SQpgTMaxGuD0",
-    "authenticatorAttachment": "platform",
-    "response": {
-        "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiMU5tYkh4SGcyTHdpMXNoWTVKV2JVWHJHWEdMbl9wamQ3TGxGZDVVQ01nWSIsIm9yaWdpbiI6ICJodHRwczovL2xvZ2luLmV4YW1wbGUuY29tIiwiY3Jvc3NPcmlnaW4iOiBmYWxzZX0",
-        "authenticatorData": "IteEK9B-kZFJE-tmeQE0fTb9NToEt-_PeXqSq0tlVNcFAAAAAA",
-        "signature": "MEUCIBaeRVOEbYsClrBicdu8cimJr99yw5UlyDrEAIJz-BLYAiEA8rVKu2SPCaMm2h0GAKe5C1YKVPYKHJNqcUJ8DhXmzy0",
-        "userHandle": "Z4KhhPZvTW-Vv_3pRE4J6w"
-    },
-    "clientExtensionResults": {}
+  "id": "o89r9ablrfK5tqkYWJLWLn4rghP71MPFAqHT1fX9Z4M",
+  "rawId": "o89r9ablrfK5tqkYWJLWLn4rghP71MPFAqHT1fX9Z4M",
+  "response": {
+    "authenticatorData": "dKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvAFAAAAAA",
+    "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiTGU5N1hRMkt0dnlWb1JGaHktdVlsSVVXSlZrYU52LWlMc0I1N2FIXzN2Sm5NLUYyS3VCVndiNEhJMVJhNlgxS2ZjMFl6dTRGX0lFZHFjY0trUG1KLWciLCJvcmlnaW4iOiJodHRwczovL3dlYmF1dGhuLmlvIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ",
+    "signature": "MEQCIELsUAUCOzh6cyispFGrN4pwTXEasQyVJ0UAW7opF0OUAiADR7qg-QIQpZerXEez9JTBY53ssNmkUYhlDyC6eHI1uA",
+    "userHandle": "LX8WlTwNobR7h16Jse6eOzzAXroGbEyVtt7MtKL6LKM"
+  },
+  "type": "public-key",
+  "clientExtensionResults": {},
+  "authenticatorAttachment": "platform"
+}
+~~~
+
+#### WebAuthn Registration Response
+
+The response for a WebAuthn credential creation request (`authn_params_op` === `create`):
+
+"id":
+: REQUIRED. A JSON string representing the credential identifier as defined in {{WEBAUTHN-3}}.
+
+"rawId":
+: REQUIRED. A JSON string representing the credential identifier as defined in {{WEBAUTHN-3}}.
+
+"type":
+: REQUIRED. A JSON string with value `public-key`.
+
+"response":
+: REQUIRED. A JSON object with the properties defined below:
+
+    "clientDataJSON":
+    : REQUIRED. A JSON string as defined in `AuthenticatorAttestationResponseJSON` in {{WEBAUTHN-3}}.
+
+    "authenticatorData":
+    : REQUIRED. A JSON string as defined in `AuthenticatorAttestationResponseJSON` in {{WEBAUTHN-3}}.
+
+    "transports":
+    : REQUIRED. A JSON array as defined in `AuthenticatorAttestationResponseJSON` in {{WEBAUTHN-3}}.
+
+    "publicKey":
+    : OPTIONAL. A JSON string as defined in `AuthenticatorAttestationResponseJSON` in {{WEBAUTHN-3}}.
+
+    "publicKeyAlgorithm":
+    : REQUIRED. A JSON number as defined in `AuthenticatorAttestationResponseJSON` in {{WEBAUTHN-3}}.
+
+    "attestationObject":
+    : REQUIRED. A JSON string as defined in `AuthenticatorAttestationResponseJSON` in {{WEBAUTHN-3}}.
+
+"authenticatorAttachment":
+: OPTIONAL. A JSON string representing the authenticator attachment modality as defined in {{WEBAUTHN-3}}.
+
+"clientExtensionResults":
+: OPTIONAL. A JSON object containing extension outputs from the client as defined in {{WEBAUTHN-3}}.
+
+~~~ json
+{
+  "id": "o89r9ablrfK5tqkYWJLWLn4rghP71MPFAqHT1fX9Z4M",
+  "rawId": "o89r9ablrfK5tqkYWJLWLn4rghP71MPFAqHT1fX9Z4M",
+  "response": {
+    "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVikdKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvBFAAAAAK3OAAI1vMYKZIsLJfHwVQMAIKPPa_Wm5a3yubapGFiS1i5-K4IT-9TDxQKh09X1_WeDpQECAyYgASFYILwr3RftOeZOgl2LfFcEe35EVCkTXPZFznwbM9Nl48eqIlggnrHqnnq_hidd3iZMbyYfiKRcWCVW0u2pqjQ0MOrTTik",
+    "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoieFBHNnNzS2VZZld1VGQ5ZTNzZkVaa0xIdlRzaWRkUS1MdjhNZzROTURuajV2aFNoeVdNRjk2ZWxqal9ET21sY1ZCX0gxdG9CZ2xMR3hIcXdISW1RY3ciLCJvcmlnaW4iOiJodHRwczovL3dlYmF1dGhuLmlvIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ",
+    "transports": [
+      "internal"
+    ],
+    "publicKeyAlgorithm": -7,
+    "publicKey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEvCvdF-055k6CXYt8VwR7fkRUKRNc9kXOfBsz02Xjx6qeseqeer-GJ13eJkxvJh-IpFxYJVbS7amqNDQw6tNOKQ",
+    "authenticatorData": "dKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvBFAAAAAK3OAAI1vMYKZIsLJfHwVQMAIKPPa_Wm5a3yubapGFiS1i5-K4IT-9TDxQKh09X1_WeDpQECAyYgASFYILwr3RftOeZOgl2LfFcEe35EVCkTXPZFznwbM9Nl48eqIlggnrHqnnq_hidd3iZMbyYfiKRcWCVW0u2pqjQ0MOrTTik"
+  },
+  "type": "public-key",
+  "clientExtensionResults": {
+    "credProps": {
+      "rk": true
+    }
+  },
+  "authenticatorAttachment": "platform"
 }
 ~~~
 
@@ -387,15 +458,19 @@ For example,
       "authorization_code": "uY29tL2F1dGhlbnRpY"
     }
 
-### WebAuthn Authentication Parameters Responses
+### WebAuthn Parameters Responses
+
+#### WebAuthn Authentication Parameters Response
 
 The authorization server generates and returns the public key credential request options for a WebAuthn authentication ceremony by creating an HTTP response content using the `application/json` media type as defined by {{RFC8259}} with the following properties and an HTTP 200 (OK) status code:
 
-"authn_params_public_key":
+< TODO: add note that some are optional in the response but required in the WebAuthn API as some may be derived client side, represent PublicKeyCredentialRequestOptions>
+
+"authn_params_public_key_get":
 : REQUIRED. A JSON object with one or more properties defined below.
 
     "challenge":
-    : REQUIRED. A JSON string
+    : REQUIRED. A JSON string <>
 
     "timeout":
     : OPTIONAL. A JSON number represnting the timeout value as defined in {{WEBAUTHN-3}}.
@@ -412,7 +487,6 @@ The authorization server generates and returns the public key credential request
     "extensions":
     : OPTIONAL, A JSON object with one or more extensions as defined in {{WEBAUTHN-3}}.
 
-For example,
 
 ~~~ http
     HTTP/1.1 200 OK
@@ -434,6 +508,88 @@ For example,
           }
         ],
         "userVerification": "preferred"
+      }
+    }
+~~~
+
+#### WebAuthn Registration Parameters Response
+
+The authorization server generates and returns the public key credential request options for a WebAuthn registration ceremony by creating an HTTP response content using the `application/json` media type as defined by {{RFC8259}} with the following properties and an HTTP 200 (OK) status code:
+
+< TODO: add note that some are optional in the response but required in the WebAuthn API as some may be derived client side, represent PublicKeyCredentialCreationOptions>
+
+"authn_params_public_key_create":
+: REQUIRED. A JSON object with one or more properties defined below.
+
+    "challenge":
+    : REQUIRED. A JSON string <>
+
+    "timeout":
+    : OPTIONAL. A JSON number representing the timeout value as defined in {{WEBAUTHN-3}}.
+
+    "rp":
+    : OPTIONAL, A JSON object representing the Relying Party attributes as defined in `PublicKeyCredentialRpEntity` in {{WEBAUTHN-3}}.
+
+    "user":
+    : OPTIONAL, A JSON object representing the user account that the credential is associated with as defined in `PublicKeyCredentialEntity` in {{WEBAUTHN-3}}.
+
+    "pubKeyCredParams":
+    : OPTIONAL, a JSON array representing the public key parameters as defined in `PublicKeyCredentialParameters` in {{WEBAUTHN-3}}.
+
+    "excludeCredentials":
+    : OPTIONAL, a JSON array representing the excluded credentials list as defined in {{WEBAUTHN-3}}.
+
+    "authenticatorSelection":
+    : OPTIONAL, a JSON object representing the authenticator selection options as defined in `AuthenticatorSelectionCriteria` in {{WEBAUTHN-3}}.
+
+    "attestation":
+    : OPTIONAL. A JSON string representing the attestation conveyance as defined in `AttestationConveyancePreference` in {{WEBAUTHN-3}}.
+
+    "hints":
+    : OPTIONAL. A JSON array representing client hints for interacting with the user as defined in `PublicKeyCredentialHints` in {{WEBAUTHN-3}}.
+
+    "extensions":
+    : OPTIONAL, A JSON object with one or more extensions as defined in {{WEBAUTHN-3}}.
+
+~~~ http
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    Cache-Control: no-store
+
+    {
+      "authn_params_public_key_create": {
+        "rp": {
+          "name": "WebAuthn.io Demo",
+          "id": "webauthn.io"
+        },
+        "user": {
+          "id": "LX8WlTwNobR7h16Jse6eOzzAXroGbEyVtt7MtKL6LKM",
+          "name": "ietf-example",
+          "displayName": "ietf-example"
+        },
+        "challenge": "xPG6ssKeYfWuTd9e3sfEZkLHvTsiddQ-Lv8Mg4NMDnj5vhShyWMF96eljj_DOmlcVB_H1toBglLGxHqwHImQcw",
+        "pubKeyCredParams": [
+          {
+            "type": "public-key",
+            "alg": -7
+          },
+          {
+            "type": "public-key",
+            "alg": -257
+          }
+        ],
+        "timeout": 60000,
+        "excludeCredentials": [],
+        "authenticatorSelection": {
+          "residentKey": "required",
+          "requireResidentKey": true,
+          "userVerification": "preferred"
+        },
+        "attestation": "none",
+        "hints": [],
+        "extensions": {
+          "credProps": true
+        }
       }
     }
 ~~~
