@@ -612,7 +612,10 @@ It may be possible to use other proof of possession mechanisms to sender constra
 
 ### Auth Session DPoP Binding
 
-If the client and authorization server are using DPoP binding of access tokens and/or authorization codes, then the `auth_session` value SHOULD be protected by the DPoP binding as well. The authorization server SHOULD bind the `auth_session` value to the DPoP public key. If the authorization server is binding the `auth_session` value to the DPoP public key, it MUST check that the same DPoP public key is being used and MUST verify the DPoP proof to ensure the client controls the corresponding private key whenever the client includes the `auth_session` in an Authorization Challenge Request as described in {{challenge-request}}.
+If the client and authorization server are using DPoP binding of access tokens and/or authorization codes, then the `auth_session` value SHOULD be protected as well. The authorization server SHOULD associate the `auth_session` value with the DPoP public key. This removes the need for the authorization server to include additional claims in the DPoP proof, while still benefitting from the assurance that the client presenting the proof has control over the DPoP key. If the authorization server associates the `auth_session` value to the DPoP public key, it:
+
+ - MUST check that the same DPoP public key is being used when the client presents the DPoP proof.
+ - MUST verify the DPoP proof to ensure the client controls the corresponding private key whenever the client includes the `auth_session` in an Authorization Challenge Request as described in {{challenge-request}}.
 
 DPoP binding of the `auth_session` value ensures that the context referenced by the `auth_session` cannot be stolen and reused by another device.
 
