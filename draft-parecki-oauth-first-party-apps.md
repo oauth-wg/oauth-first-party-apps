@@ -125,7 +125,7 @@ This draft also extends the token response (typically for use in response to a r
 
 ## Usage and Applicability
 
-This specification MUST only be used by first-party applications, which is when the authorization server and application are operated by the same entity and the user understands them both as the same entity.
+This specification MUST only be used by first-party applications, which is when the authorization server and application are controlled by the same entity and the user understands them both as the same entity.
 
 This specification MUST NOT be used by third party applications, and the authorization server SHOULD take measures to prevent use by third party applications. (e.g. only enable this grant for certain client IDs, and take measures to authenticate first-party apps when possible.)
 
@@ -557,7 +557,9 @@ The following authorization server metadata parameters {{RFC8414}} are introduce
 
 ## First-Party Applications {#first-party-applications}
 
-First-party applications are applications that the user recognizes as belonging to the same brand as the authorization server. For example, a bank publishing their own mobile application.
+First-party applications are applications that are controlled by the same entity as the authorization server used by the application, and the user understands them both as the same entity.
+
+For first-party applications, it is important that the user recognizes the application and authorization server as belonging to the same brand. For example, a bank publishing their own mobile application.
 
 Because this specification enables a client application to interact directly with the end user, and the application handles sending any information collected from the user to the authorization server, it is expected to be used only for first-party applications when the authorization server also has a high degree of trust of the client.
 
@@ -583,8 +585,6 @@ An authorization server may already have a combination of built-in or 3rd party 
 ## Client Authentication {#client-authentication}
 
 Typically, mobile and desktop applications are considered "public clients" in OAuth, since they cannot be shipped with a statically configured set of client credentials {{RFC8252}}. Because of this, client impersonation should be a concern of anyone deploying this pattern. Without client authentication, a malicious user or attacker can mimick the requests the application makes to the authorization server, pretending to be the legitimate client.
-
-Because this specification is intended for first-party applications, it is likely that the intent is to also avoid prompting the user with a consent screen as recommended by {{RFC6749}}.
 
 Implementers SHOULD consider additional measures to limit the risk of client impersonation, such as using attestation APIs available from the operating system.
 
