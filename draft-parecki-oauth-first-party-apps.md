@@ -99,7 +99,8 @@ applications, only delegating to the browser in unexpected, high risk, or error 
 
 # Introduction
 
-This document extends the OAuth 2.0 Authorization Framework {{RFC6749}} with
+This document, OAuth for First-Party Apps (FiPA),
+extends the OAuth 2.0 Authorization Framework {{RFC6749}} with
 a new endpoint, `authorization_challenge_endpoint`, to support first-party
 applications that want to control the process of obtaining authorization from
 the user using a native experience.
@@ -241,7 +242,9 @@ defines a parameter that has no meaning in this use case.
 
 The client initiates the authorization flow with or without information collected from the user (e.g. a signed passkey challenge or MFA code).
 
-The authorization challenge endpoint response is either an authorization code or an error code, and may also contain an `auth_session` which the client uses on subsequent requests to the authorization challenge endpoint.
+The authorization challenge endpoint response is either an authorization code or an error code, and may also contain an `auth_session` which the client uses on subsequent requests.
+
+Further communication between the client and authorization server MAY happen at the Authorization Challenge Endpoint or any other proprietary endpoints at the authorization server.
 
 
 ## Token endpoint
@@ -459,6 +462,8 @@ These intermediate requests are out of scope of this specification, and are expe
 to be defined by the authorization server. The format of these requests is not required
 to conform to the format of the initial authorization challenge requests
 (e.g. the request format may be `application/json` rather than `application/x-www-form-urlencoded`).
+These requests MAY also be sent to proprietary endpoints at the authorization server
+rather than the Authorization Challenge Endpoint.
 
 
 ### Auth Session {#auth-session}
@@ -906,6 +911,7 @@ These design decisions should enable authorization server implementations to iso
 
 * Fixed typos
 * Clarified resource server error response section
+* Clarified that further communication between client and AS can happen at proprietary endpoints
 
 -01
 
@@ -928,6 +934,6 @@ These design decisions should enable authorization server implementations to iso
 
 The authors would like to thank the attendees of the OAuth Security Workshop 2023 session in which this was discussed, as well as the following individuals who contributed ideas, feedback, and wording that shaped and formed the final specification:
 
-Brian Campbell, Dick Hardt, Dmitry Telegin, John Bradley, Justin Richer, Mike Jones, Orie Steele, Tobias Looker, Yaron Sheffer.
+Alejo Fernandez, Brian Campbell, Dick Hardt, Dmitry Telegin, John Bradley, Justin Richer, Mike Jones, Orie Steele, Tobias Looker, Yaron Sheffer.
 
 
