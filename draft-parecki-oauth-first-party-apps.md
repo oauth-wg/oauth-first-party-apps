@@ -743,14 +743,14 @@ A user may be required to provide an e-mail confirmation code as part of an auth
 * The Client sends the Authorization Code in a Token Request ({{token-request}}) to the Token Endpoint.
 * The Authorization Server verifies the Authorization Code and issues the Access Token and Refresh Token.
 
-## SMS Confirmation Code
-A user may be required to provide an SMS confirmation code as part of an authentication ceremony to prove they control a mobile phone number. The user provides a phone number and is then required to enter an SMS confirmation code sent to the phone. If the correct confirmation code is returned to the Authorization Server, it issues Access and Refresh Tokens.
+## Mobile Confirmation Code
+A user may be required to provide a confirmation code as part of an authentication ceremony to prove they control a mobile phone number. The user provides a phone number and is then required to enter a confirmation code sent to the phone. If the correct confirmation code is returned to the Authorization Server, it issues Access and Refresh Tokens.
 
 * The Client collects a mobile phone number from the user.
 * The Client sends the phone number in an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
-* The Authorization Server sends a confirmation code to the phone number and returns an Error Response ({{challenge-error-response}}) including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that a SMS confirmation code must be entered.
-* The Client presents a user experience guiding the user to enter the SMS confirmation code. Once the SMS verification code is entered, the Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint, including the confirmation code as well as the `auth_session` parameter returned in the previous Error Response.
-* The Authorization Server uses the `auth_session` to maintain the session context and verifies the SMS code before issuing an Authorization Code to the Client.
+* The Authorization Server sends a confirmation code to the phone number and returns an Error Response ({{challenge-error-response}}) including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that a confirmation code must be entered.
+* The Client presents a user experience guiding the user to enter the confirmation code. Once the code is entered, the Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint, including the confirmation code as well as the `auth_session` parameter returned in the previous Error Response.
+* The Authorization Server uses the `auth_session` to maintain the session context and verifies the code before issuing an Authorization Code to the Client.
 * The Client sends the Authorization Code in a Token Request ({{token-request}}) to the Token Endpoint.
 * The Authorization Server verifies the Authorization Code and issues the Access Token and Refresh Token.
 
