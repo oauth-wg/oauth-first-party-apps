@@ -292,7 +292,7 @@ Specific implementations as well as extensions to this specification MAY define 
 For example, the client makes the following request to initiate a flow
 given the user's phone number, line breaks shown for illustration purposes only:
 
-    POST /authorize HTTP/1.1
+    POST /authorize-challenge HTTP/1.1
     Host: server.example.com
     Content-Type: application/x-www-form-urlencoded
 
@@ -832,7 +832,7 @@ In addition to the response parameters defined in {{challenge-response}}, the au
 
 The client prompts the user to enter their username, and sends the username in an initial Authorization Challenge Request.
 
-    POST /authorize HTTP/1.1
+    POST /authorize-challenge HTTP/1.1
     Host: server.example.com
     Content-Type: application/x-www-form-urlencoded
 
@@ -853,7 +853,7 @@ The Authorization Server sends an error response indicating that an OTP is requi
 
 The client prompts the user for an OTP, and sends a new Authorization Challenge Request.
 
-    POST /authorize HTTP/1.1
+    POST /authorize-challenge HTTP/1.1
     Host: server.example.com
     Content-Type: application/x-www-form-urlencoded
 
@@ -934,6 +934,6 @@ These design decisions should enable authorization server implementations to iso
 
 The authors would like to thank the attendees of the OAuth Security Workshop 2023 session in which this was discussed, as well as the following individuals who contributed ideas, feedback, and wording that shaped and formed the final specification:
 
-Alejo Fernandez, Brian Campbell, Dick Hardt, Dmitry Telegin, John Bradley, Justin Richer, Mike Jones, Orie Steele, Tobias Looker, Yaron Sheffer.
+Alejo Fernandez, Brian Campbell, Dick Hardt, Dmitry Telegin, John Bradley, Justin Richer, Mike Jones, Orie Steele, Tim Cappalli, Tobias Looker, Yaron Sheffer.
 
 
