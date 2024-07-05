@@ -934,6 +934,6 @@ These design decisions should enable authorization server implementations to iso
 
 The authors would like to thank the attendees of the OAuth Security Workshop 2023 session in which this was discussed, as well as the following individuals who contributed ideas, feedback, and wording that shaped and formed the final specification:
 
-Alejo Fernandez, Brian Campbell, Dick Hardt, Dmitry Telegin, John Bradley, Justin Richer, Mike Jones, Orie Steele, Tim Cappalli, Tobias Looker, Yaron Sheffer.
+Alejo Fernandez, Brian Campbell, Dick Hardt, Dmitry Telegin, Jeff Corrigan, John Bradley, Justin Richer, Mike Jones, Orie Steele, Tim Cappalli, Tobias Looker, Yaron Sheffer.
 
 
