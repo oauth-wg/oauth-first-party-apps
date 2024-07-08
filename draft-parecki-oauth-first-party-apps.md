@@ -595,7 +595,8 @@ Typically, mobile and desktop applications are considered "public clients" in OA
 Implementers SHOULD consider additional measures to limit the risk of client impersonation, such as using attestation APIs available from the operating system.
 
 
-## Sender Constrained Tokens
+## Sender-Constrained Tokens
+
 Tokens issued in response to an authorization challenge request SHOULD be sender constrained to mitigate the risk of token theft and replay.
 
 Proof-of-Possession techniques constrain tokens by binding them to a cryptographic key. Whenever the token is presented, it MUST be accompanied by a proof that the client presenting the token also controls the cryptographic key bound to the token. If a proof-of-possession sender constrained token is presented without valid proof of possession of the cryptographic key, it MUST be rejected.
