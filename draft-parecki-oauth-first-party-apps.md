@@ -353,13 +353,13 @@ parameters with the response:
            include the `WWW-Authenticate` response header field
            matching the authentication scheme used by the client.
 
-     "invalid_grant":
-     :     The provided authorization grant or `auth_session` is
-           invalid, expired, revoked, or is otherwise invalid.
-
      "unauthorized_client":
      :     The authenticated client is not authorized to use this
-           authorization grant type.
+           endpoint.
+
+     "invalid_session":
+     :     The provided `auth_session` is
+           invalid, expired, revoked, or is otherwise invalid.
 
      "invalid_scope":
      :     The requested scope is invalid, unknown, malformed, or
@@ -402,7 +402,7 @@ parameters with the response:
 :    OPTIONAL.  The auth session allows the authorization server to
      associate subsequent requests by this client with an ongoing
      authorization request sequence. The client MUST include
-     the `auth_session` in follow-up requests to the challenge
+     the `auth_session` in follow-up requests to the authorization challenge
      endpoint if it receives one along with the error response.
 
 "request_uri":
@@ -427,7 +427,7 @@ as JSON numbers.  The order of parameters does not matter and can
 vary.
 
 The authorization server MAY define additional parameters in the response
-depending on the implmentation. The authorization server MAY also define
+depending on the implementation. The authorization server MAY also define
 more specific content types for the error responses as long as the response
 is JSON and conforms to `application/<AS-defined>+json`.
 
@@ -462,7 +462,8 @@ These intermediate requests are out of scope of this specification, and are expe
 to be defined by the authorization server. The format of these requests is not required
 to conform to the format of the initial authorization challenge requests
 (e.g. the request format may be `application/json` rather than `application/x-www-form-urlencoded`).
-These requests MAY also be sent to proprietary endpoints at the authorization server
+
+These intermediate requests MAY also be sent to proprietary endpoints at the authorization server
 rather than the Authorization Challenge Endpoint.
 
 
@@ -918,6 +919,7 @@ These design decisions should enable authorization server implementations to iso
 * Clarified resource server error response section
 * Added additional context to the Design Goals section
 * Clarified that further communication between client and AS can happen at proprietary endpoints
+* Changed `invalid_grant` to `invalid_session`
 
 -01
 
