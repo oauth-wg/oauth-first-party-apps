@@ -99,7 +99,8 @@ applications, only delegating to the browser in unexpected, high risk, or error 
 
 # Introduction
 
-This document extends the OAuth 2.0 Authorization Framework {{RFC6749}} with
+This document, OAuth for First-Party Apps (FiPA),
+extends the OAuth 2.0 Authorization Framework {{RFC6749}} with
 a new endpoint, `authorization_challenge_endpoint`, to support first-party
 applications that want to control the process of obtaining authorization from
 the user using a native experience.
@@ -241,7 +242,9 @@ defines a parameter that has no meaning in this use case.
 
 The client initiates the authorization flow with or without information collected from the user (e.g. a signed passkey challenge or MFA code).
 
-The authorization challenge endpoint response is either an authorization code or an error code, and may also contain an `auth_session` which the client uses on subsequent requests to the authorization challenge endpoint.
+The authorization challenge endpoint response is either an authorization code or an error code, and may also contain an `auth_session` which the client uses on subsequent requests.
+
+Further communication between the client and authorization server MAY happen at the Authorization Challenge Endpoint or any other proprietary endpoints at the authorization server.
 
 
 ## Token endpoint
@@ -289,7 +292,7 @@ Specific implementations as well as extensions to this specification MAY define 
 For example, the client makes the following request to initiate a flow
 given the user's phone number, line breaks shown for illustration purposes only:
 
-    POST /authorize HTTP/1.1
+    POST /authorize-challenge HTTP/1.1
     Host: server.example.com
     Content-Type: application/x-www-form-urlencoded
 
@@ -459,6 +462,8 @@ These intermediate requests are out of scope of this specification, and are expe
 to be defined by the authorization server. The format of these requests is not required
 to conform to the format of the initial authorization challenge requests
 (e.g. the request format may be `application/json` rather than `application/x-www-form-urlencoded`).
+These requests MAY also be sent to proprietary endpoints at the authorization server
+rather than the Authorization Challenge Endpoint.
 
 
 ### Auth Session {#auth-session}
@@ -486,8 +491,6 @@ This specification does not define any additional parameters beyond the token re
 This specification extends the OAuth 2.0 {{RFC6749}} token response
 defined in Section 5.1 with the additional parameter `auth_session`, defined in {{auth-session}}.
 
-The response MAY include an `auth_session` parameter which the client is expected to include on a subsequent request to the authorization challenge endpoint. The `auth_session` parameter MAY also be included even if the authorization code was obtained through a traditional OAuth authorization code flow rather than the flow defined by this specification.
-
 An example successful token response is below:
 
     HTTP/1.1 200 OK
@@ -501,6 +504,10 @@ An example successful token response is below:
       "refresh_token": "tGzv3JOkF0XG5Qx2TlKWIA",
       "auth_session": "uY29tL2F1dGhlbnRpY"
     }
+
+The response MAY include an `auth_session` parameter which the client is expected to include on any subsequent requests to the authorization challenge endpoint, as described in {{auth-session}}. The `auth_session` parameter MAY also be included even if the authorization code was obtained through a traditional OAuth authorization code flow rather than the flow defined by this specification.
+
+Including the `auth_session` parameter in the token response enables flows such as step-up authentication {{RFC9470}}, so that the authorization server can restore the context of a previous session and prompt only for the needed step-up factors. See {{step-up-sms-example}} for an example application.
 
 
 ## Token Endpoint Error Response
@@ -569,9 +576,8 @@ This specification is not prescriptive on how the Authorization Server establish
 
 There are two ways using this specification increases the risk of phishing.
 
-With this specification, the client interacts directly with the end user, collecting information provided by the user and sending it to the authorization server. If an attacker impersonates the client and successfully tricks a user into using it, they may not realize they are giving their credentials to the malicious application.
-
-In a traditional OAuth deployment using the redirect-based authorization code flow, the user will only ever enter their credentials at the authorization server, and it is straightforward to explain to avoid entering credentials in other "fake" websites. By introducing a new place the user is expected to enter their credentials using this specification, it is more complicated to teach users how to recognize other fake login prompts that might be attempting to steal their credentials.
+1. Malicious application: With this specification, the client interacts directly with the end user, collecting information provided by the user and sending it to the authorization server. If an attacker impersonates the client and successfully tricks a user into using it, they may not realize they are giving their credentials to the malicious application.
+2. User education: In a traditional OAuth deployment using the redirect-based authorization code flow, the user will only ever enter their credentials at the authorization server, and it is straightforward to explain to avoid entering credentials in other "fake" websites. By introducing a new place the user is expected to enter their credentials using this specification, it is more complicated to teach users how to recognize other fake login prompts that might be attempting to steal their credentials.
 
 Because of these risks, the authorization server MAY decide to require that the user go through a redirect-based flow at any stage of the process based on its own risk assessment.
 
@@ -737,14 +743,14 @@ A user may be required to provide an e-mail confirmation code as part of an auth
 * The Client sends the Authorization Code in a Token Request ({{token-request}}) to the Token Endpoint.
 * The Authorization Server verifies the Authorization Code and issues the Access Token and Refresh Token.
 
-## SMS Confirmation Code
-A user may be required to provide an SMS confirmation code as part of an authentication ceremony to prove they control a mobile phone number. The user provides a phone number and is then required to enter an SMS confirmation code sent to the phone. If the correct confirmation code is returned to the Authorization Server, it issues Access and Refresh Tokens.
+## Mobile Confirmation Code
+A user may be required to provide a confirmation code as part of an authentication ceremony to prove they control a mobile phone number. The user provides a phone number and is then required to enter a confirmation code sent to the phone. If the correct confirmation code is returned to the Authorization Server, it issues Access and Refresh Tokens.
 
 * The Client collects a mobile phone number from the user.
 * The Client sends the phone number in an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
-* The Authorization Server sends a confirmation code to the phone number and returns an Error Response ({{challenge-error-response}}) including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that a SMS confirmation code must be entered.
-* The Client presents a user experience guiding the user to enter the SMS confirmation code. Once the SMS verification code is entered, the Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint, including the confirmation code as well as the `auth_session` parameter returned in the previous Error Response.
-* The Authorization Server uses the `auth_session` to maintain the session context and verifies the SMS code before issuing an Authorization Code to the Client.
+* The Authorization Server sends a confirmation code to the phone number and returns an Error Response ({{challenge-error-response}}) including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that a confirmation code must be entered.
+* The Client presents a user experience guiding the user to enter the confirmation code. Once the code is entered, the Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint, including the confirmation code as well as the `auth_session` parameter returned in the previous Error Response.
+* The Authorization Server uses the `auth_session` to maintain the session context and verifies the code before issuing an Authorization Code to the Client.
 * The Client sends the Authorization Code in a Token Request ({{token-request}}) to the Token Endpoint.
 * The Authorization Server verifies the Authorization Code and issues the Access Token and Refresh Token.
 
@@ -763,7 +769,7 @@ A client may be in possession of an Access and Refresh Token as the result of a 
 * The Authorization Server verifies the Authorization Code and issues the requested tokens.
 * The Client presents the new Access Token to the Resource Server in order to access the protected resource.
 
-## Step-up Authentication using Confirmation SMS
+## Step-up Authentication using Confirmation SMS {#step-up-sms-example}
 A Client previously obtained an Access and Refresh Token after the user authenticated with an OTP. When the user attempts to access a protected resource, the Resource Server determines that it needs an additional level of authentication and triggers a step-up authentication, indicating the desired level of authentication using `acr_values` and `max_age` as defined in the Step-up Authentication specification. The Client initiates an authorization request with the Authorization Server indicating the `acr_values` and `max_age` parameters. The Authorization Server responds with error messages promptng for additional authentication until the `acr_values` and `max_age` values are satisfied before issuing fresh Access and Refresh Tokens.
 
 * The Client has a short-lived access token and long-lived refresh token following the completion of an Authorization Code Grant Flow which included user authentication.
@@ -826,7 +832,7 @@ In addition to the response parameters defined in {{challenge-response}}, the au
 
 The client prompts the user to enter their username, and sends the username in an initial Authorization Challenge Request.
 
-    POST /authorize HTTP/1.1
+    POST /authorize-challenge HTTP/1.1
     Host: server.example.com
     Content-Type: application/x-www-form-urlencoded
 
@@ -847,7 +853,7 @@ The Authorization Server sends an error response indicating that an OTP is requi
 
 The client prompts the user for an OTP, and sends a new Authorization Challenge Request.
 
-    POST /authorize HTTP/1.1
+    POST /authorize-challenge HTTP/1.1
     Host: server.example.com
     Content-Type: application/x-www-form-urlencoded
 
@@ -910,6 +916,7 @@ These design decisions should enable authorization server implementations to iso
 * Fixed typos
 * Clarified resource server error response section
 * Added additional context to the Design Goals section
+* Clarified that further communication between client and AS can happen at proprietary endpoints
 
 -01
 
@@ -932,6 +939,6 @@ These design decisions should enable authorization server implementations to iso
 
 The authors would like to thank the attendees of the OAuth Security Workshop 2023 session in which this was discussed, as well as the following individuals who contributed ideas, feedback, and wording that shaped and formed the final specification:
 
-Brian Campbell, Dick Hardt, Dmitry Telegin, John Bradley, Justin Richer, Mike Jones, Orie Steele, Tobias Looker, Yaron Sheffer.
+Alejo Fernandez, Brian Campbell, Dick Hardt, Dmitry Telegin, Jeff Corrigan, John Bradley, Justin Richer, Mike Jones, Orie Steele, Tim Cappalli, Tobias Looker, Yaron Sheffer.
 
 
