@@ -702,36 +702,36 @@ This section provides non-normative examples of how this specification may be us
 
 A user may log in with a passkey (without a password).
 
-* The Client collects the username from the user.
-* The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the username.
-* The Authorization Server verifies the username and returns a challenge
-* The Client signs the challenge using the platform authenticator, which results in the user being prompted for verification with biometrics or a PIN.
-* The Client sends the signed challenge, username, and credential ID to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
-* The Authorization Server verifies the signed challenge and returns an Authorization Code.
-* The Client requests an Access Token and Refresh Token by issuing a Token Request ({{token-request}}) to the Token Endpoint.
-* The Authorization Server verifies the Authorization Code and issues the requested tokens.
+1. The Client collects the username from the user.
+1. The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the username.
+1. The Authorization Server verifies the username and returns a challenge
+1. The Client signs the challenge using the platform authenticator, which results in the user being prompted for verification with biometrics or a PIN.
+1. The Client sends the signed challenge, username, and credential ID to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
+1. The Authorization Server verifies the signed challenge and returns an Authorization Code.
+1. The Client requests an Access Token and Refresh Token by issuing a Token Request ({{token-request}}) to the Token Endpoint.
+1. The Authorization Server verifies the Authorization Code and issues the requested tokens.
 
 ## Redirect to Authorization Server
 
 A user may be redirected to the Authorization Server to perfrom an account reset.
 
-* The Client collects username from the user.
-* The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the username.
-* The Authorization Server verifies the username and determines that the account is locked and returns a Redirect error response.
-* The Client parses the redirect message, opens a browser and redirects the user to the Authorization Server performing an OAuth 2.0 flow with PKCE.
-* The user resets their account by performing a multi-step authentication flow with the Authorization Server.
-* The Authorization Server issues an Authorization Code in a redirect back to the client, which then exchanges it for an access and refresh token.
+1. The Client collects username from the user.
+1. The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the username.
+1. The Authorization Server verifies the username and determines that the account is locked and returns a Redirect error response.
+1. The Client parses the redirect message, opens a browser and redirects the user to the Authorization Server performing an OAuth 2.0 flow with PKCE.
+1. The user resets their account by performing a multi-step authentication flow with the Authorization Server.
+1. The Authorization Server issues an Authorization Code in a redirect back to the client, which then exchanges it for an access and refresh token.
 
 
 ## Passwordless One-Time Password (OTP)
 
 In a passwordless One-Time Password (OTP) scheme, the user is in possession of a one-time password generator. This generator may be a hardware device, or implemented as an app on a mobile phone. The user provides a user identifier and one-time password, which is verified by the Authorization Server before it issues an Authorization Code, which can be exchanged for an Access and Refresh Token.
 
-* The Client collects username and OTP from user.
-* The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the username and OTP.
-* The Authorization Server verifies the username and OTP and returns an Authorization Code.
-* The Client requests an Access Token and Refresh Token by issuing a Token Request ({{token-request}}) to the Token Endpoint.
-* The Authorization Server verifies the Authorization Code and issues the requested tokens.
+1. The Client collects username and OTP from user.
+1. The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the username and OTP.
+1. The Authorization Server verifies the username and OTP and returns an Authorization Code.
+1. The Client requests an Access Token and Refresh Token by issuing a Token Request ({{token-request}}) to the Token Endpoint.
+1. The Authorization Server verifies the Authorization Code and issues the requested tokens.
 
 ## E-Mail Confirmation Code
 
@@ -750,63 +750,67 @@ An alternative version of this verification involves the user clicking a link in
 * The Client presents a message to the user instructing them to click the link sent to their email address. The user clicks the link in the email, which contains the verification code in the URL. The URL launches the app providing the verification code to the Client. The Client sends the verification code and `auth_session` to the Authorization Challenge Endpoint.
 
 ## Mobile Confirmation Code
+
 A user may be required to provide a confirmation code as part of an authentication ceremony to prove they control a mobile phone number. The user provides a phone number and is then required to enter a confirmation code sent to the phone. If the correct confirmation code is returned to the Authorization Server, it issues Access and Refresh Tokens.
 
-* The Client collects a mobile phone number from the user.
-* The Client sends the phone number in an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
-* The Authorization Server sends a confirmation code to the phone number and returns an Error Response ({{challenge-error-response}}) including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that a confirmation code must be entered.
-* The Client presents a user experience guiding the user to enter the confirmation code. Once the code is entered, the Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint, including the confirmation code as well as the `auth_session` parameter returned in the previous Error Response.
-* The Authorization Server uses the `auth_session` to maintain the session context and verifies the code before issuing an Authorization Code to the Client.
-* The Client sends the Authorization Code in a Token Request ({{token-request}}) to the Token Endpoint.
-* The Authorization Server verifies the Authorization Code and issues the Access Token and Refresh Token.
+1. The Client collects a mobile phone number from the user.
+1. The Client sends the phone number in an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
+1. The Authorization Server sends a confirmation code to the phone number and returns an Error Response ({{challenge-error-response}}) including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that a confirmation code must be entered.
+1. The Client presents a user experience guiding the user to enter the confirmation code. Once the code is entered, the Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint, including the confirmation code as well as the `auth_session` parameter returned in the previous Error Response.
+1. The Authorization Server uses the `auth_session` to maintain the session context and verifies the code before issuing an Authorization Code to the Client.
+1. The Client sends the Authorization Code in a Token Request ({{token-request}}) to the Token Endpoint.
+1. The Authorization Server verifies the Authorization Code and issues the Access Token and Refresh Token.
 
 ## Re-authenticating to an app a week later using OTP
+
 A client may be in possession of an Access and Refresh Token as the result of a previous succesful user authentication. The user returns to the app a week later and accesses the app. The Client presents the Access Token, but receives an error indicating the Access Token is no longer valid. The Client presents a Refresh Token to the Authorization Server to obtain a new Access Token. If the Authorization Server requires user interaction for reasons based on its own policies, it rejects the Refresh Token and the Client re-starts the user authentication flow to obtain new Access and Refresh Tokens.
 
-* The Client has a short-lived access token and long-lived refresh token following a previous completion of an Authorization Grant Flow which included user authentication.
-* A week later, the user launches the app and tries to access a protected resource at the Resource Server.
-* The Resource Server responds with an error code indicating an invalid access token since it has expired.
-* The Client presents the refresh token to the Authorization Server to obtain a new access token (section 6 {{RFC6749}})
-* The Authorization Server responds with an error code indicating that an OTP from the user is required, as well as an `auth_session`.
-* The Client prompts the user to enter an OTP.
-* The Client sends the OTP and `auth_session` in an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
-* The Authorization Server verifies the `auth_session` and OTP, and returns an Authorization Code.
-* The Client sends the Authorization Code in a Token Request ({{token-request}}) to the Token Endpoint.
-* The Authorization Server verifies the Authorization Code and issues the requested tokens.
-* The Client presents the new Access Token to the Resource Server in order to access the protected resource.
+1. The Client has a short-lived access token and long-lived refresh token following a previous completion of an Authorization Grant Flow which included user authentication.
+1. A week later, the user launches the app and tries to access a protected resource at the Resource Server.
+1. The Resource Server responds with an error code indicating an invalid access token since it has expired.
+1. The Client presents the refresh token to the Authorization Server to obtain a new access token (section 6 {{RFC6749}})
+1. The Authorization Server responds with an error code indicating that an OTP from the user is required, as well as an `auth_session`.
+1. The Client prompts the user to enter an OTP.
+1. The Client sends the OTP and `auth_session` in an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
+1. The Authorization Server verifies the `auth_session` and OTP, and returns an Authorization Code.
+1. The Client sends the Authorization Code in a Token Request ({{token-request}}) to the Token Endpoint.
+1. The Authorization Server verifies the Authorization Code and issues the requested tokens.
+1. The Client presents the new Access Token to the Resource Server in order to access the protected resource.
 
 ## Step-up Authentication using Confirmation SMS {#step-up-sms-example}
+
 A Client previously obtained an Access and Refresh Token after the user authenticated with an OTP. When the user attempts to access a protected resource, the Resource Server determines that it needs an additional level of authentication and triggers a step-up authentication, indicating the desired level of authentication using `acr_values` and `max_age` as defined in the Step-up Authentication specification. The Client initiates an authorization request with the Authorization Server indicating the `acr_values` and `max_age` parameters. The Authorization Server responds with error messages promptng for additional authentication until the `acr_values` and `max_age` values are satisfied before issuing fresh Access and Refresh Tokens.
 
-* The Client has a short-lived access token and long-lived refresh token following the completion of an Authorization Code Grant Flow which included user authentication.
-* When the Client presents the Access token to the Resource Server, the Resource Server determines that the `acr` claim in the Access Token is insufficient given the resource the user wants to access and responds with an `insufficient_user_authentication` error code, along with the desired `acr_values` and desired `max_age`.
-* The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the `auth_session`, `acr_values` and `max_age` parameters.
-* The Authorization Server verifies the `auth_session` and determines which authentication methods must be satisfied based on the `acr_values`, and responds with an Error Response ({{challenge-error-response}}) including `"error": "insufficient_authorization"` and a custom property indicating that an OTP must be entered.
-* The Client prompts the user for an OTP, which the user obtains and enters.
-* The Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint including the `auth_session` and OTP.
-* The Authorization Server verifies the OTP and returns an Authorization Code.
-* The Client sends the Authorization Code in a Token Request ({{token-request}}) to the Token Endpoint.
-* The Authorization Server verifies the Authorization Code and issues an Access Token with the updated `acr` value along with the Refresh Token.
-* The Client presents the Access Token to the Resources Server, which verifies that the `acr` value meets its requirements before granting access to the protected resource.
+1. The Client has a short-lived access token and long-lived refresh token following the completion of an Authorization Code Grant Flow which included user authentication.
+1. When the Client presents the Access token to the Resource Server, the Resource Server determines that the `acr` claim in the Access Token is insufficient given the resource the user wants to access and responds with an `insufficient_user_authentication` error code, along with the desired `acr_values` and desired `max_age`.
+1. The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the `auth_session`, `acr_values` and `max_age` parameters.
+1. The Authorization Server verifies the `auth_session` and determines which authentication methods must be satisfied based on the `acr_values`, and responds with an Error Response ({{challenge-error-response}}) including `"error": "insufficient_authorization"` and a custom property indicating that an OTP must be entered.
+1. The Client prompts the user for an OTP, which the user obtains and enters.
+1. The Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint including the `auth_session` and OTP.
+1. The Authorization Server verifies the OTP and returns an Authorization Code.
+1. The Client sends the Authorization Code in a Token Request ({{token-request}}) to the Token Endpoint.
+1. The Authorization Server verifies the Authorization Code and issues an Access Token with the updated `acr` value along with the Refresh Token.
+1. The Client presents the Access Token to the Resources Server, which verifies that the `acr` value meets its requirements before granting access to the protected resource.
 
 ## Registration
+
 This example describes how to use the mechanisms defined in this draft to create a complete user registration flow starting with an email address. In this example, it is the Authorization Server's policy to allow these challenges to be sent to email and phone number that were previously unrecognized, and creating the user account on the fly.
 
-* The Client collects a username from the user.
-* The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the username.
-* The Authorization Server returns an Error Response ({{challenge-error-response}}) including `"error": "insufficient_authorization"`, `"auth_session"`, and a custom property indicating that an e-mail address must be collected.
-* The Client collects an e-mail address from the user.
-* The Client sends the e-mail address as part of a second Authorization Challenge Request to the Authorization Challenge Endpoint, along with the `auth_session` parameter.
-* The Authorization Server sends a verification code to the e-mail address and returns an Error Response including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that an e-mail verification code must be entered.
-* The Client presents a user experience guiding the user to copy the e-mail verification code to the Client. Once the e-mail verification code is entered, the Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint, including the e-mail verification code as well as the `auth_session` parameter returned in the previous Error Response.
-* The Authorization Server uses the `auth_session` to maintain the session context, and verifies the e-mail verification code. It determines that it also needs a phone number for account recovery purposes and returns an Error Response including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that a phone number must be collected.
-* The Client collects a mobile phone number from the user.
-* The Client sends the phone number in an Authorization Challenge Request to the Authorization Challenge Endpoint, along with the `auth_session`.
-* The Authorization Server uses the `auth_session` parameter to link the previous requests. It sends a confirmation code to the phone number and returns an Error Response including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that a SMS confirmation code must be entered.
-* The Client presents a user experience guiding the user to enter the SMS confirmation code. Once the SMS verification code is entered, the Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint, including the confirmation code as well as the `auth_session` parameter returned in the previous Error Response.
-* The Authorization Server uses the `auth_session` to maintain the session context, and verifies the SMS verification code before issuing an Authorization Code to the Client.
-* The Client sends the Authorization Code in a Token Request ({{token-request}}) to the Token Endpoint.
-* The Authorization Server verifies the Authorization Code and issues the requested tokens.
+1. The Client collects a username from the user.
+1. The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the username.
+1. The Authorization Server returns an Error Response ({{challenge-error-response}}) including `"error": "insufficient_authorization"`, `"auth_session"`, and a custom property indicating that an e-mail address must be collected.
+1. The Client collects an e-mail address from the user.
+1. The Client sends the e-mail address as part of a second Authorization Challenge Request to the Authorization Challenge Endpoint, along with the `auth_session` parameter.
+1. The Authorization Server sends a verification code to the e-mail address and returns an Error Response including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that an e-mail verification code must be entered.
+1. The Client presents a user experience guiding the user to copy the e-mail verification code to the Client. Once the e-mail verification code is entered, the Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint, including the e-mail verification code as well as the `auth_session` parameter returned in the previous Error Response.
+1. The Authorization Server uses the `auth_session` to maintain the session context, and verifies the e-mail verification code. It determines that it also needs a phone number for account recovery purposes and returns an Error Response including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that a phone number must be collected.
+1. The Client collects a mobile phone number from the user.
+1. The Client sends the phone number in an Authorization Challenge Request to the Authorization Challenge Endpoint, along with the `auth_session`.
+1. The Authorization Server uses the `auth_session` parameter to link the previous requests. It sends a confirmation code to the phone number and returns an Error Response including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that a SMS confirmation code must be entered.
+1. The Client presents a user experience guiding the user to enter the SMS confirmation code. Once the SMS verification code is entered, the Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint, including the confirmation code as well as the `auth_session` parameter returned in the previous Error Response.
+1. The Authorization Server uses the `auth_session` to maintain the session context, and verifies the SMS verification code before issuing an Authorization Code to the Client.
+1. The Client sends the Authorization Code in a Token Request ({{token-request}}) to the Token Endpoint.
+1. The Authorization Server verifies the Authorization Code and issues the requested tokens.
 
 # Example Implementations
 
