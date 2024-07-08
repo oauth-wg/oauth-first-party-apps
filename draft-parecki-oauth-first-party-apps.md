@@ -890,11 +890,15 @@ The Authorization Server responds with an access token and refresh token.
 
 # Design Goals
 
-Rather than extend the OAuth token endpoint with additional grant types, this specification defines a new authorization flow the client can use to obtain an authorization flow. There are two primary reasons for designing the specification this way.
+This specification defines a new authorization flow the client can use to obtain an authorization grant. There are two primary reasons for designing the specification this way.
 
 This enables existing OAuth implementations to make fewer modifications to existing code by not needing to extend the token endpoint with new logic. Instead, the new logic can be encapsulated in an entirely new endpoint, the output of which is an authorization code which can be redeemed for an access token at the existing token endpoint.
 
-This also mirrors more closely the existing architecture of the redirect-based authorization code flow. In the authorization code flow, the client first initiates a request by redirecting a browser to the authorization endpoint, at which point the authorization server takes over with its own custom logic to authenticate the user in whatever way appropriate. Afterwards, the authorization server redirects the user back to the client application with an authorization code in the query string. This specification mirrors the existing approach by having the client first make a POST request to the "authorization challenge endpoint", at which point the authorization server provides its own custom logic to authenticate the user, eventually returning an authorization code.
+This also mirrors more closely the existing architecture of the redirect-based authorization code flow. In the authorization code flow, the client first initiates a request by redirecting a browser to the authorization endpoint, at which point the authorization server takes over with its own custom logic to authenticate the user in whatever way appropriate, possibly including interacting with other endpoints for the actual user authentication process. Afterwards, the authorization server redirects the user back to the client application with an authorization code in the query string. This specification mirrors the existing approach by having the client first make a POST request to the Authorization Challenge Endpoint, at which point the authorization server provides its own custom logic to authenticate the user, eventually returning an authorization code.
+
+An alternative design would be to define new custom grant types for the different authentication factors such as WebAuthn, OTP, etc. The drawback to this design is that conceptually, these authentication methods do not map to an OAuth grant. In other words, the OAuth authorization grant captures the user's intent to authorize access to some data, and that authorization is represented by an authorization code, not by different methods of authenticating the user.
+
+Another alternative option would be to have the Authorization Challenge Endpoint return an access token upon successful authentication of the user. This was deliberately not chosen, as this adds a new endpoint that tokens would be returned from. In most deployments, the Token Endpoint is the only endpoint that actually issues tokens, and includes all the implmentation logic around token binding, rate limiting, etc. Instead of defining a new endpoint that issues tokens which would have to have similar logic and protections, instead the new endpoint only issues authorization codes, which can be exchanged for tokens at the existing Token Endpoint just like in the redirect-based Authorization Code flow.
 
 These design decisions should enable authorization server implementations to isolate and encapsulate the changes needed to support this specification.
 
@@ -905,6 +909,7 @@ These design decisions should enable authorization server implementations to iso
 
 * Fixed typos
 * Clarified resource server error response section
+* Added additional context to the Design Goals section
 
 -01
 
