@@ -737,13 +737,17 @@ In a passwordless One-Time Password (OTP) scheme, the user is in possession of a
 
 A user may be required to provide an e-mail confirmation code as part of an authentication ceremony to prove they control an e-mail address. The user provides an e-mail address and is then required to enter a verification code sent to the e-mail address. If the correct verification code is returned to the Authorization Server, it issues Access and Refresh Tokens.
 
-* The Client collects an e-mail address from the user.
-* The Client sends the e-mail address in an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
-* The Authorization Server sends a verification code to the e-mail address and returns an Error Response ({{challenge-error-response}}) including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that an e-mail verification code must be entered.
-* The Client presents a user experience guiding the user to copy the e-mail verification code to the Client. Once the e-mail verification code is entered, the Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint, including the e-mail verification code as well as the `auth_session` parameter returned in the previous Error Response.
-* The Authorization Server uses the `auth_session` to maintain the session and verifies the e-mail verification code before issuing an Authorization Code to the Client.
-* The Client sends the Authorization Code in a Token Request ({{token-request}}) to the Token Endpoint.
-* The Authorization Server verifies the Authorization Code and issues the Access Token and Refresh Token.
+1. The Client collects an e-mail address from the user.
+2. The Client sends the e-mail address in an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
+3. The Authorization Server sends a verification code to the e-mail address and returns an Error Response ({{challenge-error-response}}) including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that an e-mail verification code must be entered.
+4. The Client presents a user experience guiding the user to copy the e-mail verification code to the Client. Once the e-mail verification code is entered, the Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint, including the e-mail verification code as well as the `auth_session` parameter returned in the previous Error Response.
+5. The Authorization Server uses the `auth_session` to maintain the session and verifies the e-mail verification code before issuing an Authorization Code to the Client.
+6. The Client sends the Authorization Code in a Token Request ({{token-request}}) to the Token Endpoint.
+7. The Authorization Server verifies the Authorization Code and issues the Access Token and Refresh Token.
+
+An alternative version of this verification involves the user clicking a link in an email rather than manually entering a verification code. This is typically done for email verification flows rather than inline in a login flow. The protocol-level details remain the same for the alternative flow despite the different user experience. All steps except step 4 above remain the same, but the client presents an alternative user experience for step 4 described below:
+
+* The Client presents a message to the user instructing them to click the link sent to their email address. The user clicks the link in the email, which contains the verification code in the URL. The URL launches the app providing the verification code to the Client. The Client sends the verification code and `auth_session` to the Authorization Challenge Endpoint.
 
 ## Mobile Confirmation Code
 A user may be required to provide a confirmation code as part of an authentication ceremony to prove they control a mobile phone number. The user provides a phone number and is then required to enter a confirmation code sent to the phone. If the correct confirmation code is returned to the Authorization Server, it issues Access and Refresh Tokens.
