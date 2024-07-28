@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-07-25T01:16:18.226676+00:00",
+  "timestamp": "2024-07-28T01:21:57.266084+00:00",
   "repo": "aaronpk/oauth-first-party-apps",
   "labels": [
     {
@@ -2141,7 +2141,7 @@
       "labels": [],
       "body": "If you're interested in implementing this, or already have an in progress implementation, please comment down below!",
       "createdAt": "2024-05-28T21:18:13Z",
-      "updatedAt": "2024-06-18T13:04:07Z",
+      "updatedAt": "2024-07-27T22:53:09Z",
       "closedAt": null,
       "comments": [
         {
@@ -2157,6 +2157,27 @@
           "body": "We are interested in implementing the standard in Keycloak for several customers who need this feature. Currently, in Keycloak, it is common to extend the direct grant to provide \"similar\" functionality. \r\nI proposed to follow this standard [here](https://github.com/keycloak/keycloak/discussions/25014) in the Keycloak community for implementation.",
           "createdAt": "2024-06-18T13:03:09Z",
           "updatedAt": "2024-06-18T13:04:07Z"
+        },
+        {
+          "author": "evert",
+          "authorAssociation": "NONE",
+          "body": "I'm currently implementing this here:\r\n\r\nhttps://github.com/curveball/a12n-server/pull/502\r\n\r\n",
+          "createdAt": "2024-07-27T22:14:05Z",
+          "updatedAt": "2024-07-27T22:14:05Z"
+        },
+        {
+          "author": "embesozzi",
+          "authorAssociation": "NONE",
+          "body": "I developed the implementation for Keycloak, which currently supports passkeys. For those interested, here is the related [article](https://medium.com/@embesozzi/deep-dive-into-enhancing-user-experience-with-native-authentication-and-passkeys-in-keycloak-86fb72c64278).",
+          "createdAt": "2024-07-27T22:47:46Z",
+          "updatedAt": "2024-07-27T22:47:46Z"
+        },
+        {
+          "author": "evert",
+          "authorAssociation": "NONE",
+          "body": " I'm wondering that since the current spec requires implementations to pick their own error types, I'm wondering if it wouldn't be better to prefix your error types with `keycloak_` to more clearly indicate that this is a keycloak-specific feature. ",
+          "createdAt": "2024-07-27T22:53:08Z",
+          "updatedAt": "2024-07-27T22:53:08Z"
         }
       ]
     },
