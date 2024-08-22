@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-20T01:17:20.350852+00:00",
+  "timestamp": "2024-08-22T01:19:14.806610+00:00",
   "repo": "aaronpk/oauth-first-party-apps",
   "labels": [
     {
@@ -2400,9 +2400,17 @@
       "labels": [],
       "body": "it honestly feels like a huge stretch to use authorization grant type for what is defined in this specification, given that:\r\n\r\n1. client is authenticating the user/passing the info used to authenticate the user\r\n2. a new endpoint\r\n\r\n agree that there is probably no need for the new grant types per different authentication factors, but if you are defining a new parameter ` authorization_code`, it is probably more honest and cleaner to define a new grant type to get an access token based on this new artifact from an authorization challenge endpoint. Security properties for the authorization code from a usual authorization endpoint and this new authorization challenge endpoint is also probably different, no? (I think I am slightly contradicting a comment in another issue #102, but a new grant type really feels better.)",
       "createdAt": "2024-08-12T13:45:15Z",
-      "updatedAt": "2024-08-12T13:45:15Z",
+      "updatedAt": "2024-08-20T15:27:33Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "gffletch",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think the rationale (for me anyway) is that the goal is any existing OAuth authorization request can be made via the new endpoint (just like we didn't create a new grant_type for PAR). I'm not sure what the AS would do different for the request over a standard auth code flow? The goal is to return a code the client can use to request tokens as it normally does. This also keeps the models similar if the AS requires the user to go through a web flow.",
+          "createdAt": "2024-08-20T15:27:32Z",
+          "updatedAt": "2024-08-20T15:27:32Z"
+        }
+      ]
     },
     {
       "number": 110,
