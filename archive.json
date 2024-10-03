@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-10-01T01:41:22.905878+00:00",
+  "timestamp": "2024-10-03T01:25:59.878036+00:00",
   "repo": "aaronpk/oauth-first-party-apps",
   "labels": [
     {
@@ -2425,6 +2425,22 @@
       "body": "using this draft in the context of EUDIW ecosystem would solve some problems in the following scenarios:\r\n\r\n- scenario 1: using eID tap (physical card) to authenticate the user when issuing a PID (government issued digital credential). eID card talks directly to the eID server, but the tap needs to be mediated by the wallet/client since it requires NFC. So there is no need for a browser during authorization request. German EUDIW Architecture project has an implementation of this and it is not very oauth compliant nor interoperable since a response with authorization code is not an authorization response. eID server and the issuer of a PID is the government or is authorized by the government to read the data from eID. \r\n- scenario 2: Present PID to authenticate the user when issuing a QEAA (any other credential, can be mobile driving license). Some use-cases do not want to show the user the browser and want to go straight to the PID presentation screen after the QEAA issuance request (but some use-cases might need a browser - `redirect_to_web` error would be very useful). Both wallet that stores PID and the QEAA issuer needs to be certified/registered with the government/European Commission. Issuer of QEAA needs to be authorized to receive PID.\r\n\r\nHad a discussion with the editors and they were reluctantly willing to enable the usage of the draft in a situation where a tightly defined trust framework can be considered equivalent to a first party scenario:\r\n- Issuer/AS can identify the \"first-partiness\" of the wallet and is sure that wallet knows what to do in that flow\r\n- Issuer/AS is authorized to get that user data from the wallet\r\n- security properties are also clearly defined\r\n- all this is tightly defined in a profile of first party app spec\r\n\r\ncc @danielfett @cre8",
       "createdAt": "2024-08-12T16:12:48Z",
       "updatedAt": "2024-08-12T16:15:25Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 111,
+      "id": "I_kwDOJbxyLc6YivVP",
+      "title": "Consider mentioning URL registration",
+      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/111",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Question raised on OAuth mailing list by Alex Nennker: https://mailarchive.ietf.org/arch/msg/oauth/pgO3Gpnoc-OrBlQnrZLqE-ImlBM/",
+      "createdAt": "2024-10-01T13:27:32Z",
+      "updatedAt": "2024-10-01T13:27:32Z",
       "closedAt": null,
       "comments": []
     }
