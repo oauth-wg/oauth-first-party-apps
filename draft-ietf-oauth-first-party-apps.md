@@ -3,7 +3,7 @@ title: "OAuth 2.0 for First-Party Applications"
 abbrev: "OAuth for First-Party Apps"
 category: std
 
-docname: draft-parecki-oauth-first-party-apps-latest
+docname: draft-ietf-oauth-first-party-apps-latest
 submissiontype: IETF
 number:
 date:
