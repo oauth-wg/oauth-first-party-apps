@@ -29,7 +29,7 @@ About This Document
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://aaronpk.github.io/oauth-first-party-apps/draft-parecki-oauth-
+   https://drafts.oauth.net/oauth-first-party-apps/draft-ietf-oauth-
    first-party-apps.html.  Status information for this document may be
    found at https://datatracker.ietf.org/doc/draft-ietf-oauth-first-
    party-apps/.
@@ -40,7 +40,7 @@ About This Document
    Subscribe at https://www.ietf.org/mailman/listinfo/oauth/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/aaronpk/oauth-first-party-apps.
+   https://github.com/oauth-wg/oauth-first-party-apps.
 
 Status of This Memo
 
