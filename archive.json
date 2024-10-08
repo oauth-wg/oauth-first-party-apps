@@ -1,7 +1,7 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-10-06T01:38:56.403375+00:00",
-  "repo": "aaronpk/oauth-first-party-apps",
+  "timestamp": "2024-10-08T01:25:57.132244+00:00",
+  "repo": "oauth-wg/oauth-first-party-apps",
   "labels": [
     {
       "name": "bug",
@@ -59,7 +59,7 @@
       "number": 1,
       "id": "I_kwDOJbxyLc5lMgeX",
       "title": "Name of challenge endpoint",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/1",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/1",
       "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -72,7 +72,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Currently the endpoint is called \"Authorization Challenge Endpoint\"",
           "createdAt": "2023-06-09T15:58:27Z",
           "updatedAt": "2023-06-09T15:58:27Z"
@@ -83,7 +83,7 @@
       "number": 2,
       "id": "I_kwDOJbxyLc5lMjL3",
       "title": "Response Mode",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/2",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/2",
       "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -96,7 +96,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Language from PAR:\r\n\r\n> The endpoint accepts the authorization request parameters defined in [[RFC6749](https://datatracker.ietf.org/doc/html/rfc6749)] for the authorization endpoint as well as all applicable extensions defined for the authorization endpoint.\r\n\r\nGeorge: Some parameters have meaning in a web context but don't have meaning in a native mechanism (e.g. response_mode=query). It is out of scope as to what the AS does in the case that an extension defines a parameter that is invalid in this use case.\r\n",
           "createdAt": "2023-06-09T15:57:12Z",
           "updatedAt": "2023-06-09T15:57:12Z"
@@ -107,7 +107,7 @@
       "number": 3,
       "id": "I_kwDOJbxyLc5lMjnX",
       "title": "OIDC compatibility",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/3",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/3",
       "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -120,7 +120,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Copy language from PAR:\r\n\r\n> Some examples of such extensions include Proof Key for Code Exchange (PKCE) [[RFC7636](https://datatracker.ietf.org/doc/html/rfc7636)], Resource Indicators [[RFC8707](https://datatracker.ietf.org/doc/html/rfc8707)], and OpenID Connect (OIDC) [[OIDC](http://openid.net/specs/openid-connect-core-1_0.html)].",
           "createdAt": "2023-06-09T15:53:53Z",
           "updatedAt": "2023-06-09T15:53:53Z"
@@ -131,7 +131,7 @@
       "number": 5,
       "id": "I_kwDOJbxyLc5lMpSG",
       "title": "Fallback to web, model on PAR ",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/5",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/5",
       "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -144,7 +144,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Related to #16 ",
           "createdAt": "2023-06-09T15:51:17Z",
           "updatedAt": "2023-06-09T15:51:17Z"
@@ -155,7 +155,7 @@
       "number": 6,
       "id": "I_kwDOJbxyLc5lMrTb",
       "title": "Clarify that mobile app starts the flow with this endpoint",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/6",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/6",
       "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -168,7 +168,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "The new sequence diagram in #4 covers this ",
           "createdAt": "2023-06-09T15:50:42Z",
           "updatedAt": "2023-06-09T15:50:42Z"
@@ -179,7 +179,7 @@
       "number": 7,
       "id": "I_kwDOJbxyLc5lMsPN",
       "title": "Be prescriptive on how client authentication is used",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/7",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/7",
       "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -199,7 +199,7 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Covered in Client Authentication section in Security Considerations https://aaronpk.github.io/oauth-first-party-native-apps/draft-parecki-oauth-first-party-native-apps.html#name-client-authentication",
           "createdAt": "2023-06-09T15:49:39Z",
           "updatedAt": "2023-06-09T15:49:39Z"
@@ -210,7 +210,7 @@
       "number": 8,
       "id": "I_kwDOJbxyLc5lMsaZ",
       "title": "How to layer DPoP on top of this flow",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/8",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/8",
       "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -228,7 +228,7 @@
       "number": 9,
       "id": "I_kwDOJbxyLc5mCbL_",
       "title": "Should we allow 3rd party apps as long as the only challenge method is passkey?",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/9",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/9",
       "state": "CLOSED",
       "author": "gffletch",
       "authorAssociation": "COLLABORATOR",
@@ -241,7 +241,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Pieter and I discussed this today, we are leaning towards sticking with the current limitation of 1st party apps, since mentioning 3rd party apps opens up a lot more items that would need to be solved in this context. If someone did want to create an extension to solve the 3rd party use cases that would be best done as a different draft.",
           "createdAt": "2023-06-30T15:25:11Z",
           "updatedAt": "2023-06-30T15:25:11Z"
@@ -252,7 +252,7 @@
       "number": 10,
       "id": "I_kwDOJbxyLc5mCeB6",
       "title": "I don't think we should limit the spec to one app per platform",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/10",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/10",
       "state": "CLOSED",
       "author": "gffletch",
       "authorAssociation": "COLLABORATOR",
@@ -281,7 +281,7 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "already stubbed some out in the draft, needs more expansion",
           "createdAt": "2023-06-09T15:42:43Z",
           "updatedAt": "2023-06-09T15:42:43Z"
@@ -292,7 +292,7 @@
       "number": 11,
       "id": "I_kwDOJbxyLc5mCe_a",
       "title": "Always require PKCE due to possibility of fallback to web redirect flow",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/11",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/11",
       "state": "CLOSED",
       "author": "gffletch",
       "authorAssociation": "COLLABORATOR",
@@ -312,7 +312,7 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "If we go with PAR request URI option (#16) then we need the client to create the PKCE code challenge.\r\n\r\nThe DPoP question will be covered by the new DPoP section #8",
           "createdAt": "2023-06-09T15:31:17Z",
           "updatedAt": "2023-06-09T15:43:40Z"
@@ -326,7 +326,7 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "I think this is not needed because the client can add the PKCE code challenge the first time the client pops out to the browser.",
           "createdAt": "2023-10-20T15:48:42Z",
           "updatedAt": "2023-10-20T15:48:42Z"
@@ -337,7 +337,7 @@
       "number": 12,
       "id": "I_kwDOJbxyLc5mCiY2",
       "title": "Is (e.g. password) the best choice in the Protocol Overview section",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/12",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/12",
       "state": "CLOSED",
       "author": "gffletch",
       "authorAssociation": "COLLABORATOR",
@@ -352,7 +352,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "step 1 mentions only username and email as possible first-provided info\r\n\r\nstep 2 mentions most likely outcome is error with next step, e.g. passkey or one-time code",
           "createdAt": "2023-06-09T15:19:01Z",
           "updatedAt": "2023-06-09T15:19:01Z"
@@ -363,7 +363,7 @@
       "number": 13,
       "id": "I_kwDOJbxyLc5mCj22",
       "title": "Authorization Challenge Request",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/13",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/13",
       "state": "CLOSED",
       "author": "gffletch",
       "authorAssociation": "COLLABORATOR",
@@ -378,7 +378,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "We might be able to look at PAR for language to use here, since PAR does the same thing.",
           "createdAt": "2023-05-19T15:29:31Z",
           "updatedAt": "2023-05-19T15:29:31Z"
@@ -389,7 +389,7 @@
       "number": 14,
       "id": "I_kwDOJbxyLc5mCm1W",
       "title": "Need a non-normative example showing how the AS extends the spec to make it all work",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/14",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/14",
       "state": "CLOSED",
       "author": "gffletch",
       "authorAssociation": "COLLABORATOR",
@@ -404,14 +404,14 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "We can add an appendix section describing how an AS could build a concrete implementation of this. Could reference the appendix from the main part of the spec as an example of how this could look.\r\n\r\nIn any case, we want to make sure it's clear that this is not the \"default\" implementation we expect, so doing it as an appendix will avoid that confusion.",
           "createdAt": "2023-05-19T15:12:44Z",
           "updatedAt": "2023-05-19T15:12:44Z"
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "I think this might be covered by the examples created for #15 ",
           "createdAt": "2023-06-30T21:46:20Z",
           "updatedAt": "2023-06-30T21:46:20Z"
@@ -422,7 +422,7 @@
       "number": 15,
       "id": "I_kwDOJbxyLc5mXcq4",
       "title": "Include non-normative examples in the Appendix",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/15",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/15",
       "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -437,7 +437,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "We can pull from the list of examples on the older draft:\r\n\r\nhttps://github.com/aaronpk/oauth-direct-interaction-grant/blob/main/draft-parecki-oauth-direct-interaction-grant.md#use-cases",
           "createdAt": "2023-06-30T15:10:58Z",
           "updatedAt": "2023-06-30T15:10:58Z"
@@ -448,10 +448,10 @@
       "number": 16,
       "id": "I_kwDOJbxyLc5oUG6E",
       "title": "Web redirect options",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/16",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/16",
       "state": "CLOSED",
       "author": "aaronpk",
-      "authorAssociation": "OWNER",
+      "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [
         "question"
@@ -463,7 +463,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "In either case, we want to make sure that the user can resume the flow without having to start the UX from scratch. We don't want the user to have to re-enter their username or anything, just jump into the middle of the flow in the browser. ",
           "createdAt": "2023-07-07T15:18:16Z",
           "updatedAt": "2023-07-07T15:18:16Z"
@@ -477,7 +477,7 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Done in #38 ",
           "createdAt": "2023-10-20T15:46:42Z",
           "updatedAt": "2023-10-20T15:46:42Z"
@@ -488,10 +488,10 @@
       "number": 17,
       "id": "I_kwDOJbxyLc5oUIEq",
       "title": "Describe how DPoP works with this spec",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/17",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/17",
       "state": "CLOSED",
       "author": "aaronpk",
-      "authorAssociation": "OWNER",
+      "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -501,7 +501,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Duplicate of #8 ",
           "createdAt": "2023-06-09T15:43:30Z",
           "updatedAt": "2023-06-09T15:43:30Z"
@@ -512,7 +512,7 @@
       "number": 20,
       "id": "I_kwDOJbxyLc5qQdNN",
       "title": "Add in user scenarios",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/20",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/20",
       "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -536,10 +536,10 @@
       "number": 21,
       "id": "I_kwDOJbxyLc5qQkMv",
       "title": "Expand introduction",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/21",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/21",
       "state": "CLOSED",
       "author": "aaronpk",
-      "authorAssociation": "OWNER",
+      "authorAssociation": "MEMBER",
       "assignees": [
         "aaronpk"
       ],
@@ -554,7 +554,7 @@
       "number": 22,
       "id": "I_kwDOJbxyLc5qQkNO",
       "title": "Write Introduction",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/22",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/22",
       "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -567,7 +567,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "duplicate of #21 ",
           "createdAt": "2023-06-30T22:16:12Z",
           "updatedAt": "2023-06-30T22:16:12Z"
@@ -578,10 +578,10 @@
       "number": 23,
       "id": "I_kwDOJbxyLc5qQkqk",
       "title": "Document token request",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/23",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/23",
       "state": "CLOSED",
       "author": "aaronpk",
-      "authorAssociation": "OWNER",
+      "authorAssociation": "MEMBER",
       "assignees": [
         "aaronpk"
       ],
@@ -596,10 +596,10 @@
       "number": 24,
       "id": "I_kwDOJbxyLc5qQmMc",
       "title": "`auth_session` DPoP binding",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/24",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/24",
       "state": "CLOSED",
       "author": "aaronpk",
-      "authorAssociation": "OWNER",
+      "authorAssociation": "MEMBER",
       "assignees": [
         "aaronpk"
       ],
@@ -611,7 +611,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Without DPoP binding, device session values should be one-time use.",
           "createdAt": "2023-07-07T15:29:16Z",
           "updatedAt": "2023-07-07T15:29:16Z"
@@ -625,7 +625,7 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "We can define a new parameter `ash` (auth session hash) to include the hash of the `auth_session` in the DPoP proof:\r\n\r\nhttps://datatracker.ietf.org/doc/html/rfc9449#name-dpop-proof-jwt-syntax",
           "createdAt": "2023-10-20T15:39:45Z",
           "updatedAt": "2023-10-20T15:39:45Z"
@@ -636,10 +636,10 @@
       "number": 25,
       "id": "I_kwDOJbxyLc5qQm1G",
       "title": "Update reference to Native SSO",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/25",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/25",
       "state": "CLOSED",
       "author": "aaronpk",
-      "authorAssociation": "OWNER",
+      "authorAssociation": "MEMBER",
       "assignees": [
         "aaronpk"
       ],
@@ -654,10 +654,10 @@
       "number": 27,
       "id": "I_kwDOJbxyLc5rP158",
       "title": "Better name for \"device session\"",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/27",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/27",
       "state": "CLOSED",
       "author": "aaronpk",
-      "authorAssociation": "OWNER",
+      "authorAssociation": "MEMBER",
       "assignees": [
         "aaronpk"
       ],
@@ -676,7 +676,7 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Based on the discussion in #35, we'll call this `auth_session`, along with the following:\r\n\r\n* The client MUST store the `auth_session` indefinitely (similar to how the client handles a refresh token)\r\n* The AS MAY return a new `auth_session` from every response defined in this spec, including token endpoint error and success responses\r\n* Security considerations: the AS MAY invalidate an `auth_session` at any time for its own reasons",
           "createdAt": "2023-10-20T15:37:24Z",
           "updatedAt": "2023-10-20T15:37:24Z"
@@ -687,7 +687,7 @@
       "number": 29,
       "id": "I_kwDOJbxyLc5vcWpA",
       "title": "First Party Native Apps in Browsers",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/29",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/29",
       "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -723,7 +723,7 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "We can expand the new SPA security considerations section to include: https://aaronpk.github.io/oauth-first-party-apps/draft-parecki-oauth-first-party-apps.html#name-single-page-applications\r\n\r\n* Most of the time it's not worth the additional complexity of adding this to a SPA vs doing a full page redirect or popup window for the auth code flow\r\n* (Steal some language around the first-party problem from section 9.1)",
           "createdAt": "2023-10-20T15:46:20Z",
           "updatedAt": "2023-10-20T15:46:20Z"
@@ -734,7 +734,7 @@
       "number": 30,
       "id": "I_kwDOJbxyLc5vcXCO",
       "title": "Add shelling out to the browser as a error code",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/30",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/30",
       "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -749,14 +749,14 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "We should define a new response (in addition to authorization code and error) that tells the client to launch a browser flow instead https://aaronpk.github.io/oauth-first-party-native-apps/draft-parecki-oauth-first-party-native-apps.html#section-5.2\r\n\r\nThe response is defined as a PAR response https://datatracker.ietf.org/doc/html/rfc9126#section-2.2",
           "createdAt": "2023-09-08T15:29:23Z",
           "updatedAt": "2023-09-08T15:32:47Z"
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Done in #38",
           "createdAt": "2023-10-20T15:19:50Z",
           "updatedAt": "2023-10-20T15:19:50Z"
@@ -767,7 +767,7 @@
       "number": 31,
       "id": "I_kwDOJbxyLc5vcYL2",
       "title": "Content Type",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/31",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/31",
       "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -782,7 +782,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "* Make it more clear in 5.2 that this spec expects the response to always be either the authorization code or an error https://aaronpk.github.io/oauth-first-party-native-apps/draft-parecki-oauth-first-party-native-apps.html#section-5.2\r\n* Section 5.2.2 needs to make it clear that the authorization server has to define its own error codes https://aaronpk.github.io/oauth-first-party-native-apps/draft-parecki-oauth-first-party-native-apps.html#section-5.2.2\r\n* Section 5.2.2 should explicitly allow more specific JSON content types `application/whatever+json`",
           "createdAt": "2023-09-08T15:26:19Z",
           "updatedAt": "2023-09-08T15:26:19Z"
@@ -793,7 +793,7 @@
       "number": 32,
       "id": "I_kwDOJbxyLc5vcY6l",
       "title": "Describe why not to return access token directly",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/32",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/32",
       "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -811,7 +811,7 @@
       "number": 33,
       "id": "I_kwDOJbxyLc5vcZtM",
       "title": "Client Authentication",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/33",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/33",
       "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -840,14 +840,14 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "in Section 9.1 https://aaronpk.github.io/oauth-first-party-native-apps/draft-parecki-oauth-first-party-native-apps.html#section-9.1",
           "createdAt": "2023-09-08T15:15:27Z",
           "updatedAt": "2023-09-08T15:15:27Z"
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Add new normative requirement for authorization server to verify that the application is a first party application.",
           "createdAt": "2023-09-08T16:01:19Z",
           "updatedAt": "2023-09-08T16:01:19Z"
@@ -858,10 +858,10 @@
       "number": 34,
       "id": "I_kwDOJbxyLc5whkE6",
       "title": "Update references to DPoP (RFC 9449)",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/34",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/34",
       "state": "CLOSED",
       "author": "aaronpk",
-      "authorAssociation": "OWNER",
+      "authorAssociation": "MEMBER",
       "assignees": [
         "aaronpk"
       ],
@@ -876,7 +876,7 @@
       "number": 35,
       "id": "I_kwDOJbxyLc5wh2fw",
       "title": "Step-Up",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/35",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/35",
       "state": "CLOSED",
       "author": "dteleguin",
       "authorAssociation": "NONE",
@@ -919,7 +919,7 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "The `auth_session` parameter is now defined in the successful token response, so an AS can return a value to the device even if the first access token was obtained through the redirect flow.",
           "createdAt": "2023-10-20T20:25:41Z",
           "updatedAt": "2023-10-20T20:25:41Z"
@@ -930,10 +930,10 @@
       "number": 36,
       "id": "I_kwDOJbxyLc5wh8r7",
       "title": "Add security consideration discouraging use of this spec in SPAs",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/36",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/36",
       "state": "CLOSED",
       "author": "aaronpk",
-      "authorAssociation": "OWNER",
+      "authorAssociation": "MEMBER",
       "assignees": [
         "gffletch"
       ],
@@ -952,7 +952,7 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "> Thinking out loud, would the hypothetic \"SPA attestation\" be possible in principle / make sense at all?\r\n\r\nYes, Chrome has a proposal for the \"Web Integrity API\", but it has received a lot of pushback:\r\n\r\nhttps://github.com/RupertBenWiser/Web-Environment-Integrity/blob/main/explainer.md\r\n\r\nSafari already shipped Private Access Tokens which are similar:\r\n\r\nhttps://developer.apple.com/news/?id=huqjyh7k",
           "createdAt": "2023-10-20T14:54:25Z",
           "updatedAt": "2023-10-20T14:54:25Z"
@@ -963,7 +963,7 @@
       "number": 37,
       "id": "I_kwDOJbxyLc5xyrEp",
       "title": "Add user experience considerations",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/37",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/37",
       "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -985,14 +985,14 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Notes from editor's call:\r\n\r\n* \"Not recommended to use this with challenges that require significant user experience challenges, for example entering a password on a TV screen with an on-screen keyboard.\"\r\n* Security consideration around the differences between exposure of credentials on a TV screen in a room vs the risk of a cross-device flow\r\n* We don't want to discourage the possibility of using this flow with a passkey on a TV remote control\r\n* \"If you're on a limited input device, and the authentication method the user must pass requires significant user interaction, e.g. entering a password, then you shouldn't use this method; use the device flow instead.\"\r\n",
           "createdAt": "2023-10-27T15:24:53Z",
           "updatedAt": "2023-10-27T15:24:53Z"
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Completed in #60",
           "createdAt": "2024-02-28T22:50:05Z",
           "updatedAt": "2024-02-28T22:50:05Z"
@@ -1003,10 +1003,10 @@
       "number": 40,
       "id": "I_kwDOJbxyLc5zSfXK",
       "title": "Add passkey example",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/40",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/40",
       "state": "CLOSED",
       "author": "aaronpk",
-      "authorAssociation": "OWNER",
+      "authorAssociation": "MEMBER",
       "assignees": [
         "aaronpk"
       ],
@@ -1021,10 +1021,10 @@
       "number": 41,
       "id": "I_kwDOJbxyLc5zaQq7",
       "title": "Client authentication requirements for authorization challenge endpoint",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/41",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/41",
       "state": "CLOSED",
       "author": "aaronpk",
-      "authorAssociation": "OWNER",
+      "authorAssociation": "MEMBER",
       "assignees": [
         "aaronpk"
       ],
@@ -1039,7 +1039,7 @@
       "number": 43,
       "id": "I_kwDOJbxyLc51Wocm",
       "title": "Appendix A.2",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/43",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/43",
       "state": "CLOSED",
       "author": "mattjm",
       "authorAssociation": "CONTRIBUTOR",
@@ -1052,7 +1052,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Yes you're correct, this is worded poorly",
           "createdAt": "2023-11-03T14:34:18Z",
           "updatedAt": "2023-11-03T14:34:18Z"
@@ -1063,7 +1063,7 @@
       "number": 44,
       "id": "I_kwDOJbxyLc511Ufn",
       "title": "random stringo ",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/44",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/44",
       "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "NONE",
@@ -1076,7 +1076,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "thanks, that was fixed in https://github.com/aaronpk/oauth-first-party-apps/pull/42",
           "createdAt": "2023-11-03T20:52:19Z",
           "updatedAt": "2023-11-03T20:52:19Z"
@@ -1094,7 +1094,7 @@
       "number": 45,
       "id": "I_kwDOJbxyLc511rxI",
       "title": "error code vs error code ",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/45",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/45",
       "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "NONE",
@@ -1107,7 +1107,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Thanks, we've addressed the two points here.\r\n\r\nThat should have been \"custom property\" instead of \"custom error code\".\r\n\r\nWe've renamed `authorization_required` to `insufficient_authorization` and defined it on both endpoints. Can you let me know if this clears it up?",
           "createdAt": "2023-12-08T16:29:53Z",
           "updatedAt": "2023-12-08T16:29:53Z"
@@ -1125,7 +1125,7 @@
       "number": 46,
       "id": "I_kwDOJbxyLc52BqBn",
       "title": "PAR response w/ request_uri and PKCE doesn't quite work",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/46",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/46",
       "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "NONE",
@@ -1140,7 +1140,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "I think this is why we originally had a note to possibly add the PKCE code challenge to the initial request, even though it wouldn't do anything unless bounced out to the web. But it seems weird to require it on every request when most of them will not result in a redirect response.\r\n\r\nI was trying to take a shortcut here but maybe the answer is to just return an error message and have the client start a new flow with whatever it wants (PAR, plain auth code) itself. We'd just need to add a new parameter to the request to carry the auth_session.",
           "createdAt": "2023-11-07T07:14:10Z",
           "updatedAt": "2023-11-07T07:14:10Z"
@@ -1161,14 +1161,14 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "We discussed this today and came up with the following solution:\r\n\r\n* Define a new error code in 5.2.3 `redirect_to_web`\r\n* Add `request_uri` parameter to error response section (like PAR)\r\n* Normative: Only return `request_uri` if the original authorization request contained PKCE code challenge\r\n* Security Consideration: If you return auth_session and redirect_to_web then you SHOULD support PAR",
           "createdAt": "2023-12-08T17:06:42Z",
           "updatedAt": "2023-12-08T17:06:42Z"
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "I updated this so that the option of the PKCE shortcut for the redirect to web is available. This should all be possible now.",
           "createdAt": "2024-02-28T22:19:43Z",
           "updatedAt": "2024-02-28T22:19:43Z"
@@ -1179,7 +1179,7 @@
       "number": 47,
       "id": "I_kwDOJbxyLc52BtCI",
       "title": "DPoP Authorization Code Binding",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/47",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/47",
       "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "NONE",
@@ -1194,7 +1194,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "That makes sense, we should do it the same way that's recommended for PAR.",
           "createdAt": "2023-12-15T16:25:15Z",
           "updatedAt": "2023-12-15T16:25:15Z"
@@ -1215,7 +1215,7 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Closing this as it was resolved in #59 ",
           "createdAt": "2024-02-28T22:20:58Z",
           "updatedAt": "2024-02-28T22:20:58Z"
@@ -1226,7 +1226,7 @@
       "number": 48,
       "id": "I_kwDOJbxyLc52B1F1",
       "title": "DPoP Thoughts",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/48",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/48",
       "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "NONE",
@@ -1248,7 +1248,7 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Completed in #58",
           "createdAt": "2024-02-28T22:44:26Z",
           "updatedAt": "2024-02-28T22:44:26Z"
@@ -1259,7 +1259,7 @@
       "number": 49,
       "id": "I_kwDOJbxyLc52B3ey",
       "title": "no charset w/ JSON media type ",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/49",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/49",
       "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "NONE",
@@ -1275,7 +1275,7 @@
       "number": 50,
       "id": "I_kwDOJbxyLc52B_Kn",
       "title": "content of follow-up requests to the challenge endpoint",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/50",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/50",
       "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "NONE",
@@ -1288,7 +1288,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "We agree, Section 5.1 should mention that future requests to the endpoint are defined by the authorization server, not by this specification, and may be in formats other than `application/x-www-form-urlencoded`",
           "createdAt": "2023-12-15T16:54:30Z",
           "updatedAt": "2023-12-15T16:54:30Z"
@@ -1299,10 +1299,10 @@
       "number": 51,
       "id": "I_kwDOJbxyLc53LmHe",
       "title": "Send email to list about Device Flow / PAR / First Party apps commonality",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/51",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/51",
       "state": "CLOSED",
       "author": "aaronpk",
-      "authorAssociation": "OWNER",
+      "authorAssociation": "MEMBER",
       "assignees": [
         "aaronpk"
       ],
@@ -1314,7 +1314,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Sent: https://mailarchive.ietf.org/arch/msg/oauth/Q8O7ITOyAsx_wlgVctsltcheaNM/",
           "createdAt": "2024-02-02T16:56:54Z",
           "updatedAt": "2024-02-02T16:56:54Z"
@@ -1325,10 +1325,10 @@
       "number": 52,
       "id": "I_kwDOJbxyLc53Lmgd",
       "title": "Write FIDO extension to First-Party Apps",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/52",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/52",
       "state": "OPEN",
       "author": "aaronpk",
-      "authorAssociation": "OWNER",
+      "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Look at https://github.com/jaredhanson/id-oauth-fido2/blob/main/draft.txt for WebAuthn parameters",
@@ -1338,7 +1338,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "This has been started in #93",
           "createdAt": "2024-07-02T21:27:48Z",
           "updatedAt": "2024-07-02T21:27:48Z"
@@ -1349,10 +1349,10 @@
       "number": 53,
       "id": "I_kwDOJbxyLc53LmpW",
       "title": "Update First-Party Apps to extend POST Request Framework",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/53",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/53",
       "state": "CLOSED",
       "author": "aaronpk",
-      "authorAssociation": "OWNER",
+      "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "After #54",
@@ -1362,7 +1362,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Closing for now, as there was no interest for doing this on the mailing list.",
           "createdAt": "2024-02-26T22:56:38Z",
           "updatedAt": "2024-02-26T22:56:38Z"
@@ -1373,10 +1373,10 @@
       "number": 54,
       "id": "I_kwDOJbxyLc53Lmw7",
       "title": "Write draft of POST Request Framework",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/54",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/54",
       "state": "CLOSED",
       "author": "aaronpk",
-      "authorAssociation": "OWNER",
+      "authorAssociation": "MEMBER",
       "assignees": [
         "aaronpk"
       ],
@@ -1388,7 +1388,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Closing for now, as there was no interest for doing this on the mailing list.",
           "createdAt": "2024-02-26T22:56:29Z",
           "updatedAt": "2024-02-26T22:56:29Z"
@@ -1399,7 +1399,7 @@
       "number": 55,
       "id": "I_kwDOJbxyLc57DLS_",
       "title": "Support authorization challenge endpoint on a different domain than the AS ?",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/55",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/55",
       "state": "CLOSED",
       "author": "gffletch",
       "authorAssociation": "COLLABORATOR",
@@ -1412,7 +1412,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "I don't think we need to say anything in particular about this. If the AS wants to redirect the browser to a different IDP, it would have to do its own OIDC flow to that IDP anyway, so a shortcut like this wouldn't work anyway.",
           "createdAt": "2024-02-28T22:23:12Z",
           "updatedAt": "2024-02-28T22:23:12Z"
@@ -1423,7 +1423,7 @@
       "number": 56,
       "id": "I_kwDOJbxyLc57Phie",
       "title": "Prohibit moving sessions across devices",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/56",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/56",
       "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -1438,7 +1438,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "auth_session is expected to be device bound",
           "createdAt": "2024-01-19T16:46:40Z",
           "updatedAt": "2024-01-19T16:46:40Z"
@@ -1452,7 +1452,7 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Resolved in #57",
           "createdAt": "2024-02-28T22:21:28Z",
           "updatedAt": "2024-02-28T22:21:28Z"
@@ -1463,7 +1463,7 @@
       "number": 62,
       "id": "I_kwDOJbxyLc6Et-fS",
       "title": "Endpoint name",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/62",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/62",
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1479,7 +1479,7 @@
       "number": 63,
       "id": "I_kwDOJbxyLc6Et-gN",
       "title": "Motivation",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/63",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/63",
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1495,7 +1495,7 @@
       "number": 64,
       "id": "I_kwDOJbxyLc6Et-hS",
       "title": "Interaction with \"native SSO\"",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/64",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/64",
       "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1508,7 +1508,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "I'm not sure I understand the problem. The point of section 1.1 is to describe when not to use this spec. It then also says Native SSO might be a better solution. Do you have any suggestions for how to make this clearer?",
           "createdAt": "2024-06-28T15:57:34Z",
           "updatedAt": "2024-06-28T15:57:34Z"
@@ -1526,7 +1526,7 @@
       "number": 65,
       "id": "I_kwDOJbxyLc6Et-if",
       "title": "Limitations of this spec",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/65",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/65",
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1542,7 +1542,7 @@
       "number": 66,
       "id": "I_kwDOJbxyLc6Et-jo",
       "title": "Returning a token from the endpoint",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/66",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/66",
       "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1557,7 +1557,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Yes this should go into the design goals section. The idea is to enable an existing AS to more easily adopt this, by not adding a new endpoint that tokens are returned from. Instead, this new endpoint only returns an authorization code which can be exchanged for an access token at the existing token endpoint, taking advantage of all the existing logic around client authentication, token binding, rate limiting, etc.",
           "createdAt": "2024-04-26T15:27:29Z",
           "updatedAt": "2024-04-26T15:27:29Z"
@@ -1568,7 +1568,7 @@
       "number": 67,
       "id": "I_kwDOJbxyLc6Et-k4",
       "title": "Protocol overview - forward references",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/67",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/67",
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1584,7 +1584,7 @@
       "number": 68,
       "id": "I_kwDOJbxyLc6Et-l-",
       "title": "RS Behavior",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/68",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/68",
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1600,7 +1600,7 @@
       "number": 69,
       "id": "I_kwDOJbxyLc6Et-m0",
       "title": "Which extensions exactly?",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/69",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/69",
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1616,7 +1616,7 @@
       "number": 70,
       "id": "I_kwDOJbxyLc6Et-nk",
       "title": "acr_values reference",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/70",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/70",
       "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1632,7 +1632,7 @@
       "number": 71,
       "id": "I_kwDOJbxyLc6Et-oh",
       "title": "ASCII?",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/71",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/71",
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1648,7 +1648,7 @@
       "number": 72,
       "id": "I_kwDOJbxyLc6Et-pj",
       "title": "invalid_grant error code",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/72",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/72",
       "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1664,7 +1664,7 @@
       "number": 73,
       "id": "I_kwDOJbxyLc6Et-qn",
       "title": "redirect_to_web error code",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/73",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/73",
       "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1680,7 +1680,7 @@
       "number": 74,
       "id": "I_kwDOJbxyLc6Et-ry",
       "title": "Redirect to Web",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/74",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/74",
       "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1693,7 +1693,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "The change in this draft is that `redirect_to_web` is just an error now, indicating that the client should start a traditional OAuth flow. So there is no dynamic way for the server to return an authorization endpoint URL defined by this draft, it's just however you'd be doing it in the standard OAuth way.",
           "createdAt": "2024-04-26T15:25:24Z",
           "updatedAt": "2024-04-26T15:25:24Z"
@@ -1711,7 +1711,7 @@
       "number": 75,
       "id": "I_kwDOJbxyLc6Et-s5",
       "title": "Binding to device",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/75",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/75",
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1737,7 +1737,7 @@
       "number": 76,
       "id": "I_kwDOJbxyLc6Et-uC",
       "title": "auth_session in a successful token response",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/76",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/76",
       "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1763,7 +1763,7 @@
       "number": 77,
       "id": "I_kwDOJbxyLc6Et-vI",
       "title": "RFC 6750",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/77",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/77",
       "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1776,7 +1776,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "I added the reference and also rephrased that section to be more clear",
           "createdAt": "2024-04-26T15:36:06Z",
           "updatedAt": "2024-04-26T15:36:06Z"
@@ -1787,7 +1787,7 @@
       "number": 78,
       "id": "I_kwDOJbxyLc6Et-wX",
       "title": "Relationship with \"Native Apps\" RFC",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/78",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/78",
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1803,7 +1803,7 @@
       "number": 79,
       "id": "I_kwDOJbxyLc6Et-xe",
       "title": "Should we \"update\" RFC6749",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/79",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/79",
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1818,7 +1818,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "It's a common misconception that `redirect_uri` is a required parameter on the token endpoint. It's actually [only required IF](https://www.rfc-editor.org/rfc/rfc6749#section-4.1.3) a `redirect_uri` was present in the authorization request, which it would not be in this specification.",
           "createdAt": "2024-04-26T15:37:09Z",
           "updatedAt": "2024-04-26T15:37:23Z"
@@ -1836,7 +1836,7 @@
       "number": 80,
       "id": "I_kwDOJbxyLc6Et-ye",
       "title": "Definition of First Party Apps",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/80",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/80",
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1856,7 +1856,7 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "The definition of first-party apps has been updated in this commit: 5074218fe28f032a8fbcc457fd36d823d031dd36",
           "createdAt": "2024-07-08T15:19:16Z",
           "updatedAt": "2024-07-08T15:19:16Z"
@@ -1867,7 +1867,7 @@
       "number": 81,
       "id": "I_kwDOJbxyLc6Et-zR",
       "title": "Phishing: two ways?",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/81",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/81",
       "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1891,7 +1891,7 @@
       "number": 82,
       "id": "I_kwDOJbxyLc6Et_UH",
       "title": "Credential stuffing",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/82",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/82",
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1904,7 +1904,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Credential stuffing attacks usually require automation to be successful, so the theory is that authentic apps can't be automated, which is why that phrase is there.",
           "createdAt": "2024-07-08T15:22:24Z",
           "updatedAt": "2024-07-08T15:22:24Z"
@@ -1915,7 +1915,7 @@
       "number": 83,
       "id": "I_kwDOJbxyLc6Et_UZ",
       "title": "Consent screen",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/83",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/83",
       "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1935,14 +1935,14 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "I think it makes more sense to just be silent about the consent issue in the client authentication section by just removing that sentence since it wasn't a should/must anyway.",
           "createdAt": "2024-06-28T15:31:31Z",
           "updatedAt": "2024-06-28T15:31:31Z"
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "This sentence was removed: 5074218fe28f032a8fbcc457fd36d823d031dd36",
           "createdAt": "2024-07-08T15:34:21Z",
           "updatedAt": "2024-07-08T15:34:21Z"
@@ -1953,7 +1953,7 @@
       "number": 84,
       "id": "I_kwDOJbxyLc6Et_Up",
       "title": "DPoP binding of auth_session",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/84",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/84",
       "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -1966,7 +1966,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "It is not a new claim in the DPoP proof, because that would imply the binding happens from the client, not the AS. Brian's suggestion was to require the AS to do the binding, in which case it's internal and not part of the spec.",
           "createdAt": "2024-04-05T15:40:37Z",
           "updatedAt": "2024-04-05T15:40:37Z"
@@ -1991,7 +1991,7 @@
       "number": 85,
       "id": "I_kwDOJbxyLc6Et_U_",
       "title": "IANA Claims list is missing",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/85",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/85",
       "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -2004,7 +2004,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Thanks, this was left over from when there was previously a new claim name defined",
           "createdAt": "2024-04-05T15:39:17Z",
           "updatedAt": "2024-04-05T15:39:17Z"
@@ -2015,7 +2015,7 @@
       "number": 86,
       "id": "I_kwDOJbxyLc6Et_VT",
       "title": "E-mail confirmation code",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/86",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/86",
       "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -2028,7 +2028,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "The `auth_session` is a secret known only to the device, so should not be sent in an email. It would be a separate code sent in the email link, and the native client would take the code from the link and include the `auth_session` and the code in the request to the AS.",
           "createdAt": "2024-06-28T15:22:50Z",
           "updatedAt": "2024-06-28T15:22:50Z"
@@ -2042,7 +2042,7 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "Yes that should be described as well. But both flows are common. The email link tends to be more common for email verification where the user is expected to complete that task later, but email codes are more common when used as a second factor.\r\n\r\nIn any case, the protocol doesn't change for either one, since the link in the email would ultimately launch the native app passing the email verification code into the app, which the app would then send in a request along with the `auth_session` it already has.",
           "createdAt": "2024-06-29T15:35:44Z",
           "updatedAt": "2024-06-29T15:35:44Z"
@@ -2053,7 +2053,7 @@
       "number": 87,
       "id": "I_kwDOJbxyLc6Et_Vt",
       "title": "Extra reference",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/87",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/87",
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -2069,7 +2069,7 @@
       "number": 88,
       "id": "I_kwDOJbxyLc6Et_WC",
       "title": "Typos",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/88",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/88",
       "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "NONE",
@@ -2085,7 +2085,7 @@
       "number": 89,
       "id": "I_kwDOJbxyLc6FHkQY",
       "title": "SMS is an abbreviation for a specific service",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/89",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/89",
       "state": "CLOSED",
       "author": "sjjhsjjh",
       "authorAssociation": "NONE",
@@ -2101,7 +2101,7 @@
       "number": 90,
       "id": "I_kwDOJbxyLc6FZWRU",
       "title": "Add guidance on service providers",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/90",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/90",
       "state": "OPEN",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -2117,7 +2117,7 @@
       "number": 94,
       "id": "I_kwDOJbxyLc6If3Gp",
       "title": "Change /authorize examples to something else",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/94",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/94",
       "state": "CLOSED",
       "author": "timcappalli",
       "authorAssociation": "NONE",
@@ -2133,10 +2133,10 @@
       "number": 96,
       "id": "I_kwDOJbxyLc6KZfQg",
       "title": "Interest and implementations",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/96",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/96",
       "state": "OPEN",
       "author": "aaronpk",
-      "authorAssociation": "OWNER",
+      "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "If you're interested in implementing this, or already have an in progress implementation, please comment down below!",
@@ -2185,10 +2185,10 @@
       "number": 97,
       "id": "I_kwDOJbxyLc6KZf5t",
       "title": "Add section with refresh token error response example ",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/97",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/97",
       "state": "OPEN",
       "author": "aaronpk",
-      "authorAssociation": "OWNER",
+      "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -2201,10 +2201,10 @@
       "number": 98,
       "id": "I_kwDOJbxyLc6OG_OQ",
       "title": "Make it more obvious that the rest of the back and forth can happen at proprietary endpoints",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/98",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/98",
       "state": "CLOSED",
       "author": "aaronpk",
-      "authorAssociation": "OWNER",
+      "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -2217,7 +2217,7 @@
       "number": 99,
       "id": "I_kwDOJbxyLc6Srqjn",
       "title": "stronger client auth at the authorization challenge endpoint needed",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/99",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/99",
       "state": "OPEN",
       "author": "Sakurann",
       "authorAssociation": "NONE",
@@ -2248,7 +2248,7 @@
       "number": 100,
       "id": "I_kwDOJbxyLc6Srxij",
       "title": "why define a new \"auth_session\" parameter?",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/100",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/100",
       "state": "OPEN",
       "author": "Sakurann",
       "authorAssociation": "NONE",
@@ -2264,7 +2264,7 @@
       "number": 101,
       "id": "I_kwDOJbxyLc6Srzl_",
       "title": "client authentication with client_id",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/101",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/101",
       "state": "OPEN",
       "author": "Sakurann",
       "authorAssociation": "NONE",
@@ -2280,7 +2280,7 @@
       "number": 102,
       "id": "I_kwDOJbxyLc6Sr13-",
       "title": "is there a reason why you use `authorization_code` and not `code` in the authorization code response?",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/102",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/102",
       "state": "OPEN",
       "author": "Sakurann",
       "authorAssociation": "NONE",
@@ -2296,7 +2296,7 @@
       "number": 103,
       "id": "I_kwDOJbxyLc6Sr4-g",
       "title": "clarify which error codes are new and which ones are extending the existing ones",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/103",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/103",
       "state": "OPEN",
       "author": "Sakurann",
       "authorAssociation": "NONE",
@@ -2312,7 +2312,7 @@
       "number": 104,
       "id": "I_kwDOJbxyLc6Sr7F7",
       "title": "mentione negotiation of user authentication in the UX section",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/104",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/104",
       "state": "OPEN",
       "author": "Sakurann",
       "authorAssociation": "NONE",
@@ -2328,7 +2328,7 @@
       "number": 105,
       "id": "I_kwDOJbxyLc6Sr9Qb",
       "title": "For PAR, PAR endpoint should be used.",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/105",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/105",
       "state": "OPEN",
       "author": "Sakurann",
       "authorAssociation": "NONE",
@@ -2344,7 +2344,7 @@
       "number": 106,
       "id": "I_kwDOJbxyLc6SsBdY",
       "title": "what drives the need for the interoperability in this specification?",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/106",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/106",
       "state": "OPEN",
       "author": "Sakurann",
       "authorAssociation": "NONE",
@@ -2360,7 +2360,7 @@
       "number": 107,
       "id": "I_kwDOJbxyLc6SsDkM",
       "title": "the usage of JWE in stateless implementations......",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/107",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/107",
       "state": "OPEN",
       "author": "Sakurann",
       "authorAssociation": "NONE",
@@ -2376,7 +2376,7 @@
       "number": 108,
       "id": "I_kwDOJbxyLc6SsFRp",
       "title": "REQUIRED in annex B is confusing",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/108",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/108",
       "state": "OPEN",
       "author": "Sakurann",
       "authorAssociation": "NONE",
@@ -2392,7 +2392,7 @@
       "number": 109,
       "id": "I_kwDOJbxyLc6SsMB5",
       "title": "why not define a new grant type for this flow (not for the different authentication factors)",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/109",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/109",
       "state": "OPEN",
       "author": "Sakurann",
       "authorAssociation": "NONE",
@@ -2416,7 +2416,7 @@
       "number": 110,
       "id": "I_kwDOJbxyLc6SthSF",
       "title": "extend the definition of first party to include strictly defined trust frameworks",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/110",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/110",
       "state": "OPEN",
       "author": "Sakurann",
       "authorAssociation": "NONE",
@@ -2432,7 +2432,7 @@
       "number": 111,
       "id": "I_kwDOJbxyLc6YivVP",
       "title": "Consider mentioning URL registration",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/issues/111",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/111",
       "state": "OPEN",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -2450,7 +2450,7 @@
       "number": 4,
       "id": "PR_kwDOJbxyLc5P32Vy",
       "title": "Added a figure to reflect the protocol description",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/pull/4",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/pull/4",
       "state": "MERGED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -2459,7 +2459,7 @@
       "body": "Added a figure outlining the back and forth between the native client and the authorization server.",
       "createdAt": "2023-05-05T15:15:42Z",
       "updatedAt": "2023-06-09T17:31:17Z",
-      "baseRepository": "aaronpk/oauth-first-party-apps",
+      "baseRepository": "oauth-wg/oauth-first-party-apps",
       "baseRefName": "main",
       "baseRefOid": "731807ba4d220e1bf7c8bbeba1c1e1432d534f01",
       "headRepository": "PieterKas/oauth-first-party-native-apps",
@@ -2478,7 +2478,7 @@
       "number": 18,
       "id": "PR_kwDOJbxyLc5TMjde",
       "title": "Security Considerations: How to use DPoP for Native Apps",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/pull/18",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/pull/18",
       "state": "MERGED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -2487,7 +2487,7 @@
       "body": "Described how to use DPoP as part of the security considerations.",
       "createdAt": "2023-06-16T14:13:04Z",
       "updatedAt": "2023-06-16T15:36:29Z",
-      "baseRepository": "aaronpk/oauth-first-party-apps",
+      "baseRepository": "oauth-wg/oauth-first-party-apps",
       "baseRefName": "main",
       "baseRefOid": "aa2d1575e60c04d11fb1f3d7101d59e91320ba03",
       "headRepository": "PieterKas/oauth-first-party-native-apps",
@@ -2507,7 +2507,7 @@
             "abbreviatedOid": "a63a5cf"
           },
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2023-06-16T15:35:52Z",
@@ -2527,7 +2527,7 @@
             "abbreviatedOid": "00abd04"
           },
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "state": "APPROVED",
           "body": "",
           "createdAt": "2023-06-16T15:36:22Z",
@@ -2540,7 +2540,7 @@
       "number": 19,
       "id": "PR_kwDOJbxyLc5TMxkW",
       "title": "Addressing issues #2, #3 and #10.",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/pull/19",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/pull/19",
       "state": "MERGED",
       "author": "gffletch",
       "authorAssociation": "COLLABORATOR",
@@ -2549,7 +2549,7 @@
       "body": "",
       "createdAt": "2023-06-16T14:45:10Z",
       "updatedAt": "2023-06-16T15:14:18Z",
-      "baseRepository": "aaronpk/oauth-first-party-apps",
+      "baseRepository": "oauth-wg/oauth-first-party-apps",
       "baseRefName": "main",
       "baseRefOid": "aa2d1575e60c04d11fb1f3d7101d59e91320ba03",
       "headRepository": "gffletch/oauth-first-party-native-apps",
@@ -2569,7 +2569,7 @@
             "abbreviatedOid": "dc75a22"
           },
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2023-06-16T15:06:56Z",
@@ -2589,7 +2589,7 @@
             "abbreviatedOid": "dc75a22"
           },
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2023-06-16T15:07:06Z",
@@ -2609,7 +2609,7 @@
             "abbreviatedOid": "dc75a22"
           },
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2023-06-16T15:08:26Z",
@@ -2629,7 +2629,7 @@
             "abbreviatedOid": "dc75a22"
           },
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2023-06-16T15:13:27Z",
@@ -2649,7 +2649,7 @@
             "abbreviatedOid": "f9fd2d4"
           },
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "state": "APPROVED",
           "body": "",
           "createdAt": "2023-06-16T15:14:04Z",
@@ -2662,7 +2662,7 @@
       "number": 26,
       "id": "PR_kwDOJbxyLc5Uc6d2",
       "title": "Added worked examples showing examples of the main use cases",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/pull/26",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/pull/26",
       "state": "MERGED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -2671,7 +2671,7 @@
       "body": "Included use cases for OTP, e-mail, SMS confirmation, step-up authentication and registration.\r\n\r\nAlso see #14 and #15",
       "createdAt": "2023-07-02T19:20:25Z",
       "updatedAt": "2023-07-07T14:31:32Z",
-      "baseRepository": "aaronpk/oauth-first-party-apps",
+      "baseRepository": "oauth-wg/oauth-first-party-apps",
       "baseRefName": "main",
       "baseRefOid": "89dc093de6a85c658c17803446b4ebcec1969816",
       "headRepository": "PieterKas/oauth-first-party-native-apps",
@@ -2690,7 +2690,7 @@
       "number": 28,
       "id": "PR_kwDOJbxyLc5XmAy7",
       "title": "OAuth FiPNA Enhancements",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/pull/28",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/pull/28",
       "state": "MERGED",
       "author": "corriganjeff",
       "authorAssociation": "CONTRIBUTOR",
@@ -2699,7 +2699,7 @@
       "body": "I added three sections I feel are important:\r\n1.) Credential Stuffing/Abuse callout in security considerations. Browser-based front ends have lots of security checks inherently built in to an IdP's flow. If we move the authNZ to be backend API based then it's important to call out to implementors that they should treat that API with the same security concerns as whatever API recieves request when a login form is submitted. \r\n2.) New Grant Type needed. \r\n3.) DCR Registration consideration\r\nand 4.) corrected minor typo\r\n\r\nHappy to discuss. I have other updates I'll add and submit PRs/issues for later. ",
       "createdAt": "2023-08-10T03:03:35Z",
       "updatedAt": "2023-09-08T15:13:05Z",
-      "baseRepository": "aaronpk/oauth-first-party-apps",
+      "baseRepository": "oauth-wg/oauth-first-party-apps",
       "baseRefName": "main",
       "baseRefOid": "b84c71f34734421f5929577aad6f38911ba27d13",
       "headRepository": "corriganjeff/oauth-first-party-native-apps",
@@ -2819,7 +2819,7 @@
             "abbreviatedOid": "b6c4743"
           },
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2023-09-08T15:11:04Z",
@@ -2859,7 +2859,7 @@
       "number": 38,
       "id": "PR_kwDOJbxyLc5bX41g",
       "title": "Added support for redirecting to the web",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/pull/38",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/pull/38",
       "state": "MERGED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -2868,7 +2868,7 @@
       "body": "Added option for redirecting to the web.\r\n\r\nNotes: \r\n\r\n1. Re-using the PAR response - feels strange to have the \"request_uri\" parameter as the redirect URI - is that OK?\r\n2. Added and example of redirecting to the web. Not entirely sure how control gets passed back to the \"native\" app/client or how much detail we should provide.",
       "createdAt": "2023-09-27T19:31:19Z",
       "updatedAt": "2023-10-20T15:19:08Z",
-      "baseRepository": "aaronpk/oauth-first-party-apps",
+      "baseRepository": "oauth-wg/oauth-first-party-apps",
       "baseRefName": "main",
       "baseRefOid": "ed66d40500f7ea9a4d8c62422669f20a7a972419",
       "headRepository": "PieterKas/oauth-first-party-native-apps",
@@ -2883,7 +2883,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "I see the problem with the current text.\r\n\r\nIn PAR, the response is a `request_uri` which represents the PAR request itself:\r\n\r\n```\r\n HTTP/1.1 201 Created\r\n Content-Type: application/json\r\n Cache-Control: no-cache, no-store\r\n\r\n {\r\n  \"request_uri\": \"urn:ietf:params:oauth:request_uri:6esc_11ACC5bwc014ltc14eY22c\",\r\n  \"expires_in\": 60\r\n }\r\n```\r\n\r\nThe client is expected to then start an authorization request and put the `request_uri` value in the `request_uri` query string parameter:\r\n\r\n```\r\nGET /authorize?client_id=s6BhdRkqt3&request_uri=urn%3Aietf%3Aparams\r\n  %3Aoauth%3Arequest_uri%3A6esc_11ACC5bwc014ltc14eY22c\r\n```\r\n\r\nSo the text in this section should instead be:\r\n\r\n```\r\n\"redirect\":\r\n: REQUIRED. A Pushed Authroization Request (PAR) response as defined in\r\nSection 2.2 of {{RFC9126}}. The request_uri parameter contains the URI that\r\nthe client should use in the authorization request.\r\n```\r\n",
           "createdAt": "2023-10-20T14:36:12Z",
           "updatedAt": "2023-10-20T14:36:12Z"
@@ -2936,7 +2936,7 @@
             "abbreviatedOid": "6e16df2"
           },
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2023-10-13T15:06:37Z",
@@ -2956,7 +2956,7 @@
             "abbreviatedOid": "6e16df2"
           },
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2023-10-13T15:06:51Z",
@@ -2976,7 +2976,7 @@
             "abbreviatedOid": "6e16df2"
           },
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2023-10-13T15:08:52Z",
@@ -2996,7 +2996,7 @@
       "number": 39,
       "id": "PR_kwDOJbxyLc5cMht4",
       "title": "Updates for issues #31, #33, #36",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/pull/39",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/pull/39",
       "state": "MERGED",
       "author": "gffletch",
       "authorAssociation": "COLLABORATOR",
@@ -3005,7 +3005,7 @@
       "body": "Added text to address assigned issues:\r\n\r\nhttps://github.com/aaronpk/oauth-first-party-apps/issues/36\r\nhttps://github.com/aaronpk/oauth-first-party-apps/issues/33\r\nhttps://github.com/aaronpk/oauth-first-party-apps/issues/31",
       "createdAt": "2023-10-08T15:29:46Z",
       "updatedAt": "2023-10-20T14:40:55Z",
-      "baseRepository": "aaronpk/oauth-first-party-apps",
+      "baseRepository": "oauth-wg/oauth-first-party-apps",
       "baseRefName": "main",
       "baseRefOid": "ed66d40500f7ea9a4d8c62422669f20a7a972419",
       "headRepository": "gffletch/oauth-first-party-native-apps",
@@ -3025,7 +3025,7 @@
             "abbreviatedOid": "ff81d83"
           },
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "state": "APPROVED",
           "body": "",
           "createdAt": "2023-10-20T14:40:50Z",
@@ -3038,7 +3038,7 @@
       "number": 42,
       "id": "PR_kwDOJbxyLc5eJaTp",
       "title": "minor grammar/typo suggestions",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/pull/42",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/pull/42",
       "state": "MERGED",
       "author": "mattjm",
       "authorAssociation": "CONTRIBUTOR",
@@ -3047,7 +3047,7 @@
       "body": "",
       "createdAt": "2023-10-30T17:18:22Z",
       "updatedAt": "2023-11-03T14:32:59Z",
-      "baseRepository": "aaronpk/oauth-first-party-apps",
+      "baseRepository": "oauth-wg/oauth-first-party-apps",
       "baseRefName": "main",
       "baseRefOid": "47959f37b4cb7269f4ecc0981f2274dd15855be2",
       "headRepository": "mattjm/oauth-first-party-apps",
@@ -3066,7 +3066,7 @@
       "number": 57,
       "id": "PR_kwDOJbxyLc5l2pn_",
       "title": "Require device binding for auth sessions",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/pull/57",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/pull/57",
       "state": "MERGED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -3075,10 +3075,10 @@
       "body": "Issue #56 \r\n\r\nAdd normative requirement for device binding of auth session and require the authorization server to enforce it.",
       "createdAt": "2024-02-02T16:54:32Z",
       "updatedAt": "2024-02-28T22:21:14Z",
-      "baseRepository": "aaronpk/oauth-first-party-apps",
+      "baseRepository": "oauth-wg/oauth-first-party-apps",
       "baseRefName": "main",
       "baseRefOid": "a99fef02bbe19d9be5991e9f9f2dfc366d8a51b4",
-      "headRepository": "aaronpk/oauth-first-party-apps",
+      "headRepository": "oauth-wg/oauth-first-party-apps",
       "headRefName": "PieterKas-patch-1",
       "headRefOid": "a95bf369cf4f31f3c1ab00a273a70b8594dcbebf",
       "closedAt": "2024-02-20T19:39:39Z",
@@ -3094,7 +3094,7 @@
       "number": 58,
       "id": "PR_kwDOJbxyLc5nR-C4",
       "title": "Removed need for new ash claim.",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/pull/58",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/pull/58",
       "state": "MERGED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -3103,10 +3103,10 @@
       "body": "Removed the need for the new ash claim by inverting the way in which binding works by putting responsibility for maintaining the binding on the authorization server (see issue #48).",
       "createdAt": "2024-02-19T12:11:35Z",
       "updatedAt": "2024-02-21T12:48:23Z",
-      "baseRepository": "aaronpk/oauth-first-party-apps",
+      "baseRepository": "oauth-wg/oauth-first-party-apps",
       "baseRefName": "main",
       "baseRefOid": "a99fef02bbe19d9be5991e9f9f2dfc366d8a51b4",
-      "headRepository": "aaronpk/oauth-first-party-apps",
+      "headRepository": "oauth-wg/oauth-first-party-apps",
       "headRefName": "PieterKas-patch-2",
       "headRefOid": "b0e979888f8465f1e19cb52c08ea8da92fd79ce5",
       "closedAt": "2024-02-20T19:41:25Z",
@@ -3136,7 +3136,7 @@
       "number": 59,
       "id": "PR_kwDOJbxyLc5nTHs6",
       "title": "Update section on authorization code binding",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/pull/59",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/pull/59",
       "state": "MERGED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -3145,10 +3145,10 @@
       "body": "Proposed update based on feedback in issue #47 \r\n\r\nOpen question for reviewers (and @bc_pi) whether we should allow both or only a single method, and if a single methods should we opt for the least common denominator  (dpop_jkt) or an authorization challenge endpoint specific one?",
       "createdAt": "2024-02-19T14:57:24Z",
       "updatedAt": "2024-02-26T21:11:05Z",
-      "baseRepository": "aaronpk/oauth-first-party-apps",
+      "baseRepository": "oauth-wg/oauth-first-party-apps",
       "baseRefName": "main",
       "baseRefOid": "76c8b702116e27fa726a73f2389a4ab6dc03bb21",
-      "headRepository": "aaronpk/oauth-first-party-apps",
+      "headRepository": "oauth-wg/oauth-first-party-apps",
       "headRefName": "PieterKas-patch-3",
       "headRefOid": "92edeba4d15ee7b3ff609872941f75c36a867a01",
       "closedAt": "2024-02-26T21:11:01Z",
@@ -3167,7 +3167,7 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "I would tend to agree that we should stick with _only_ the header option for DPoP. ",
           "createdAt": "2024-02-23T16:24:35Z",
           "updatedAt": "2024-02-23T16:24:35Z"
@@ -3240,7 +3240,7 @@
             "abbreviatedOid": "1f1f285"
           },
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2024-02-26T21:08:46Z",
@@ -3260,7 +3260,7 @@
             "abbreviatedOid": "87f56f1"
           },
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "state": "APPROVED",
           "body": "",
           "createdAt": "2024-02-26T21:09:52Z",
@@ -3280,7 +3280,7 @@
       "number": 60,
       "id": "PR_kwDOJbxyLc5nhjPW",
       "title": "Update draft-parecki-oauth-first-party-apps.md",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/pull/60",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/pull/60",
       "state": "MERGED",
       "author": "gffletch",
       "authorAssociation": "COLLABORATOR",
@@ -3289,7 +3289,7 @@
       "body": "Addressing Issue #37\r\n\r\nI did not add anything explicit to the Security Considerations section and instead mentioned the potential security exposure in the text on User Experience",
       "createdAt": "2024-02-21T13:33:24Z",
       "updatedAt": "2024-02-26T21:11:32Z",
-      "baseRepository": "aaronpk/oauth-first-party-apps",
+      "baseRepository": "oauth-wg/oauth-first-party-apps",
       "baseRefName": "main",
       "baseRefOid": "76c8b702116e27fa726a73f2389a4ab6dc03bb21",
       "headRepository": "gffletch/oauth-first-party-native-apps",
@@ -3308,7 +3308,7 @@
       "number": 61,
       "id": "PR_kwDOJbxyLc5obT54",
       "title": "Typo fix",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/pull/61",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/pull/61",
       "state": "MERGED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -3317,10 +3317,10 @@
       "body": "",
       "createdAt": "2024-03-01T16:15:32Z",
       "updatedAt": "2024-03-01T16:16:49Z",
-      "baseRepository": "aaronpk/oauth-first-party-apps",
+      "baseRepository": "oauth-wg/oauth-first-party-apps",
       "baseRefName": "main",
       "baseRefOid": "d4f3c3b84cdaeafdf3d14f845925f35077de0066",
-      "headRepository": "aaronpk/oauth-first-party-apps",
+      "headRepository": "oauth-wg/oauth-first-party-apps",
       "headRefName": "PieterKas-patch-1",
       "headRefOid": "31d531398927ecf96bc0019b7226a14dbe6d1840",
       "closedAt": "2024-03-01T16:16:45Z",
@@ -3336,7 +3336,7 @@
       "number": 91,
       "id": "PR_kwDOJbxyLc5t21Vh",
       "title": "Clarified two ways in which phishing may increase",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/pull/91",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/pull/91",
       "state": "MERGED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -3345,10 +3345,10 @@
       "body": "Clarifying the text to make it clear that there are two ways in which phishing attacks may be facilitated by this specification. (see issue #81)\r\n\r\ncc @yaronf",
       "createdAt": "2024-04-26T15:39:12Z",
       "updatedAt": "2024-07-02T21:18:27Z",
-      "baseRepository": "aaronpk/oauth-first-party-apps",
+      "baseRepository": "oauth-wg/oauth-first-party-apps",
       "baseRefName": "main",
       "baseRefOid": "00925d63778cd68ebd7913ad09fef210ec53c1af",
-      "headRepository": "aaronpk/oauth-first-party-apps",
+      "headRepository": "oauth-wg/oauth-first-party-apps",
       "headRefName": "PieterKas-patch-1",
       "headRefOid": "2a072e364005f7528545691d32462a24916d6c43",
       "closedAt": "2024-07-02T21:17:19Z",
@@ -3364,19 +3364,19 @@
       "number": 92,
       "id": "PR_kwDOJbxyLc5t29xX",
       "title": "clarify auth_session in token response",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/pull/92",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/pull/92",
       "state": "MERGED",
       "author": "aaronpk",
-      "authorAssociation": "OWNER",
+      "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "closes #76",
       "createdAt": "2024-04-26T15:59:49Z",
       "updatedAt": "2024-07-02T21:16:28Z",
-      "baseRepository": "aaronpk/oauth-first-party-apps",
+      "baseRepository": "oauth-wg/oauth-first-party-apps",
       "baseRefName": "main",
       "baseRefOid": "c84cd9bea1a121caa781151233e5c473c4a43090",
-      "headRepository": "aaronpk/oauth-first-party-apps",
+      "headRepository": "oauth-wg/oauth-first-party-apps",
       "headRefName": "issue-76",
       "headRefOid": "d7f400051d24dc8401b2fb68c901114fadb5e90b",
       "closedAt": "2024-07-02T21:16:28Z",
@@ -3392,7 +3392,7 @@
       "number": 93,
       "id": "PR_kwDOJbxyLc5vHacd",
       "title": "Changes to support WebAuthn Get and Create",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/pull/93",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/pull/93",
       "state": "OPEN",
       "author": "timcappalli",
       "authorAssociation": "NONE",
@@ -3401,7 +3401,7 @@
       "body": "WIP",
       "createdAt": "2024-05-10T16:32:36Z",
       "updatedAt": "2024-05-10T16:37:26Z",
-      "baseRepository": "aaronpk/oauth-first-party-apps",
+      "baseRepository": "oauth-wg/oauth-first-party-apps",
       "baseRefName": "main",
       "baseRefOid": "c84cd9bea1a121caa781151233e5c473c4a43090",
       "headRepository": "timcappalli/oauth-first-party-apps",
@@ -3414,7 +3414,7 @@
       "comments": [
         {
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "body": "I had to push this to a branch on my repo for the build script to build a preview of it, available here:\r\n\r\nhttps://drafts.aaronpk.com/oauth-first-party-apps/timcappalli-webauthn/draft-parecki-oauth-first-party-apps.html",
           "createdAt": "2024-05-10T16:37:25Z",
           "updatedAt": "2024-05-10T16:37:25Z"
@@ -3426,7 +3426,7 @@
       "number": 95,
       "id": "PR_kwDOJbxyLc5wGX2a",
       "title": "Clarify binding mechanism for DPoP",
-      "url": "https://github.com/aaronpk/oauth-first-party-apps/pull/95",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/pull/95",
       "state": "MERGED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
@@ -3437,10 +3437,10 @@
       "body": "Clarify that the binding is not done through cryptographic means but rather through association by the authorization server since the binding is only between the client and the authorizations server. See issue #84 \r\n\r\ncc @yaronf , @bc-pi",
       "createdAt": "2024-05-21T15:43:12Z",
       "updatedAt": "2024-06-28T15:15:26Z",
-      "baseRepository": "aaronpk/oauth-first-party-apps",
+      "baseRepository": "oauth-wg/oauth-first-party-apps",
       "baseRefName": "main",
       "baseRefOid": "c84cd9bea1a121caa781151233e5c473c4a43090",
-      "headRepository": "aaronpk/oauth-first-party-apps",
+      "headRepository": "oauth-wg/oauth-first-party-apps",
       "headRefName": "PieterKas-patch-2",
       "headRefOid": "184014b730a0a5263d34e4d095c025eb08066b1f",
       "closedAt": "2024-06-28T15:15:26Z",
@@ -3457,7 +3457,7 @@
             "abbreviatedOid": "2718843"
           },
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2024-06-28T15:14:12Z",
@@ -3477,7 +3477,7 @@
             "abbreviatedOid": "184014b"
           },
           "author": "aaronpk",
-          "authorAssociation": "OWNER",
+          "authorAssociation": "MEMBER",
           "state": "APPROVED",
           "body": "",
           "createdAt": "2024-06-28T15:15:21Z",
