@@ -20,8 +20,8 @@ venue:
   type: "Working Group"
   mail: "oauth@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/oauth/"
-  github: "aaronpk/oauth-first-party-apps"
-  latest: "https://aaronpk.github.io/oauth-first-party-apps/draft-parecki-oauth-first-party-apps.html"
+  github: "oauth-wg/oauth-first-party-apps"
+  latest: "https://drafts.oauth.net/oauth-first-party-apps/draft-ietf-oauth-first-party-apps.html"
 
 author:
  -
