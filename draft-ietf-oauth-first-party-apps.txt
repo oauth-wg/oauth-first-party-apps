@@ -5,10 +5,10 @@
 Web Authorization Protocol                                    A. Parecki
 Internet-Draft                                                      Okta
 Intended status: Standards Track                             G. Fletcher
-Expires: 11 April 2025                             Capital One Financial
+Expires: 18 April 2025                             Capital One Financial
                                                             P. Kasselman
-                                                               Microsoft
-                                                          8 October 2024
+                                                                   SPIRL
+                                                         15 October 2024
 
 
                  OAuth 2.0 for First-Party Applications
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 April 2025.
+   This Internet-Draft will expire on 18 April 2025.
 
 Copyright Notice
 
@@ -1739,5 +1739,5 @@ Authors' Addresses
 
 
    Pieter Kasselman
-   Microsoft
-   Email: pieter.kasselman@microsoft.com
+   SPIRL
+   Email: pieter@spirl.com
