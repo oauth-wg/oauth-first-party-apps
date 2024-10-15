@@ -32,8 +32,8 @@ author:
     organization: Capital One Financial
     email: george.fletcher@capitalone.com
  -  fullname: Pieter Kasselman
-    organization: Microsoft
-    email: pieter.kasselman@microsoft.com
+    organization: SPIRL
+    email: pieter@spirl.com
 
 normative:
   RFC6749:
