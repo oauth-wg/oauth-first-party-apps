@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-10-15T00:23:21.033587+00:00",
+  "timestamp": "2024-10-17T00:23:02.357134+00:00",
   "repo": "oauth-wg/oauth-first-party-apps",
   "labels": [
     {
@@ -3482,6 +3482,48 @@
           "body": "",
           "createdAt": "2024-06-28T15:15:21Z",
           "updatedAt": "2024-06-28T15:15:21Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 112,
+      "id": "PR_kwDOJbxyLc5-tJ9p",
+      "title": "Change of affiliation for Pieter",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/pull/112",
+      "state": "MERGED",
+      "author": "PieterKas",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-10-15T16:58:18Z",
+      "updatedAt": "2024-10-15T17:00:45Z",
+      "baseRepository": "oauth-wg/oauth-first-party-apps",
+      "baseRefName": "main",
+      "baseRefOid": "579a64dc399c70c463741e7af72aa257810259e1",
+      "headRepository": "oauth-wg/oauth-first-party-apps",
+      "headRefName": "PieterKas-patch-1",
+      "headRefOid": "1a2661fa4a2cfaaee730709796603f2f04aa1fd0",
+      "closedAt": "2024-10-15T17:00:44Z",
+      "mergedAt": "2024-10-15T17:00:44Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "1f1f9e707fdf18baadc3e1382cbf4051626f9d12"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJbxyLc6NQ_cP",
+          "commit": {
+            "abbreviatedOid": "1a2661f"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-10-15T17:00:24Z",
+          "updatedAt": "2024-10-15T17:00:24Z",
           "comments": []
         }
       ]
