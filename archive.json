@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-10-17T00:23:02.357134+00:00",
+  "timestamp": "2024-10-20T00:25:31.121169+00:00",
   "repo": "oauth-wg/oauth-first-party-apps",
   "labels": [
     {
@@ -52,6 +52,11 @@
       "name": "discuss",
       "description": "",
       "color": "CC8F7C"
+    },
+    {
+      "name": "ietf121",
+      "description": "",
+      "color": "c5def5"
     }
   ],
   "issues": [
@@ -1330,10 +1335,12 @@
       "author": "aaronpk",
       "authorAssociation": "MEMBER",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "ietf121"
+      ],
       "body": "Look at https://github.com/jaredhanson/id-oauth-fido2/blob/main/draft.txt for WebAuthn parameters",
       "createdAt": "2023-11-17T16:45:17Z",
-      "updatedAt": "2024-07-02T21:27:50Z",
+      "updatedAt": "2024-10-18T15:09:37Z",
       "closedAt": null,
       "comments": [
         {
@@ -2421,10 +2428,12 @@
       "author": "Sakurann",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "ietf121"
+      ],
       "body": "using this draft in the context of EUDIW ecosystem would solve some problems in the following scenarios:\r\n\r\n- scenario 1: using eID tap (physical card) to authenticate the user when issuing a PID (government issued digital credential). eID card talks directly to the eID server, but the tap needs to be mediated by the wallet/client since it requires NFC. So there is no need for a browser during authorization request. German EUDIW Architecture project has an implementation of this and it is not very oauth compliant nor interoperable since a response with authorization code is not an authorization response. eID server and the issuer of a PID is the government or is authorized by the government to read the data from eID. \r\n- scenario 2: Present PID to authenticate the user when issuing a QEAA (any other credential, can be mobile driving license). Some use-cases do not want to show the user the browser and want to go straight to the PID presentation screen after the QEAA issuance request (but some use-cases might need a browser - `redirect_to_web` error would be very useful). Both wallet that stores PID and the QEAA issuer needs to be certified/registered with the government/European Commission. Issuer of QEAA needs to be authorized to receive PID.\r\n\r\nHad a discussion with the editors and they were reluctantly willing to enable the usage of the draft in a situation where a tightly defined trust framework can be considered equivalent to a first party scenario:\r\n- Issuer/AS can identify the \"first-partiness\" of the wallet and is sure that wallet knows what to do in that flow\r\n- Issuer/AS is authorized to get that user data from the wallet\r\n- security properties are also clearly defined\r\n- all this is tightly defined in a profile of first party app spec\r\n\r\ncc @danielfett @cre8",
       "createdAt": "2024-08-12T16:12:48Z",
-      "updatedAt": "2024-08-12T16:15:25Z",
+      "updatedAt": "2024-10-18T15:14:54Z",
       "closedAt": null,
       "comments": []
     },
@@ -2441,6 +2450,22 @@
       "body": "Question raised on OAuth mailing list by Alex Nennker: https://mailarchive.ietf.org/arch/msg/oauth/pgO3Gpnoc-OrBlQnrZLqE-ImlBM/",
       "createdAt": "2024-10-01T13:27:32Z",
       "updatedAt": "2024-10-01T13:27:32Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 113,
+      "id": "I_kwDOJbxyLc6ayRES",
+      "title": "parameters that must not be present in authorization challenge request",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/113",
+      "state": "OPEN",
+      "author": "Sakurann",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "- I think request_uri, code_challenge, and code_challenge_method authorization request parameters MUST NOT be provided in authorization challenge request?\r\n- and why response_type parameter is not mandatory in the authorization challenge request?",
+      "createdAt": "2024-10-18T08:44:03Z",
+      "updatedAt": "2024-10-18T08:44:03Z",
       "closedAt": null,
       "comments": []
     }
