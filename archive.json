@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-11-03T00:25:32.595290+00:00",
+  "timestamp": "2024-11-05T00:23:02.089332+00:00",
   "repo": "oauth-wg/oauth-first-party-apps",
   "labels": [
     {
@@ -3425,7 +3425,7 @@
       "labels": [],
       "body": "WIP",
       "createdAt": "2024-05-10T16:32:36Z",
-      "updatedAt": "2024-05-10T16:37:26Z",
+      "updatedAt": "2024-11-04T11:08:00Z",
       "baseRepository": "oauth-wg/oauth-first-party-apps",
       "baseRefName": "main",
       "baseRefOid": "c84cd9bea1a121caa781151233e5c473c4a43090",
@@ -3443,6 +3443,13 @@
           "body": "I had to push this to a branch on my repo for the build script to build a preview of it, available here:\r\n\r\nhttps://drafts.aaronpk.com/oauth-first-party-apps/timcappalli-webauthn/draft-parecki-oauth-first-party-apps.html",
           "createdAt": "2024-05-10T16:37:25Z",
           "updatedAt": "2024-05-10T16:37:25Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "I fixed the merge conflicts in the branch on this repo and rebuilt the preview at the new URL:\r\n\r\nhttps://drafts.oauth.net/oauth-first-party-apps/timcappalli-webauthn/draft-ietf-oauth-first-party-apps.html",
+          "createdAt": "2024-11-04T11:07:58Z",
+          "updatedAt": "2024-11-04T11:07:58Z"
         }
       ],
       "reviews": []
