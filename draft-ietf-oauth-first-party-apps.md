@@ -128,7 +128,7 @@ This draft also extends the token response (typically for use in response to a r
 
 This specification MUST only be used by first-party applications, which is when the authorization server and application are controlled by the same entity and the user understands them both as the same entity.
 
-This specification MUST NOT be used by third party applications, and the authorization server SHOULD take measures to prevent use by third party applications. (e.g. only enable this grant for certain client IDs, and take measures to authenticate first-party apps when possible.)
+This specification MUST NOT be used by third party applications, and the authorization server MUST take measures to prevent use by third party applications. (e.g. only enable this grant for certain client IDs, and take measures to authenticate first-party apps when possible.)
 
 Using this specification in scenarios other than those described will lead to unintended security and privacy problems for users and service providers.
 
