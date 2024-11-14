@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-11-12T00:22:47.794798+00:00",
+  "timestamp": "2024-11-14T00:22:59.606886+00:00",
   "repo": "oauth-wg/oauth-first-party-apps",
   "labels": [
     {
@@ -2468,6 +2468,413 @@
       "updatedAt": "2024-10-18T08:44:03Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 114,
+      "id": "I_kwDOJbxyLc6eFr3y",
+      "title": "Authorization server and 3rd party apps",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/114",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The draft notes multiple times that the new endpoint and the protocol are only for first party apps and not third party apps, yet in 1.1 it states, \u201c[\u2026] the authorization server SHOULD take measures to prevent use by third party applications.\u201d  I believe the SHOULD should be changed to a MUST.",
+      "createdAt": "2024-11-12T14:03:54Z",
+      "updatedAt": "2024-11-12T14:03:54Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 116,
+      "id": "I_kwDOJbxyLc6eFvhF",
+      "title": "re-authorization vs. re-authentication",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/116",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Sections 3.2 and 3.3 both use the language \u201cre-authorization of the user is required\u201d when the AS responds with an error to presentation of a refresh token (3.2) or the RS requires step up per RFC9470 (3.3).  In both of these cases, re-authorization is required, however, I believe that the requirement is actually re-authentication of the user in order to re-authorize them.  \r\n\r\nI suggest changing both instances to re-authentication. (Edited to change re-authorization to re-authentication in this sentence.)  ",
+      "createdAt": "2024-11-12T14:09:59Z",
+      "updatedAt": "2024-11-13T15:21:55Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Can you clarify if you mean it should be re-authentication or re-authorization? The text suggest you prefer re-authentication, but your recommendation is for re-authorization.",
+          "createdAt": "2024-11-12T17:03:58Z",
+          "updatedAt": "2024-11-12T17:03:58Z"
+        },
+        {
+          "author": "deansaxe",
+          "authorAssociation": "NONE",
+          "body": "I _think_ that what's necessary is re-authorization, but in order to re-authorize the user, they must be re-authenticated.  So my preference is to change the text to re-authentication.",
+          "createdAt": "2024-11-12T17:21:49Z",
+          "updatedAt": "2024-11-12T17:21:49Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Ok, that is different from your proposal in the issue\r\n\r\n>I suggest changing both instances to re-authorization.",
+          "createdAt": "2024-11-12T18:23:56Z",
+          "updatedAt": "2024-11-12T18:23:56Z"
+        },
+        {
+          "author": "embesozzi",
+          "authorAssociation": "NONE",
+          "body": "+1 `re-authorization` since we are in the context of OAuth. I usually try to say OIDC \u2192 authentication and OAuth \u2192 authorization (which is really an access delegation standard)",
+          "createdAt": "2024-11-12T22:54:13Z",
+          "updatedAt": "2024-11-12T22:54:13Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Yes I agree these should be \"re-authentication\". The goal is to leverage the existing step-up spec RFC9470, which has this language:\r\n\r\nhttps://www.rfc-editor.org/rfc/rfc9470#section-3\r\n\r\n> The authentication event associated with the access token presented with the request does not meet the authentication requirements of the protected resource.\r\n\r\nYes we are talking about user authentication here. I am not actually sure how those two sentences in 3.2 and 3.3 turned in to \"re-authorization\". The user is not being authorized, the application is, and these sections are talking about the user. So \"re-authentication\" is correct.",
+          "createdAt": "2024-11-12T23:30:09Z",
+          "updatedAt": "2024-11-12T23:30:09Z"
+        },
+        {
+          "author": "deansaxe",
+          "authorAssociation": "NONE",
+          "body": "> Ok, that is different from your proposal in the issue\r\n> \r\n> > I suggest changing both instances to re-authorization.\r\n\r\nYes, I had an error in the original issue.  I updated the text in the issue to align with what I intended.  Good catch!",
+          "createdAt": "2024-11-13T15:21:54Z",
+          "updatedAt": "2024-11-13T15:21:54Z"
+        }
+      ]
+    },
+    {
+      "number": 117,
+      "id": "I_kwDOJbxyLc6eFwEH",
+      "title": "Handling parameters that have no meaning in a first party app context",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/117",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 4.1 identifies that it is out of scope to define how to handle a parameter that has no meaning in this use cases.  The draft can be more explicit and state that these parameters MAY be ignored since they are irrelevant.",
+      "createdAt": "2024-11-12T14:10:51Z",
+      "updatedAt": "2024-11-12T17:22:36Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I would go further and suggest \"SHOULD ignore parameters that are not relevant to the use case\" to provide stricter guidance. Thoughts?",
+          "createdAt": "2024-11-12T17:05:37Z",
+          "updatedAt": "2024-11-12T17:05:37Z"
+        },
+        {
+          "author": "deansaxe",
+          "authorAssociation": "NONE",
+          "body": "I agree @PieterKas, that is the correct wording.",
+          "createdAt": "2024-11-12T17:22:34Z",
+          "updatedAt": "2024-11-12T17:22:34Z"
+        }
+      ]
+    },
+    {
+      "number": 118,
+      "id": "I_kwDOJbxyLc6eFxBR",
+      "title": "error_uri may be unnecessary for first party apps",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/118",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 5.2.2 defines an error_uri.  This seems unnecessary - and is defined as optional - since this is only usable by first party apps. This can be removed from the draft since first party app developers should have no need for this data.",
+      "createdAt": "2024-11-12T14:12:32Z",
+      "updatedAt": "2024-11-12T17:10:20Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I believe this is a useful option for developers who may want to provide additional information, or who may want to change that information - this mechanism allows them to more dynamically provide that information. ",
+          "createdAt": "2024-11-12T17:10:19Z",
+          "updatedAt": "2024-11-12T17:10:19Z"
+        }
+      ]
+    },
+    {
+      "number": 119,
+      "id": "I_kwDOJbxyLc6eFxgU",
+      "title": "Minimum length of the auth_session when presented as a random string",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/119",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 5.3.1 specifies the auth_session as a random string or JWE.  The draft should specify the minimum length of this random string, e.g. >16 bytes, to avoid collisions.",
+      "createdAt": "2024-11-12T14:13:24Z",
+      "updatedAt": "2024-11-12T17:13:43Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Great point. ",
+          "createdAt": "2024-11-12T17:13:41Z",
+          "updatedAt": "2024-11-12T17:13:41Z"
+        }
+      ]
+    },
+    {
+      "number": 120,
+      "id": "I_kwDOJbxyLc6eF1Nn",
+      "title": "Device binding of the auth_session",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/120",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 5.3.1 mandates the auth_session is bound to the device, yet offers no guidance on how to do so.  Consider adding non-normative text to suggest mechanisms, such as a DPoP proof, to provide guidance to implementers without constraining implementers to a single mechanism.",
+      "createdAt": "2024-11-12T14:19:48Z",
+      "updatedAt": "2024-11-13T19:28:20Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "body": "It is not up to this draft to define device binding and there may be multiple mechanisms. If there is an existing draft that defines how device binding can be achieved, we can reference that. There may also be platform specific mechanisms for doing this, which is beyond the scope of this document to define. In terms of DPoP, I think it only give device binding if the key is known to be bound to the device which is not something DPoP explicitly requires. Device binding feels like a separate draft...",
+          "createdAt": "2024-11-12T17:18:45Z",
+          "updatedAt": "2024-11-12T17:18:45Z"
+        },
+        {
+          "author": "deansaxe",
+          "authorAssociation": "NONE",
+          "body": "I understand the complexity here, which is why I suggested some non-normative text.  If there's an interest in working on a device binding spec, let's discuss that.  I see value in such a doc.",
+          "createdAt": "2024-11-13T15:19:15Z",
+          "updatedAt": "2024-11-13T15:19:15Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "body": "A draft on device binding would be a great point of discussion for IETF 122. I also wonder if this is something that the OAuth client attestation draft could be used for?",
+          "createdAt": "2024-11-13T19:28:19Z",
+          "updatedAt": "2024-11-13T19:28:19Z"
+        }
+      ]
+    },
+    {
+      "number": 121,
+      "id": "I_kwDOJbxyLc6eF4v9",
+      "title": "Returning the auth_session parameter from the token endpoint",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/121",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 6.1 states that the token endpoint response MAY include the auth_session parameter.  This is required for messages returned from the AS, I am unclear why it is not required when a token endpoint response is returned. Section 6.2 has the same issue.",
+      "createdAt": "2024-11-12T14:25:34Z",
+      "updatedAt": "2024-11-12T17:29:38Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The intent was that this is an optional feature of the protocol. The authorization server may not want or need to maintain context, so it becomes optional in that sense. I do expect it will be commonly used, but the protocol can be used without it. It may also be included in the token response (even when the authorization code was obtained through other means), but not mandatory as existing AS's may not support it.",
+          "createdAt": "2024-11-12T17:29:37Z",
+          "updatedAt": "2024-11-12T17:29:37Z"
+        }
+      ]
+    },
+    {
+      "number": 122,
+      "id": "I_kwDOJbxyLc6eF52e",
+      "title": "Determining the first-partyness of an application",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/122",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 9.1 explicitly states that the draft is not prescriptive about how the \u201cfirst partyness\u201d of the app is determined.  Given the risk of the use of third party apps with this protocol, the draft should aim to be prescriptive regarding how \u201cfirst partyness\u201d is assessed.  This may be documented either as normative or non-normative guidance.\r\n\r\nSimilarly, the draft should be more direct in the text that SPAs SHOULD NOT be used as first party apps due to the challenges they present. Section 9.8 identifies SPAs at NOT RECOMMENDED.",
+      "createdAt": "2024-11-12T14:27:15Z",
+      "updatedAt": "2024-11-12T23:34:00Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Defining the \"first -partyness\" of an application is up to the Authorization Server. Developers have a choice of platform and proprietary mechanisms and the document already provides hints of how this might be used. First partiness also extends beyond technical measures and includes trust frameworks and contractual obligations which are out of scope for a technical specification. It may be interesting to consider a BCP that can be updated and evolved over time to keep track with the latest techniques in determining first-part status, but something to be addressed separately from this draft.",
+          "createdAt": "2024-11-12T17:38:49Z",
+          "updatedAt": "2024-11-12T23:34:00Z"
+        },
+        {
+          "author": "embesozzi",
+          "authorAssociation": "NONE",
+          "body": "It would be useful for implementers and developers to provide some high-level recommendations on this topic, as the proposal is 100% related to first-party apps. \r\nSo far, I have found that the spec [OAuth 2.0 Attestation-Based Client Authentication](https://datatracker.ietf.org/doc/draft-ietf-oauth-attestation-based-client-auth/) can be helpful in this context. I share a general idea [here](https://medium.com/@embesozzi/deep-dive-into-enhancing-user-experience-with-native-authentication-and-passkeys-in-keycloak-86fb72c64278).",
+          "createdAt": "2024-11-12T22:42:21Z",
+          "updatedAt": "2024-11-12T22:42:21Z"
+        }
+      ]
+    },
+    {
+      "number": 123,
+      "id": "I_kwDOJbxyLc6eF6st",
+      "title": "Ordering of operations in Appendix A.1",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/123",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "In Appendix A.1 step 4, the user should be prompted for their activation secret before the client can sign the challenge, since the activation secret unlocks the signing key.  In the draft, these operations are reversed.",
+      "createdAt": "2024-11-12T14:28:40Z",
+      "updatedAt": "2024-11-12T17:40:29Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Good catch.",
+          "createdAt": "2024-11-12T17:40:28Z",
+          "updatedAt": "2024-11-12T17:40:28Z"
+        }
+      ]
+    },
+    {
+      "number": 124,
+      "id": "I_kwDOJbxyLc6eF7WE",
+      "title": "Change platform authenticator to passkey",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/124",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "In Appendix A.1 step 4 change \u201cplatform authenticator\u201d to \u201cpasskey\u201d.  \r\n\r\nThe passkey - a FIDO credential - may reside in a platform authenticator, a first or third party passkey provider, or on a hardware key.  ",
+      "createdAt": "2024-11-12T14:29:42Z",
+      "updatedAt": "2024-11-12T18:21:50Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Good clarification.",
+          "createdAt": "2024-11-12T18:21:49Z",
+          "updatedAt": "2024-11-12T18:21:49Z"
+        }
+      ]
+    },
+    {
+      "number": 125,
+      "id": "I_kwDOJbxyLc6eT3Wr",
+      "title": "Mentioning of PKCE related parameters",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/125",
+      "state": "OPEN",
+      "author": "janakamarasena",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Under section 5.1. \u201cAuthorization Challenge Request\u201d the spec lists the \u201ccode_challenge\u201d and the \"code_challenge_method\" as optional parameters. As this protocol establishes direct communication between the client and the AS I don\u2019t see a real requirement to mention PKCE related parameters here. Please let me know if I have missed anything here.\r\n\r\nAs I understood, using these two parameters in the authorization challenge request is useful only when the client expects that it will have to perform a redirect based authorization flow and also the AS supports PAR capabilities through the authorization_challenge_endpoint. I think this will be an edge case and given the spec mentions it supports all extensions applicable to the authorization endpoint I don\u2019t see a major need to specifically mention these two parameters under this section. I think this could also cause confusion to implementers.",
+      "createdAt": "2024-11-13T16:08:44Z",
+      "updatedAt": "2024-11-13T16:08:44Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 126,
+      "id": "I_kwDOJbxyLc6eT46d",
+      "title": "Possibility to use the auth_session in new authorization request when redirect to web",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/126",
+      "state": "OPEN",
+      "author": "janakamarasena",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Under section 5.2.2.1. \u201cRedirect to Web Error Response\u201d the spec mentions \r\n   \r\n\r\n> In this case, the client is expected to initiate a new OAuth\r\n>    Authorization Code flow with PKCE according to [RFC6749] and\r\n>    [RFC7636].\r\n> \r\n>    If the client expects the frequency of this error response to be\r\n>    high, the client MAY include a PKCE ([RFC7636]) code_challenge in the\r\n>    initial authorization challenge request.  This enables the\r\n>    authorization server to essentially treat the authorization challenge\r\n>    request as a PAR [RFC9126] request, and return the request_uri and\r\n>    expires_in as defined by [RFC9126] in the error response.  The client\r\n>    then uses the request_uri value to build an authorization request as\r\n>    defined in [RFC9126] Section 4.\r\n\r\nI think it would be good to add some text to the spec mentioning the possibility to use the auth_session in this new authorization request such that the user can continue the login from where the user left off. Something similar is mentioned in section 6.1. for step-up authentication. \r\n\r\n",
+      "createdAt": "2024-11-13T16:11:21Z",
+      "updatedAt": "2024-11-13T16:11:21Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 127,
+      "id": "I_kwDOJbxyLc6eT5r3",
+      "title": "Two standard endpoints for PAR",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/127",
+      "state": "OPEN",
+      "author": "janakamarasena",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "I have some concerns with the authorization_challenge_endpoint being able to act as the PAR endpoint. I understand the improved experience gained here but this essentially creates two standard endpoints that can do similar things. Instead it might be possible to use the auth_session to maintain the complete context. However this could be overloading the expectations of the auth_session.",
+      "createdAt": "2024-11-13T16:12:39Z",
+      "updatedAt": "2024-11-13T16:12:39Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 128,
+      "id": "I_kwDOJbxyLc6eT62r",
+      "title": "Requirement of having an opaque auth_session value",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/128",
+      "state": "OPEN",
+      "author": "janakamarasena",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Under section 5.3.1. \u201cAuth Session\u201d spec mentions;\r\n\r\n>    The auth_session value is completely opaque to the client, and as\r\n>    such the authorization server MUST adequately protect the value from\r\n>    inspection by the client, for example by using a random string or\r\n>    using a JWE if the authorization server is not maintaining state on\r\n>    the backend.\r\n\r\nI think the intention behind mandating to maintain the opaqueness is to protect any sensitive information. Depending on the AS implementation it could decide on using an auth_session value which is not opaque but also does not contain any sensitive data. I think it would be better to recommend that the AS uses adequate measures such as encryption in the event they are using something other than an opaque value that contains sensitive data. The current mandating will put an unnecessary burden on the AS to encrypt and decrypt data if it doesn\u2019t contain sensitive information.",
+      "createdAt": "2024-11-13T16:14:49Z",
+      "updatedAt": "2024-11-13T16:14:49Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 129,
+      "id": "I_kwDOJbxyLc6eT8-V",
+      "title": "Binding the auth session to the device",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/129",
+      "state": "OPEN",
+      "author": "janakamarasena",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Under section 5.3.1. \u201cAuth Session\u201d spec mentions;\r\n\r\n>   To mitigate the risk of session hijacking, the 'auth_session' MUST be\r\n>    bound to the device, and the authorization server MUST reject an\r\n>    'auth_session' if it is presented from a different device than the\r\n>    one it was bound to.\r\n\r\nI completely agree on the need to mitigate the risk of session hijacking. However, in the current text, although it's not directly mentioned here, it will require the AS to have a proof of possession mechanism in place as pointed in Section 9 \"Security Considerations\". This can be a major barrier to implement this specification as the AS should also implement another specification. There can be different ways the implementation can solve this problem without needing proof of possession. For example if the auth_session is only transmitted between the AS and the client then it will be protected with TLS in transit and the client and AS can use independent mechanisms to protect the auth_session at rest. Since this specification applies only to first party applications the implementers will have full control over how the client and the AS protects the data, and therefore can make sure adequate protection is in place for the auth_session. Due to this I think it is better to change wording from mandating to a recommendation.",
+      "createdAt": "2024-11-13T16:18:23Z",
+      "updatedAt": "2024-11-13T16:18:39Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 130,
+      "id": "I_kwDOJbxyLc6eT-Q0",
+      "title": "The need for \"Resource Server Error Response\" section",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/130",
+      "state": "OPEN",
+      "author": "janakamarasena",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Regarding section \u201c7. Resource Server Error Response\u201d I am wondering whether this section is required at all as this spec makes no addition to RFC9470. Is this section there to provide clarity due to RFC9470 using the authorization endpoint in its text?",
+      "createdAt": "2024-11-13T16:20:32Z",
+      "updatedAt": "2024-11-13T16:20:32Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 131,
+      "id": "I_kwDOJbxyLc6eT_CV",
+      "title": "Possible miswording in section 9.5.1.",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/131",
+      "state": "OPEN",
+      "author": "janakamarasena",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Under section 9.5.1. DPoP: Demonstrating Proof-of-Possession it mentions \u201c\u2026 The authorization server MUST ensure that the same key is used in all subsequent Authorization Challenge Requests, **or** in the eventual token request\u2026\u201d I think it was meant to say \u201c... Authorization Challenge Requests, **and** in the eventual token request\u2026\u201d",
+      "createdAt": "2024-11-13T16:21:55Z",
+      "updatedAt": "2024-11-13T16:21:55Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -3559,6 +3966,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 115,
+      "id": "PR_kwDOJbxyLc6Bo55I",
+      "title": "AS and 3rd Party Apps",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/pull/115",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Change to require the authorization service to prevent access by 3rd party apps as identified in #114.",
+      "createdAt": "2024-11-12T14:06:52Z",
+      "updatedAt": "2024-11-12T14:06:52Z",
+      "baseRepository": "oauth-wg/oauth-first-party-apps",
+      "baseRefName": "main",
+      "baseRefOid": "1f1f9e707fdf18baadc3e1382cbf4051626f9d12",
+      "headRepository": "deansaxe/oauth-first-party-apps",
+      "headRefName": "patch-1",
+      "headRefOid": "370efb403f261558faae34211ccfc4742582df9f",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
