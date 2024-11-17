@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-11-14T00:22:59.606886+00:00",
+  "timestamp": "2024-11-17T00:26:23.151380+00:00",
   "repo": "oauth-wg/oauth-first-party-apps",
   "labels": [
     {
@@ -2497,7 +2497,7 @@
       "labels": [],
       "body": "Sections 3.2 and 3.3 both use the language \u201cre-authorization of the user is required\u201d when the AS responds with an error to presentation of a refresh token (3.2) or the RS requires step up per RFC9470 (3.3).  In both of these cases, re-authorization is required, however, I believe that the requirement is actually re-authentication of the user in order to re-authorize them.  \r\n\r\nI suggest changing both instances to re-authentication. (Edited to change re-authorization to re-authentication in this sentence.)  ",
       "createdAt": "2024-11-12T14:09:59Z",
-      "updatedAt": "2024-11-13T15:21:55Z",
+      "updatedAt": "2024-11-14T16:53:08Z",
       "closedAt": null,
       "comments": [
         {
@@ -2541,6 +2541,20 @@
           "body": "> Ok, that is different from your proposal in the issue\r\n> \r\n> > I suggest changing both instances to re-authorization.\r\n\r\nYes, I had an error in the original issue.  I updated the text in the issue to align with what I intended.  Good catch!",
           "createdAt": "2024-11-13T15:21:54Z",
           "updatedAt": "2024-11-13T15:21:54Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks for the clarification Dean. I agree it should read re-authentication.",
+          "createdAt": "2024-11-14T15:58:42Z",
+          "updatedAt": "2024-11-14T15:58:42Z"
+        },
+        {
+          "author": "deansaxe",
+          "authorAssociation": "NONE",
+          "body": "I filed a PR #132.",
+          "createdAt": "2024-11-14T16:53:07Z",
+          "updatedAt": "2024-11-14T16:53:07Z"
         }
       ]
     },
@@ -3986,6 +4000,32 @@
       "headRepository": "deansaxe/oauth-first-party-apps",
       "headRefName": "patch-1",
       "headRefOid": "370efb403f261558faae34211ccfc4742582df9f",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 132,
+      "id": "PR_kwDOJbxyLc6B8vZf",
+      "title": "Change re-authorization to re-authentication",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/pull/132",
+      "state": "OPEN",
+      "author": "deansaxe",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Following the discussion in #116, I've updated the text.",
+      "createdAt": "2024-11-14T16:52:15Z",
+      "updatedAt": "2024-11-14T16:52:15Z",
+      "baseRepository": "oauth-wg/oauth-first-party-apps",
+      "baseRefName": "main",
+      "baseRefOid": "1f1f9e707fdf18baadc3e1382cbf4051626f9d12",
+      "headRepository": "deansaxe/oauth-first-party-apps",
+      "headRefName": "patch-2",
+      "headRefOid": "efe524877486f08fba67a6743434cf168d746a04",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
