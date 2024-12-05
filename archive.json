@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-03T00:26:12.647153+00:00",
+  "timestamp": "2024-12-05T00:25:31.427632+00:00",
   "repo": "oauth-wg/oauth-first-party-apps",
   "labels": [
     {
@@ -2295,9 +2295,17 @@
       "labels": [],
       "body": "wouldn't it better to align with RFC6749 and use `code`?\r\n\r\nalso, would probably better to point to https://www.rfc-editor.org/rfc/rfc6749.html#section-1.3.1 as to the definition of authorization code returned from the authorization challenge endpoint, because right now it does not seem to be explicitly well-defined and you probably don't want to duplicate the existing text.",
       "createdAt": "2024-08-12T13:10:21Z",
-      "updatedAt": "2024-08-12T13:10:21Z",
+      "updatedAt": "2024-12-04T04:57:34Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "evert",
+          "authorAssociation": "NONE",
+          "body": "Had the same thought!",
+          "createdAt": "2024-12-04T04:57:32Z",
+          "updatedAt": "2024-12-04T04:57:32Z"
+        }
+      ]
     },
     {
       "number": 103,
@@ -2887,6 +2895,22 @@
       "body": "Under section 9.5.1. DPoP: Demonstrating Proof-of-Possession it mentions \u201c\u2026 The authorization server MUST ensure that the same key is used in all subsequent Authorization Challenge Requests, **or** in the eventual token request\u2026\u201d I think it was meant to say \u201c... Authorization Challenge Requests, **and** in the eventual token request\u2026\u201d",
       "createdAt": "2024-11-13T16:21:55Z",
       "updatedAt": "2024-11-13T16:21:55Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 133,
+      "id": "I_kwDOJbxyLc6h65z9",
+      "title": "insufficient_authorization vs custom errors",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/133",
+      "state": "OPEN",
+      "author": "evert",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The spec mentions that implementers should define their own error codes for specific challenges, and [Appendix B.2.](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-first-party-apps#appendix-B.2) Gives an example of using the `otp_required'  error code.\r\n\r\nHowever, the spec also defines `insufficient_authorization` as:\r\n\r\n    The presented authorization is insufficient, and the authorization server is requesting the client take additional steps to complete the authorization.\r\n\r\nAsking the client to supply a OTP code feels like an 'additional step'. Am I misunderstanding `insufficient_authorization`? \r\n\r\nI'm also curious about the scenario where a user might take one of several possible steps to fulfill a challenge. For example, after providing a username and password a dialog may be presented where the user can choose either 'sending a code via email', 'sending a code via sms' or providing a TOTP code. ",
+      "createdAt": "2024-12-04T05:05:59Z",
+      "updatedAt": "2024-12-04T05:06:08Z",
       "closedAt": null,
       "comments": []
     }
