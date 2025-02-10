@@ -5,10 +5,10 @@
 Web Authorization Protocol                                    A. Parecki
 Internet-Draft                                                      Okta
 Intended status: Standards Track                             G. Fletcher
-Expires: 18 April 2025                             Capital One Financial
+Expires: 14 August 2025                            Capital One Financial
                                                             P. Kasselman
                                                                    SPIRL
-                                                         15 October 2024
+                                                        10 February 2025
 
 
                  OAuth 2.0 for First-Party Applications
@@ -57,11 +57,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 April 2025.
+   This Internet-Draft will expire on 14 August 2025.
 
 Copyright Notice
 
-   Copyright (c) 2024 IETF Trust and the persons identified as the
+   Copyright (c) 2025 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -226,7 +226,7 @@ Table of Contents
    the user is attempting to authorize.
 
    For example, requesting a user to enter a password on a limited-input
-   device (e.g.  TV) creates a lot of user friction while also exposing
+   device (e.g. TV) creates a lot of user friction while also exposing
    the user's password to anyone else in the room.  On the other hand,
    using a challenge method that involves, for example, a fingerprint
    reader on the TV remote allowing for a FIDO2 passkey authentication
@@ -786,9 +786,9 @@ Table of Contents
    Registration [RFC7591] to enable strong client authentication in
    addition to client verification (first-partyness).  The exact steps
    required are out of scope for this specification.  Note that
-   applications running inside a browser (e.g.  Single Page Apps)
-   context it is much more difficult to verify the first-partyness of
-   the client.  Please see Section 9.8 for additional details.
+   applications running inside a browser (e.g. Single Page Apps) context
+   it is much more difficult to verify the first-partyness of the
+   client.  Please see Section 9.8 for additional details.
 
 9.2.  Phishing
 
@@ -1041,9 +1041,9 @@ Table of Contents
    [I-D.ietf-oauth-cross-device-security]
               Kasselman, P., Fett, D., and F. Skokan, "Cross-Device
               Flows: Security Best Current Practice", Work in Progress,
-              Internet-Draft, draft-ietf-oauth-cross-device-security-08,
-              8 July 2024, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-oauth-cross-device-security-08>.
+              Internet-Draft, draft-ietf-oauth-cross-device-security-09,
+              6 January 2025, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-oauth-cross-device-security-09>.
 
    [IANA.JWT] "*** BROKEN REFERENCE ***".
 
@@ -1142,9 +1142,9 @@ Table of Contents
    [I-D.ietf-oauth-browser-based-apps]
               Parecki, A., Waite, D., and P. De Ryck, "OAuth 2.0 for
               Browser-Based Applications", Work in Progress, Internet-
-              Draft, draft-ietf-oauth-browser-based-apps-18, 1 May 2024,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              browser-based-apps-18>.
+              Draft, draft-ietf-oauth-browser-based-apps-22, 17 January
+              2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              oauth-browser-based-apps-22>.
 
    [RFC6750]  Jones, M. and D. Hardt, "The OAuth 2.0 Authorization
               Framework: Bearer Token Usage", RFC 6750,
