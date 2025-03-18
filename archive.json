@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-16T00:27:17.349957+00:00",
+  "timestamp": "2025-03-18T00:24:42.607302+00:00",
   "repo": "oauth-wg/oauth-first-party-apps",
   "labels": [
     {
@@ -2657,7 +2657,7 @@
       "labels": [],
       "body": "Section 5.3.1 mandates the auth_session is bound to the device, yet offers no guidance on how to do so.  Consider adding non-normative text to suggest mechanisms, such as a DPoP proof, to provide guidance to implementers without constraining implementers to a single mechanism.",
       "createdAt": "2024-11-12T14:19:48Z",
-      "updatedAt": "2024-11-13T19:28:20Z",
+      "updatedAt": "2025-03-17T17:09:43Z",
       "closedAt": null,
       "comments": [
         {
@@ -2680,6 +2680,20 @@
           "body": "A draft on device binding would be a great point of discussion for IETF 122. I also wonder if this is something that the OAuth client attestation draft could be used for?",
           "createdAt": "2024-11-13T19:28:19Z",
           "updatedAt": "2024-11-13T19:28:19Z"
+        },
+        {
+          "author": "dhs-BI",
+          "authorAssociation": "NONE",
+          "body": "Looks like we never followed up on this @PieterKas.  Let's discuss at IETF122.",
+          "createdAt": "2025-03-17T06:44:42Z",
+          "updatedAt": "2025-03-17T06:44:42Z"
+        },
+        {
+          "author": "damienbod",
+          "authorAssociation": "NONE",
+          "body": "How about using client assertions for device-binding? On the startup of each instance, the application can request a new sessionId from the OAuth server using a unique public key which is created on the startup together with the private key and this can be used to authenticate all future token requests for this instance using a client assertion. The private key would never leave the device, can even be persisted in memory only. DPoP can be used for the tokens. The OAuth server would link the sessionId to the public key and the sessionId could be passed in the signed client assertion to identify which public key should be used to validate the signature.",
+          "createdAt": "2025-03-17T17:08:50Z",
+          "updatedAt": "2025-03-17T17:09:42Z"
         }
       ]
     },
