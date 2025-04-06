@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-01T00:29:13.110579+00:00",
+  "timestamp": "2025-04-06T00:27:23.059120+00:00",
   "repo": "oauth-wg/oauth-first-party-apps",
   "labels": [
     {
@@ -1331,7 +1331,7 @@
       "id": "I_kwDOJbxyLc53Lmgd",
       "title": "Write FIDO extension to First-Party Apps",
       "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/52",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "aaronpk",
       "authorAssociation": "MEMBER",
       "assignees": [],
@@ -1340,8 +1340,8 @@
       ],
       "body": "Look at https://github.com/jaredhanson/id-oauth-fido2/blob/main/draft.txt for WebAuthn parameters",
       "createdAt": "2023-11-17T16:45:17Z",
-      "updatedAt": "2024-10-18T15:09:37Z",
-      "closedAt": null,
+      "updatedAt": "2025-04-04T15:53:39Z",
+      "closedAt": "2025-04-04T15:53:38Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -1349,6 +1349,13 @@
           "body": "This has been started in #93",
           "createdAt": "2024-07-02T21:27:48Z",
           "updatedAt": "2024-07-02T21:27:48Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This will be a separate spec.",
+          "createdAt": "2025-04-04T15:53:38Z",
+          "updatedAt": "2025-04-04T15:53:38Z"
         }
       ]
     },
@@ -2927,6 +2934,30 @@
       "updatedAt": "2024-12-04T05:06:08Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 134,
+      "id": "I_kwDOJbxyLc6xMPeb",
+      "title": "Collect things that would need to happen to use the PAR endpoint",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/134",
+      "state": "OPEN",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "We'll send an email to the list about this when we have a more complete list, to settle on whether or not to use the PAR endpoint.",
+      "createdAt": "2025-04-04T15:44:49Z",
+      "updatedAt": "2025-04-04T15:48:02Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "* The AS needs to know whether to treat this as a plain PAR request or a first-party request\n",
+          "createdAt": "2025-04-04T15:46:11Z",
+          "updatedAt": "2025-04-04T15:46:11Z"
+        }
+      ]
     }
   ],
   "pulls": [
