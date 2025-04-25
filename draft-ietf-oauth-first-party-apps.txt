@@ -5,10 +5,10 @@
 Web Authorization Protocol                                    A. Parecki
 Internet-Draft                                                      Okta
 Intended status: Standards Track                             G. Fletcher
-Expires: 14 August 2025                            Capital One Financial
+Expires: 27 October 2025                           Capital One Financial
                                                             P. Kasselman
                                                                    SPIRL
-                                                        10 February 2025
+                                                           25 April 2025
 
 
                  OAuth 2.0 for First-Party Applications
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 August 2025.
+   This Internet-Draft will expire on 27 October 2025.
 
 Copyright Notice
 
@@ -338,14 +338,14 @@ Table of Contents
 
    When the client uses a refresh token to obtain a new access token,
    the authorization server MAY respond with an error to indicate that
-   re-authorization of the user is required.
+   re-authentication of the user is required.
 
 3.3.  Resource Request
 
    When making a resource request to a resource server, the resource
    server MAY respond with an error according to OAuth 2.0 Step-Up
    Authentication Challenge Protocol [RFC9470], indicating that re-
-   authorization of the user is required.
+   authentication of the user is required.
 
 4.  Protocol Endpoints
 
@@ -1140,11 +1140,11 @@ Table of Contents
 11.2.  Informative References
 
    [I-D.ietf-oauth-browser-based-apps]
-              Parecki, A., Waite, D., and P. De Ryck, "OAuth 2.0 for
+              Parecki, A., De Ryck, P., and D. Waite, "OAuth 2.0 for
               Browser-Based Applications", Work in Progress, Internet-
-              Draft, draft-ietf-oauth-browser-based-apps-22, 17 January
+              Draft, draft-ietf-oauth-browser-based-apps-24, 3 March
               2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              oauth-browser-based-apps-22>.
+              oauth-browser-based-apps-24>.
 
    [RFC6750]  Jones, M. and D. Hardt, "The OAuth 2.0 Authorization
               Framework: Bearer Token Usage", RFC 6750,
