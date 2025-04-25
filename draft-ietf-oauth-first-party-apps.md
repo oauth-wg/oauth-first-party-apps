@@ -214,11 +214,11 @@ Figure: First-Party Client Authorization Code Request
 
 ## Refresh Token Request
 
-When the client uses a refresh token to obtain a new access token, the authorization server MAY respond with an error to indicate that re-authorization of the user is required.
+When the client uses a refresh token to obtain a new access token, the authorization server MAY respond with an error to indicate that re-authentication of the user is required.
 
 ## Resource Request
 
-When making a resource request to a resource server, the resource server MAY respond with an error according to OAuth 2.0 Step-Up Authentication Challenge Protocol {{RFC9470}}, indicating that re-authorization of the user is required.
+When making a resource request to a resource server, the resource server MAY respond with an error according to OAuth 2.0 Step-Up Authentication Challenge Protocol {{RFC9470}}, indicating that re-authentication of the user is required.
 
 
 # Protocol Endpoints
