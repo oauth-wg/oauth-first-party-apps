@@ -921,28 +921,13 @@ These design decisions should enable authorization server implementations to iso
 
 # Document History
 
--02
-
-* Fixed typos
-* Clarified resource server error response section
-* Added additional context to the Design Goals section
-* Clarified that further communication between client and AS can happen at proprietary endpoints
-* Changed `invalid_grant` to `invalid_session`
-
 -01
 
-* Added clarification on use of authorization code binding when using DPoP with the authorization challenge endpoint.
-* Removed ash claim to simplify DPoP binding with auth_session value.
-* Fixed how "redirect to web" mechanism works with PKCE.
-* Added "intermediate requests" section to clarify these requests are out of scope, moved "auth session" description to that section.
+* Corrected "re-authorization of the user" to "re-authentication of the user"
 
 -00
 
-* Renamed `authorization_required` to `insufficient_authorization`
-* Defined `insufficient_authorization` on the Authorization Challenge Endpoint
-* Renamed `device_session` to `auth_session`
-* Added explicit method to indicate the client should restart the flow in a browser
-* Described how to use DPoP in conjunction with this spec
+* Adopted into the OAuth WG, no changes from previous individual draft
 
 
 # Acknowledgments
@@ -950,6 +935,6 @@ These design decisions should enable authorization server implementations to iso
 
 The authors would like to thank the attendees of the OAuth Security Workshop 2023 session in which this was discussed, as well as the following individuals who contributed ideas, feedback, and wording that shaped and formed the final specification:
 
-Alejo Fernandez, Brian Campbell, Dick Hardt, Dmitry Telegin, Jeff Corrigan, John Bradley, Justin Richer, Mike Jones, Orie Steele, Tim Cappalli, Tobias Looker, Yaron Sheffer.
+Alejo Fernandez, Brian Campbell, Dean Saxe, Dick Hardt, Dmitry Telegin, Jeff Corrigan, John Bradley, Justin Richer, Mike Jones, Orie Steele, Tim Cappalli, Tobias Looker, Yaron Sheffer.
 
 
