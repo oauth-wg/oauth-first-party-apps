@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-06T00:26:35.732562+00:00",
+  "timestamp": "2025-05-18T00:29:23.564225+00:00",
   "repo": "oauth-wg/oauth-first-party-apps",
   "labels": [
     {
@@ -2947,7 +2947,7 @@
       "labels": [],
       "body": "We'll send an email to the list about this when we have a more complete list, to settle on whether or not to use the PAR endpoint.",
       "createdAt": "2025-04-04T15:44:49Z",
-      "updatedAt": "2025-04-04T15:48:02Z",
+      "updatedAt": "2025-05-15T16:27:30Z",
       "closedAt": null,
       "comments": [
         {
@@ -2956,6 +2956,13 @@
           "body": "* The AS needs to know whether to treat this as a plain PAR request or a first-party request\n",
           "createdAt": "2025-04-04T15:46:11Z",
           "updatedAt": "2025-04-04T15:46:11Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "* no new parameters defined at the PAR endpoint\n* step-up is handled by the RS returning the standard step-up parameters, the client putting those into the PAR request, then includes the request_uri and auth_session at the challenge endpoint\n",
+          "createdAt": "2025-05-15T16:27:29Z",
+          "updatedAt": "2025-05-15T16:27:29Z"
         }
       ]
     },
