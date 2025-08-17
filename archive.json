@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-15T00:31:12.950746+00:00",
+  "timestamp": "2025-08-17T00:30:54.372828+00:00",
   "repo": "oauth-wg/oauth-first-party-apps",
   "labels": [
     {
@@ -3035,6 +3035,22 @@
           "updatedAt": "2025-05-05T20:00:48Z"
         }
       ]
+    },
+    {
+      "number": 137,
+      "id": "I_kwDOJbxyLc7GEw66",
+      "title": "Adopting the reference MCP Tools specs for the discovery and execution of supported authenticators (a.k.a. tools)",
+      "url": "https://github.com/oauth-wg/oauth-first-party-apps/issues/137",
+      "state": "OPEN",
+      "author": "embesozzi",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "I know that the metadata for specifying authentication is out of scope for the specification, but to facilitate adoption and interoperability, as well as the development of SDKs supporting FiPA, it would be a win\u2013win to reference some MCP server specifications.\nI have implemented the FiPA extension for an open-source IdP, and in more complex scenarios - such as when multiple authentication methods exist in the same flow - there are no examples of how to distinguish between authentication and registration, or how to simply provide metadata to the app for input and output parameters.\n\nWhile implementing MCP servers, I realized it might be useful to reference how MCP defines tools and how they are implemented. Below are some examples showing how to use such references. Let\u2019s say we support OTP login, here\u2019s a good way to define the required arguments and parameters:\n\n- Discovery of tools (a.k.a. authenticators) for OTP login:\n```json\n..other fipa params..\n\"tools\": [\n  {\n    \"name\": \"otp_send\",\n    \"inputSchema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"username\": { \"type\": \"string\" }\n      },\n      \"required\": [\"username\"]\n    }\n  }, \n  {\n    \"name\": \"otp_verify\",\n    \"inputSchema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"otp\": { \"type\": \"string\" }\n      },\n      \"required\": [\"otp\"]\n    }\n  }\n]\n```\n\nCalls would then be:\n\n- Send the OTP:\n```json\n..other fipa params..\n\"method\": \"tools/call\",\n\"params\": {\n  \"name\": \"otp_send\",\n  \"arguments\": {\n    \"username\": \"xxxxxx\"\n  }\n}\n```\n\n2. Verify the OTP:\n```json\n...other fipa params..\n\"method\": \"tools/call\",\n\"params\": {\n  \"name\": \"otp_verify\",\n  \"arguments\": {\n    \"otp\": \"xxxxxx\"\n  }\n}\n```\n\nA similar approach can be used for discovery when the IdP supports multiple login methods, such as OTP and passkeys (just an example).\n\n```json\n....oauth params..\n\"error\": \"login_required\",\n\"tools\": [\n  {\n    \"name\": \"otp_send\",\n    \"inputSchema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"username\": { \"type\": \"string\" }\n      },\n      \"required\": [\"username\"]\n    }\n  },\n  ...\n  {\n    \"name\": \"passkeys_get\",\n    \"inputSchema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"username\": { \"type\": \"string\" }\n      },\n      \"required\": [\"username\"]\n    }\n  },\n  {\n    \"name\": \"passkeys_verify\",\n    \"inputSchema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"publicKey\": { ... }\n      },\n      \"required\": [\"publicKey\"]\n    }\n  }\n]\n```\n\nI know this might be asking a lot, but I believe that having some references for how flows are implemented would help ensure interoperability between IdPs. Given MCP\u2019s wide adoption, it could be worth evaluating this approach.\n\n\n\n\n\n \n",
+      "createdAt": "2025-08-14T18:07:15Z",
+      "updatedAt": "2025-08-14T18:07:15Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
