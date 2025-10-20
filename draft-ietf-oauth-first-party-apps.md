@@ -84,6 +84,7 @@ informative:
   RFC6750:
   RFC8252:
   I-D.ietf-oauth-browser-based-apps:
+  I-D.ietf-oauth-attestation-based-client-auth:
 
 --- abstract
 
@@ -128,7 +129,7 @@ This draft also extends the token response (typically for use in response to a r
 
 This specification MUST only be used by first-party applications, which is when the authorization server and application are controlled by the same entity and the user understands them both as the same entity.
 
-This specification MUST NOT be used by third party applications, and the authorization server SHOULD take measures to prevent use by third party applications. (e.g. only enable this grant for certain client IDs, and take measures to authenticate first-party apps when possible.)
+This specification MUST NOT be used by third party applications, and the authorization server SHOULD take measures to prevent use by third party applications. (e.g. only enable this grant for certain client IDs, and take measures to authenticate first-party apps when possible, such as by using app attestations as described in {{I-D.ietf-oauth-attestation-based-client-auth}}.)
 
 Using this specification in scenarios other than those described will lead to unintended security and privacy problems for users and service providers.
 
@@ -571,7 +572,7 @@ For first-party applications, it is important that the user recognizes the appli
 
 Because this specification enables a client application to interact directly with the end user, and the application handles sending any information collected from the user to the authorization server, it is expected to be used only for first-party applications when the authorization server also has a high degree of trust of the client.
 
-This specification is not prescriptive on how the Authorization Server establishes its trust in the first-partyness of the application. For mobile platforms, most support some mechanism for application attestation that can be used to identify the entity that created/signed/uploaded the app to the app store. App attestation can be combined with other mechanisms like Dynamic Client Registration {{RFC7591}} to enable strong client authentication in addition to client verification (first-partyness). The exact steps required are out of scope for this specification. Note that applications running inside a browser (e.g. Single Page Apps) context it is much more difficult to verify the first-partyness of the client. Please see {{single-page-apps}} for additional details.
+This specification is not prescriptive on how the Authorization Server establishes its trust in the first-partyness of the application. For mobile platforms, most support some mechanism for application attestation that can be used to identify the entity that created/signed/uploaded the app to the app store. App attestation can be combined with mechanisms such as Attestation-Based Client Authentication [[I-D.ietf-oauth-attestation-based-client-auth]] or Dynamic Client Registration {{RFC7591}} to enable strong client authentication in addition to client verification (first-partyness). The exact steps required are out of scope for this specification. Note that applications running inside a browser (e.g. Single Page Apps) context it is much more difficult to verify the first-partyness of the client. Please see {{single-page-apps}} for additional details.
 
 ## Phishing {#phishing}
 
@@ -921,6 +922,12 @@ These design decisions should enable authorization server implementations to iso
 
 # Document History
 
+-02
+
+* Updated affiliations and acks
+* Editorial clarifications
+* Added reference to Attestation-Based Client Authentication
+
 -01
 
 * Corrected "re-authorization of the user" to "re-authentication of the user"
@@ -935,6 +942,6 @@ These design decisions should enable authorization server implementations to iso
 
 The authors would like to thank the attendees of the OAuth Security Workshop 2023 session in which this was discussed, as well as the following individuals who contributed ideas, feedback, and wording that shaped and formed the final specification:
 
-Alejo Fernandez, Brian Campbell, Dean Saxe, Dick Hardt, Dmitry Telegin, Jeff Corrigan, John Bradley, Justin Richer, Mike Jones, Orie Steele, Tim Cappalli, Tobias Looker, Yaron Sheffer.
+Alejo Fernandez, Brian Campbell, Dean Saxe, Dick Hardt, Dmitry Telegin, Janak Amarasena, Jeff Corrigan, John Bradley, Justin Richer, Mike Jones, Orie Steele, Tim Cappalli, Tobias Looker, Yaron Sheffer.
 
 
