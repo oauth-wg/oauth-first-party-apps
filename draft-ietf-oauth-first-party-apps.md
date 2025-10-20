@@ -443,7 +443,7 @@ In this case, the client is expected to initiate a new OAuth
 Authorization Code flow with PKCE according to {{RFC6749}} and {{RFC7636}}.
 
 If the client expects the frequency of this error response to be high,
-the client MAY include a PKCE ({{RFC7636}}) `code_challenge` in the initial authorization
+the client MAY include a PKCE {{RFC7636}} `code_challenge` in the initial authorization
 challenge request. This enables the authorization server to essentially treat
 the authorization challenge request as a PAR {{RFC9126}} request, and
 return the `request_uri` and `expires_in` as defined by {{RFC9126}} in the error response.
@@ -604,7 +604,7 @@ Proof-of-Possession techniques constrain tokens by binding them to a cryptograph
 
 ### DPoP: Demonstrating Proof-of-Possession
 
-DPoP ({{RFC9449}}) is an application-level mechanism for sender-constraining OAuth {{RFC6749}} access and refresh tokens. If DPoP is used to sender constrain tokens, the client SHOULD use DPoP for every token request to the Authorization Server and interaction with the Resource Server.
+DPoP {{RFC9449}} is an application-level mechanism for sender-constraining OAuth {{RFC6749}} access and refresh tokens. If DPoP is used to sender constrain tokens, the client SHOULD use DPoP for every token request to the Authorization Server and interaction with the Resource Server.
 
 DPoP includes an optional capability to bind the authorization code to the DPoP key to enable end-to-end binding of the entire authorization flow. Given the back-channel nature of this specification, there are far fewer opportunities for an attacker to access the authorization code and PKCE code verifier compared to the redirect-based Authorization Code Flow. In this specification, the Authorization Code is obtained via a back-channel request. Despite this, omitting Authorization Code binding leaves a gap in the end-to-end protection that DPoP provides, so DPoP Authorization Code binding SHOULD be used.
 
