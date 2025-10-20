@@ -594,7 +594,7 @@ Table of Contents
    [RFC7636].
 
    If the client expects the frequency of this error response to be
-   high, the client MAY include a PKCE ([RFC7636]) code_challenge in the
+   high, the client MAY include a PKCE [RFC7636] code_challenge in the
    initial authorization challenge request.  This enables the
    authorization server to essentially treat the authorization challenge
    request as a PAR [RFC9126] request, and return the request_uri and
@@ -860,7 +860,7 @@ Table of Contents
 
 9.5.1.  DPoP: Demonstrating Proof-of-Possession
 
-   DPoP ([RFC9449]) is an application-level mechanism for sender-
+   DPoP [RFC9449] is an application-level mechanism for sender-
    constraining OAuth [RFC6749] access and refresh tokens.  If DPoP is
    used to sender constrain tokens, the client SHOULD use DPoP for every
    token request to the Authorization Server and interaction with the
