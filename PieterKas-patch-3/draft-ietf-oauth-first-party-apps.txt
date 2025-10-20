@@ -5,10 +5,10 @@
 Web Authorization Protocol                                    A. Parecki
 Internet-Draft                                                      Okta
 Intended status: Standards Track                             G. Fletcher
-Expires: 27 October 2025                           Capital One Financial
+Expires: 23 April 2026                             Capital One Financial
                                                             P. Kasselman
-                                                                   SPIRL
-                                                           25 April 2025
+                                                        Defakto Security
+                                                         20 October 2025
 
 
                  OAuth 2.0 for First-Party Applications
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 October 2025.
+   This Internet-Draft will expire on 23 April 2026.
 
 Copyright Notice
 
@@ -1041,9 +1041,9 @@ Table of Contents
    [I-D.ietf-oauth-cross-device-security]
               Kasselman, P., Fett, D., and F. Skokan, "Cross-Device
               Flows: Security Best Current Practice", Work in Progress,
-              Internet-Draft, draft-ietf-oauth-cross-device-security-09,
-              6 January 2025, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-oauth-cross-device-security-09>.
+              Internet-Draft, draft-ietf-oauth-cross-device-security-12,
+              5 September 2025, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-oauth-cross-device-security-12>.
 
    [IANA.JWT] "*** BROKEN REFERENCE ***".
 
@@ -1142,9 +1142,9 @@ Table of Contents
    [I-D.ietf-oauth-browser-based-apps]
               Parecki, A., De Ryck, P., and D. Waite, "OAuth 2.0 for
               Browser-Based Applications", Work in Progress, Internet-
-              Draft, draft-ietf-oauth-browser-based-apps-24, 3 March
+              Draft, draft-ietf-oauth-browser-based-apps-25, 3 July
               2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              oauth-browser-based-apps-24>.
+              oauth-browser-based-apps-25>.
 
    [RFC6750]  Jones, M. and D. Hardt, "The OAuth 2.0 Authorization
               Framework: Bearer Token Usage", RFC 6750,
@@ -1708,5 +1708,5 @@ Authors' Addresses
 
 
    Pieter Kasselman
-   SPIRL
-   Email: pieter@spirl.com
+   Defakto Security
+   Email: pieter@defakto.security
