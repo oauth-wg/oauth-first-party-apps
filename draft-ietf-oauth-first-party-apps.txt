@@ -884,7 +884,7 @@ Table of Contents
    Request.  The authorization server MUST check the DPoP proof JWT that
    was included in the DPoP header as defined in Section 4.3 of
    [RFC9449].  The authorization server MUST ensure that the same key is
-   used in all subsequent Authorization Challenge Requests, or in the
+   used in all subsequent Authorization Challenge Requests and in the
    eventual token request.  The authorization server MUST reject
    subsequent Authorization Challenge Requests, or the eventual token
    request, unless a DPoP proof for the same key presented in the
