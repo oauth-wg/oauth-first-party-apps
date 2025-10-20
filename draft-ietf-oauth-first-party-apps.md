@@ -32,8 +32,8 @@ author:
     organization: Capital One Financial
     email: george.fletcher@capitalone.com
  -  fullname: Pieter Kasselman
-    organization: SPIRL
-    email: pieter@spirl.com
+    organization: Defakto Security
+    email: pieter@defakto.security
 
 normative:
   RFC6749:
