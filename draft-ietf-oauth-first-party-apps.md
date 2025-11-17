@@ -112,7 +112,7 @@ as well as information about the client's request to the Native Authorization En
 and receives either an authorization code or an error code in response. The error code
 may indicate that the client can continue to prompt the user for more information,
 should federate the request to a downstream Authorization Server by invoking their
-Native Authorization Endpoint, or can indicate that the client needs to launch 
+Native Authorization Endpoint, or can indicate that the client needs to launch
 a browser to have the user complete the flow in a browser.
 
 The Native Authorization Endpoint is used to initiate the OAuth flow in place of redirecting
@@ -552,7 +552,7 @@ Example of *Client App* response following end-user input entry:
 
     POST /native-authorization HTTP/1.1
     Host: example.as.com
-    Content-Type: application/x-www-form-urlencode
+    Content-Type: application/x-www-form-urlencoded
 
     auth_session=ce6772f5e07bc8361572f
     &email=end_user@example.as.com
