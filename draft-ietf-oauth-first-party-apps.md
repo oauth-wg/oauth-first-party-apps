@@ -552,7 +552,7 @@ Example of *Client App* response following end-user input entry:
 
     POST /native-authorization HTTP/1.1
     Host: example.as.com
-    Content-Type: application/x-www-form-urlencoded
+    Content-Type: application/x-www-form-urlencode
 
     auth_session=ce6772f5e07bc8361572f
     &email=end_user@example.as.com
