@@ -398,6 +398,12 @@ parameters with the response:
            the *federated_native_request_uri* response parameter.
            See {{federating-response}} for details.
 
+     "redirect_to_app":
+     :     The Authorization Server wishes to fulfill the user interaction
+           using another native app. This response MUST include the
+           *federated_native_request_uri* response parameter.
+           See {{redirect-to-app-response}} for details.
+     
      "redirect_to_web":
      :     The request is not able to be fulfilled with any further
            direct interaction with the user. Instead, the client
@@ -522,6 +528,28 @@ Client SHALL compile during each flow an Allowlist of DNS domains of all *federa
 
 * After being invoked on its native_callback_uri, if provided.
 * After receiving the error code *federated_response*.
+
+#### Redirect to app response {#redirect-to-app-response}
+
+If the authorization server decides to use another native app to interact with
+end user, it responds with error code *redirect_to_app* and provides the
+*federated_native_request_uri* response parameter.
+
+Client MUST call the federated_native_request_uri as a *native authorization endpoint*,
+using the query string parameters as application/x-www-form-urlencoded request body.
+
+Example redirect_to_app response:
+
+    HTTP/1.1 400 Bad Request
+    Content-Type: application/json
+
+    {
+        "error": "redirect_to_app",
+        "federated_native_request_uri": "https://next-as.com/native-redirect?client_id=s6BhdRkqt3&request_uri=urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX"
+    }
+	
+Following which, client MUST use OS mechanisms to invoke the deep link received in *federated_native_request_uri*. If no app claiming federated_native_request_uri is found,
+*Client App* MUST terminate the flow and MAY attempt a normal non-native OAuth flow.
 
 #### Additional Information Required Response {#insufficient-information}
 
