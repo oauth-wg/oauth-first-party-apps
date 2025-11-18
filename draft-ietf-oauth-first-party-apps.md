@@ -311,7 +311,7 @@ given the user's phone number, line breaks shown for illustration purposes only:
 
 ## Native Authorization Response {#native-response}
 
-The authorization server determines whether the information provided up to this point is sufficient to issue an authorization code, and if so responds with an authorization code. If the information is not sufficient for issuing an authorization code, then the authorization server MUST respond with an error response.
+The authorization server determines whether the information provided up to this point is sufficient to issue an authorization code, and if so responds with an authorization code. If the information is not sufficient for issuing an authorization code, then the authorization server MUST respond with an error response s.
 
 ### Authorization Code Response
 
