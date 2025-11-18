@@ -403,7 +403,7 @@ parameters with the response:
            using another native app. This response MUST include the
            *federated_native_request_uri* response parameter.
            See {{redirect-to-app-response}} for details.
-     
+
      "redirect_to_web":
      :     The request is not able to be fulfilled with any further
            direct interaction with the user. Instead, the client
