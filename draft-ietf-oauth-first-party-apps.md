@@ -209,7 +209,7 @@ Figure: First-Party Client Authorization Code Request
 
 - (A) The first-party client starts the flow, by presenting the user with a "sign in" button, or collecting information from the user, such as their email address or username.
 - (B) The client initiates the authorization request by making a POST request to the Native Authorization Endpoint, optionally with information collected from the user (e.g. email or username)
-- (C) The authorization server determines whether the information provided to the Native Authorization Endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error. In this example, it determines that additional information is needed and responds with an error. The error may contain additional information to guide the Client on what information to collect next. This pattern of collecting information, submitting it to the Native Authorization Endpoint and then receiving an error or authorization code may repeat several times.
+- (C) The authorization server determines whether the information provided to the Native Authorization Endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error. In this example, it determines that additional information is needed and responds with an error. The error may contain additional information to guide the Client on what information to collect next. This pattern of collecting information, submitting it to the Native Authorization Endpoint and then receiving an error or authorization code may repeat several times. The authorization server MAY decide to federate to another downstream authorization server, providing a request uri to its Native Authorization Endpoint.
 - (D) The client gathers additional information (e.g. signed passkey challenge, or one-time code from email) and makes a POST request to the Native Authorization Endpoint.
 - (E) The Native Authorization Endpoint returns an authorization code.
 - (F) The client sends the authorization code received in step (E) to obtain a token from the Token Endpoint.
@@ -240,7 +240,7 @@ The native authorization endpoint accepts the authorization request parameters d
 
 The native authorization endpoint also accepts the *native_callback_uri* parameter.
 
-Authorization server intending to federate a native authorization request to a downstream authorization server, MUST ensure it offers a *native_authorization_endpoint*, otherwise return an error response with error code *native_authorization_unsupported*.
+Authorization servers intending to federate a native authorization request to a downstream authorization server, MUST ensure it offers a *native_authorization_endpoint*, otherwise return the error *native_authorization_unsupported*.
 
 The client initiates the authorization flow with or without information collected from the user (e.g. a signed passkey challenge or MFA code).
 
@@ -386,6 +386,18 @@ parameters with the response:
            determine the target authorization server to federate to.
            See {{insufficient-information}} for details.
 
+     "federate":
+     :     The Authorization Server wishes to federate processing to another
+           authorization server, which it is a client of. This response MUST
+           include the *federated_native_request_uri* response parameter.
+           See {{federating-response}} for details.
+
+    "federated_response":
+     :     The Authorization Server wishes to respond to an authorization server,
+           which has federated to it. This response MUST include the
+           *federated_native_request_uri* response parameter.
+           See {{federating-response}} for details.
+
      "redirect_to_web":
      :     The request is not able to be fulfilled with any further
            direct interaction with the user. Instead, the client
@@ -395,8 +407,8 @@ parameters with the response:
 
     "native_authorization_unsupported":
     :     The authorization server does not support the native authorization
-          endpoint, or it does but a downstream authorization server it
-          attempted to federate to, does not support the native authorization endpoint.
+          endpoint, or does, but a downstream authorization server it attempted
+          to federate to, does not support the native authorization endpoint.
 
      Values for the `error` parameter MUST NOT include characters
      outside the set %x20-21 / %x23-5B / %x5D-7E.
@@ -429,6 +441,11 @@ parameters with the response:
 "request_uri":
 :    OPTIONAL.  A request URI as described by {{RFC9126}} Section 2.2.
 
+"federated_native_request_uri":
+:    OPTIONAL.  A request URI towards the Native Authorization Endpoint of
+     a downstream authorization server, with the request parameters according
+     to this specification, provided as query parameters.
+
 "expires_in":
 :    OPTIONAL.  The lifetime of the `request_uri` in seconds, as
      described by {{RFC9126}} Section 2.2.
@@ -451,6 +468,60 @@ The authorization server MAY define additional parameters in the response
 depending on the implementation. The authorization server MAY also define
 more specific content types for the error responses as long as the response
 is JSON and conforms to `application/<AS-defined>+json`.
+
+#### Federating Response {#federating-response}
+
+If the authorization server decides to federate to another authorization server,
+or respond to an authorization server which has federated to it, it responds with
+error code *federate* or *federated_response* accordingly, and provides the
+*federated_native_request_uri* response parameter.
+
+Client MUST call the federated_native_request_uri as a *native authorization endpoint*,
+using the query string parameters as application/x-www-form-urlencoded request body.
+
+Example federating response:
+
+    HTTP/1.1 400 Bad Request
+    Content-Type: application/json
+
+    {
+        "error": "federate",
+        "federated_native_request_uri": "https://next-as.com/native-redirect?client_id=s6BhdRkqt3&request_uri=urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX"
+    }
+	
+Following which, the client calls *federated_native_request_uri*:
+
+    POST /native-redirect HTTP/1.1
+    Host: next-as.com
+    Content-Type: application/x-www-form-urlencoded
+
+    client_id=s6BhdRkqt3
+    &request_uri=urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX
+
+Example response to an authorization server, which federated to the current authorization server:
+
+    HTTP/1.1 400 Bad Request
+    Content-Type: application/json
+
+    {
+        "error": "federated_response",
+        "federated_native_request_uri": "https://prev-as.com/native-redirect?authorization_code=uY29tL2F1dGhlbnRpY&state=xyz"
+    }
+
+Following which, the client calls *federated_native_request_uri*:
+
+    POST /native-redirect HTTP/1.1
+    Host: prev-as.com
+    Content-Type: application/x-www-form-urlencoded
+
+    authorization_code=uY29tL2F1dGhlbnRpY
+    &state=xyz
+
+
+Client SHALL include in an Allowlist the DNS domains of all *federated_native_request_uri* it encounters during each flow with error code *federate*, to be used for validation in the response handling phase, which is:
+
+* After being invoked on its native_callback_uri, if provided.
+* After receiving the error code *federated_response*
 
 #### Additional Information Required Response {#insufficient-information}
 
@@ -580,10 +651,7 @@ as defined in {{RFC9126}} Section 4.
 
 ## Intermediate Requests
 
-If the authorization server returns an `insufficient_authorization` or `insufficient_information` error as described
-above, this is an indication that there is further information the client
-should request from the user, and continue to make requests to the authorization
-server until the authorization request is fulfilled and an authorization code returned.
+If the authorization server returns an `insufficient_authorization` error as described above, this is an indication that there is further information the client should request from the user, and continue to make requests to the authorization server until the authorization request is fulfilled and an authorization code returned.
 
 These intermediate requests are out of scope of this specification, and are expected
 to be defined by the authorization server. The format of these requests is not required
