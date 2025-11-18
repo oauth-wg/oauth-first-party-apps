@@ -393,9 +393,9 @@ parameters with the response:
            See {{federating-response}} for details.
 
     "federated_response":
-     :     The Authorization Server wishes to respond to an authorization server,
-           which has federated to it. This response MUST include the
-           *federated_native_request_uri* response parameter.
+     :     The Authorization Server wishes to respond to an authorization
+           server, which has federated to it. This response MUST include
+           the *federated_native_request_uri* response parameter.
            See {{federating-response}} for details.
 
      "redirect_to_web":
@@ -518,10 +518,10 @@ Following which, the client calls *federated_native_request_uri*:
     &state=xyz
 
 
-Client SHALL include in an Allowlist the DNS domains of all *federated_native_request_uri* it encounters during each flow with error code *federate*, to be used for validation in the response handling phase, which is:
+Client SHALL compile during each flow an Allowlist of DNS domains of all *federated_native_request_uri* it encounters, which were returned with error code *federate*, to be used for validation in the response handling phase, which is:
 
 * After being invoked on its native_callback_uri, if provided.
-* After receiving the error code *federated_response*
+* After receiving the error code *federated_response*.
 
 #### Additional Information Required Response {#insufficient-information}
 
