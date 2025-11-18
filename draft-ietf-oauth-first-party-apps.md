@@ -123,7 +123,7 @@ preferred, this draft provides a mechanism for the client to directly interact
 with the user. This requires a high degree of trust between the authorization server
 and the client, as there typically is for first-party applications.
 It should only be considered when there are usability
-concerns with a redirect-based approach, such as for native mobile or desktop applications a.
+concerns with a redirect-based approach, such as for native mobile or desktop applications.
 
 This draft also extends the token response (typically for use in response to a refresh token request) and resource server response to allow the authorization server or resource server to indicate that the client should re-request authorization from the user. This can include requesting step-up authentication by including parameters defined in {{RFC9470}} as well.
 
@@ -175,35 +175,35 @@ There are three primary ways this specification extends various parts of an OAut
 ## Initial Authorization Request
 
 ~~~ ascii-art
-                                                +-------------------+
-                                                |   Authorization   |
-                          (B)Native             |      Server       |
-             +----------+ Authorization Request |+-----------------+|
-(A)Client+---|  First-  |---------------------->||     Native      ||
-   Starts|   |  Party   |                       ||  Authorization  ||
-   Flow  +-->|  Client  |<----------------------||    Endpoint     ||
-             |          | (C)Authorization      ||                 ||
-             |          |    Error Response     ||                 ||
-             |          |         :             ||                 ||
-             |          |         :             ||                 ||
-             |          | (D)Native             ||                 ||
-             |          | Authorization Request ||                 ||
-             |          |---------------------->||                 ||
-             |          |                       ||                 ||
-             |          |<----------------------||                 ||
-             |          | (E) Authorization     |+-----------------+|
-             |          |     Code Response     |                   |
-             |          |                       |                   |
-             |          |                       |                   |
-             |          |                       |                   |
-             |          | (F) Token             |                   |
-             |          |     Request           |+-----------------+|
-             |          |---------------------->||      Token      ||
-             |          |                       ||     Endpoint    ||
-             |          |<----------------------||                 ||
-             |          | (G) Access Token      |+-----------------+|
-             |          |                       |                   |
-             +----------+                       +-------------------+
+                                                +--------------------+
+                                                |   Authorization    |
+                          (B)Native             |      Servers       |
+             +----------+ Authorization Request |+------------------+|
+(A)Client+---|  First-  |---------------------->||+----------------+||
+   Starts|   |  Party   |                       |||    Native      |||
+   Flow  +-->|  Client  |<----------------------||| Authorization  |||
+             |          | (C)Authorization      |||   Endpoint     |||
+             |          |    Error Response     |||                |||
+             |          |         :             |||                |||
+             |          |         :             |||                |||
+             |          | (D)Native             |||                |||
+             |          | Authorization Request |||                |||
+             |          |---------------------->|||                |||
+             |          |                       |||                |||
+             |          |<----------------------||+----------------+||
+             |          | (E) Authorization     |+------------------+|
+             |          |     Code Response     |                    |
+             |          |                       |                    |
+             |          |                       |                    |
+             |          |                       |                    |
+             |          | (F) Token             |                    |
+             |          |     Request           |+------------------+|
+             |          |---------------------->||      Token       ||
+             |          |                       ||     Endpoint     ||
+             |          |<----------------------||                  ||
+             |          | (G) Access Token      |+------------------+|
+             |          |                       |                    |
+             +----------+                       +--------------------+
 ~~~
 Figure: First-Party Client Authorization Code Request
 
@@ -261,7 +261,7 @@ server to indicate that further authentication of the user is required.
 
 # Authorization Initiation {#authorization-initiation}
 
-A client may wish to initiate an authorization flow by first prompting the user for their user identifier or other account information. The authorization challenge endpoint is a new endpoint to collect this login hint and direct the client with the next steps, whether that is to do an MFA flow, or perform an OAuth redirect-based flow.
+A client may wish to initiate an authorization flow by first prompting the user for their user identifier or other account information. The native authorization endpoint is a new endpoint to collect this login hint and direct the client with the next steps, whether that is to do an MFA flow, or perform an OAuth redirect-based flow.
 
 In order to preserve the security of this specification, the Authorization Server MUST verify the "first-partyness" of the client before continuing with the authentication flow. Please see {{first-party-applications}} for additional considerations.
 
@@ -311,7 +311,7 @@ given the user's phone number, line breaks shown for illustration purposes only:
 
 ## Native Authorization Response {#native-response}
 
-The authorization server determines whether the information provided up to this point is sufficient to issue an authorization code, and if so responds with an authorization code. If the information is not sufficient for issuing an authorization code, then the authorization server MUST respond with an error response s.
+The authorization server determines whether the information provided up to this point is sufficient to issue an authorization code, and if so responds with an authorization code. If the information is not sufficient for issuing an authorization code, then the authorization server MUST respond with an error response.
 
 ### Authorization Code Response
 
