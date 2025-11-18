@@ -88,9 +88,10 @@ informative:
 
 --- abstract
 
-This document defines the Authorization Challenge Endpoint, which supports
-a first-party client that wants to control the process of
-obtaining authorization from the user using a native experience.
+{{RFC8252}} defined OAuth 2.0 **for** Native Apps, through external user-agents,
+primarily the user's browser. This document addresses OAuth 2.0 **by** Native Apps,
+and defines the Native Authorization Endpoint, which supports a first-party client that
+wants to control the process of obtaining authorization from the user using a native experience.
 
 In many cases, this can provide an entirely browserless OAuth 2.0 experience suited for native
 applications, only delegating to the browser in unexpected, high risk, or error conditions.
@@ -102,18 +103,19 @@ applications, only delegating to the browser in unexpected, high risk, or error 
 
 This document, OAuth for First-Party Apps (FiPA),
 extends the OAuth 2.0 Authorization Framework {{RFC6749}} with
-a new endpoint, `authorization_challenge_endpoint`, to support first-party
-applications that want to control the process of obtaining authorization from
-the user using a native experience.
+a new endpoint, `native_authorization_endpoint`, to support first-party
+applications that want to control the process of obtaining authorization
+from the user using a native experience.
 
 The client collects any initial information from the user and POSTs that information
-as well as information about the client's request to the Authorization Challenge Endpoint,
+as well as information about the client's request to the Native Authorization Endpoint,
 and receives either an authorization code or an error code in response. The error code
 may indicate that the client can continue to prompt the user for more information,
-or can indicate that the client needs to launch a browser to have the user complete
-the flow in a browser.
+should federate the request to a downstream Authorization Server by invoking their
+Native Authorization Endpoint, or can indicate that the client needs to launch
+a browser to have the user complete the flow in a browser.
 
-The Authorization Challenge Endpoint is used to initiate the OAuth flow in place of redirecting
+The Native Authorization Endpoint is used to initiate the OAuth flow in place of redirecting
 or launching a browser to the authorization endpoint.
 
 While a fully-delegated approach using the redirect-based Authorization Code grant is generally
@@ -121,7 +123,7 @@ preferred, this draft provides a mechanism for the client to directly interact
 with the user. This requires a high degree of trust between the authorization server
 and the client, as there typically is for first-party applications.
 It should only be considered when there are usability
-concerns with a redirect-based approach, such as for native mobile or desktop applications.
+concerns with a redirect-based approach, such as for native mobile or desktop applications a.
 
 This draft also extends the token response (typically for use in response to a refresh token request) and resource server response to allow the authorization server or resource server to indicate that the client should re-request authorization from the user. This can include requesting step-up authentication by including parameters defined in {{RFC9470}} as well.
 
@@ -175,17 +177,17 @@ There are three primary ways this specification extends various parts of an OAut
 ~~~ ascii-art
                                                 +-------------------+
                                                 |   Authorization   |
-                          (B)Authorization      |      Server       |
-             +----------+    Challenge Request  |+-----------------+|
-(A)Client+---|  First-  |---------------------->||  Authorization  ||
-   Starts|   |  Party   |                       ||   Challenge     ||
+                          (B)Native             |      Server       |
+             +----------+ Authorization Request |+-----------------+|
+(A)Client+---|  First-  |---------------------->||     Native      ||
+   Starts|   |  Party   |                       ||  Authorization  ||
    Flow  +-->|  Client  |<----------------------||    Endpoint     ||
              |          | (C)Authorization      ||                 ||
              |          |    Error Response     ||                 ||
              |          |         :             ||                 ||
              |          |         :             ||                 ||
-             |          | (D)Authorization      ||                 ||
-             |          |    Challenge Request  ||                 ||
+             |          | (D)Native             ||                 ||
+             |          | Authorization Request ||                 ||
              |          |---------------------->||                 ||
              |          |                       ||                 ||
              |          |<----------------------||                 ||
@@ -206,10 +208,10 @@ There are three primary ways this specification extends various parts of an OAut
 Figure: First-Party Client Authorization Code Request
 
 - (A) The first-party client starts the flow, by presenting the user with a "sign in" button, or collecting information from the user, such as their email address or username.
-- (B) The client initiates the authorization request by making a POST request to the Authorization Challenge Endpoint, optionally with information collected from the user (e.g. email or username)
-- (C) The authorization server determines whether the information provided to the Authorization Challenge Endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error. In this example, it determines that additional information is needed and responds with an error. The error may contain additional information to guide the Client on what information to collect next. This pattern of collecting information, submitting it to the Authorization Challenge Endpoint and then receiving an error or authorization code may repeat several times.
-- (D) The client gathers additional information (e.g. signed passkey challenge, or one-time code from email) and makes a POST request to the Authorization Challenge Endpoint.
-- (E) The Authorization Challenge Endpoint returns an authorization code.
+- (B) The client initiates the authorization request by making a POST request to the Native Authorization Endpoint, optionally with information collected from the user (e.g. email or username)
+- (C) The authorization server determines whether the information provided to the Native Authorization Endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error. In this example, it determines that additional information is needed and responds with an error. The error may contain additional information to guide the Client on what information to collect next. This pattern of collecting information, submitting it to the Native Authorization Endpoint and then receiving an error or authorization code may repeat several times.
+- (D) The client gathers additional information (e.g. signed passkey challenge, or one-time code from email) and makes a POST request to the Native Authorization Endpoint.
+- (E) The Native Authorization Endpoint returns an authorization code.
 - (F) The client sends the authorization code received in step (E) to obtain a token from the Token Endpoint.
 - (G) The Authorization Server returns an Access Token from the Token Endpoint.
 
@@ -224,28 +226,27 @@ When making a resource request to a resource server, the resource server MAY res
 
 # Protocol Endpoints
 
-## Authorization Challenge Endpoint {#authorization-challenge-endpoint}
+## Native Authorization Endpoint {#native-authorization-endpoint}
 
-The authorization challenge endpoint is a new endpoint defined by this specification which the first-party application uses to obtain an authorization code.
+The native authorization endpoint is a new endpoint defined by this specification which the first-party application uses to obtain an authorization code.
 
-The authorization challenge endpoint is an HTTP API at the authorization server that accepts HTTP POST requests with parameters in the HTTP request message body using the `application/x-www-form-urlencoded` format. This format has a character encoding of UTF-8, as described in Appendix B of {{RFC6749}}. The authorization challenge endpoint URL MUST use the "https" scheme.
+The native authorization endpoint is an HTTP API at the authorization server that accepts HTTP POST requests with parameters in the HTTP request message body using the `application/x-www-form-urlencoded` format. This format has a character encoding of UTF-8, as described in Appendix B of {{RFC6749}}. The authorization challenge endpoint URL MUST use the "https" scheme.
 
-If the authorization server requires client authentication for this client on the Token Endpoint, then the authorization server MUST also require client authentication for this client on the Authorization Challenge Endpoint. See {{client-authentication}} for more details.
+If the authorization server requires client authentication for this client on the Token Endpoint, then the authorization server MUST also require client authentication for this client on the Native Authorization Endpoint. See {{client-authentication}} for more details.
 
-Authorization servers supporting this specification SHOULD include the URL of their authorization challenge endpoint in their authorization server metadata document {{RFC8414}} using the `authorization_challenge_endpoint` parameter as defined in {{authorization-server-metadata}}.
+Authorization servers supporting this specification SHOULD include the URL of their native authorization endpoint in their authorization server metadata document {{RFC8414}} using the `native_authorization_endpoint` parameter as defined in {{authorization-server-metadata}}.
 
-The endpoint accepts the authorization request parameters defined in {{RFC6749}} for the authorization endpoint as well
-as all applicable extensions defined for the authorization endpoint. Some examples of such extensions include Proof
-Key for Code Exchange (PKCE) {{RFC7636}}, Resource Indicators {{RFC8707}}, and OpenID Connect {{OpenID}}. It is
-important to note that some extension parameters have meaning in a web context but don't have meaning in a native
-mechanism (e.g. `response_mode=query`). It is out of scope as to what the AS does in the case that an extension
-defines a parameter that has no meaning in this use case.
+The native authorization endpoint accepts the authorization request parameters defined in {{RFC6749}} for the authorization endpoint as well as all applicable extensions defined for the authorization endpoint. Some examples of such extensions include Proof Key for Code Exchange (PKCE) {{RFC7636}}, Resource Indicators {{RFC8707}}, and OpenID Connect {{OpenID}}. It is important to note that some extension parameters have meaning in a web context but don't have meaning in a native mechanism (e.g. `response_mode=query`). It is out of scope as to what the AS does in the case that an extension defines a parameter that has no meaning in this use case.
+
+The native authorization endpoint also accepts the *native_callback_uri* parameter.
+
+Authorization server intending to federate a native authorization request to a downstream authorization server, MUST ensure it offers a *native_authorization_endpoint*, otherwise return an error response with error code *native_authorization_unsupported*.
 
 The client initiates the authorization flow with or without information collected from the user (e.g. a signed passkey challenge or MFA code).
 
-The authorization challenge endpoint response is either an authorization code or an error code, and may also contain an `auth_session` which the client uses on subsequent requests.
+The native authorization endpoint response is either an authorization code or an error code, and may also contain an `auth_session` which the client uses on subsequent requests.
 
-Further communication between the client and authorization server MAY happen at the Authorization Challenge Endpoint or any other proprietary endpoints at the authorization server.
+Further communication between the client and authorization server MAY happen at the Native Authorization Endpoint or any other proprietary endpoints at the authorization server.
 
 
 ## Token endpoint
@@ -288,19 +289,27 @@ format with a character encoding of UTF-8 in the HTTP request body:
 : OPTIONAL. The code challenge method as defined by {{RFC7636}}.
   See {{redirect-to-web}} for details.
 
+"native_callback_uri":
+: OPTIONAL. Native client app's redirect_uri, claimed as deep link. *native_callback_uri* is invoked by authorization server's user-interacting app to provide its response. When invoked, *native_callback_uri* accepts the redirect_uri parameter:
+
+  "redirect_uri":
+  : REQUIRED. url-encoded redirect_uri from authorization server's user-interacting app, including its respective response parameters.
+
+If native_callback_uri is included in a native authorization request, authorization server MUST forward the native_callback_uri in any subsequent request to a downstream authorization server.
+
 Specific implementations as well as extensions to this specification MAY define additional parameters to be used at this endpoint.
 
 For example, the client makes the following request to initiate a flow
 given the user's phone number, line breaks shown for illustration purposes only:
 
-    POST /authorize-challenge HTTP/1.1
+    POST /native-authorization HTTP/1.1
     Host: server.example.com
     Content-Type: application/x-www-form-urlencoded
 
     login_hint=%2B1-310-123-4567&scope=profile
     &client_id=bb16c14c73415
 
-## Authorization Challenge Response {#challenge-response}
+## Native Authorization Response {#native-response}
 
 The authorization server determines whether the information provided up to this point is sufficient to issue an authorization code, and if so responds with an authorization code. If the information is not sufficient for issuing an authorization code, then the authorization server MUST respond with an error response.
 
@@ -371,12 +380,23 @@ parameters with the response:
            server is requesting the client take additional steps to
            complete the authorization.
 
+     "insufficient_information":
+     :     the Authorization Server requires additional user input,
+           which is not an authentication challenge, for example to
+           determine the target authorization server to federate to.
+           See {{insufficient-information}} for details.
+
      "redirect_to_web":
      :     The request is not able to be fulfilled with any further
            direct interaction with the user. Instead, the client
            should initiate a new authorization code flow so that the
            user interacts with the authorization server in a web browser.
            See {{redirect-to-web}} for details.
+
+    "native_authorization_unsupported":
+    :     The authorization server does not support the native authorization
+          endpoint, or it does but a downstream authorization server it
+          attempted to federate to, does not support the native authorization endpoint.
 
      Values for the `error` parameter MUST NOT include characters
      outside the set %x20-21 / %x23-5B / %x5D-7E.
@@ -432,6 +452,112 @@ depending on the implementation. The authorization server MAY also define
 more specific content types for the error responses as long as the response
 is JSON and conforms to `application/<AS-defined>+json`.
 
+#### Additional Information Required Response {#insufficient-information}
+
+If additional user input is required, for example to determine where to federate to,
+The response body shall contain the following additional properties:
+
+logo:
+: OPTIONAL. URL or base64-encoded logo of *Authorization Server*, for branding purposes.
+
+userPrompt:
+: REQUIRED. A JSON object containing the prompt definition. The following parameters MAY be used:
+
+- options: OPTIONAL. A JSON object that defines a dropdown/select input with various options to choose from. Each key is the parameter name to be sent in the response and each value defines the option:
+
+  - title: OPTIONAL. A string holding the input's title.
+  - description: OPTIONAL. A string holding the input's description.
+  - values: REQUIRED. A JSON object where each key is the selection value and each value holds display data for that value:
+
+    - name: REQUIRED. A string holding the display name of the selection value.
+    - logo: OPTIONAL. A string holding a URL or base64-encoded image for that selection value.
+- inputs: OPTIONAL. A JSON object that defines an input field. Each key is the parameter name to be sent in the response and each value defines the input field:
+
+  - title: OPTIONAL. A string holding the input's title.
+  - hint: OPTIONAL. A string holding the input's hint that is displayed if the input is empty.
+  - description: OPTIONAL. A string holding the input's description.
+
+Example of prompting end-user for 2 multiple-choice inputs:
+
+    HTTP/1.1 400 Bad Request
+    Content-Type: application/json
+
+    {
+        "error": "insufficient_information",
+        "auth_session": "uY29tL2F1dGhlbnRpY",
+        "logo": "uri or base64-encoded logo of Authorization Server",
+        "userPrompt": {
+            "options": {
+                "bank": {
+                    "title": "Bank",
+                    "description": "Choose your Bank",
+                    "values": {
+                        "bankOfSomething": {
+                            "name": "Bank of Something",
+                            "logo": "uri or base64-encoded logo"
+                        },
+                        "firstBankOfCountry": {
+                            "name": "First Bank of Country",
+                            "logo": "uri or base64-encoded logo"
+                        }
+                    }
+                },
+                "segment": {
+                    "title": "Customer Segment",
+                    "description": "Choose your Customer Segment",
+                    "values": {
+                        "retail": "Retail",
+                        "smb": "Small & Medium Businesses",
+                        "corporate": "Corporate",
+                        "ic": "Institutional Clients"
+                    }
+                }
+            }
+        }
+    }
+
+Example of prompting end-user for text input entry:
+
+    HTTP/1.1 400 Bad Request
+    Content-Type: application/json
+
+    {
+        "error": "insufficient_information",
+        "auth_session": "uY29tL2F1dGhlbnRpY",
+        "action": "prompt",
+        "id": "request-identifier-2",
+        "logo": "uri or base64-encoded logo of Authorization Server",
+        "userPrompt": {
+            "inputs": {
+                "email": {
+                    "hint": "Enter your email address",
+                    "title": "E-Mail",
+                    "description": "Lorem Ipsum"
+                }
+            }
+        }
+    }
+
+The client gathers the required additional information and makes a POST request to the Native Authorization Endpoint. Example of response following end-user multiple-choice:
+
+    POST /native-authorization HTTP/1.1
+    Host: example.as.com
+    Content-Type: application/x-www-form-urlencoded
+
+    auth_session=ce6772f5e07bc8361572f
+    &bank=bankOfSomething
+    &segment=retail
+
+Example of *Client App* response following end-user input entry:
+
+    POST /native-authorization HTTP/1.1
+    Host: example.as.com
+    Content-Type: application/x-www-form-urlencoded
+
+    auth_session=ce6772f5e07bc8361572f
+    &email=end_user@example.as.com
+
+
 #### Redirect to Web Error Response {#redirect-to-web}
 
 The authorization server may choose to interact directly with the user based on a risk
@@ -454,7 +580,7 @@ as defined in {{RFC9126}} Section 4.
 
 ## Intermediate Requests
 
-If the authorization server returns an `insufficient_authorization` error as described
+If the authorization server returns an `insufficient_authorization` or `insufficient_information` error as described
 above, this is an indication that there is further information the client
 should request from the user, and continue to make requests to the authorization
 server until the authorization request is fulfilled and an authorization code returned.
@@ -557,7 +683,7 @@ This specification does not define any new parameters for the resource server er
 
 The following authorization server metadata parameters {{RFC8414}} are introduced to signal the server's capability and policy with respect to first-party applications.
 
-"authorization_challenge_endpoint":
+"native_authorization_endpoint":
 : The URL of the authorization challenge endpoint at which a client can initiate
   an authorization request and eventually obtain an authorization code.
 
@@ -685,7 +811,7 @@ IANA has (TBD) registered the following values in the IANA "OAuth Parameters" re
 
 IANA has (TBD) registered the following values in the IANA "OAuth Authorization Server Metadata" registry of {{IANA.oauth-parameters}} established by {{RFC8414}}.
 
-**Metadata Name**: `authorization_challenge_endpoint`
+**Metadata Name**: `native_authorization_endpoint`
 
 **Metadata Description**: URL of the authorization server's authorization challenge endpoint.
 
@@ -704,10 +830,10 @@ This section provides non-normative examples of how this specification may be us
 A user may log in with a passkey (without a password).
 
 1. The Client collects the username from the user.
-1. The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the username.
+1. The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{native-authorization-endpoint}}) including the username.
 1. The Authorization Server verifies the username and returns a challenge
 1. The Client signs the challenge using the platform authenticator, which results in the user being prompted for verification with biometrics or a PIN.
-1. The Client sends the signed challenge, username, and credential ID to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
+1. The Client sends the signed challenge, username, and credential ID to the Authorization Challenge Endpoint ({{native-authorization-endpoint}}).
 1. The Authorization Server verifies the signed challenge and returns an Authorization Code.
 1. The Client requests an Access Token and Refresh Token by issuing a Token Request ({{token-request}}) to the Token Endpoint.
 1. The Authorization Server verifies the Authorization Code and issues the requested tokens.
@@ -717,7 +843,7 @@ A user may log in with a passkey (without a password).
 A user may be redirected to the Authorization Server to perfrom an account reset.
 
 1. The Client collects username from the user.
-1. The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the username.
+1. The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{native-authorization-endpoint}}) including the username.
 1. The Authorization Server verifies the username and determines that the account is locked and returns a Redirect error response.
 1. The Client parses the redirect message, opens a browser and redirects the user to the Authorization Server performing an OAuth 2.0 flow with PKCE.
 1. The user resets their account by performing a multi-step authentication flow with the Authorization Server.
@@ -729,7 +855,7 @@ A user may be redirected to the Authorization Server to perfrom an account reset
 In a passwordless One-Time Password (OTP) scheme, the user is in possession of a one-time password generator. This generator may be a hardware device, or implemented as an app on a mobile phone. The user provides a user identifier and one-time password, which is verified by the Authorization Server before it issues an Authorization Code, which can be exchanged for an Access and Refresh Token.
 
 1. The Client collects username and OTP from user.
-1. The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the username and OTP.
+1. The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{native-authorization-endpoint}}) including the username and OTP.
 1. The Authorization Server verifies the username and OTP and returns an Authorization Code.
 1. The Client requests an Access Token and Refresh Token by issuing a Token Request ({{token-request}}) to the Token Endpoint.
 1. The Authorization Server verifies the Authorization Code and issues the requested tokens.
@@ -739,7 +865,7 @@ In a passwordless One-Time Password (OTP) scheme, the user is in possession of a
 A user may be required to provide an e-mail confirmation code as part of an authentication ceremony to prove they control an e-mail address. The user provides an e-mail address and is then required to enter a verification code sent to the e-mail address. If the correct verification code is returned to the Authorization Server, it issues Access and Refresh Tokens.
 
 1. The Client collects an e-mail address from the user.
-2. The Client sends the e-mail address in an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
+2. The Client sends the e-mail address in an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{native-authorization-endpoint}}).
 3. The Authorization Server sends a verification code to the e-mail address and returns an Error Response ({{challenge-error-response}}) including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that an e-mail verification code must be entered.
 4. The Client presents a user experience guiding the user to copy the e-mail verification code to the Client. Once the e-mail verification code is entered, the Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint, including the e-mail verification code as well as the `auth_session` parameter returned in the previous Error Response.
 5. The Authorization Server uses the `auth_session` to maintain the session and verifies the e-mail verification code before issuing an Authorization Code to the Client.
@@ -755,7 +881,7 @@ An alternative version of this verification involves the user clicking a link in
 A user may be required to provide a confirmation code as part of an authentication ceremony to prove they control a mobile phone number. The user provides a phone number and is then required to enter a confirmation code sent to the phone. If the correct confirmation code is returned to the Authorization Server, it issues Access and Refresh Tokens.
 
 1. The Client collects a mobile phone number from the user.
-1. The Client sends the phone number in an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
+1. The Client sends the phone number in an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{native-authorization-endpoint}}).
 1. The Authorization Server sends a confirmation code to the phone number and returns an Error Response ({{challenge-error-response}}) including `"error": "insufficient_authorization"`, `"auth_session"` and a custom property indicating that a confirmation code must be entered.
 1. The Client presents a user experience guiding the user to enter the confirmation code. Once the code is entered, the Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint, including the confirmation code as well as the `auth_session` parameter returned in the previous Error Response.
 1. The Authorization Server uses the `auth_session` to maintain the session context and verifies the code before issuing an Authorization Code to the Client.
@@ -772,7 +898,7 @@ A client may be in possession of an Access and Refresh Token as the result of a 
 1. The Client presents the refresh token to the Authorization Server to obtain a new access token (section 6 {{RFC6749}})
 1. The Authorization Server responds with an error code indicating that an OTP from the user is required, as well as an `auth_session`.
 1. The Client prompts the user to enter an OTP.
-1. The Client sends the OTP and `auth_session` in an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
+1. The Client sends the OTP and `auth_session` in an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{native-authorization-endpoint}}).
 1. The Authorization Server verifies the `auth_session` and OTP, and returns an Authorization Code.
 1. The Client sends the Authorization Code in a Token Request ({{token-request}}) to the Token Endpoint.
 1. The Authorization Server verifies the Authorization Code and issues the requested tokens.
@@ -784,7 +910,7 @@ A Client previously obtained an Access and Refresh Token after the user authenti
 
 1. The Client has a short-lived access token and long-lived refresh token following the completion of an Authorization Code Grant Flow which included user authentication.
 1. When the Client presents the Access token to the Resource Server, the Resource Server determines that the `acr` claim in the Access Token is insufficient given the resource the user wants to access and responds with an `insufficient_user_authentication` error code, along with the desired `acr_values` and desired `max_age`.
-1. The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the `auth_session`, `acr_values` and `max_age` parameters.
+1. The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{native-authorization-endpoint}}) including the `auth_session`, `acr_values` and `max_age` parameters.
 1. The Authorization Server verifies the `auth_session` and determines which authentication methods must be satisfied based on the `acr_values`, and responds with an Error Response ({{challenge-error-response}}) including `"error": "insufficient_authorization"` and a custom property indicating that an OTP must be entered.
 1. The Client prompts the user for an OTP, which the user obtains and enters.
 1. The Client sends an Authorization Challenge Request to the Authorization Challenge Endpoint including the `auth_session` and OTP.
@@ -798,7 +924,7 @@ A Client previously obtained an Access and Refresh Token after the user authenti
 This example describes how to use the mechanisms defined in this draft to create a complete user registration flow starting with an email address. In this example, it is the Authorization Server's policy to allow these challenges to be sent to email and phone number that were previously unrecognized, and creating the user account on the fly.
 
 1. The Client collects a username from the user.
-1. The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the username.
+1. The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{native-authorization-endpoint}}) including the username.
 1. The Authorization Server returns an Error Response ({{challenge-error-response}}) including `"error": "insufficient_authorization"`, `"auth_session"`, and a custom property indicating that an e-mail address must be collected.
 1. The Client collects an e-mail address from the user.
 1. The Client sends the e-mail address as part of a second Authorization Challenge Request to the Authorization Challenge Endpoint, along with the `auth_session` parameter.
@@ -815,7 +941,7 @@ This example describes how to use the mechanisms defined in this draft to create
 
 # Example Implementations
 
-In order to successfully implement this specification, the Authorization Server will need to define its own specific requirements for what values clients are expected to send in the Authorization Challenge Request ({{challenge-request}}), as well as its own specific error codes in the Authorization Challenge Response ({{challenge-response}}).
+In order to successfully implement this specification, the Authorization Server will need to define its own specific requirements for what values clients are expected to send in the Authorization Challenge Request ({{challenge-request}}), as well as its own specific error codes in the Authorization Challenge Response ({{native-response}}).
 
 Below is an example of parameters required for a complete implementation that enables the user to log in with a username and OTP.
 
@@ -832,7 +958,7 @@ In addition to the request parameters defined in {{challenge-request}}, the auth
 
 ## Authorization Challenge Response Parameters
 
-In addition to the response parameters defined in {{challenge-response}}, the authorization server defines the additional value for the `error` response below.
+In addition to the response parameters defined in {{native-response}}, the authorization server defines the additional value for the `error` response below.
 
 "otp_required":
 :     The client should collect an OTP from the user and send the OTP in
@@ -843,7 +969,7 @@ In addition to the response parameters defined in {{challenge-response}}, the au
 
 The client prompts the user to enter their username, and sends the username in an initial Authorization Challenge Request.
 
-    POST /authorize-challenge HTTP/1.1
+    POST /native-authorization HTTP/1.1
     Host: server.example.com
     Content-Type: application/x-www-form-urlencoded
 
@@ -864,7 +990,7 @@ The Authorization Server sends an error response indicating that an OTP is requi
 
 The client prompts the user for an OTP, and sends a new Authorization Challenge Request.
 
-    POST /authorize-challenge HTTP/1.1
+    POST /native-authorization HTTP/1.1
     Host: server.example.com
     Content-Type: application/x-www-form-urlencoded
 
