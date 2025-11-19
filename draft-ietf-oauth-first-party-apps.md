@@ -498,7 +498,7 @@ Example federating response:
         urn%3Aietf%3Aparams%3Aoauth%3A
         request_uri%3AR3p_hzwsR7outNQSKfoX"
     }
-	
+
 Following which, the client calls *federated_native_request_uri*:
 
     POST /native-redirect HTTP/1.1
