@@ -482,12 +482,15 @@ or to respond to an authorization server which has federated to it, it responds 
 error code *federate* or *federated_response* accordingly, and provides the
 *federation_uri* response parameter.
 
+Authorization server identifies it has been federated to, through the presence
+of the redirect_uri parameter. If redirect_uri has been provided,
+authorization server provides a federating response where *federation_uri*
+is the provided redirect_uri.
 
 Client MUST call the federation_uri as a *native authorization endpoint*,
 using the query string parameters as application/x-www-form-urlencoded request body.
 
-
-Example federating response:
+Example **federating** response:
 
     HTTP/1.1 400 Bad Request
     Content-Type: application/json
@@ -508,7 +511,7 @@ Following which, the client calls *federation_uri*:
     client_id=s6BhdRkqt3&request_uri=
     urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX
 
-Example response to an authorization server, which federated to the current authorization server:
+Example **response to an authorization server, which federated to the current authorization server**:
 
     HTTP/1.1 400 Bad Request
     Content-Type: application/json
@@ -528,11 +531,11 @@ Following which, the client calls *federation_uri*:
     authorization_code=uY29tL2F1dGhlbnRpY
     &state=xyz
 
+Client SHALL compile during each flow an Allowlist of DNS domains of all *federation_uri* it encounters,
+which were returned with error code *federate*, to be used for validation in the **response handling phase**, which begins:
 
-Client SHALL compile during each flow an Allowlist of DNS domains of all *federation_uri* it encounters, which were returned with error code *federate*, to be used for validation in the response handling phase, which is:
-
-* After being invoked on its native_callback_uri, if provided.
-* After receiving the error code *federated_response*.
+* Once client has been invoked on its native_callback_uri (if provided).
+* Once client has received the error code *federated_response*.
 
 #### Redirect to app response {#redirect-to-app-response}
 
