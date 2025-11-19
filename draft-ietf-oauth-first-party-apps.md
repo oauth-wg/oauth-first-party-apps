@@ -492,7 +492,9 @@ Example federating response:
 
     {
         "error": "federate",
-        "federated_native_request_uri": "https://next-as.com/native-redirect?client_id=s6BhdRkqt3&request_uri=urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX"
+        "federated_native_request_uri": "https://next-as.com/native-redirect?
+        client_id=s6BhdRkqt3
+        &request_uri=urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX"
     }
 	
 Following which, the client calls *federated_native_request_uri*:
@@ -501,8 +503,8 @@ Following which, the client calls *federated_native_request_uri*:
     Host: next-as.com
     Content-Type: application/x-www-form-urlencoded
 
-    client_id=s6BhdRkqt3
-    &request_uri=urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX
+    client_id=s6BhdRkqt3&request_uri=
+    urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX
 
 Example response to an authorization server, which federated to the current authorization server:
 
@@ -511,7 +513,8 @@ Example response to an authorization server, which federated to the current auth
 
     {
         "error": "federated_response",
-        "federated_native_request_uri": "https://prev-as.com/native-redirect?authorization_code=uY29tL2F1dGhlbnRpY&state=xyz"
+        "federated_native_request_uri": "https://prev-as.com/native-redirect?
+        authorization_code=uY29tL2F1dGhlbnRpY&state=xyz"
     }
 
 Following which, the client calls *federated_native_request_uri*:
@@ -545,7 +548,9 @@ Example redirect_to_app response:
 
     {
         "error": "redirect_to_app",
-        "federated_native_request_uri": "https://next-as.com/native-redirect?client_id=s6BhdRkqt3&request_uri=urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX"
+        "federated_native_request_uri": "https://next-as.com/native-redirect?
+        client_id=s6BhdRkqt3&request_uri=
+        urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX"
     }
 
 Following which, client MUST use OS mechanisms to invoke the deep link received in *federated_native_request_uri*. If no app claiming federated_native_request_uri is found,
