@@ -386,19 +386,19 @@ parameters with the response:
            determine the target authorization server to federate to.
            See {{insufficient-information}} for details.
 
-     federated_response":
-     :     The Authorization Server wishes to respond to an authorization
-           server, which has federated to it. This response MUST include
-           the *federated_native_request_uri* response parameter.
-           See {{federating-response}} for details.
-
      "federate":
      :     The Authorization Server wishes to federate processing to another
            authorization server, which it is a client of. This response MUST
            include the *federated_native_request_uri* response parameter.
            See {{federating-response}} for details.
 
-    ""redirect_to_app":
+     federated_response":
+     :     The Authorization Server wishes to respond to an authorization
+           server, which has federated to it. This response MUST include
+           the *federated_native_request_uri* response parameter.
+           See {{federating-response}} for details.
+
+     "redirect_to_app":
      :     The Authorization Server wishes to fulfill the user interaction
            using another native app. This response MUST include the
            *federated_native_request_uri* response parameter.
