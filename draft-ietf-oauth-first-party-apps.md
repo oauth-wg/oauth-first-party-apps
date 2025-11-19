@@ -492,7 +492,7 @@ Example federating response:
 
     {
         "error": "federate",
-        "federated_native_request_uri": 
+        "federated_native_request_uri":
         "https://next-as.com/native-redirect?
         client_id=s6BhdRkqt3&request_uri=
         urn%3Aietf%3Aparams%3Aoauth%3A
