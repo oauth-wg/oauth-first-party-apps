@@ -313,7 +313,7 @@ given the user's phone number, line breaks shown for illustration purposes only:
 
 The authorization server determines whether the information provided up to this point is sufficient to issue an authorization code, and if so responds with an authorization code. If the information is not sufficient for issuing an authorization code, then the authorization server MUST respond with an error response.
 
-### Authorization Code Response
+### Authorization Code Response {#authorization-code-response}
 
 The authorization server issues an authorization code
 by creating an HTTP response content using the `application/json`
@@ -482,10 +482,11 @@ or to respond to an authorization server which has federated to it, it responds 
 error code *federate* or *federated_response* accordingly, and provides the
 *federation_uri* response parameter.
 
-Authorization server identifies it has been federated to, through the presence
-of the redirect_uri parameter. If redirect_uri has been provided,
-authorization server provides a federating response where *federation_uri*
-is the provided redirect_uri.
+Authorization server identifies it has been federated to, and avoids returning
+an Authorization Code Response {{#authorization-code-response}} through the presence
+of the redirect_uri parameter. If a redirect_uri has been provided,
+authorization server provides a federating response whose *federation_uri*
+attribute is the provided redirect_uri with the appropriate response parameters.
 
 Client MUST call the federation_uri as a *native authorization endpoint*,
 using the query string parameters as application/x-www-form-urlencoded request body.
@@ -511,7 +512,7 @@ Following which, the client calls *federation_uri*:
     client_id=s6BhdRkqt3&request_uri=
     urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX
 
-Example **response to an authorization server, which federated to the current authorization server**:
+Example **response using a provided redirect_uri**:
 
     HTTP/1.1 400 Bad Request
     Content-Type: application/json
@@ -531,11 +532,10 @@ Following which, the client calls *federation_uri*:
     authorization_code=uY29tL2F1dGhlbnRpY
     &state=xyz
 
-Client SHALL compile during each flow an Allowlist of DNS domains of all *federation_uri* it encounters,
-which were returned with error code *federate*, to be used for validation in the **response handling phase**, which begins:
-
-* Once client has been invoked on its native_callback_uri (if provided).
-* Once client has received the error code *federated_response*.
+Client SHALL compile during each flow an Allowlist of DNS domains of all *federation_uri*
+it has encountered, which were returned with error code *federate*, to be used for validation
+of any federation_uri attributes received in conjunction with the error code *federated_response*,
+or as parameter when client's native_callback_uri is invoked (if provided).
 
 #### Redirect to app response {#redirect-to-app-response}
 
