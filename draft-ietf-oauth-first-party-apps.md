@@ -411,10 +411,10 @@ parameters with the response:
            user interacts with the authorization server in a web browser.
            See {{redirect-to-web}} for details.
 
-    "native_authorization_unsupported":
-    :     The authorization server does not support the native authorization
-          endpoint, or does, but a downstream authorization server it attempted
-          to federate to, does not support the native authorization endpoint.
+     "native_authorization_unsupported":
+     :     The authorization server does not support the native authorization
+           endpoint, or does, but a downstream authorization server it attempted
+           to federate to, does not support the native authorization endpoint.
 
      Values for the `error` parameter MUST NOT include characters
      outside the set %x20-21 / %x23-5B / %x5D-7E.
@@ -493,8 +493,8 @@ Example federating response:
     {
         "error": "federate",
         "federated_native_request_uri": "https://next-as.com/native-redirect?
-        client_id=s6BhdRkqt3
-        &request_uri=urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX"
+        client_id=s6BhdRkqt3&request_uri=
+        urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX"
     }
 	
 Following which, the client calls *federated_native_request_uri*:
