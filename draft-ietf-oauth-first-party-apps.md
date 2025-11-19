@@ -483,7 +483,7 @@ error code *federate* or *federated_response* accordingly, and provides the
 *federation_uri* response parameter.
 
 Authorization server identifies it has been federated to, and avoids returning
-an Authorization Code Response {{#authorization-code-response}} through the presence
+an Authorization Code Response {{authorization-code-response}} through the presence
 of the redirect_uri parameter. If a redirect_uri has been provided,
 authorization server provides a federating response whose *federation_uri*
 attribute is the provided redirect_uri with the appropriate response parameters.
