@@ -547,7 +547,7 @@ Example redirect_to_app response:
         "error": "redirect_to_app",
         "federated_native_request_uri": "https://next-as.com/native-redirect?client_id=s6BhdRkqt3&request_uri=urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX"
     }
-	
+
 Following which, client MUST use OS mechanisms to invoke the deep link received in *federated_native_request_uri*. If no app claiming federated_native_request_uri is found,
 *Client App* MUST terminate the flow and MAY attempt a normal non-native OAuth flow.
 
