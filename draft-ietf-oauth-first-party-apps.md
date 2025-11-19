@@ -389,19 +389,19 @@ parameters with the response:
      "federate":
      :     The Authorization Server wishes to federate processing to another
            authorization server, which it is a client of. This response MUST
-           include the *federated_native_request_uri* response parameter.
+           include the *federation_uri* response parameter.
            See {{federating-response}} for details.
 
      federated_response":
      :     The Authorization Server wishes to respond to an authorization
            server, which has federated to it. This response MUST include
-           the *federated_native_request_uri* response parameter.
+           the *federation_uri* response parameter.
            See {{federating-response}} for details.
 
      "redirect_to_app":
      :     The Authorization Server wishes to fulfill the user interaction
            using another native app. This response MUST include the
-           *federated_native_request_uri* response parameter.
+           *federation_uri* response parameter.
            See {{redirect-to-app-response}} for details.
 
      "redirect_to_web":
@@ -447,7 +447,7 @@ parameters with the response:
 "request_uri":
 :    OPTIONAL.  A request URI as described by {{RFC9126}} Section 2.2.
 
-"federated_native_request_uri":
+"federation_uri":
 :    OPTIONAL.  A request URI towards the Native Authorization Endpoint of
      a downstream authorization server, with the request parameters according
      to this specification, provided as query parameters.
@@ -478,12 +478,14 @@ is JSON and conforms to `application/<AS-defined>+json`.
 #### Federating Response {#federating-response}
 
 If the authorization server decides to federate to another authorization server,
-or respond to an authorization server which has federated to it, it responds with
+or to respond to an authorization server which has federated to it, it responds with
 error code *federate* or *federated_response* accordingly, and provides the
-*federated_native_request_uri* response parameter.
+*federation_uri* response parameter.
 
-Client MUST call the federated_native_request_uri as a *native authorization endpoint*,
+
+Client MUST call the federation_uri as a *native authorization endpoint*,
 using the query string parameters as application/x-www-form-urlencoded request body.
+
 
 Example federating response:
 
@@ -492,12 +494,12 @@ Example federating response:
 
     {
         "error": "federate",
-        "federated_native_request_uri": "https://next-as.com/native-redirect?
-        client_id=s6BhdRkqt3&request_uri=
+        "federation_uri": "https://next-as.com/native-redirect?
+        client_id=s6BhdRkqt3request_uri=
         urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX"
     }
 
-Following which, the client calls *federated_native_request_uri*:
+Following which, the client calls *federation_uri*:
 
     POST /native-redirect HTTP/1.1
     Host: next-as.com
@@ -513,11 +515,11 @@ Example response to an authorization server, which federated to the current auth
 
     {
         "error": "federated_response",
-        "federated_native_request_uri": "https://prev-as.com/native-redirect?
+        "federation_uri": "https://prev-as.com/native-redirect?
         authorization_code=uY29tL2F1dGhlbnRpY&state=xyz"
     }
 
-Following which, the client calls *federated_native_request_uri*:
+Following which, the client calls *federation_uri*:
 
     POST /native-redirect HTTP/1.1
     Host: prev-as.com
@@ -527,7 +529,7 @@ Following which, the client calls *federated_native_request_uri*:
     &state=xyz
 
 
-Client SHALL compile during each flow an Allowlist of DNS domains of all *federated_native_request_uri* it encounters, which were returned with error code *federate*, to be used for validation in the response handling phase, which is:
+Client SHALL compile during each flow an Allowlist of DNS domains of all *federation_uri* it encounters, which were returned with error code *federate*, to be used for validation in the response handling phase, which is:
 
 * After being invoked on its native_callback_uri, if provided.
 * After receiving the error code *federated_response*.
@@ -536,9 +538,9 @@ Client SHALL compile during each flow an Allowlist of DNS domains of all *federa
 
 If the authorization server decides to use another native app to interact with
 end user, it responds with error code *redirect_to_app* and provides the
-*federated_native_request_uri* response parameter.
+*federation_uri* response parameter.
 
-Client MUST call the federated_native_request_uri as a *native authorization endpoint*,
+Client MUST call the federation_uri as a *native authorization endpoint*,
 using the query string parameters as application/x-www-form-urlencoded request body.
 
 Example redirect_to_app response:
@@ -548,12 +550,12 @@ Example redirect_to_app response:
 
     {
         "error": "redirect_to_app",
-        "federated_native_request_uri": "https://next-as.com/native-redirect?
+        "federation_uri": "https://next-as.com/native-redirect?
         client_id=s6BhdRkqt3&request_uri=
         urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX"
     }
 
-Following which, client MUST use OS mechanisms to invoke the deep link received in *federated_native_request_uri*. If no app claiming federated_native_request_uri is found,
+Following which, client MUST use OS mechanisms to invoke the deep link received in *federation_uri*. If no app claiming federation_uri is found,
 *Client App* MUST terminate the flow and MAY attempt a normal non-native OAuth flow.
 
 #### Additional Information Required Response {#insufficient-information}
