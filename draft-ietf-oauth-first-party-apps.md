@@ -541,25 +541,24 @@ adding previously obtained auth_session:
 #### Redirect to app response {#redirect-to-app-response}
 
 If the authorization server decides to use another native app to interact with
-end user, it responds with error code *redirect_to_app* and provides the
-*federation_uri* response parameter.
+end user, it responds with error code *redirect_to_app* and MUST return the
+*deep_link*, *response_uri* and *auth_session* response attributes.
 
-Client MUST call the federation_uri as a *native authorization endpoint*,
-using the query string parameters as application/x-www-form-urlencoded request body.
-
-Example redirect_to_app response:
+Example **redirect_to_app** response:
 
     HTTP/1.1 400 Bad Request
     Content-Type: application/json
 
     {
         "error": "redirect_to_app",
+        "auth_session": "ce6772f5e07bc8361572f",
+        "response_uri": "https://prev-as.com/native-authorization",
         "deep_link": "https://next-as.com/native-authorization?
-        client_id=s6BhdRkqt3&request_uri=
-        urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX"
+          client_id=s6BhdRkqt3&request_uri=
+          urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX"
     }
 
-Following which, client MUST use OS mechanisms to invoke the obtained deep_link.
+Client MUST use OS mechanisms to invoke the obtained deep_link.
 If no app claiming deep_link is found on the device, client MUST terminate the
 flow and MAY attempt a normal non-native OAuth flow.
 
