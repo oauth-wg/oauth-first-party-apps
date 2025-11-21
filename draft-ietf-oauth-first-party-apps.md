@@ -506,8 +506,8 @@ as application/x-www-form-urlencoded request body. Example:
     urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX
 
 
-The federated authorization server SHOULD evaluate considering end-user's privacy and security
-if it wishes to request authorization challenges when it is being federated to.
+The federated authorization server SHOULD consider end-user's privacy and security
+to determine if it SHOULD request authorization challenges when being federated to.
 
 The client MUST provide any response obtained from the **federated** authorization server,
 by calling the *response_uri* of the respective **federating** authorization server using
