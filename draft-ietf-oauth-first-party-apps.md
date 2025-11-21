@@ -441,7 +441,7 @@ parameters with the response:
      authorization server to federate to.
 
 "deep_link":
-:    OPTIONAL.  Https URI of native app to be invoked to handle the request.
+:    OPTIONAL.  A URI of native app to be invoked to handle the request.
 
 "federation_body":
 :    OPTIONAL.  A string of application/x-www-form-urlencoded encoded
