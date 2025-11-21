@@ -511,8 +511,9 @@ to determine if it SHOULD request authorization challenges when being federated 
 
 The client MUST provide any response obtained from the **federated** authorization server,
 as application/x-www-form-urlencoded request body for the *response_uri* of the respective
-**federating** authorization server which SHALL be invoked using HTTP POST,
-except when **federated** authorization server has returned the following error codes:
+**federating** authorization server which SHALL be invoked using HTTP POST.
+
+Except when **federated** authorization server has returned the following error codes:
 *insufficient_authorization*, *insufficient_information*, *redirect_to_app*, *redirect_to_web*,
 in which case the client MUST handle these errors according to this specification.
 
@@ -567,7 +568,7 @@ The app that received the redirect handles the native authorization request:
 * Validates the request and ensures it contains a *native_callback_uri*, Otherwise terminates the flow.
 * Establishes trust in *native_callback_uri* and validates that an app claiming it is on the device. Otherwise terminates the flow.
 * Authenticates end-user and authorizes the request.
-* MUST use OS mechanisms to invoke *native_callback_uri* and return to the client, providing it a response according to this spec as url-encoded query parameters.
+* MUST use OS mechanisms to invoke *native_callback_uri* and return to the client, providing it a response whose contents is according to this specification for the response of a Native Authorization Endpoint, as url-encoded query parameters.
 
 When the client is invoked on its native_callback_uri, it shall handle the response parameters as it
 would handle a response from a federated authorization server. See {{federating-response}} for details.
