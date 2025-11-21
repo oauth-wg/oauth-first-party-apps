@@ -66,6 +66,17 @@ normative:
       - ins: M. Jones
       - ins: B. de Medeiros
       - ins: C. Mortimore
+  OpenID.Federation:
+    title: OpenID Federation 1.0
+    target: https://openid.net/specs/openid-federation-1_0.html
+    date: March 5, 2025
+    author:
+      - ins: R. Hedberg, Ed.
+      - ins: M.B. Jones
+      - ins: A.A. Solberg
+      - ins: J. Bradley
+      - ins: G. De Marco
+      - ins: V. Dzhuvinov
   IANA.oauth-parameters:
   IANA.JWT:
   USASCII:
@@ -569,6 +580,14 @@ The app that received the redirect handles the native authorization request:
 * Establishes trust in *native_callback_uri* and validates that an app claiming it is on the device. Otherwise terminates the flow.
 * Authenticates end-user and authorizes the request.
 * MUST use OS mechanisms to invoke *native_callback_uri* and return to the client, providing it a response whose contents is according to this specification for the response of a Native Authorization Endpoint, as url-encoded query parameters.
+
+Note - trust establishment mechanisms in *native_callback_uri* are out of scope of this specification.
+However we note that closed ecosystems could employ an allowList, and open ecosystems could leverage
+{{OpenID.Federation}}:
+
+  * Extract native_callback_uri's DNS domain.
+  * Add the path /.well-known/openid-federation and perform trust chain resolution.
+  * Inspect client's metadata for redirect_uri's and validate **native_callback_uri** is included among them.
 
 When the client is invoked on its native_callback_uri, it shall handle the response parameters as it
 would handle a response from a federated authorization server. See {{federating-response}} for details.
