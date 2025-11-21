@@ -506,15 +506,15 @@ as application/x-www-form-urlencoded request body. Example:
     urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX
 
 
-The federated authorization server SHOULD consider end-user's privacy and security
+The federated authorization server should consider end-user's privacy and security
 to determine if it SHOULD request authorization challenges when being federated to.
 
 The client MUST provide any response obtained from the **federated** authorization server,
-by calling the *response_uri* of the respective **federating** authorization server using
-HTTP POST, providing the obtained response as application/x-www-form-urlencoded request body,
-except when receiving error codes: *insufficient_authorization*, *insufficient_information*,
-*redirect_to_app*, *redirect_to_web*, in which case the client MUST handle these errors
-according to this specification.
+as application/x-www-form-urlencoded request body for the *response_uri* of the respective
+**federating** authorization server which SHALL be invoked using HTTP POST,
+except when **federated** authorization server has returned the following error codes:
+*insufficient_authorization*, *insufficient_information*, *redirect_to_app*, *redirect_to_web*,
+in which case the client MUST handle these errors according to this specification.
 
 Example client calling receiving an {#authorization-code-response} from the federated
 authorization server:
