@@ -444,12 +444,12 @@ parameters with the response:
 :    OPTIONAL.  A URI of native app to be invoked to handle the request.
 
 "federation_body":
-:    OPTIONAL.  A string of application/x-www-form-urlencoded encoded
+:    OPTIONAL.  A string of application/x-www-form-urlencoded
      request parameters according to this specification for the
      downstream authorization server's Native Authorization Endpoint.
 
 "response_uri":
-:    OPTIONAL.  A URI of an endpoint of the federating authorization server
+:    OPTIONAL.  A URI of an endpoint of federating authorization server
      which shall receive the response from the federated authorization server.
 
 "expires_in":
