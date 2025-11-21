@@ -113,7 +113,7 @@ and receives either an authorization code or an error code in response. The erro
 may indicate that the client can continue to prompt the user for more information,
 should federate the request to a downstream Authorization Server by invoking their
 Native Authorization Endpoint, or can indicate that the client needs to launch
-a browser to have the user complete the flow in a browser.
+another app or a browser to have the user complete the flow in a browser.
 
 The Native Authorization Endpoint is used to initiate the OAuth flow in place of redirecting
 or launching a browser to the authorization endpoint.
@@ -240,7 +240,7 @@ The native authorization endpoint accepts the authorization request parameters d
 
 The native authorization endpoint also accepts the *native_callback_uri* parameter.
 
-Authorization servers intending to federate a native authorization request to a downstream authorization server, MUST ensure it offers a *native_authorization_endpoint*, otherwise return the error *native_authorization_unsupported*.
+When authorization servers intend to federate to a downstream authorization server, they MUST ensure it offers a *native_authorization_endpoint*, otherwise return the error *native_authorization_unsupported*.
 
 The client initiates the authorization flow with or without information collected from the user (e.g. a signed passkey challenge or MFA code).
 
@@ -290,7 +290,7 @@ format with a character encoding of UTF-8 in the HTTP request body:
   See {{redirect-to-web}} for details.
 
 "native_callback_uri":
-: OPTIONAL. Native client app's redirect_uri, claimed as deep link. *native_callback_uri* is invoked by authorization server's user-interacting app to provide its response. If native_callback_uri is included in a native authorization request, authorization server MUST include the native_callback_uri when federating to any other authorization server.
+: OPTIONAL. Native client app's redirect_uri, claimed as deep link. *native_callback_uri* MAY be invoked by authorization server's user-interacting app to natively switch to client app to provide its response. If native_callback_uri is included in a native authorization request, authorization server MUST include the native_callback_uri when federating to another authorization server.
 
 Specific implementations as well as extensions to this specification MAY define additional parameters to be used at this endpoint.
 
@@ -377,14 +377,14 @@ parameters with the response:
 
      "insufficient_information":
      :     the Authorization Server requires additional user input,
-           which is not an authentication challenge, for example to
-           determine the target authorization server to federate to.
+           other than an authentication challenge, to determine the
+           target authorization server to federate to.
            See {{insufficient-information}} for details.
 
      "federate":
-     :     The Authorization Server wishes to federate processing to another
-           authorization server, which it is a client of. This response MUST
-           include the *federation_uri* response parameter.
+     :     The Authorization Server wishes to federate to another
+           authorization server, which it is a client of. This
+           response MUST include the *federation_uri* response parameter.
            See {{federating-response}} for details.
 
      "redirect_to_app":
@@ -575,7 +575,7 @@ would handle a response from a federated authorization server. See {{federating-
 #### Additional Information Required Response {#insufficient-information}
 
 If additional user input is required, for example to determine where to federate to,
-The response body shall contain the following additional properties:
+the response body shall contain the following additional properties:
 
 logo:
 : OPTIONAL. URL or base64-encoded logo of *Authorization Server*, for branding purposes.
@@ -597,7 +597,7 @@ userPrompt:
   - hint: OPTIONAL. A string holding the input's hint that is displayed if the input is empty.
   - description: OPTIONAL. A string holding the input's description.
 
-Example of prompting end-user for 2 multiple-choice inputs:
+Example of requesting end-user for 2 multiple-choice inputs:
 
     HTTP/1.1 400 Bad Request
     Content-Type: application/json
@@ -636,7 +636,7 @@ Example of prompting end-user for 2 multiple-choice inputs:
         }
     }
 
-Example of prompting end-user for text input entry:
+Example of requesting end-user for text input entry (email):
 
     HTTP/1.1 400 Bad Request
     Content-Type: application/json
