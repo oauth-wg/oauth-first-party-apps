@@ -582,7 +582,7 @@ The app that received the redirect handles the native authorization request:
 * MUST use OS mechanisms to invoke *native_callback_uri* and return to the client, providing it a response whose contents is according to this specification for the response of a Native Authorization Endpoint, as url-encoded query parameters.
 
 Note - trust establishment mechanisms in *native_callback_uri* are out of scope of this specification.
-However we note that closed ecosystems could employ an allowList, and open ecosystems could leverage
+However we assume closed ecosystems could employ an allowList, and open ecosystems could leverage
 {{OpenID.Federation}}:
 
   * Extract native_callback_uri's DNS domain.
