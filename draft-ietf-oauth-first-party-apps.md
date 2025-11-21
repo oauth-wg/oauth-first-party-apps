@@ -573,6 +573,19 @@ The app that received the redirect handles the native authorization request:
 When the client is invoked on its native_callback_uri, it shall handle the response parameters as it
 would handle a response from a federated authorization server. See {{federating-response}} for details.
 
+Example URI used to invoke of client app on its claimed native_callback_uri:
+
+    https://client.example.com/cb?authorization_code=uY29tL2F1dGhlbnRpY
+
+Example client invoking the response_uri of the authorization server which redirected it to the app:
+
+    POST /native-authorization HTTP/1.1
+    Host: prev-as.com
+    Content-Type: application/x-www-form-urlencoded
+
+    authorization_code=uY29tL2F1dGhlbnRpY
+    &auth_session=ce6772f5e07bc8361572f
+
 #### Additional Information Required Response {#insufficient-information}
 
 If additional user input is required, for example to determine where to federate to,
