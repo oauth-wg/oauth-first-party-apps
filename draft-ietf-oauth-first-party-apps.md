@@ -1005,7 +1005,7 @@ A user may be redirected to the Authorization Server to perfrom an account reset
 
 ## Federate and Redirect to App
 
-### Diagram 
+### Diagram
 
 ~~~ ascii-art
                                                 +--------------------+
@@ -1027,7 +1027,7 @@ A user may be redirected to the Authorization Server to perfrom an account reset
              |          |<----------------------||    Endpoint      ||
              |          | (E) Redirect to       |+------------------+|
              |          |     App Response      +--------------------+
-             |          |         :             
+             |          |         :
              |          |         :             +--------------------+
              |          | (F) Invoke App        |                    |
              |          |---------------------->|   Native App of    |
@@ -1048,11 +1048,10 @@ A user may be redirected to the Authorization Server to perfrom an account reset
              |          | (J) Token Request     |+------------------+|
              |          |---------------------->||      Token       ||
              |          |<----------------------||     Endpoint     ||
-             |          | (K) Access Token      |+------------------+|  
+             |          | (K) Access Token      |+------------------+|
              |          |                       +--------------------+
-             |          |                       
-             |          |                       
-             +----------+                       
+             |          |
+             +----------+
 ~~~
 Figure: Client is federated, then redirected to app
 
