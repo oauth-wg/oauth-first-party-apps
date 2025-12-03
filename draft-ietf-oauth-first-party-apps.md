@@ -1082,7 +1082,7 @@ including the original native_callback_uri:
     client_id=s6BhdRkqt3&native_callback_uri=
     https://client.example.com/cb
 
-as-1.com receives a request_uri in response, and then responds to client:
+as-1.com receives a request_uri from the PAR endpoint, and then responds to client:
 
     HTTP/1.1 400 Bad Request
     Content-Type: application/json
@@ -1120,32 +1120,33 @@ as-2.com decides to use its native app to interact with end-user and responds:
           urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX"
     }
 
-Example client calling receiving an {#authorization-code-response} from the federated
-authorization server:
+Client locates app claiming the obtained deep_link and invokes it.
+The invoked app handles the native authorization request and then natively invokes native_callback_uri:
 
-    HTTP/1.1 200 OK
-    Content-Type: application/json
-    Cache-Control: no-store
+    https://client.example.com/cb?authorization_code=uY29tL2F1dGhlbnRpY
 
-    {
-      "authorization_code": "uY29tL2F1dGhlbnRpY"
-    }
+### Client calls federating authorization server
 
-And providing it to the federating authorization server's response_uri,
-adding previously obtained auth_session:
+Client invokes the response_uri of the authorization server which federated
+it to the authorization server which redirected it to the app:
 
     POST /native-authorization HTTP/1.1
-    Host: prev-as.com
+    Host: as-1.com
     Content-Type: application/x-www-form-urlencoded
 
     authorization_code=uY29tL2F1dGhlbnRpY
     &auth_session=ce6772f5e07bc8361572f
 
-### App calls client
+And receives in response an authorization code:
 
-### Client calls federating authorization server
+    HTTP/1.1 200 OK
+    Content-Type: application/json
 
-### Client calls its authorization server
+    {
+      "authorization_code": "vZ3:uM3G2eHimcoSqjZ"
+    }
+
+Client proceeds to exchange code for tokens.
 
 ## Passwordless One-Time Password (OTP)
 
