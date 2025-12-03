@@ -301,7 +301,7 @@ format with a character encoding of UTF-8 in the HTTP request body:
   See {{redirect-to-web}} for details.
 
 "native_callback_uri":
-: OPTIONAL. Native client app's redirect_uri, claimed as deep link. *native_callback_uri* MAY be invoked by authorization server's user-interacting app to natively switch to client app to provide its response. If native_callback_uri is included in a native authorization request, authorization server MUST include the native_callback_uri when federating to another authorization server.
+: OPTIONAL. Native client app's **redirect_uri**, claimed as deep link. *native_callback_uri* SHALL be natively invoked by authorization server's user-interacting app to provide its response to the client app. If native_callback_uri is included in a native authorization request, authorization server MUST include the native_callback_uri when federating to another authorization server.
 
 Specific implementations as well as extensions to this specification MAY define additional parameters to be used at this endpoint.
 
@@ -411,10 +411,10 @@ parameters with the response:
            user interacts with the authorization server in a web browser.
            See {{redirect-to-web}} for details.
 
-     "native_authorization_unsupported":
-     :     The authorization server does not support the native authorization
-           endpoint, or does, but a downstream authorization server it attempted
-           to federate to, does not support the native authorization endpoint.
+     "native_authorization_federate_unsupported":
+     :     The authorization server intended to federate to
+           a downstream authorization server, but it does not
+           support the native authorization endpoint.
 
      Values for the `error` parameter MUST NOT include characters
      outside the set %x20-21 / %x23-5B / %x5D-7E.
@@ -492,6 +492,9 @@ If the authorization server decides to federate to another authorization server,
 responds with error code *federate* and MUST return the *federation_uri*,
 *federation_body*, *response_uri* and *auth_session* response attributes.
 
+When federating to another authorization server, federating authorization server MUST
+use PAR {{RFC9126}} and include request_uri in federation_body.
+
 Example **federating** response:
 
     HTTP/1.1 400 Bad Request
@@ -519,13 +522,16 @@ as application/x-www-form-urlencoded request body. Example:
 
 The federated authorization server should consider end-user's privacy and security
 to determine if it SHOULD request authorization challenges when being federated to.
+For example it can identify **federating** clients and avoid serving them authorization
+challenges, as user-serving clients receiving those challenges are not its first
+party clients.
 
 The client MUST provide any response obtained from the **federated** authorization server,
 as application/x-www-form-urlencoded request body for the *response_uri* of the respective
 **federating** authorization server which SHALL be invoked using HTTP POST.
 
 Except when **federated** authorization server has returned the following error codes:
-*insufficient_authorization*, *insufficient_information*, *redirect_to_app*, *redirect_to_web*,
+*federate*, *insufficient_authorization*, *insufficient_information*, *redirect_to_app*, *redirect_to_web*,
 in which case the client MUST handle these errors according to this specification.
 
 Example client calling receiving an {#authorization-code-response} from the federated
