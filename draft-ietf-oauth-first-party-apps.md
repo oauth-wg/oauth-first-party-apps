@@ -243,7 +243,7 @@ The native authorization endpoint is a new endpoint defined by this specificatio
 
 The native authorization endpoint is an HTTP API at the authorization server that accepts HTTP POST requests with parameters in the HTTP request message body using the `application/x-www-form-urlencoded` format. This format has a character encoding of UTF-8, as described in Appendix B of {{RFC6749}}. The native authorization endpoint URL MUST use the "https" scheme.
 
-If the authorization server requires client authentication for this client on the Token Endpoint, then the authorization server MUST also require client authentication for this client on the Native Authorization Endpoint, or require the client to use PAR {{RFC9126}}, with appropriate client authentication on the pushed authorization request endpoint. When using PAR with client authentication, providing the request_uri to the Native Authorization Endpoint attests that client authentication took place. When federating to downstream authorization servers, the usage of PAR {{RFC9126}} with client authentication is REQUIRED, as the native client calling the Native Authorization Endpoint of a federated authorization server is not an OAuth client and therefore cannot authenticate to the Native Authorization Endpoint. See {{client-authentication}} for more details.
+If the authorization server requires client authentication for this client on the Token Endpoint, then the authorization server MUST also require client authentication for this client on the Native Authorization Endpoint, or require the client to use PAR {{RFC9126}}, with appropriate client authentication on the pushed authorization request endpoint. When using PAR with client authentication, providing the request_uri to the Native Authorization Endpoint attests that client authentication took place. When federating to downstream authorization servers, the usage of PAR {{RFC9126}} with client authentication is REQUIRED, as the native client calling the Native Authorization Endpoint of a federated authorization server is not *its* OAuth client and therefore cannot authenticate to the Native Authorization Endpoint. See {{client-authentication}} for more details.
 
 Authorization servers supporting this specification SHOULD include the URL of their native authorization endpoint in their authorization server metadata document {{RFC8414}} using the `native_authorization_endpoint` parameter as defined in {{authorization-server-metadata}}.
 
@@ -558,9 +558,9 @@ adding previously obtained auth_session:
 
 #### Redirect to app response {#redirect-to-app-response}
 
-If the authorization server decides to use another native app to interact with
+If the authorization server decides to use a native app to interact with
 end user, it responds with error code *redirect_to_app* and MUST return the
-*deep_link*, *response_uri* and *auth_session* response attributes.
+*deep_link* response attribute.
 
 Example **redirect_to_app** response:
 
@@ -569,8 +569,6 @@ Example **redirect_to_app** response:
 
     {
         "error": "redirect_to_app",
-        "auth_session": "ce6772f5e07bc8361572f",
-        "response_uri": "https://prev-as.com/native-authorization",
         "deep_link": "https://next-as.com/native-authorization?
           client_id=s6BhdRkqt3&request_uri=
           urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX"
@@ -580,12 +578,12 @@ Client MUST use OS mechanisms to invoke the obtained deep_link.
 If no app claiming deep_link is found on the device, client MUST terminate the
 flow and MAY attempt a normal non-native OAuth flow.
 
-The app that received the redirect handles the native authorization request:
+The invoked app handles the native authorization request:
 
 * Validates the request and ensures it contains a *native_callback_uri*, Otherwise terminates the flow.
 * Establishes trust in *native_callback_uri* and validates that an app claiming it is on the device. Otherwise terminates the flow.
 * Authenticates end-user and authorizes the request.
-* MUST use OS mechanisms to invoke *native_callback_uri* and return to the client, providing it a response whose contents is according to this specification for the response of a Native Authorization Endpoint, as url-encoded query parameters.
+* Uses OS mechanisms to natively invoke *native_callback_uri* and return to the client, providing it a response according to this specification's response from a Native Authorization Endpoint, as url-encoded query parameters.
 
 Note - trust establishment mechanisms in *native_callback_uri* are out of scope of this specification.
 However we assume closed ecosystems could employ an allowList, and open ecosystems could leverage
@@ -595,7 +593,7 @@ However we assume closed ecosystems could employ an allowList, and open ecosyste
   * Add the path /.well-known/openid-federation and perform trust chain resolution.
   * Inspect client's metadata for redirect_uri's and validate **native_callback_uri** is included among them.
 
-When the client is invoked on its native_callback_uri, it shall handle the response parameters as it
+When the client is natively invoked on its native_callback_uri, it shall handle the response parameters as it
 would handle a response from a federated authorization server. See {{federating-response}} for details.
 
 Example URI used to invoke of client app on its claimed native_callback_uri:
@@ -1005,6 +1003,64 @@ A user may be redirected to the Authorization Server to perfrom an account reset
 1. The user resets their account by performing a multi-step authentication flow with the Authorization Server.
 1. The Authorization Server issues an Authorization Code in a redirect back to the client, which then exchanges it for an access and refresh token.
 
+## Federate and Redirect to App
+
+### Diagram 
+
+~~~ ascii-art
+                                                +--------------------+
+                                                |   Authorization    |
+                          (B)Native             |      Server 1      |
+             +----------+ Authorization Request |+------------------+|
+(A)User  +---|          |---------------------->||     Native       ||
+   Starts|   |          |                       ||  Authorization   ||
+   Flow  +-->|  Client  |<----------------------||    Endpoint      ||
+             |          | (C)Federate Error     |+------------------+|
+             |          |        Response       +--------------------+
+             |          |         :
+             |          |         :             +--------------------+
+             |          |         :             |   Authorization    |
+             |          | (D)Native             |      Server 2      |
+             |          | Authorization Request |+------------------+|
+             |          |---------------------->||     Native       ||
+             |          |                       ||  Authorization   ||
+             |          |<----------------------||    Endpoint      ||
+             |          | (E) Redirect to       |+------------------+|
+             |          |     App Response      +--------------------+
+             |          |         :             
+             |          |         :             +--------------------+
+             |          | (F) Invoke App        |                    |
+             |          |---------------------->|   Native App of    |
+             |          |                       |   Auth Server 2    |
+             |          |<----------------------|                    |
+             |          | (G)Authorization code +--------------------+
+             |          |    For Auth Server 1
+             |          |         :             +--------------------+
+             |          |         :             |   Authorization    |
+             |          | (H)Authorization Code |      Server 1      |
+             |          |    For Auth Server 1  |+------------------+|
+             |          |---------------------->||    Response      ||
+             |          |<----------------------||       Uri        ||
+             |          | (I) Authorization     |+------------------+|
+             |          |     Code Response     |                    |
+             |          |         :             |                    |
+             |          |         :             |                    |
+             |          | (J) Token Request     |+------------------+|
+             |          |---------------------->||      Token       ||
+             |          |<----------------------||     Endpoint     ||
+             |          | (K) Access Token      |+------------------+|  
+             |          |                       +--------------------+
+             |          |                       
+             |          |                       
+             +----------+                       
+~~~
+Figure: Client is federated, then redirected to app
+
+### Client makes initial request and is federated
+
+### Client calls federated authorization server and is redirected to app
+
+### Client calls federating authorization server
 
 ## Passwordless One-Time Password (OTP)
 
