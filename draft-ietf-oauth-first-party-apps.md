@@ -1040,14 +1040,16 @@ A user may be redirected to the Authorization Server to perfrom an account reset
              |          | (H)Authorization Code |      Server 1      |
              |          |    For Auth Server 1  |+------------------+|
              |          |---------------------->||    Response      ||
-             |          |<----------------------||       Uri        ||
+             |          |                       ||       Uri        ||
+             |          |<----------------------||    Endpoint      ||
              |          | (I) Authorization     |+------------------+|
              |          |     Code Response     |                    |
              |          |         :             |                    |
              |          |         :             |                    |
              |          | (J) Token Request     |+------------------+|
              |          |---------------------->||      Token       ||
-             |          |<----------------------||     Endpoint     ||
+             |          |                       ||     Endpoint     ||
+             |          |<----------------------||                  ||
              |          | (K) Access Token      |+------------------+|
              |          |                       +--------------------+
              |          |
