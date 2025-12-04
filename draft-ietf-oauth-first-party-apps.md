@@ -243,7 +243,7 @@ The native authorization endpoint is a new endpoint defined by this specificatio
 
 The native authorization endpoint is an HTTP API at the authorization server that accepts HTTP POST requests with parameters in the HTTP request message body using the `application/x-www-form-urlencoded` format. This format has a character encoding of UTF-8, as described in Appendix B of {{RFC6749}}. The native authorization endpoint URL MUST use the "https" scheme.
 
-If the authorization server requires client authentication for this client on the Token Endpoint, then the authorization server MUST also require client authentication for this client on the Native Authorization Endpoint, or require the client to use PAR {{RFC9126}}, with appropriate client authentication on the pushed authorization request endpoint. When using PAR with client authentication, providing the request_uri to the Native Authorization Endpoint attests that client authentication took place. When federating to downstream authorization servers, the usage of PAR {{RFC9126}} with client authentication is REQUIRED, as the native client calling the Native Authorization Endpoint of a federated authorization server is not *its* OAuth client and therefore cannot authenticate to the Native Authorization Endpoint. See {{client-authentication}} for more details.
+If the authorization server requires client authentication for this client on the Token Endpoint, then the authorization server MUST also require client authentication for this client on the Native Authorization Endpoint, or require the client to use PAR {{RFC9126}}, with appropriate client authentication on the pushed authorization request endpoint. When using PAR with client authentication, the request_uri provided to the Native Authorization Endpoint attests that client authentication took place. When federating to downstream authorization servers, the usage of PAR {{RFC9126}} with client authentication is REQUIRED, as the native client calling the Native Authorization Endpoint of a federated authorization server is not *its* OAuth client and therefore has no other means of authenticating. See {{client-authentication}} for more details.
 
 Authorization servers supporting this specification SHOULD include the URL of their native authorization endpoint in their authorization server metadata document {{RFC8414}} using the `native_authorization_endpoint` parameter as defined in {{authorization-server-metadata}}.
 
@@ -251,7 +251,7 @@ The native authorization endpoint accepts the authorization request parameters d
 
 The native authorization endpoint also accepts the *native_callback_uri* parameter.
 
-When authorization servers intend to federate to a downstream authorization server, they MUST ensure it offers a *native_authorization_endpoint*, otherwise return the error *native_authorization_federate_unsupported*.
+Before authorization servers instruct a client to federate to a downstream authorization server, they MUST ensure it offers a *native_authorization_endpoint*, otherwise return the error native_authorization_federate_unsupported*.
 
 The client initiates the authorization flow with or without information collected from the user (e.g. a signed passkey challenge or MFA code).
 
@@ -530,11 +530,11 @@ The client MUST provide any response obtained from the **federated** authorizati
 as application/x-www-form-urlencoded request body for the *response_uri* of the respective
 **federating** authorization server which SHALL be invoked using HTTP POST.
 
-Except when **federated** authorization server has returned the following error codes:
-*federate*, *insufficient_authorization*, *insufficient_information*, *redirect_to_app*, *redirect_to_web*,
-in which case the client MUST handle these errors according to this specification.
+However, when **federated** authorization server returns the following error codes:
+*federate*, *insufficient_authorization*, *insufficient_information*, *redirect_to_app*,
+*redirect_to_web*, client MUST handle these errors according to this specification.
 
-Example client calling receiving an {#authorization-code-response} from the federated
+Example client calling receiving an {{authorization-code-response}} from the federated
 authorization server:
 
     HTTP/1.1 200 OK
