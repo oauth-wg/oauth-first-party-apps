@@ -594,10 +594,10 @@ However we assume closed ecosystems could employ an allowList, and open ecosyste
   * Add the path /.well-known/openid-federation and perform trust chain resolution.
   * Inspect client's metadata for redirect_uri's and validate **native_callback_uri** is included among them.
 
-When the client is invoked on its native_callback_uri, it shall regard the invocation as a response from
-the authorization server which redirected the client to the app.
-In other words, the authorization server which redirected the client to the app is not the
-audience of the app's response. See {{federating-response}} for details.
+When the client is invoked on its native_callback_uri, it shall regard the invocation as a
+response **from** the authorization server which redirected the client to the app.
+In other words, this response's audience is not the authorization server which redirected
+the client to the app. See {{federating-response}} for details.
 
 Example URI used to invoke of client app on its claimed native_callback_uri:
 
