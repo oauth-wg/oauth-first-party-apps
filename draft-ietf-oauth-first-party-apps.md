@@ -492,8 +492,9 @@ If the authorization server decides to federate to another authorization server,
 responds with error code *federate* and MUST return the *federation_uri*,
 *federation_body*, *response_uri* and *auth_session* response attributes.
 
-When federating to another authorization server, federating authorization server MUST
-use PAR {{RFC9126}} and include request_uri in federation_body.
+When federating to another authorization server:
+* Federating authorization server MUST use PAR {{RFC9126}} and include *request_uri* in federation_body.
+* If *native_callback_uri* was included in the native authorization request, it MUST be included when calling federated authorization server's Native Authorization Endpoint.
 
 Example **federating** response:
 
@@ -521,10 +522,10 @@ as application/x-www-form-urlencoded request body. Example:
 
 
 The federated authorization server should consider end-user's privacy and security
-to determine if it SHOULD request authorization challenges when being federated to.
-For example it can identify **federating** clients and avoid serving them authorization
-challenges, as user-serving clients receiving those challenges are not its first
-party clients.
+to determine if it should present authorization challenges in federation scenarios.
+For example, it can label **federating** clients as such and avoid serving them
+authorization challenges, as user-serving clients receiving those challenges are
+not first party clients.
 
 The client MUST provide any response obtained from the **federated** authorization server,
 as application/x-www-form-urlencoded request body for the *response_uri* of the respective
@@ -534,7 +535,7 @@ However, when **federated** authorization server returns the following error cod
 *federate*, *insufficient_authorization*, *insufficient_information*, *redirect_to_app*,
 *redirect_to_web*, client MUST handle these errors according to this specification.
 
-Example client calling receiving an {{authorization-code-response}} from the federated
+Example client calling receiving an authorization code response {{authorization-code-response}} from the federated
 authorization server:
 
     HTTP/1.1 200 OK
@@ -593,17 +594,20 @@ However we assume closed ecosystems could employ an allowList, and open ecosyste
   * Add the path /.well-known/openid-federation and perform trust chain resolution.
   * Inspect client's metadata for redirect_uri's and validate **native_callback_uri** is included among them.
 
-When the client is natively invoked on its native_callback_uri, it shall handle the response parameters as it
-would handle a response from a federated authorization server. See {{federating-response}} for details.
+When the client is invoked on its native_callback_uri, it shall regard the invocation as a response from
+the authorization server which redirected the client to the app.
+In other words, the authorization server which redirected the client to the app is not the
+audience of the app's response. See {{federating-response}} for details.
 
 Example URI used to invoke of client app on its claimed native_callback_uri:
 
     https://client.example.com/cb?authorization_code=uY29tL2F1dGhlbnRpY
 
-Example client invoking the response_uri of the authorization server which redirected it to the app:
+Example client invoking the response_uri **of the authorization server which federated it**
+to the authorization server, which redirected it to the app:
 
     POST /native-authorization HTTP/1.1
-    Host: prev-as.com
+    Host: **prev-as.com**
     Content-Type: application/x-www-form-urlencoded
 
     authorization_code=uY29tL2F1dGhlbnRpY
