@@ -507,7 +507,7 @@ Example **federating** response:
         "response_uri": "https://prev-as.com/native-authorization",
         "federation_uri": "https://next-as.com/native-authorization",
         "federation_body": "client_id=s6BhdRkqt3&request_uri=
-          urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX"
+          urn:ietf:params:oauth:request_uri:R3p_hzwsR7outNQSKfoX"
     }
 
 Client MUST call the *federation_uri* using HTTP POST, and provide it *federation_body*
@@ -518,7 +518,7 @@ as application/x-www-form-urlencoded request body. Example:
     Content-Type: application/x-www-form-urlencoded
 
     client_id=s6BhdRkqt3&request_uri=
-    urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX
+    urn:ietf:params:oauth:request_uri:R3p_hzwsR7outNQSKfoX
 
 
 The federated authorization server should consider end-user's privacy and security
@@ -572,7 +572,7 @@ Example **redirect_to_app** response:
         "error": "redirect_to_app",
         "deep_link": "https://next-as.com/native-authorization?
           client_id=s6BhdRkqt3&request_uri=
-          urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX"
+          urn:ietf:params:oauth:request_uri:R3p_hzwsR7outNQSKfoX"
     }
 
 Client MUST use OS mechanisms to invoke the obtained deep_link.
@@ -1007,7 +1007,7 @@ A user may be redirected to the Authorization Server to perfrom an account reset
 1. The user resets their account by performing a multi-step authentication flow with the Authorization Server.
 1. The Authorization Server issues an Authorization Code in a redirect back to the client, which then exchanges it for an access and refresh token.
 
-## Native client federated, then redirected to app
+## Native client federated and redirected to app
 
 ### Diagram
 
@@ -1038,7 +1038,7 @@ A user may be redirected to the Authorization Server to perfrom an account reset
              |          |                       |   Auth Server 2    |
              |          |<----------------------|                    |
              |          | (G)Authorization code +--------------------+
-             |          |    For Auth Server 1
+             |          |   For Auth Server 1
              |          |         :             +--------------------+
              |          |         :             |   Authorization    |
              |          | (H)Authorization Code |      Server 1      |
@@ -1059,11 +1059,11 @@ A user may be redirected to the Authorization Server to perfrom an account reset
              |          |
              +----------+
 ~~~
-Figure: Client is federated, then redirected to app
+Figure: Native client federated, then redirected to app
 
 ### Client makes initial request and receives "federate" error
 
-Client calls the native authorization endpoint:
+Client calls the native authorization endpoint and includes the *native_callback_uri* parameter:
 
     POST /native-authorization HTTP/1.1
     Host: as-1.com
@@ -1075,9 +1075,16 @@ Client calls the native authorization endpoint:
 The first authorization server, as-1.com, decides to federate to as-2.com after validating
 it supports the native authorization endpoint. If it does not, as-1.com returns:
 
-Since native authorization endpoint is supported by the federated authorization server,
+    HTTP/1.1 400 Bad Request
+    Content-Type: application/json
+
+    {
+        "error": "native_authorization_federate_unsupported"
+    }
+
+If native authorization endpoint is supported by the federated authorization server,
 as-1.com performs a PAR {{RFC9126}} request to as-2.com's pushed authorization endpoint,
-including the original native_callback_uri:
+including the original *native_callback_uri*:
 
     POST /par HTTP/1.1
     Host: as-2.com
@@ -1086,7 +1093,8 @@ including the original native_callback_uri:
     client_id=s6BhdRkqt3&native_callback_uri=
     https://client.example.com/cb
 
-as-1.com receives a request_uri from the PAR endpoint, and then responds to client:
+as-1.com receives a request_uri from the PAR endpoint, which it
+includes in its response to client, in the *federation_body* attribute:
 
     HTTP/1.1 400 Bad Request
     Content-Type: application/json
@@ -1097,7 +1105,7 @@ as-1.com receives a request_uri from the PAR endpoint, and then responds to clie
         "response_uri": "https://as-1.com/native-authorization",
         "federation_uri": "https://as-2.com/native-authorization",
         "federation_body": "client_id=s6BhdRkqt3&request_uri=
-          urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX"
+          urn:ietf:params:oauth:request_uri:R3p_hzwsR7outNQSKfoX"
     }
 
 ### Client calls federated authorization server and is redirected to app
@@ -1110,7 +1118,7 @@ Client calls the *federation_uri* it got from as-1.com using HTTP POST with
     Content-Type: application/x-www-form-urlencoded
 
     client_id=s6BhdRkqt3&request_uri=
-    urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX
+    urn:ietf:params:oauth:request_uri:R3p_hzwsR7outNQSKfoX
 
 as-2.com decides to use its native app to interact with end-user and responds:
 
@@ -1121,7 +1129,7 @@ as-2.com decides to use its native app to interact with end-user and responds:
         "error": "redirect_to_app",
         "deep_link": "https://as-2.com/native-authorization?
           client_id=s6BhdRkqt3&request_uri=
-          urn%3Aietf%3Aparams%3Aoauth%3Arequest_uri%3AR3p_hzwsR7outNQSKfoX"
+          urn:ietf:params:oauth:request_uri:R3p_hzwsR7outNQSKfoX"
     }
 
 Client locates app claiming the obtained deep_link and invokes it.
