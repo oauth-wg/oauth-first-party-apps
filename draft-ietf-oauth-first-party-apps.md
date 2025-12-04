@@ -1093,7 +1093,7 @@ including the original *native_callback_uri*:
     client_id=s6BhdRkqt3&native_callback_uri=
     https://client.example.com/cb
 
-as-1.com receives a request_uri from the PAR endpoint, which it
+as-1.com receives a request_uri from as-2.com's PAR endpoint, which it
 includes in its response to client, in the *federation_body* attribute:
 
     HTTP/1.1 400 Bad Request
