@@ -1108,6 +1108,8 @@ includes in its response to client, in the *federation_body* attribute:
           urn:ietf:params:oauth:request_uri:R3p_hzwsR7outNQSKfoX"
     }
 
+See {{federating-response}} for more details.
+
 ### Client calls federated authorization server and is redirected to app
 
 Client calls the *federation_uri* it got from as-1.com using HTTP POST with
@@ -1132,15 +1134,16 @@ as-2.com decides to use its native app to interact with end-user and responds:
           urn:ietf:params:oauth:request_uri:R3p_hzwsR7outNQSKfoX"
     }
 
-Client locates app claiming the obtained deep_link and invokes it.
+Client locates an app claiming the obtained deep_link and invokes it.
+See {{redirect-to-app-response}} for more details.
 The invoked app handles the native authorization request and then natively invokes native_callback_uri:
 
     https://client.example.com/cb?authorization_code=uY29tL2F1dGhlbnRpY
 
 ### Client calls federating authorization server
 
-Client invokes the response_uri of the authorization server which federated
-it to the authorization server which redirected it to the app:
+Client invokes the response_uri of as-1.com as it is the authorization server which federated
+it to as-2.com and the app's response is regarded as the response of as-2.com:
 
     POST /native-authorization HTTP/1.1
     Host: as-1.com
@@ -1149,7 +1152,7 @@ it to the authorization server which redirected it to the app:
     authorization_code=uY29tL2F1dGhlbnRpY
     &auth_session=ce6772f5e07bc8361572f
 
-And receives in response an authorization code:
+And receives in response an authorization code, which it is the audience of (no further federations) to resolve:
 
     HTTP/1.1 200 OK
     Content-Type: application/json
