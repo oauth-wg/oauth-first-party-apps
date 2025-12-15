@@ -1456,7 +1456,9 @@ User            First Party Client        IdP              Wallet/DC API       V
 The verifier is displayed here as a separate instance, but can also be part of the IDP. In both cases, it is transparent to the client, as the client only talks to the IDP's Native Authorization Endpoint {#native-authorization-endpoint}
 
 1. / 2. User opens app and starts the flow. The client can already indicate, as part of the OAuth request, wallet use case + DC API support as well as SD/CD use case and native_cb_url If not, this can be negotiated by e.g., a Additional Information Required Response {#insufficient-information}
-3. IDP returns with error response (insufficient_authorization), indicating in the response body that digital credentials are required. If sufficient information is provided in step 2, the IDP can already respond with the presentation request. For example:
+3. IDP returns with error response (insufficient_authorization), indicating in the response body that digital credentials are required. If sufficient information is provided in step 2, the IDP can already respond with the presentation request.
+   
+For example:
 
     HTTP/1.1 403 Forbidden
     Content-Type: application/json
@@ -1494,13 +1496,14 @@ The IDP's response in this case may look as follows:
 
 
 8. Client invokes the DC API. Note that the presentation request is usually of the form openid4vp://?request_uri=... so the client has to fetch the actual request from request_uri and hand that to the DC API
-9.-10. Client receives the vp_token and hands it off to the IDP. The client's request (step 10) may look as follows:
+9.-10. Client receives the vp_token and hands it off to the IDP.
 
+The client's request (step 10) may look as follows:
 
     POST /native-authorization HTTP/1.1
     Host: server.example.com
     Content-Type: application/json
-
+ 
     {
       "auth_session": "ce6772f5e07bc8361572f",
       "vp_token": "....."
