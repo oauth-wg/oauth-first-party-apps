@@ -1348,6 +1348,7 @@ The Authorization Server responds with an access token and refresh token.
 
 Digital credentials can be used to authenticate a user. This example flow shows how  and the DC API can be incorporated into this spec.
 
+~~~ ascii-art
 User            First Party Client        IdP              Wallet/DC API       Verifier
 ----            ------------------        ---              --------------       --------
 |                     |                  |                    |                  |
@@ -1450,6 +1451,7 @@ User            First Party Client        IdP              Wallet/DC API       V
 |                     | (39) Tokens      |
 |                     |<-----------------|
 |                     |                  |                   
+~~~
 
 The verifier is displayed here as a separate instance, but can also be part of the IDP. In both cases, it is transparent to the client, as the client only talks to the IDP's Native Authorization Endpoint {#native-authorization-endpoint}
 
