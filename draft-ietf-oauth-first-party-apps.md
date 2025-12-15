@@ -1346,110 +1346,110 @@ The Authorization Server responds with an access token and refresh token.
 
 ## Usage with Digital Credentials
 
-Digital credentials can be used to authenticate a user. This example flow shows how OpenId4VP and the DC API can be incorporated into this spec.
+Digital credentials can be used to authenticate a user. This example flow shows how  and the DC API can be incorporated into this spec.
 
 User            First Party Client        IdP              Wallet/DC API       Verifier
 ----            ------------------        ---              --------------       --------
 |                     |                  |                    |                  |
 |                     |                  |                    |                  |
-| [1] Start Flow      |                  |                    |                  |
+| (1) Start Flow      |                  |                    |                  |
 |-------------------->|                  |                    |                  |
-|                     | [2] Native Authorization Request      |                  |
+|                     | (2) Native Authorization Request      |                  |
 |                     |----------------->|                    |                  |
-|                     | [3] Authorization Error Response      |                  |
+|                     | (3) Authorization Error Response      |                  |
 |                     |   (insufficient_authorization,        |                  |
 |                     |     dc_credential_required)           |                  |
 |                     |<-----------------|                    |                  |
 |                     |                  |                    |                  |
 +===================== DC API branch ============================================+
 |                     |                  |                    |                  |
-|                     | [4] DC API Capability Indication      |                  |
+|                     | (4) DC API Capability Indication      |                  |
 |                     |----------------->|                    |                  |
-|                     |                  | [5] Create Presentation request (OIDC4VP)
+|                     |                  | (5) Create Presentation request (OIDC4VP)
 |                     |                  |-------------------------------------->| 
-|                     |                  | [6] Presentation request (OIDC4VP)    |
+|                     |                  | (6) Presentation request (OIDC4VP)    |
 |                     |                  |<--------------------------------------|
-|                     | [7] Presentation request (OIDC4VP)    |                  |
+|                     | (7) Presentation request (OIDC4VP)    |                  |
 |                     |<-----------------|                    |                  |
-|                     | [8] Presentation Request (OID4VP)     |                  |
+|                     | (8) Presentation Request (OID4VP)     |                  |
 |                     |-------------------------------------->|                  |
-|                     | [9] Presentation Response (vp_token)  |                  |
+|                     | (9) Presentation Response (vp_token)  |                  |
 |                     |<--------------------------------------|                  | 
-|                     | [10] vp_token                         |                  |
+|                     | (10) vp_token                         |                  |
 |                     |----------------->|                    |                  |
-|                     |                  | [11] vp_token      |                  |
+|                     |                  | (11) vp_token      |                  |
 |                     |                  |------------------->|                  |
-|                     |                  | [12] Verification Result              |
+|                     |                  | (12) Verification Result              |
 |                     |                  |<--------------------------------------|
 +================================================================================+
 +=================== No DC API branch ===========================================+
 |                     |                  |                    |                  |
-| [13] Display options                   |                    |                  |
+| (13) Display options                   |                    |                  |
 | (same device / cross device)           |                    |                  |
 |<--------------------|                  |                    |                  |
-| [14] Selects option |                  |                    |                  |
+| (14) Selects option |                  |                    |                  |
 |-------------------->|                  |                    |                  |
-|                     | [15] Selected option                  |                  |
+|                     | (15) Selected option                  |                  |
 |                     |----------------->|                    |                  |
 |                     |                  |                    |                  |
 |------- Same device path -------------------------------------------------------|
-|                     |                  | [16] Create Presentation request (OIDC4VP)
+|                     |                  | (16) Create Presentation request (OIDC4VP)
 |                     |                  |-------------------------------------->|
-|                     |                  | [17] Presentation request (OIDC4VP)   |
+|                     |                  | (17) Presentation request (OIDC4VP)   |
 |                     |                  |<--------------------------------------|
-|                     | [18] Presentation request (OIDC4VP)   |                  |
+|                     | (18) Presentation request (OIDC4VP)   |                  |
 |                     |<-----------------|                    |                  |
-|                     | [19] Invoke Wallet via Deeplink       |                  |
+|                     | (19) Invoke Wallet via Deeplink       |                  |
 |                     |-------------------------------------->|                  |
-|                     |                  |                    | [20] Presentation Response (vp_token)
+|                     |                  |                    | (20) Presentation Response (vp_token)
 |                     |                  |                    |----------------->|
-|                     |                  | [21] redirect_uri_client?handle       |
+|                     |                  | (21) redirect_uri_client?handle       |
 |                     |                  |<--------------------------------------|
-|                     | [22] Redirect to client w/ redirect_uri_client?handle    |
+|                     | (22) Redirect to client w/ redirect_uri_client?handle    |
 |                     |<--------------------------------------|                  |
-|                     | [23] handle                           |                  |
+|                     | (23) handle                           |                  |
 |                     |----------------->|                    |                  |
-|                     |                  | [24] Get Presentation Result          |
+|                     |                  | (24) Get Presentation Result          |
 |                     |                  |-------------------------------------->|
-|                     |                  | [25] Presentation Result              |
+|                     |                  | (25) Presentation Result              |
 |                     |                  |<--------------------------------------|
 |                     |                  |                    |                  |
 |------- Cross device path ------------------------------------------------------|
-|                     |                  | [26] Create Presentation request (OIDC4VP)
+|                     |                  | (26) Create Presentation request (OIDC4VP)
 |                     |                  |-------------------------------------->| 
-|                     |                  | [27] Presentation request (OIDC4VP)   |
+|                     |                  | (27) Presentation request (OIDC4VP)   |
 |                     |                  |<--------------------------------------|
-|                     | [28] Presentation request (OIDC4VP)   |                  |
+|                     | (28) Presentation request (OIDC4VP)   |                  |
 |                     |<-----------------|                    |                  |
-| [29] Display QR Code|                  |                    |                  |
+| (29) Display QR Code|                  |                    |                  |
 |<--------------------|                  |                    |                  |
-| [30] Scan QR Code   |                  |                    |                  |
+| (30) Scan QR Code   |                  |                    |                  |
 |----------------------------------------------------------->>|                  |
-|                     |                  |                    | [31] Presentation Response (vp_token)
+|                     |                  |                    | (31) Presentation Response (vp_token)
 |                     |                  |                    |----------------->|
 |                     +---- Loop ------------------------------------------------+
-|                     | [32] Poll for authorization response                     |
+|                     | (32) Poll for authorization response                     |
 |                     |----------------->|                                       |
-|                     |                  | [33] Get Presentation Result          |
+|                     |                  | (33) Get Presentation Result          |
 |                     |                  |-------------------------------------->|
-|                     |                  | [34] Pending                          |
+|                     |                  | (34) Pending                          |
 |                     |                  |<--------------------------------------|
-|                     | [35] Pending     |                                       |
+|                     | (35) Pending     |                                       |
 |                     |<-----------------|                                       |
 |                     +---- Break when presentation done ------------------------|
-|                     |                  | [36] Presentation Result              |
+|                     |                  | (36) Presentation Result              |
 |                     |                  |<--------------------------------------|
 +================================================================================+
-|                     |                  |                                   
+|                     |                  |
 |  Note: Assuming the happy path. In case of error, error responses are sent back accordingly.
-|                     |                  |                                    
-|                     | [37] code        |                                    
-|                     |<-----------------|                 
-|                     | [38] Token Request with code                          
-|                     |----------------->|                 
-|                     | [39] Tokens      |                                   
+|                     |                  |
+|                     | (37) code        |
 |                     |<-----------------|
-|                     |                  |                    
+|                     | (38) Token Request with code
+|                     |----------------->|
+|                     | (39) Tokens      |
+|                     |<-----------------|
+|                     |                  |                   
 
 The verifier is displayed here as a separate instance, but can also be part of the IDP. In both cases, it is transparent to the client, as the client only talks to the IDP's Native Authorization Endpoint {#native-authorization-endpoint}
 
