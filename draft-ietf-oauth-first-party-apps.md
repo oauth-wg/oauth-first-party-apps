@@ -1344,6 +1344,220 @@ The Authorization Server responds with an access token and refresh token.
       "refresh_token": "e090366ac1c448b8aed84cbc07"
     }
 
+## Usage with Digital Credentials
+
+Digital credentials can be used to authenticate a user. This example flow shows how OpenId4VP and the DC API can be incorporated into this spec.
+
+User            First Party Client        IdP              Wallet/DC API       Verifier
+----            ------------------        ---              --------------       --------
+|                     |                  |                    |                  |
+|                     |                  |                    |                  |
+| [1] Start Flow      |                  |                    |                  |
+|-------------------->|                  |                    |                  |
+|                     | [2] Native Authorization Request      |                  |
+|                     |----------------->|                    |                  |
+|                     | [3] Authorization Error Response      |                  |
+|                     |   (insufficient_authorization,        |                  |
+|                     |     dc_credential_required)           |                  |
+|                     |<-----------------|                    |                  |
+|                     |                  |                    |                  |
++===================== DC API branch ============================================+
+|                     |                  |                    |                  |
+|                     | [4] DC API Capability Indication      |                  |
+|                     |----------------->|                    |                  |
+|                     |                  | [5] Create Presentation request (OIDC4VP)
+|                     |                  |-------------------------------------->| 
+|                     |                  | [6] Presentation request (OIDC4VP)    |
+|                     |                  |<--------------------------------------|
+|                     | [7] Presentation request (OIDC4VP)    |                  |
+|                     |<-----------------|                    |                  |
+|                     | [8] Presentation Request (OID4VP)     |                  |
+|                     |-------------------------------------->|                  |
+|                     | [9] Presentation Response (vp_token)  |                  |
+|                     |<--------------------------------------|                  | 
+|                     | [10] vp_token                         |                  |
+|                     |----------------->|                    |                  |
+|                     |                  | [11] vp_token      |                  |
+|                     |                  |------------------->|                  |
+|                     |                  | [12] Verification Result              |
+|                     |                  |<--------------------------------------|
++================================================================================+
++=================== No DC API branch ===========================================+
+|                     |                  |                    |                  |
+| [13] Display options                   |                    |                  |
+| (same device / cross device)           |                    |                  |
+|<--------------------|                  |                    |                  |
+| [14] Selects option |                  |                    |                  |
+|-------------------->|                  |                    |                  |
+|                     | [15] Selected option                  |                  |
+|                     |----------------->|                    |                  |
+|                     |                  |                    |                  |
+|------- Same device path -------------------------------------------------------|
+|                     |                  | [16] Create Presentation request (OIDC4VP)
+|                     |                  |-------------------------------------->|
+|                     |                  | [17] Presentation request (OIDC4VP)   |
+|                     |                  |<--------------------------------------|
+|                     | [18] Presentation request (OIDC4VP)   |                  |
+|                     |<-----------------|                    |                  |
+|                     | [19] Invoke Wallet via Deeplink       |                  |
+|                     |-------------------------------------->|                  |
+|                     |                  |                    | [20] Presentation Response (vp_token)
+|                     |                  |                    |----------------->|
+|                     |                  | [21] redirect_uri_client?handle       |
+|                     |                  |<--------------------------------------|
+|                     | [22] Redirect to client w/ redirect_uri_client?handle    |
+|                     |<--------------------------------------|                  |
+|                     | [23] handle                           |                  |
+|                     |----------------->|                    |                  |
+|                     |                  | [24] Get Presentation Result          |
+|                     |                  |-------------------------------------->|
+|                     |                  | [25] Presentation Result              |
+|                     |                  |<--------------------------------------|
+|                     |                  |                    |                  |
+|------- Cross device path ------------------------------------------------------|
+|                     |                  | [26] Create Presentation request (OIDC4VP)
+|                     |                  |-------------------------------------->| 
+|                     |                  | [27] Presentation request (OIDC4VP)   |
+|                     |                  |<--------------------------------------|
+|                     | [28] Presentation request (OIDC4VP)   |                  |
+|                     |<-----------------|                    |                  |
+| [29] Display QR Code|                  |                    |                  |
+|<--------------------|                  |                    |                  |
+| [30] Scan QR Code   |                  |                    |                  |
+|----------------------------------------------------------->>|                  |
+|                     |                  |                    | [31] Presentation Response (vp_token)
+|                     |                  |                    |----------------->|
+|                     +---- Loop ------------------------------------------------+
+|                     | [32] Poll for authorization response                     |
+|                     |----------------->|                                       |
+|                     |                  | [33] Get Presentation Result          |
+|                     |                  |-------------------------------------->|
+|                     |                  | [34] Pending                          |
+|                     |                  |<--------------------------------------|
+|                     | [35] Pending     |                                       |
+|                     |<-----------------|                                       |
+|                     +---- Break when presentation done ------------------------|
+|                     |                  | [36] Presentation Result              |
+|                     |                  |<--------------------------------------|
++================================================================================+
+|                     |                  |                                   
+|  Note: Assuming the happy path. In case of error, error responses are sent back accordingly.
+|                     |                  |                                    
+|                     | [37] code        |                                    
+|                     |<-----------------|                 
+|                     | [38] Token Request with code                          
+|                     |----------------->|                 
+|                     | [39] Tokens      |                                   
+|                     |<-----------------|
+|                     |                  |                    
+
+The verifier is displayed here as a separate instance, but can also be part of the IDP. In both cases, it is transparent to the client, as the client only talks to the IDP's Native Authorization Endpoint {#native-authorization-endpoint}
+
+1. / 2. User opens app and starts the flow. The client can already indicate, as part of the OAuth request, wallet use case + DC API support as well as SD/CD use case and native_cb_url If not, this can be negotiated by e.g., a Additional Information Required Response {#insufficient-information}
+3. IDP returns with error response (insufficient_authorization), indicating in the response body that digital credentials are required. If sufficient information is provided in step 2, the IDP can already respond with the presentation request. For example:
+
+    HTTP/1.1 403 Forbidden
+    Content-Type: application/json
+    Cache-Control: no-store
+
+    {
+      "error": "insufficient_authorization",
+      "auth_session": "ce6772f5e07bc8361572f",
+      "type": "digital_credentials_required",
+      "request": "openid4vp://?request_uri=..." // omitted if the IDP cannot yet return the presentation request
+    }
+
+4.-7. If the client supports the DC API, it indicates this to the IDP. The IDP then instructs the verifier to create a respective presentation request, which is returned through the IDP to the client. These steps can be ignored if step 3 already includes the presentation request. A request from client to IDP indicating DC API support (step 4) may look as follows:
+
+    POST /native-authorization HTTP/1.1
+    Host: server.example.com
+    Content-Type: application/json
+
+    {
+      "auth_session": "ce6772f5e07bc8361572f",
+      "dc_api": true
+    }
+
+The IDP's response in this case may look as follows:
+
+    HTTP/1.1 201 Created
+    Content-Type: application/json
+    Cache-Control: no-store
+
+    {
+      "auth_session": "ce6772f5e07bc8361572f",
+      "type": "digital_credentials_required",
+      "request": "openid4vp://?request_uri=..."
+    }
+
+
+8. Client invokes the DC API. Note that the presentation request is usually of the form openid4vp://?request_uri=... so the client has to fetch the actual request from request_uri and hand that to the DC API
+9.-10. Client receives the vp_token and hands it off to the IDP. The client's request (step 10) may look as follows:
+
+
+    POST /native-authorization HTTP/1.1
+    Host: server.example.com
+    Content-Type: application/json
+
+    {
+      "auth_session": "ce6772f5e07bc8361572f",
+      "vp_token": "....."
+    }
+
+11. The IDP asks the verifier to verify the presentation
+12. The IDP evaluates the verification result and returns either a code or an error as per Native Authorization Response {#native-response}. Here we assume the happy path. Continue with step 37
+
+13.-15. If DC API is NOT supported, the client prompts the user whether they want to use a wallet on the same or another device. The user chooses and the client indicates to IDP that DC API is unsupport, user choice and, for same device, with native_cb_url. These steps can be ignored if step 3 already includes the presentation request. A request from client to IDP indicating that DC API is unsupport (step 15) may look as follows:
+
+    POST /native-authorization HTTP/1.1
+    Host: server.example.com
+    Content-Type: application/json
+
+    {
+      "auth_session": "ce6772f5e07bc8361572f",
+      "dc_api": false, // false or missing indicates NO client support for DC API
+      "openid4vp_redirect_uri": "..." // indicates same device flow
+    }
+
+The IDP's response in this case may look as follows:
+
+    HTTP/1.1 201 Created
+    Content-Type: application/json
+    Cache-Control: no-store
+
+    {
+      "auth_session": "ce6772f5e07bc8361572f",
+      "type": "digital_credentials_required",
+      "request": "openid4vp://?request_uri=..."
+    }
+
+16.-18. In case of same device, the IDP requests a presentation request from the verifier, passing openid4vp_redirect_uri to be used in a later step. These steps can be ignored if step 3 already includes the presentation request.
+19. Client invokes Wallet through Deep Link (note that the presentation request is usually of the form openid4vp://?request_uri=...)
+20. Wallet presents credentials to verifier
+21. Verifier responds with redirect_uri it received from the IDP
+22. Wallet redirects back to the client using redirect_uri as a Deeplink
+23. Client extracts the handle from the received URL and hands it off to the IDP. Note that this handle is either generated by the verifier or handed to it in step 16 as part of openid4vp_redirect_uri.
+
+    POST /native-authorization HTTP/1.1
+    Host: server.example.com
+    Content-Type: application/json
+
+    {
+      "auth_session": "ce6772f5e07bc8361572f",
+      "presentation_id" : "87248924n2f"
+    }
+
+24.-25. The IDP uses the handle to look up the presentation and reteive the result. The IDP then evaluates the verification result and returns either a code or an error as per Native Authorization Response {#native-response}. Here we assume the happy path. Continue with step 37
+
+26.-28 In case of cross device, the IDP requests a presentation request from the verifier WITHOUT passing/referencing a redirect_uri and hands it over to the client. These steps can be ignored if step 3 already includes the presentation request.
+29. The client renders it as QR code and displays it to the user.
+30. The user scans the QR code with the wallet
+31. The wallet presents the credentials to the verifier
+32.-35. The client polls the IDP for the presentation status until it receives a non-pendig result. The IDP in turn polls the verifier before handing the result back to the client
+36. Once the presentation is done, the verifier returns the result to the IDP. The IDP then evaluates the verification result and returns either a code or an error as per Native Authorization Response {#native-response}, breaking the loop. Here we assume the happy path. Continue with step 37
+
+37.-39. The IDP returns an authorization code to the client, which redeems it for an access token
+
 # Design Goals
 
 This specification defines a new authorization flow the client can use to obtain an authorization grant. There are two primary reasons for designing the specification this way.
