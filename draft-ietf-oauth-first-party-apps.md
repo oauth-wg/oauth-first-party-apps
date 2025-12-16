@@ -1347,7 +1347,7 @@ The Authorization Server responds with an access token and refresh token.
 
 ## Usage with Digital Credentials {#digital-credentials}
 
-Digital credentials can be used to authenticate a user. This example flow shows how and the DC API can be incorporated into this spec.
+Digital credentials (stored in wallets) can be used to authenticate a user. This example flow shows how they can be incorporated into this spec using DC API/OpenId4VP.
 
 ~~~ ascii-art
 User            First Party Client        IdP              Wallet/DC API       Verifier
