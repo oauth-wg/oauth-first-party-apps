@@ -1451,18 +1451,18 @@ User            First Party Client        IdP              Wallet/DC API       V
 |                     |----------------->|
 |                     | (39) Tokens      |
 |                     |<-----------------|
-|                     |                  |                   
+|                     |                  |
 ~~~
 
 The verifier is displayed here as a separate instance, but can also be part of the IDP. In both cases, it is transparent to the client, as the client only talks to the IDP's Native Authorization Endpoint {{native-authorization-endpoint}}
 
-1. User opens app  
+1. User opens app
 2. The client can already indicate, as part of the Native Authorization Request {{native-auth-request}}, wallet use case + DC API support as well as SD/CD use case and a redirect URI intended for redirect from a wallet to the client in OPENID4VP same device flows (hereafter called openid4vp_redirect_uri) If not, this can be negotiated by e.g., a Additional Information Required Response {{insufficient-information}}. For example, a request using an OAuth request object which contains the mentioned indications may look as follows:
 
        POST /native-authorization HTTP/1.1
        Host: server.example.com
        Content-Type: application/x-www-form-urlencoded
-       
+
        request=....
        &client_id=bb16c14c73415
        &scope=...
@@ -1473,9 +1473,9 @@ The verifier is displayed here as a separate instance, but can also be part of t
          "client_id": "...",
          "aud": "...",
          "scope": "...",
-         "dc_api": false, 
+         "dc_api": false,
          "openid4vp_flow_type": "same_device",
-         "openid4vp_redirect_uri": "https://deeplink.example.client 
+         "openid4vp_redirect_uri": "https://deeplink.example.client
          // other claims
        }
 
@@ -1544,9 +1544,9 @@ The verifier is displayed here as a separate instance, but can also be part of t
 
         {
           "auth_session": "ce6772f5e07bc8361572f",
-          "dc_api": false, 
+          "dc_api": false,
           "device_flow_type": "same_device",
-          "openid4vp_redirect_uri": "..." 
+          "openid4vp_redirect_uri": "..."
         }
 
 16. In case of same device, the IDP requests a presentation request from the verifier. The IDP might generate a handle which is linked to the presentation reques. This handle will be handed to the client as a request parameter appended to openid4vp_redirect_uri, when the verifier responds to the wallet (step 21). Alternatively, the verifier generates such a handle and returns it together with the presentation request to the IDP. This step can be ignored if step 3 already includes the presentation request.
