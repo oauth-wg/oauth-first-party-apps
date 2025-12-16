@@ -47,6 +47,7 @@ normative:
   RFC8628:
   RFC8707:
   RFC9126:
+  RFC9396:
   RFC9449:
   RFC9470:
   I-D.ietf-oauth-cross-device-security:
@@ -1344,7 +1345,7 @@ The Authorization Server responds with an access token and refresh token.
       "refresh_token": "e090366ac1c448b8aed84cbc07"
     }
 
-## Usage with Digital Credentials
+## Usage with Digital Credentials {#digital-credentials}
 
 Digital credentials can be used to authenticate a user. This example flow shows how and the DC API can be incorporated into this spec.
 
@@ -1446,17 +1447,17 @@ User            First Party Client        IdP              Wallet/DC API       V
 |                     |                  |
 |                     | (37) code        |
 |                     |<-----------------|
-|                     | (38) Token Request with code
+|                     | (38) Token Request w/ code
 |                     |----------------->|
 |                     | (39) Tokens      |
 |                     |<-----------------|
 |                     |                  |                   
 ~~~
 
-The verifier is displayed here as a separate instance, but can also be part of the IDP. In both cases, it is transparent to the client, as the client only talks to the IDP's Native Authorization Endpoint {#native-authorization-endpoint}
+The verifier is displayed here as a separate instance, but can also be part of the IDP. In both cases, it is transparent to the client, as the client only talks to the IDP's Native Authorization Endpoint {{native-authorization-endpoint}}
 
 1. User opens app  
-2. The client can already indicate, as part of the Native Authorization Request {#native-auth-request}, wallet use case + DC API support as well as SD/CD use case and a redirect URI intended for redirect from a wallet to the client in OPENID4VP same device flows (hereafter called openid4vp_redirect_uri) If not, this can be negotiated by e.g., a Additional Information Required Response {#insufficient-information}. For example, a request using an OAuth request object which contains the mentioned indications may look as follows:
+2. The client can already indicate, as part of the Native Authorization Request {{native-auth-request}}, wallet use case + DC API support as well as SD/CD use case and a redirect URI intended for redirect from a wallet to the client in OPENID4VP same device flows (hereafter called openid4vp_redirect_uri) If not, this can be negotiated by e.g., a Additional Information Required Response {{insufficient-information}}. For example, a request using an OAuth request object which contains the mentioned indications may look as follows:
 
        POST /native-authorization HTTP/1.1
        Host: server.example.com
@@ -1532,7 +1533,7 @@ The verifier is displayed here as a separate instance, but can also be part of t
         }
 
 11. The IDP asks the verifier to verify the vp_token
-12. The IDP evaluates the verification result and returns either a code or an error as per Native Authorization Response {#native-response}. Here we assume the happy path. Continue with step 37
+12. The IDP evaluates the verification result and returns either a code or an error as per Native Authorization Response {{native-response}}. Here we assume the happy path. Continue with step 37
 13. If DC API is NOT supported, the client prompts the user whether they want to use a wallet on the same or another device. This step can be ignored if step 3 already includes the presentation request.
 14. The user chooses. This step can be ignored if step 3 already includes the presentation request.
 15. The client indicates to IDP that DC API is unsupported, the user's choice and, for same device, the openid4vp_redirect_uri. This step can be ignored if step 3 already includes the presentation request.
@@ -1578,7 +1579,7 @@ The verifier is displayed here as a separate instance, but can also be part of t
         }
 
 24. The IDP uses the handle it received from the client to look up the presentation and retrieve the result.
-25. The IDP evaluates the verification result and returns either a code or an error as per Native Authorization Response {#native-response}. Here we assume the happy path. Continue with step 37.
+25. The IDP evaluates the verification result and returns either a code or an error as per Native Authorization Response {{native-response}}. Here we assume the happy path. Continue with step 37.
 26. In case of cross device, the IDP requests a presentation request from the verifier WITHOUT passing/referencing an openid4vp_redirect_uri. This step can be ignored if step 3 already includes the presentation request.
 27. The verifier responds to the IDP with the presentation request. This step can be ignored if step 3 already includes the presentation request. This step can be ignored if step 3 already includes the presentation request.
 28. The IDP answers the client with the presentation request (see step 18 for an example response). This step can be ignored if step 3 already includes the presentation request.
@@ -1608,10 +1609,93 @@ The verifier is displayed here as a separate instance, but can also be part of t
           "status": "pending"
         }
 
-36. Once the presentation is done, the verifier returns the result to the IDP. The IDP then evaluates the verification result and returns either a code or an error as per Native Authorization Response {#native-response}, breaking the loop. Here we assume the happy path. Continue with step 37.
-37. The IDP returns an authorization code to the client as per Native Authorization Response {#native-response}.
-38. The client redeems the code for an access token as per Token Request {#token-request}.
-39. The IDP responds to the the token request as per as per Token Request {#token-request}.
+36. Once the presentation is done, the verifier returns the result to the IDP. The IDP then evaluates the verification result and returns either a code or an error as per Native Authorization Response {{native-response}}, breaking the loop. Here we assume the happy path. Continue with step 37.
+37. The IDP returns an authorization code to the client as per Native Authorization Response {{native-response}}.
+38. The client redeems the code for an access token as per Token Request {{token-request}}.
+39. The IDP responds to the token request as per as per Token Request {{token-request}}.
+
+### RAR & Transaction Data
+
+OpenId4VP supports transaction data, which is additional data that is signed and presented together with the requested credentials. This can be mapped to OAuth's RAR. The following diagram depicts a wallet flow incorporating RAR. Details of how the wallet is invoked or how the presentation result reaches the IDP are omitted for simplicity. Refer to Usage with Digital Credentials {{digital-credentials}} for details.
+
+~~~ ascii-art
+First Party Client        IdP              Wallet/DC API       Verifier
+------------------        ---              --------------       --------
+|                          |                    |                  |
+| (1) Native Authorization Request w/ RAR       |                  |
+|------------------------->|                    |                  |
+|                          | (2) Create Presentation request (OIDC4VP) w/ tx_data
+|                          |-------------------------------------->|
+|                          | (3) Presentation request (OIDC4VP)    |
+|                          |<--------------------------------------|
+| (4) Presentation request (OIDC4VP)            |                  |
+|<-------------------------|                    |                  |
+| (5) Presentation Request (OIDC4VP)            |                  |
+|---------------------------------------------->|                  |
+|                          |                    | (6) Presentation Response (vp_token)
+|                          |                    |----------------->|
+|                          | (7) Presentation Result               |
+|                          |<--------------------------------------|
+| (8) code                |
+|<-------------------------|
+| (9) Token Request w/ code
+|------------------------->|
+| (10) Token Response w/ RAR
+|<-------------------------|
+~~~
+
+1. The client initiates the OAtuh request, including RAR.
+2. The IDP processes that RAR from the request and creates a transaction data object from it. Details of the structure are out of scope of this specification. Depending on the use case, it is valid to map the RAR one-to-one or transform it. The IDP then sends a request including the transaction data to the verifier to create a presentation request.
+3. The verifier responds with the presentation request.
+4. The IDP answers the client with the presentation request.
+5. The client invokes the wallet. How exactly the wallet is invoked is omitted simplicity. See Usage with Digital Credentials {{digital-credentials}} for details.
+6. The wallet creates a vp_token including the requested transaction data and sends it to the verifier.
+7. The verifier verifies the vp_token and eventually the IDP learns about the result. How the IDP learns about the result is omitted for simplicity. See Usage with Digital Credentials {{digital-credentials}} for details. The IDP then evaluates the result, especially the transactino data.
+8. The IDP returns an authorization code to the client as per Native Authorization Response {{native-response}}.
+9. The client redeems the code for an access token as per Token Request {{token-request}}.
+10. The IDP responds to the token request as per as per Token Request {{token-request}}. It also includes the athorization_details
+
+        HTTP/1.1 200 OK
+        Content-Type: application/json
+        Cache-Control: no-store
+        
+        {
+          "access_token": "2YotnFZFEjr1zCsicMWpAA",
+          "token_type": "Bearer",
+          "expires_in": 3600,
+          "authorization_details": [
+            {
+              "type": "account_information",
+              "access": {
+                "accounts": [
+                  {
+                    "iban": "DE2310010010123456789"
+                  },
+                  {
+                    "maskedPan": "123456xxxxxx1234"
+                  }
+                ],
+                "balances": [
+                  {
+                    "iban": "DE2310010010123456789"
+                  }
+                ],
+                "transactions": [
+                  {
+                    "iban": "DE2310010010123456789"
+                  },
+                  {
+                    "maskedPan": "123456xxxxxx1234"
+                  }
+                ]
+              },
+              "recurringIndicator": true
+            }
+          ]
+        }
+
+    It's valid to also return a refresh token. In that case, when refreshing the access token, the client can send different authorization details. These would usually be a subset of the authorization details requested in the initial request (more on this in {{RFC9396}}). Due to the nature of those refresh-requests, no wallet would be invoked and as such no transaction data created.
+
 
 # Design Goals
 
