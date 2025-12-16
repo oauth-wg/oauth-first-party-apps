@@ -1368,7 +1368,7 @@ User            First Party Client        IdP              Wallet/DC API       V
 |                     | (4) DC API Capability Indication      |                  |
 |                     |----------------->|                    |                  |
 |                     |                  | (5) Create Presentation request (OIDC4VP)
-|                     |                  |-------------------------------------->| 
+|                     |                  |-------------------------------------->|
 |                     |                  | (6) Presentation request (OIDC4VP)    |
 |                     |                  |<--------------------------------------|
 |                     | (7) Presentation request (OIDC4VP)    |                  |
@@ -1376,7 +1376,7 @@ User            First Party Client        IdP              Wallet/DC API       V
 |                     | (8) Presentation Request (OID4VP)     |                  |
 |                     |-------------------------------------->|                  |
 |                     | (9) Presentation Response (vp_token)  |                  |
-|                     |<--------------------------------------|                  | 
+|                     |<--------------------------------------|                  |
 |                     | (10) vp_token                         |                  |
 |                     |----------------->|                    |                  |
 |                     |                  | (11) vp_token      |                  |
@@ -1418,7 +1418,7 @@ User            First Party Client        IdP              Wallet/DC API       V
 |                     |                  |                    |                  |
 |------- Cross device path ------------------------------------------------------|
 |                     |                  | (26) Create Presentation request (OIDC4VP)
-|                     |                  |-------------------------------------->| 
+|                     |                  |-------------------------------------->|
 |                     |                  | (27) Presentation request (OIDC4VP)   |
 |                     |                  |<--------------------------------------|
 |                     | (28) Presentation request (OIDC4VP)   |                  |
@@ -1486,7 +1486,7 @@ The verifier is displayed here as a separate instance, but can also be part of t
        HTTP/1.1 403 Forbidden
        Content-Type: application/json
        Cache-Control: no-store
-   
+
        {
          "error": "insufficient_authorization",
          "auth_session": "ce6772f5e07bc8361572f",
@@ -1499,7 +1499,7 @@ The verifier is displayed here as a separate instance, but can also be part of t
        POST /native-authorization HTTP/1.1
        Host: server.example.com
        Content-Type: application/json
-   
+
        {
          "auth_session": "ce6772f5e07bc8361572f",
          "dc_api": true
@@ -1508,17 +1508,17 @@ The verifier is displayed here as a separate instance, but can also be part of t
 5. The IDP then instructs the verifier to create a respective presentation request, which is returned through the IDP to the client. This step can be ignored if step 3 already includes the presentation request
 6. The verifier returns the presentation request to the IDP. This step can be ignored if step 3 already includes the presentation request
 7. The IDP answers the client with the presentation request. This step can be ignored if step 3 already includes the presentation request
-   
+
        HTTP/1.1 201 Created
        Content-Type: application/json
        Cache-Control: no-store
-   
+
        {
          "auth_session": "ce6772f5e07bc8361572f",
          "type": "digital_credentials_required",
          "request": "openid4vp://?request_uri=..."
        }
-   
+
 8. Client invokes the DC API. Note that the presentation request is usually of the form openid4vp://?request_uri=... so the client has to fetch the actual request from request_uri and hand that to the DC API
 9. The DC API returns the vp_token to the client
 10. Client sends vp_token to the IDP
@@ -1526,7 +1526,7 @@ The verifier is displayed here as a separate instance, but can also be part of t
         POST /native-authorization HTTP/1.1
         Host: server.example.com
         Content-Type: application/json
-     
+
         {
           "auth_session": "ce6772f5e07bc8361572f",
           "vp_token": "....."
@@ -1541,7 +1541,7 @@ The verifier is displayed here as a separate instance, but can also be part of t
         POST /native-authorization HTTP/1.1
         Host: server.example.com
         Content-Type: application/json
-    
+
         {
           "auth_session": "ce6772f5e07bc8361572f",
           "dc_api": false, 
@@ -1556,13 +1556,13 @@ The verifier is displayed here as a separate instance, but can also be part of t
         HTTP/1.1 201 Created
         Content-Type: application/json
         Cache-Control: no-store
-    
+
         {
           "auth_session": "ce6772f5e07bc8361572f",
           "type": "digital_credentials_required",
           "request": "openid4vp://?request_uri=..."
         }
-   
+
 19. Client invokes Wallet through Deep Link. Note that the presentation request is usually of the form openid4vp://?request_uri=...
 20. Wallet presents credentials to verifier.
 21. Verifier responds with a URL that tells the wallet to redirect. This is part of OpenId4VP. This redirect_uri is the openid4vp_redirect_uri mentioned in previous steps. The verifier either simply returns the openid4vp_redirect_uri it received earlier, or it appends the handle to it, which it has generated together with the presentation request. This behaviour depends on the verifier's implementation. Step 3 or step 16 describe this as well.
@@ -1572,7 +1572,7 @@ The verifier is displayed here as a separate instance, but can also be part of t
         POST /native-authorization HTTP/1.1
         Host: server.example.com
         Content-Type: application/json
-    
+
         {
           "auth_session": "ce6772f5e07bc8361572f",
           "presentation_id" : "87248924n2f"
@@ -1591,11 +1591,11 @@ The verifier is displayed here as a separate instance, but can also be part of t
         POST /native-authorization HTTP/1.1
         Host: server.example.com
         Content-Type: application/json
-    
+
         {
           "auth_session": "ce6772f5e07bc8361572f"
         }
-    
+
 33. The IDP in turn retreives the presentation status from the verifier.
 34. The verifier responds to the IDP that the presentation result is not yet ready.
 35. The IDP responds to the client that the presentation result is not yet ready.
@@ -1603,7 +1603,7 @@ The verifier is displayed here as a separate instance, but can also be part of t
         HTTP/1.1 200 OK
         Content-Type: application/json
         Cache-Control: no-store
-    
+
         {
           "auth_session": "ce6772f5e07bc8361572f",
           "status": "pending"
@@ -1653,12 +1653,12 @@ First Party Client        IdP              Wallet/DC API       Verifier
 7. The verifier verifies the vp_token and eventually the IDP learns about the result. How the IDP learns about the result is omitted for simplicity. See Usage with Digital Credentials {{digital-credentials}} for details. The IDP then evaluates the result, especially the transactino data.
 8. The IDP returns an authorization code to the client as per Native Authorization Response {{native-response}}.
 9. The client redeems the code for an access token as per Token Request {{token-request}}.
-10. The IDP responds to the token request as per as per Token Request {{token-request}}. It also includes the athorization_details
+10. The IDP responds to the token request as per as per Token Request {{token-request}}. It also includes the athorization_details.
 
         HTTP/1.1 200 OK
         Content-Type: application/json
         Cache-Control: no-store
-        
+
         {
           "access_token": "2YotnFZFEjr1zCsicMWpAA",
           "token_type": "Bearer",
