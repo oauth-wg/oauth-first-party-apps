@@ -1346,7 +1346,7 @@ The Authorization Server responds with an access token and refresh token.
 
 ## Usage with Digital Credentials
 
-Digital credentials can be used to authenticate a user. This example flow shows how  and the DC API can be incorporated into this spec.
+Digital credentials can be used to authenticate a user. This example flow shows how and the DC API can be incorporated into this spec.
 
 ~~~ ascii-art
 User            First Party Client        IdP              Wallet/DC API       Verifier
@@ -1455,10 +1455,35 @@ User            First Party Client        IdP              Wallet/DC API       V
 
 The verifier is displayed here as a separate instance, but can also be part of the IDP. In both cases, it is transparent to the client, as the client only talks to the IDP's Native Authorization Endpoint {#native-authorization-endpoint}
 
-1. / 2. User opens app and starts the flow. The client can already indicate, as part of the OAuth request, wallet use case + DC API support as well as SD/CD use case and native_cb_url If not, this can be negotiated by e.g., a Additional Information Required Response {#insufficient-information}
-3. IDP returns with error response (insufficient_authorization), indicating in the response body that digital credentials are required. If sufficient information is provided in step 2, the IDP can already respond with the presentation request.
+1. / 2. User opens app and starts the flow. The client can already indicate, as part of the Native Authorization Request {#native-auth-request}, wallet use case + DC API support as well as SD/CD use case and a redirect URI intended for redirect from a wallet to the client in OPENID4VP same device flows (hereafter called openid4vp_redirect_uri) If not, this can be negotiated by e.g., a Additional Information Required Response {#insufficient-information}.
+  
+For example, a request using an OAuth request object which contains the mentioned indications may look as follows:
+
+    POST /native-authorization HTTP/1.1
+    Host: server.example.com
+    Content-Type: application/x-www-form-urlencoded
+    
+    request=....
+    &client_id=bb16c14c73415
+    &scope=...
+
+Example request object:
+
+    {
+      "client_id": "...",
+      "aud": "...",
+      "scope": "...",
+      "dc_api": false, 
+      "openid4vp_flow_type": "same_device",
+      "openid4vp_redirect_uri": "https://deeplink.example.client 
+      // other claims
+    }
+
+Note that the client must know these indicators upfront or collect this information from the user before making the initial request.
+
+3. IDP returns with error response (insufficient_authorization), indicating in the response body that digital credentials are required. If sufficient information is provided in step 2, the IDP can already respond with the presentation request. In that case, the IDP would request a presentation request according to the provided information (dc_api=true/false, SD/CD). In case of dc_api=false and same device flow, the IDP might generate a handle which is linked to the presentation reques.This handle will be handed to the client as a request parameter appended to openid4vp_redirect_uri, when the verifier responds to the wallet. Alternatively, the verifier generates such a handle and returns it together with the presentation request to the IDP. See also step 22.
    
-For example:
+The IDP's response may look like this:
 
     HTTP/1.1 403 Forbidden
     Content-Type: application/json
@@ -1512,7 +1537,7 @@ The client's request (step 10) may look as follows:
 11. The IDP asks the verifier to verify the presentation
 12. The IDP evaluates the verification result and returns either a code or an error as per Native Authorization Response {#native-response}. Here we assume the happy path. Continue with step 37
 
-13.-15. If DC API is NOT supported, the client prompts the user whether they want to use a wallet on the same or another device. The user chooses and the client indicates to IDP that DC API is unsupport, user choice and, for same device, with native_cb_url. These steps can be ignored if step 3 already includes the presentation request. A request from client to IDP indicating that DC API is unsupport (step 15) may look as follows:
+13.-15. If DC API is NOT supported, the client prompts the user whether they want to use a wallet on the same or another device. The user chooses and the client indicates to IDP that DC API is unsupported, user choice and, for same device, with openid4vp_redirect_uri. These steps can be ignored if step 3 already includes the presentation request. A request from client to IDP indicating that DC API is unsupport (step 15) may look as follows:
 
     POST /native-authorization HTTP/1.1
     Host: server.example.com
@@ -1520,8 +1545,9 @@ The client's request (step 10) may look as follows:
 
     {
       "auth_session": "ce6772f5e07bc8361572f",
-      "dc_api": false, // false or missing indicates NO client support for DC API
-      "openid4vp_redirect_uri": "..." // indicates same device flow
+      "dc_api": false, 
+      "device_flow_type": "same_device",
+      "openid4vp_redirect_uri": "..." 
     }
 
 The IDP's response in this case may look as follows:
@@ -1536,7 +1562,7 @@ The IDP's response in this case may look as follows:
       "request": "openid4vp://?request_uri=..."
     }
 
-16.-18. In case of same device, the IDP requests a presentation request from the verifier, passing openid4vp_redirect_uri to be used in a later step. These steps can be ignored if step 3 already includes the presentation request.
+16.-18. In case of same device, the IDP requests a presentation request from the verifier. The IDP might generate a handle which is linked to the presentation reques.This handle will be handed to the client as a request parameter appended to openid4vp_redirect_uri, when the verifier responds to the wallet (step 22). Alternatively, the verifier generates such a handle and returns it together with the presentation request to the IDP. These steps can be ignored if step 3 already includes the presentation request.
 19. Client invokes Wallet through Deep Link (note that the presentation request is usually of the form openid4vp://?request_uri=...)
 20. Wallet presents credentials to verifier
 21. Verifier responds with redirect_uri it received from the IDP
@@ -1552,13 +1578,23 @@ The IDP's response in this case may look as follows:
       "presentation_id" : "87248924n2f"
     }
 
-24.-25. The IDP uses the handle to look up the presentation and reteive the result. The IDP then evaluates the verification result and returns either a code or an error as per Native Authorization Response {#native-response}. Here we assume the happy path. Continue with step 37
+24.-25. The IDP uses the handle to look up the presentation and retrieve the result. The IDP then evaluates the verification result and returns either a code or an error as per Native Authorization Response {#native-response}. Here we assume the happy path. Continue with step 37
 
-26.-28 In case of cross device, the IDP requests a presentation request from the verifier WITHOUT passing/referencing a redirect_uri and hands it over to the client. These steps can be ignored if step 3 already includes the presentation request.
+26.-28 In case of cross device, the IDP requests a presentation request from the verifier WITHOUT passing/referencing an openid4vp_redirect_uri and hands it over to the client. These steps can be ignored if step 3 already includes the presentation request.
 29. The client renders it as QR code and displays it to the user.
 30. The user scans the QR code with the wallet
 31. The wallet presents the credentials to the verifier
-32.-35. The client polls the IDP for the presentation status until it receives a non-pendig result. The IDP in turn polls the verifier before handing the result back to the client
+32.-35. The client polls the IDP for the presentation status until it receives a non-pending result. The IDP in turn polls the verifier before handing the result back to the client. A response from the IDP describing a pending presenentation status may look as follows:
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    Cache-Control: no-store
+
+    {
+      "auth_session": "ce6772f5e07bc8361572f",
+      "status": "pending"
+    }
+
 36. Once the presentation is done, the verifier returns the result to the IDP. The IDP then evaluates the verification result and returns either a code or an error as per Native Authorization Response {#native-response}, breaking the loop. Here we assume the happy path. Continue with step 37
 
 37.-39. The IDP returns an authorization code to the client, which redeems it for an access token
