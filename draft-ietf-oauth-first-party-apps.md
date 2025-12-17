@@ -1442,16 +1442,16 @@ The verifier is displayed here as a separate instance, but can also be part of t
     - Same device/cross device (only, if DC API is not supported)
     - a redirect URI intended for redirect from a wallet to the client in {{OpenID4VP}} same device flows (hereafter called openid4vp_redirect_uri)
 
-       POST /native-authorization HTTP/1.1
-       Host: server.example.com
-       Content-Type: application/x-www-form-urlencoded
+          POST /native-authorization HTTP/1.1
+          Host: server.example.com
+          Content-Type: application/x-www-form-urlencoded
 
-       &client_id=bb16c14c73415
-       &scope=profile
-       &dc_api=false
-       &login_hint=wallet
-       &openid4vp_flow_type=same_device
-       &openid4vp_redirect_uri=https%3A%2F%2Fdeeplink.example.client
+          &client_id=bb16c14c73415
+          &scope=profile
+          &dc_api=false
+          &login_hint=wallet
+          &openid4vp_flow_type=same_device
+          &openid4vp_redirect_uri=https%3A%2F%2Fdeeplink.example.client
 
    Note that the client must know these indicators upfront or collect this information from the user before making the initial request.
 
