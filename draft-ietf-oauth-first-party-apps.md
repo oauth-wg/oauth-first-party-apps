@@ -1433,7 +1433,7 @@ User            First Party Client        AS               Wallet/DC API        
 |                     |                  |
 ~~~
 
-The verifier is displayed here as a separate instance, but can also be part of the AS. In both cases, it is transparent to the client, as the client only talks to the AS's Native Authorization Endpoint ({{native-authorization-endpoint}}).
+The verifier is displayed here as a separate instance, but can also be part of the authorization server. In both cases, it is transparent to the client, as the client only talks to the authorization server's Native Authorization Endpoint ({{native-authorization-endpoint}}).
 
 1. User opens app
 2. The client indicates, as part of the Native Authorization Request ({{native-auth-request}}), the following:
@@ -1455,7 +1455,7 @@ The verifier is displayed here as a separate instance, but can also be part of t
 
    Note that the client may collect this information from the user before making the initial request, or provide what it knows initially and respond gradually to additional requests for information from the authorization server.
 
-3. AS returns with error response (insufficient_authorization), indicating in the response body that digital credential presentation is required. The authorization server's response may look like this:
+3. Authorization server returns with error response (insufficient_authorization), indicating in the response body that digital credential presentation is required. The authorization server's response may look like this:
 
        HTTP/1.1 400 Bad Request
        Content-Type: application/json
