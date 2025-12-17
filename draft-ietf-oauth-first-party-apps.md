@@ -1438,7 +1438,7 @@ The verifier is displayed here as a separate instance, but can also be part of t
 1. User opens app
 2. The client indicates, as part of the Native Authorization Request ({{native-auth-request}}), the following:
     - Login via digital credentials (wallet) desired
-    - DC API support 
+    - DC API support
     - Same device/cross device (only, if DC API is not supported)
     - a redirect URI intended for redirect from a wallet to the client in {{OpenID4VP}} same device flows (hereafter called openid4vp_redirect_uri)
 
@@ -1468,7 +1468,7 @@ The verifier is displayed here as a separate instance, but can also be part of t
          "request": "openid4vp://?request_uri=..." // omitted if the AS cannot yet return the presentation request
        }
 
-4. Client invokes the DC API. 
+4. Client invokes the DC API.
 5. The DC API returns the vp_token to the client
 6. Client sends vp_token to the AS
 
@@ -1485,9 +1485,9 @@ The verifier is displayed here as a separate instance, but can also be part of t
 8. The verifier verifies the vp_token and returns the result to the AS. The AS evaluates the verification result and returns either a code or an error as per {{native-response}}. Here we assume the happy path. Continue with step 24.
 9. If DC API is NOT supported and in case of same device flow, the client invokes the Wallet through Deep Link.
 10. Wallet presents credentials to verifier.
-11. Verifier responds with a URL that tells the wallet to redirect as per {{OpenID4VP}}. 
+11. Verifier responds with a URL that tells the wallet to redirect as per {{OpenID4VP}}.
 12. Wallet redirects back to the client by treating the received URL as a Deep Link.
-13. Client extracts the handle from the received URL and hands it off to the AS. 
+13. Client extracts the handle from the received URL and hands it off to the AS.
 
         POST /native-authorization HTTP/1.1
         Host: server.example.com
