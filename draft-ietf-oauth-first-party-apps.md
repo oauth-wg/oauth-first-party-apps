@@ -1357,7 +1357,7 @@ The Authorization Server responds with an access token and refresh token.
 
 ## Usage with Digital Credentials {#digital-credentials}
 
-Digital credentials (stored in wallets) can be used to authenticate a user. This example flow shows how they can be incorporated into this spec using DC API/{{OpenID4VP}}.
+Digital credentials (stored in wallets) may be used by authorization servers to authenticate a user or approve a transaction. This example flow shows how wallet credential presentation can be incorporated into this spec using DC API/{{OpenID4VP}}.
 
 ~~~ ascii-art
 User            First Party Client        AS               Wallet/DC API        Verifier
@@ -1453,11 +1453,11 @@ The verifier is displayed here as a separate instance, but can also be part of t
           &openid4vp_flow_type=same_device
           &openid4vp_redirect_uri=https%3A%2F%2Fdeeplink.example.client
 
-   Note that the client must know these indicators upfront or collect this information from the user before making the initial request.
+   Note that the client may collect this information from the user before making the initial request, or provide what it knows initially and respond gradually to additional requests for information from the authorization server.
 
-3. AS returns with error response (insufficient_authorization), indicating in the response body that digital credentials are required. The AS's response may look like this:
+3. AS returns with error response (insufficient_authorization), indicating in the response body that digital credential presentation is required. The authorization server's response may look like this:
 
-       HTTP/1.1 403 Forbidden
+       HTTP/1.1 400 Bad Request
        Content-Type: application/json
        Cache-Control: no-store
 
@@ -1465,12 +1465,12 @@ The verifier is displayed here as a separate instance, but can also be part of t
          "error": "insufficient_authorization",
          "auth_session": "ce6772f5e07bc8361572f",
          "type": "digital_credentials_required",
-         "request": "openid4vp://?request_uri=..." // omitted if the AS cannot yet return the presentation request
+         "request": "openid4vp://?request_uri=..." // omitted if the authorization server cannot yet return the presentation request
        }
 
 4. Client invokes the DC API.
 5. The DC API returns the vp_token to the client
-6. Client sends vp_token to the AS
+6. Client sends vp_token to the authorization server
 
         POST /native-authorization HTTP/1.1
         Host: server.example.com
@@ -1481,13 +1481,13 @@ The verifier is displayed here as a separate instance, but can also be part of t
           "vp_token": "....."
         }
 
-7. The AS asks the verifier to verify the vp_token
-8. The verifier verifies the vp_token and returns the result to the AS. The AS evaluates the verification result and returns either a code or an error as per {{native-response}}. Here we assume the happy path. Continue with step 24.
+7. The authorization server asks the verifier to verify the vp_token
+8. The verifier verifies the vp_token and returns the result. The authorization server evaluates the verification result and returns either a code or an error as per {{native-response}}. Here we assume the happy path. Continue with step 24.
 9. If DC API is NOT supported and in case of same device flow, the client invokes the Wallet through Deep Link.
 10. Wallet presents credentials to verifier.
-11. Verifier responds with a URL that tells the wallet to redirect as per {{OpenID4VP}}.
-12. Wallet redirects back to the client by treating the received URL as a Deep Link.
-13. Client extracts the handle from the received URL and hands it off to the AS.
+11. Verifier responds with a URL instructing wallet to redirect as per {{OpenID4VP}}.
+12. Wallet redirects back to the client using the received URL as a Deep Link.
+13. Client extracts the handle from the received URL and provides it to the authorization server.
 
         POST /native-authorization HTTP/1.1
         Host: server.example.com
@@ -1498,12 +1498,12 @@ The verifier is displayed here as a separate instance, but can also be part of t
           "presentation_id" : "87248924n2f"
         }
 
-14. The AS uses the handle to look up the presentation and retrieve the result.
-15. The verifier responds with the presentation result which the AS evaluates. The AS then returns either a code or an error as per {{native-response}}. Here we assume the happy path. Continue with step 24.
+14. The authorization server uses the handle at verifier to look retrieve the presentation result.
+15. The verifier responds with the presentation result which the authorization server evaluates, then returns either a code or an error as per {{native-response}}. Here we assume the happy path. Continue with step 24.
 16. If DC API is NOT supported and in case of cross device, the client renders the presentation request as QR code and displays it to the user.
 17. The user scans the QR code with the wallet.
 18. The wallet presents the credentials to the verifier.
-19. While displaying the QR code, the client polls the AS for the presentation status until it receives a non-pending result.
+19. Meanwhile, client polls the authorization server for the presentation status until it receives a non-pending result.
 
         POST /native-authorization HTTP/1.1
         Host: server.example.com
@@ -1513,27 +1513,28 @@ The verifier is displayed here as a separate instance, but can also be part of t
           "auth_session": "ce6772f5e07bc8361572f"
         }
 
-20. The AS in turn retreives the presentation status from the verifier.
-21. The verifier responds to the AS that the presentation result is not yet ready.
-22. The AS responds to the client that the presentation result is not yet ready.
+20. The authorization server in turn retreives the presentation status from the verifier.
+21. The verifier responds to the authorization server that the presentation result is not yet ready.
+22. The authorization server responds to the client that the presentation result is not yet ready.
 
-        HTTP/1.1 200 OK
+        HTTP/1.1 400 Bad Request
         Content-Type: application/json
         Cache-Control: no-store
 
         {
-          "auth_session": "ce6772f5e07bc8361572f",
-          "status": "pending"
+          "error": "insufficient_authorization",
+          "status": "pending",
+          "auth_session": "ce6772f5e07bc8361572f"
         }
 
-23. Once the presentation is done, the verifier returns the result to the AS. The AS then evaluates the verification result and returns either a code or an error as per {{native-response}}, breaking the loop. Here we assume the happy path. Continue with step 24.
-24. The AS returns an authorization code to the client as per {{native-response}}.
+23. Once the presentation is done, the verifier returns the result to the authorization server, which then evaluates the verification result and returns either a code or an error as per {{native-response}}, breaking the loop. Here we assume the happy path. Continue with step 24.
+24. The authorization server returns an authorization code to the client as per {{native-response}}.
 25. The client redeems the code for an access token as per {{token-request}}.
-26. The AS responds to the token request as per {{token-request}}.
+26. The authorization server responds to the token request as per {{token-request}}.
 
 ### RAR & Transaction Data
 
-{{OpenID4VP}} supports transaction data, which is additional data that is signed and presented together with the requested credentials. This can be mapped to OAuth's RAR. The following diagram depicts a wallet flow incorporating RAR. Details of how the wallet is invoked or how the presentation result reaches the AS are omitted for simplicity. Refer to {{digital-credentials}} for details.
+{{OpenID4VP}} supports transaction data, which is additional data to be signed and presented alongside the requested credentials. This can be mapped to RAR {{RFC9396}}. The following diagram depicts a wallet flow incorporating RAR. Details of how the wallet is invoked or how the presentation result reaches the authorization server are omitted for simplicity. Refer to {{digital-credentials}} for details.
 
 ~~~ ascii-art
 First Party Client        AS              Wallet/DC API       Verifier
@@ -1562,15 +1563,15 @@ First Party Client        AS              Wallet/DC API       Verifier
 ~~~
 
 1. The client initiates the OAuth request, including RAR.
-2. The AS processes that RAR from the request and creates a transaction data object from it. Details of the structure are out of scope of this specification. Depending on the use case, it is valid to map the RAR one-to-one or transform it. The AS then sends a request including the transaction data to the verifier to create a presentation request.
+2. The authorization server processes that RAR from the request and creates a transaction data object from it. The authorization server then sends a request including the transaction data to the verifier to create a presentation request.
 3. The verifier responds with the presentation request.
-4. The AS answers the client with the presentation request.
+4. The authorization server responds to client with the presentation request.
 5. The client invokes the wallet. How exactly the wallet is invoked is omitted for simplicity. See Usage with Digital Credentials {{digital-credentials}} for details.
 6. The wallet creates a vp_token including the requested transaction data and sends it to the verifier.
-7. The verifier verifies the vp_token and eventually the AS learns about the result. How the AS learns about the result is omitted for simplicity. See Usage with Digital Credentials {{digital-credentials}} for details. The AS then evaluates the result, especially the transactiono data.
-8. The AS returns an authorization code to the client as per {{native-response}}.
+7. The verifier verifies the vp_token and eventually the authorization server learns about the result. How the authorization server learns about the result is omitted for simplicity. See Usage with Digital Credentials {{digital-credentials}} for details. The authorization server then evaluates the result, especially the transaction data.
+8. The authorization server returns an authorization code to the client as per {{native-response}}.
 9. The client redeems the code for an access token as per {{token-request}}.
-10. The AS responds to the token request as per {{token-request}}. It also includes the authorization_details.
+10. The authorization server responds to the token request as per {{token-request}}. It also includes the authorization_details.
 
         HTTP/1.1 200 OK
         Content-Type: application/json
