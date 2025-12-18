@@ -47,6 +47,7 @@ normative:
   RFC8628:
   RFC8707:
   RFC9126:
+  RFC9396:
   RFC9449:
   RFC9470:
   I-D.ietf-oauth-cross-device-security:
@@ -77,6 +78,16 @@ normative:
       - ins: J. Bradley
       - ins: G. De Marco
       - ins: V. Dzhuvinov
+  OpenID4VP:
+    title: OpenID for Verifiable Presentations 1.0
+    target: https://openid.net/specs/openid-4-verifiable-presentations-1_0.html
+    date: July 9, 2025
+    author:
+      - ins: O. Terbu
+      - ins: T. Lodderstedt
+      - ins: K. Yasuda
+      - ins: D. Fett
+      - ins: J. Heenan
   IANA.oauth-parameters:
   IANA.JWT:
   USASCII:
@@ -1343,6 +1354,263 @@ The Authorization Server responds with an access token and refresh token.
       "access_token": "d41c0692f1187fd9b326c63d",
       "refresh_token": "e090366ac1c448b8aed84cbc07"
     }
+
+## Usage with Digital Credentials {#digital-credentials}
+
+Digital credentials (stored in wallets) may be used by authorization servers to authenticate a user or approve a transaction. This example flow shows how wallet credential presentation can be incorporated into this spec using DC API/{{OpenID4VP}}.
+
+~~~ ascii-art
+User            First Party Client        AS               Wallet/DC API        Verifier
+----            ------------------        ---              --------------       --------
+|                     |                  |                    |                  |
+|                     |                  |                    |                  |
+| (1) Start Flow      |                  |                    |                  |
+|-------------------->|                  |                    |                  |
+|                     | (2) Native Authorization Request      |                  |
+|                     |----------------->|                    |                  |
+|                     | (3) Authorization Error Response      |                  |
+|                     |   (insufficient_authorization,        |                  |
+|                     |     dc_credential_required)           |                  |
+|                     |<-----------------|                    |                  |
+|                     |                  |                    |                  |
++===================== DC API branch ============================================+
+|                     | (4) Presentation Request (OID4VP)     |                  |
+|                     |-------------------------------------->|                  |
+|                     | (5) Presentation Response (vp_token)  |                  |
+|                     |<--------------------------------------|                  |
+|                     | (6) vp_token                          |                  |
+|                     |----------------->|                    |                  |
+|                     |                  | (7) vp_token       |                  |
+|                     |                  |-------------------------------------->|
+|                     |                  | (8) Verification Result               |
+|                     |                  |<--------------------------------------|
++================================================================================+
++=================== No DC API branch ===========================================+
+|------- Same device path -------------------------------------------------------|
+|                     | (9) Invoke Wallet via Deeplink        |                  |
+|                     |-------------------------------------->|                  |
+|                     |                  |                    | (10) Presentation Response (vp_token)
+|                     |                  |                    |----------------->|
+|                     |                  | (11) redirect_uri_client?handle       |
+|                     |                  |<--------------------------------------|
+|                     | (12) Redirect to client w/ openid4vp_redirect_uri?handle=123
+|                     |<--------------------------------------|                  |
+|                     | (13) Handle                           |                  |
+|                     |----------------->|                    |                  |
+|                     |                  | (14) Get Presentation Result          |
+|                     |                  |-------------------------------------->|
+|                     |                  | (15) Presentation Result              |
+|                     |                  |<--------------------------------------|
+|------- Cross device path ------------------------------------------------------|
+| (16) Display QR Code|                  |                    |                  |
+|<--------------------|                  |                    |                  |
+| (17) Scan QR Code   |                  |                    |                  |
+|----------------------------------------------------------->>|                  |
+|                     |                  |                    | (18) Presentation Response (vp_token)
+|                     |                  |                    |----------------->|
+|                     +---- Loop ------------------------------------------------+
+|                     | (19) Poll for authorization response                     |
+|                     |----------------->|                                       |
+|                     |                  | (20) Get Presentation Result          |
+|                     |                  |<------------------------------------->|
+|                     |                  | (21) Pending                          |
+|                     |                  |<--------------------------------------|
+|                     | (22) Pending     |                                       |
+|                     |<-----------------|                                       |
+|                     +---- Break when presentation done ------------------------|
+|                     |                  | (23) Presentation Result              |
+|                     |                  |<--------------------------------------|
++================================================================================+
+|                     |                  |
+|  Note: Assuming the happy path. In case of error, error responses are sent back accordingly.
+|                     |                  |
+|                     | (24) Code        |
+|                     |<-----------------|
+|                     | (25) Token Request w/ code
+|                     |----------------->|
+|                     | (26) Tokens      |
+|                     |<-----------------|
+|                     |                  |
+~~~
+
+The verifier is displayed here as a separate instance, but can also be part of the authorization server. In both cases, it is transparent to the client, as the client only talks to the authorization server's Native Authorization Endpoint ({{native-authorization-endpoint}}).
+
+1. User opens app
+2. The client indicates, as part of the Native Authorization Request ({{native-auth-request}}), the following:
+    - Login via digital credentials (wallet) desired
+    - DC API support
+    - Same device/cross device (only, if DC API is not supported)
+    - a redirect URI intended for redirect from a wallet to the client in {{OpenID4VP}} same device flows (hereafter called openid4vp_redirect_uri)
+
+          POST /native-authorization HTTP/1.1
+          Host: server.example.com
+          Content-Type: application/x-www-form-urlencoded
+
+          &client_id=bb16c14c73415
+          &scope=profile
+          &dc_api=false
+          &login_hint=wallet
+          &openid4vp_flow_type=same_device
+          &openid4vp_redirect_uri=https%3A%2F%2Fdeeplink.example.client
+
+   Note that the client may collect this information from the user before making the initial request, or provide what it knows initially and respond gradually to additional requests for information from the authorization server.
+
+3. Authorization server returns with error response (insufficient_authorization), indicating in the response body that digital credential presentation is required. The authorization server's response may look like this:
+
+       HTTP/1.1 400 Bad Request
+       Content-Type: application/json
+       Cache-Control: no-store
+
+       {
+         "error": "insufficient_authorization",
+         "auth_session": "ce6772f5e07bc8361572f",
+         "type": "digital_credentials_required",
+         "request": "openid4vp://?request_uri=..." // omitted if the authorization server cannot yet return the presentation request
+       }
+
+4. Client invokes the DC API.
+5. The DC API returns the vp_token to the client
+6. Client sends vp_token to the authorization server
+
+        POST /native-authorization HTTP/1.1
+        Host: server.example.com
+        Content-Type: application/json
+
+        {
+          "auth_session": "ce6772f5e07bc8361572f",
+          "vp_token": "....."
+        }
+
+7. The authorization server asks the verifier to verify the vp_token
+8. The verifier verifies the vp_token and returns the result. The authorization server evaluates the verification result and returns either a code or an error as per {{native-response}}. Here we assume the happy path. Continue with step 24.
+9. If DC API is NOT supported and in case of same device flow, the client invokes the Wallet through Deep Link.
+10. Wallet presents credentials to verifier.
+11. Verifier responds with a URL instructing wallet to redirect as per {{OpenID4VP}}.
+12. Wallet redirects back to the client using the received URL as a Deep Link.
+13. Client extracts the handle from the received URL and provides it to the authorization server.
+
+        POST /native-authorization HTTP/1.1
+        Host: server.example.com
+        Content-Type: application/json
+
+        {
+          "auth_session": "ce6772f5e07bc8361572f",
+          "presentation_id" : "87248924n2f"
+        }
+
+14. The authorization server uses the handle at verifier to look retrieve the presentation result.
+15. The verifier responds with the presentation result which the authorization server evaluates, then returns either a code or an error as per {{native-response}}. Here we assume the happy path. Continue with step 24.
+16. If DC API is NOT supported and in case of cross device, the client renders the presentation request as QR code and displays it to the user.
+17. The user scans the QR code with the wallet.
+18. The wallet presents the credentials to the verifier.
+19. Meanwhile, client polls the authorization server for the presentation status until it receives a non-pending result.
+
+        POST /native-authorization HTTP/1.1
+        Host: server.example.com
+        Content-Type: application/json
+
+        {
+          "auth_session": "ce6772f5e07bc8361572f"
+        }
+
+20. The authorization server in turn retreives the presentation status from the verifier.
+21. The verifier responds to the authorization server that the presentation result is not yet ready.
+22. The authorization server responds to the client that the presentation result is not yet ready.
+
+        HTTP/1.1 400 Bad Request
+        Content-Type: application/json
+        Cache-Control: no-store
+
+        {
+          "error": "insufficient_authorization",
+          "status": "pending",
+          "auth_session": "ce6772f5e07bc8361572f"
+        }
+
+23. Once the presentation is done, the verifier returns the result to the authorization server, which then evaluates the verification result and returns either a code or an error as per {{native-response}}, breaking the loop. Here we assume the happy path. Continue with step 24.
+24. The authorization server returns an authorization code to the client as per {{native-response}}.
+25. The client redeems the code for an access token as per {{token-request}}.
+26. The authorization server responds to the token request as per {{token-request}}.
+
+### RAR & Transaction Data
+
+{{OpenID4VP}} supports transaction data, which is additional data to be signed and presented alongside the requested credentials. This can be mapped to RAR {{RFC9396}}. The following diagram depicts a wallet flow incorporating RAR. Details of how the wallet is invoked or how the presentation result reaches the authorization server are omitted for simplicity. Refer to {{digital-credentials}} for details.
+
+~~~ ascii-art
+First Party Client        AS              Wallet/DC API       Verifier
+------------------        ---              --------------       --------
+|                          |                    |                  |
+| (1) Native Authorization Request w/ RAR       |                  |
+|------------------------->|                    |                  |
+|                          | (2) Create Presentation request (OIDC4VP) w/ tx_data
+|                          |-------------------------------------->|
+|                          | (3) Presentation request (OIDC4VP)    |
+|                          |<--------------------------------------|
+| (4) Presentation request (OIDC4VP)            |                  |
+|<-------------------------|                    |                  |
+| (5) Presentation Request (OIDC4VP)            |                  |
+|---------------------------------------------->|                  |
+|                          |                    | (6) Presentation Response (vp_token)
+|                          |                    |----------------->|
+|                          | (7) Presentation Result               |
+|                          |<--------------------------------------|
+| (8) code                |
+|<-------------------------|
+| (9) Token Request w/ code
+|------------------------->|
+| (10) Token Response w/ RAR
+|<-------------------------|
+~~~
+
+1. The client initiates the OAuth request, including RAR.
+2. The authorization server processes that RAR from the request and creates a transaction data object from it. The authorization server then sends a request including the transaction data to the verifier to create a presentation request.
+3. The verifier responds with the presentation request.
+4. The authorization server responds to client with the presentation request.
+5. The client invokes the wallet. How exactly the wallet is invoked is omitted for simplicity. See Usage with Digital Credentials {{digital-credentials}} for details.
+6. The wallet creates a vp_token including the requested transaction data and sends it to the verifier.
+7. The verifier verifies the vp_token and eventually the authorization server learns about the result. How the authorization server learns about the result is omitted for simplicity. See Usage with Digital Credentials {{digital-credentials}} for details. The authorization server then evaluates the result, especially the transaction data.
+8. The authorization server returns an authorization code to the client as per {{native-response}}.
+9. The client redeems the code for an access token as per {{token-request}}.
+10. The authorization server responds to the token request as per {{token-request}}. It also includes the authorization_details.
+
+        HTTP/1.1 200 OK
+        Content-Type: application/json
+        Cache-Control: no-store
+
+        {
+          "access_token": "2YotnFZFEjr1zCsicMWpAA",
+          "token_type": "Bearer",
+          "expires_in": 3600,
+          "authorization_details": [
+            {
+              "type": "account_information",
+              "access": {
+                "accounts": [
+                  {
+                    "iban": "DE2310010010123456789"
+                  },
+                  {
+                    "maskedPan": "123456xxxxxx1234"
+                  }
+                ],
+                "balances": [
+                  {
+                    "iban": "DE2310010010123456789"
+                  }
+                ],
+                "transactions": [
+                  {
+                    "iban": "DE2310010010123456789"
+                  },
+                  {
+                    "maskedPan": "123456xxxxxx1234"
+                  }
+                ]
+              },
+              "recurringIndicator": true
+            }
+          ]
+        }
 
 # Design Goals
 
