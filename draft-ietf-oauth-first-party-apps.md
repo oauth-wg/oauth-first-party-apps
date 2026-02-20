@@ -204,12 +204,12 @@ There are three primary ways this specification extends various parts of an OAut
 ~~~
 Figure: First-Party Client Authorization Code Request
 
-- (A) The first-party client starts the flow, by presenting the user with a "sign in" button, or collecting information from the user, such as their email address or username.
-- (B) The client initiates the authorization request by making a POST request to the Authorization Challenge Endpoint, optionally with information collected from the user (e.g. email or username)
-- (C) The authorization server determines whether the information provided to the Authorization Challenge Endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error. In this example, it determines that additional information is needed and responds with an error. The error may contain additional information to guide the Client on what information to collect next. This pattern of collecting information, submitting it to the Authorization Challenge Endpoint and then receiving an error or authorization code may repeat several times.
+- (A) The first-party client starts the flow, by presenting the user with a "sign in" button, or collecting information from the user, such as their email address or username (see {{authorization-initiation}}.
+- (B) The client initiates the authorization request by making a POST request to the Authorization Challenge Endpoint (see {{challenge-request}}, optionally with information collected from the user (e.g. email or username)
+- (C) The authorization server determines whether the information provided to the Authorization Challenge Endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error (see {{challenge-response}}). In this example, it determines that additional information is needed and responds with an error. The error may contain additional information to guide the Client on what information to collect next. This pattern of collecting information, submitting it to the Authorization Challenge Endpoint and then receiving an error or authorization code may repeat several times.
 - (D) The client gathers additional information (e.g. signed passkey challenge, or one-time code from email) and makes a POST request to the Authorization Challenge Endpoint.
 - (E) The Authorization Challenge Endpoint returns an authorization code.
-- (F) The client sends the authorization code received in step (E) to obtain a token from the Token Endpoint.
+- (F) The client sends the authorization code received in step (E) to obtain a token from the Token Endpoint (see {{token-request}}).
 - (G) The Authorization Server returns an Access Token from the Token Endpoint.
 
 ## Refresh Token Request
@@ -451,7 +451,7 @@ The client then uses the `request_uri` value to build an authorization request
 as defined in {{RFC9126}} Section 4.
 
 
-## Intermediate Requests
+## Intermediate Requests {#intermediate_requests}
 
 If the authorization server returns an `insufficient_authorization` error as described
 above, this is an indication that there is further information the client
