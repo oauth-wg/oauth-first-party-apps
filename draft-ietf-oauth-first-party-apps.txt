@@ -5,10 +5,10 @@
 Web Authorization Protocol                                    A. Parecki
 Internet-Draft                                                      Okta
 Intended status: Standards Track                             G. Fletcher
-Expires: 23 April 2026                             Capital One Financial
+Expires: 24 August 2026                            Capital One Financial
                                                             P. Kasselman
                                                         Defakto Security
-                                                         20 October 2025
+                                                        20 February 2026
 
 
                  OAuth 2.0 for First-Party Applications
@@ -57,11 +57,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 April 2026.
+   This Internet-Draft will expire on 24 August 2026.
 
 Copyright Notice
 
-   Copyright (c) 2025 IETF Trust and the persons identified as the
+   Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -143,10 +143,9 @@ Table of Contents
 1.  Introduction
 
    This document, OAuth for First-Party Apps (FiPA), extends the OAuth
-   2.0 Authorization Framework [RFC6749] with a new endpoint,
-   authorization_challenge_endpoint, to support first-party applications
-   that want to control the process of obtaining authorization from the
-   user using a native experience.
+   2.0 Authorization Framework [RFC6749] with a new endpoint to support
+   first-party applications that want to control the process of
+   obtaining authorization from the user using a native experience.
 
    The client collects any initial information from the user and POSTs
    that information as well as information about the client's request to
@@ -1043,9 +1042,9 @@ Table of Contents
    [I-D.ietf-oauth-cross-device-security]
               Kasselman, P., Fett, D., and F. Skokan, "Cross-Device
               Flows: Security Best Current Practice", Work in Progress,
-              Internet-Draft, draft-ietf-oauth-cross-device-security-12,
-              5 September 2025, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-oauth-cross-device-security-12>.
+              Internet-Draft, draft-ietf-oauth-cross-device-security-15,
+              23 January 2026, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-oauth-cross-device-security-15>.
 
    [IANA.JWT] "*** BROKEN REFERENCE ***".
 
@@ -1152,9 +1151,9 @@ Table of Contents
    [I-D.ietf-oauth-browser-based-apps]
               Parecki, A., De Ryck, P., and D. Waite, "OAuth 2.0 for
               Browser-Based Applications", Work in Progress, Internet-
-              Draft, draft-ietf-oauth-browser-based-apps-25, 3 July
+              Draft, draft-ietf-oauth-browser-based-apps-26, 3 December
               2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              oauth-browser-based-apps-25>.
+              oauth-browser-based-apps-26>.
 
    [RFC6750]  Jones, M. and D. Hardt, "The OAuth 2.0 Authorization
               Framework: Bearer Token Usage", RFC 6750,
