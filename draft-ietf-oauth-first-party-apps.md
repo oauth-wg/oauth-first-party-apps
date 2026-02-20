@@ -102,7 +102,7 @@ applications, only delegating to the browser in unexpected, high risk, or error 
 
 This document, OAuth for First-Party Apps (FiPA),
 extends the OAuth 2.0 Authorization Framework {{RFC6749}} with
-a new endpoint, `authorization_challenge_endpoint`, to support first-party
+a new endpoint to support first-party
 applications that want to control the process of obtaining authorization from
 the user using a native experience.
 
