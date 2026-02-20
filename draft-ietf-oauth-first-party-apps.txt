@@ -411,7 +411,11 @@ Table of Contents
    information.  The authorization challenge endpoint is a new endpoint
    to collect this login hint and direct the client with the next steps,
    whether that is to do an MFA flow, or perform an OAuth redirect-based
-   flow.
+   flow.  If the authorization server directs the client to complete the
+   flow using a redirect-based authorization request in a browser, the
+   client and authorization server SHOULD follow applicable best current
+   practices for native apps (e.g., RFC 8252 and its successors) for
+   redirect URI selection and external user-agent usage.
 
    In order to preserve the security of this specification, the
    Authorization Server MUST verify the "first-partyness" of the client
