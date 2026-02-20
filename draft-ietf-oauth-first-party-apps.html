@@ -1437,8 +1437,7 @@ concerns with a redirect-based approach, such as for native mobile or desktop ap
 <a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-limitations-of-this-specifi" class="section-name selfRef">Limitations of this specification</a>
         </h3>
 <p id="section-1.2-1">The scope of this specification is limited to first-party applications. Please review the entirety of <a href="#security-considerations" class="auto internal xref">Section 9</a>, and when more than one first-party application is supported, <a href="#multiple-applications" class="auto internal xref">Section 9.7</a>.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
-<p id="section-1.2-2">While this draft provides the framework for a native OAuth experience, each implementation
-will need to define the specific behavior that it expects from OAuth clients interacting with the authorization server. While this lack of clearly defining the details would typically lead to less interoperability, it is acceptable in this case since we intend this specification to be deployed in a tightly coupled environment since it is only applicable to first-party applications.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
+<p id="section-1.2-2">This draft defines the overall framework for delivering a native OAuth user authentication experience. The precise client–server interactions used to authenticate the user (e.g., prompts, challenges, and step sequencing) are intentionally left to individual deployments and are out of scope for this specification. Future profiles may standardize specific interaction patterns.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="user-experience-considerations">
