@@ -1848,13 +1848,11 @@ to use it to initiate an authorization request as described in <span><a href="ht
 <p id="section-5.2.2.1-3">If no <code>request_uri</code> is returned, the client is expected to initiate a new OAuth
 Authorization Code flow with PKCE according to <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> and <span>[<a href="#RFC7636" class="cite xref">RFC7636</a>]</span>.<a href="#section-5.2.2.1-3" class="pilcrow">¶</a></p>
 <p id="section-5.2.2.1-4">If the client expects the frequency of this error response to be high,
-the client <span class="bcp14">MAY</span> include a PKCE <span>[<a href="#RFC7636" class="cite xref">RFC7636</a>]</span> <code>code_challenge</code> in the initial authorization
-challenge request. This enables the authorization server to essentially treat
-the authorization challenge request as a PAR <span>[<a href="#RFC9126" class="cite xref">RFC9126</a>]</span> request, and
-return the <code>request_uri</code> and <code>expires_in</code> as defined by <span>[<a href="#RFC9126" class="cite xref">RFC9126</a>]</span> in the error response.<a href="#section-5.2.2.1-4" class="pilcrow">¶</a></p>
+the client <span class="bcp14">SHOULD</span> include a PKCE <span>[<a href="#RFC7636" class="cite xref">RFC7636</a>]</span> <code>code_challenge</code> in the initial authorization
+challenge request.<a href="#section-5.2.2.1-4" class="pilcrow">¶</a></p>
 <p id="section-5.2.2.1-5">If the client does not include a PKCE <code>code_challenge</code> in the initial authorization
-challenge request, the authorization server <span class="bcp14">SHOULD NOT</span> return a <code>request_uri</code> in the
-<code>redirect_to_web</code> error response.<a href="#section-5.2.2.1-5" class="pilcrow">¶</a></p>
+challenge request, the authorization server <span class="bcp14">MUST NOT</span> return a <code>request_uri</code> in the
+<code>redirect_to_web</code> error response, as that would effectively be the same as a PAR request without PKCE.<a href="#section-5.2.2.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
