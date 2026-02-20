@@ -141,8 +141,7 @@ If you provide multiple apps and expect users to use multiple apps on the same d
 
 The scope of this specification is limited to first-party applications. Please review the entirety of {{security-considerations}}, and when more than one first-party application is supported, {{multiple-applications}}.
 
-While this draft provides the framework for a native OAuth experience, each implementation
-will need to define the specific behavior that it expects from OAuth clients interacting with the authorization server. While this lack of clearly defining the details would typically lead to less interoperability, it is acceptable in this case since we intend this specification to be deployed in a tightly coupled environment since it is only applicable to first-party applications.
+This draft defines the overall framework for delivering a native OAuth user authentication experience. The precise client–server interactions used to authenticate the user (e.g., prompts, challenges, and step sequencing) are intentionally left to individual deployments and are out of scope for this specification. Future profiles may standardize specific interaction patterns.
 
 ## User Experience Considerations
 
