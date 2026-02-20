@@ -1187,8 +1187,7 @@ A.1.  Passkey
        challenge
 
    4.  The user is prompted for verification with biometrics or a PIN,
-       enabling the Client to sign the challenge using the platform
-       authenticator.
+       enabling the Client to sign the challenge using the passkey.
 
    5.  The Client sends the signed challenge, username, and credential
        ID to the Authorization Challenge Endpoint (Section 4.1).
