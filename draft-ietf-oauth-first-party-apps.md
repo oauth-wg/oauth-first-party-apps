@@ -476,7 +476,7 @@ If the client has an `auth_session`, the client MUST include it in future reques
 
 Every response defined by this specification may include a new `auth_session` value. Clients MUST NOT assume that `auth_session` values are static, and MUST be prepared to update the stored `auth_session` value if one is received in a response.
 
-To mitigate the risk of session hijacking, the 'auth_session' MUST be bound to the device, and the authorization server MUST reject an 'auth_session' if it is presented from a different device than the one it was bound to.
+To mitigate the risk of session hijacking, the `auth_session` MUST be bound to the device, and the authorization server MUST reject an `auth_session` if it is presented from a different device than the one it was bound to.
 
 See {{auth-session-security}} for additional security considerations.
 
@@ -507,7 +507,7 @@ An example successful token response is below:
 
 The response MAY include an `auth_session` parameter which the client is expected to include on any subsequent requests to the authorization challenge endpoint, as described in {{auth-session}}. The `auth_session` parameter MAY also be included even if the authorization code was obtained through a traditional OAuth authorization code flow rather than the flow defined by this specification.
 
-Including the `auth_session` parameter in the token response enables flows such as step-up authentication {{RFC9470}}, so that the authorization server can restore the context of a previous session and prompt only for the needed step-up factors. See {{step-up-sms-example}} for an example application.
+The `auth_session` mechanism described in {{auth-session}} is an optional feature the authorization server can leverage in order to enable flows such as step-up authentication {{RFC9470}}, so that the authorization server can restore the context of a previous session and prompt only for the needed step-up factors. See {{step-up-sms-example}} for an example application.
 
 
 ## Token Endpoint Error Response
