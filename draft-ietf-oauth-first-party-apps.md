@@ -120,7 +120,7 @@ While a fully-delegated approach using the redirect-based Authorization Code gra
 preferred, this draft provides a mechanism for the client to directly interact
 with the user. This requires a high degree of trust between the authorization server
 and the client, as there typically is for first-party applications.
-It should be considered only when a redirect-based approach introduces usability issues, for example, when switching context between a native mobile or desktop application and the browser disrupts the user journey and prevents task completion.
+It should be considered only when a redirect-based approach introduces usability issues, for example, when switching context between a native application and the browser, disrupting the user journey and preventing task completion.
 
 This draft also extends the token response (typically for use in response to a refresh token request) and resource server response to allow the authorization server or resource server to indicate that the client should re-request authorization from the user. This can include requesting step-up authentication by including parameters defined in {{RFC9470}} as well.
 
