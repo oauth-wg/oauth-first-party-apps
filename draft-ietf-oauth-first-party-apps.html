@@ -1523,13 +1523,13 @@ and "Token Endpoint" defined by <span>[<a href="#RFC6749" class="cite xref">RFC6
 <p id="section-3.1-2">Figure: First-Party Client Authorization Code Request<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.1-3.1">
-            <p id="section-3.1-3.1.1">(A) The first-party client starts the flow, by presenting the user with a "sign in" button, or collecting information from the user, such as their email address or username.<a href="#section-3.1-3.1.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-3.1.1">(A) The first-party client starts the flow, by presenting the user with a "sign in" button, or collecting information from the user, such as their email address or username (see <a href="#authorization-initiation" class="auto internal xref">Section 5</a>.<a href="#section-3.1-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-3.2">
-            <p id="section-3.1-3.2.1">(B) The client initiates the authorization request by making a POST request to the Authorization Challenge Endpoint, optionally with information collected from the user (e.g. email or username)<a href="#section-3.1-3.2.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-3.2.1">(B) The client initiates the authorization request by making a POST request to the Authorization Challenge Endpoint (see <a href="#challenge-request" class="auto internal xref">Section 5.1</a>, optionally with information collected from the user (e.g. email or username)<a href="#section-3.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-3.3">
-            <p id="section-3.1-3.3.1">(C) The authorization server determines whether the information provided to the Authorization Challenge Endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error. In this example, it determines that additional information is needed and responds with an error. The error may contain additional information to guide the Client on what information to collect next. This pattern of collecting information, submitting it to the Authorization Challenge Endpoint and then receiving an error or authorization code may repeat several times.<a href="#section-3.1-3.3.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-3.3.1">(C) The authorization server determines whether the information provided to the Authorization Challenge Endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error (see <a href="#challenge-response" class="auto internal xref">Section 5.2</a>). In this example, it determines that additional information is needed and responds with an error. The error may contain additional information to guide the Client on what information to collect next. This pattern of collecting information, submitting it to the Authorization Challenge Endpoint and then receiving an error or authorization code may repeat several times.<a href="#section-3.1-3.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-3.4">
             <p id="section-3.1-3.4.1">(D) The client gathers additional information (e.g. signed passkey challenge, or one-time code from email) and makes a POST request to the Authorization Challenge Endpoint.<a href="#section-3.1-3.4.1" class="pilcrow">¶</a></p>
@@ -1538,7 +1538,7 @@ and "Token Endpoint" defined by <span>[<a href="#RFC6749" class="cite xref">RFC6
             <p id="section-3.1-3.5.1">(E) The Authorization Challenge Endpoint returns an authorization code.<a href="#section-3.1-3.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-3.6">
-            <p id="section-3.1-3.6.1">(F) The client sends the authorization code received in step (E) to obtain a token from the Token Endpoint.<a href="#section-3.1-3.6.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-3.6.1">(F) The client sends the authorization code received in step (E) to obtain a token from the Token Endpoint (see <a href="#token-request" class="auto internal xref">Section 6</a>).<a href="#section-3.1-3.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-3.7">
             <p id="section-3.1-3.7.1">(G) The Authorization Server returns an Access Token from the Token Endpoint.<a href="#section-3.1-3.7.1" class="pilcrow">¶</a></p>
@@ -1859,7 +1859,7 @@ as defined in <span>[<a href="#RFC9126" class="cite xref">RFC9126</a>]</span> Se
 </div>
 </section>
 </div>
-<div id="intermediate-requests">
+<div id="intermediate_requests">
 <section id="section-5.3">
         <h3 id="name-intermediate-requests">
 <a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-intermediate-requests" class="section-name selfRef">Intermediate Requests</a>
