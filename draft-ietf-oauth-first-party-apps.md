@@ -703,7 +703,7 @@ A user may log in with a passkey (without a password).
 1. The Client collects the username from the user.
 1. The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the username.
 1. The Authorization Server verifies the username and returns a challenge
-1. The Client signs the challenge using the platform authenticator, which results in the user being prompted for verification with biometrics or a PIN.
+1. The user is prompted for verification with biometrics or a PIN, enabling the Client to sign the challenge using the platform authenticator.
 1. The Client sends the signed challenge, username, and credential ID to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
 1. The Authorization Server verifies the signed challenge and returns an Authorization Code.
 1. The Client requests an Access Token and Refresh Token by issuing a Token Request ({{token-request}}) to the Token Endpoint.
