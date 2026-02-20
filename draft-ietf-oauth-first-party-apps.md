@@ -445,14 +445,12 @@ If no `request_uri` is returned, the client is expected to initiate a new OAuth
 Authorization Code flow with PKCE according to {{RFC6749}} and {{RFC7636}}.
 
 If the client expects the frequency of this error response to be high,
-the client MAY include a PKCE {{RFC7636}} `code_challenge` in the initial authorization
-challenge request. This enables the authorization server to essentially treat
-the authorization challenge request as a PAR {{RFC9126}} request, and
-return the `request_uri` and `expires_in` as defined by {{RFC9126}} in the error response.
+the client SHOULD include a PKCE {{RFC7636}} `code_challenge` in the initial authorization
+challenge request.
 
 If the client does not include a PKCE `code_challenge` in the initial authorization
-challenge request, the authorization server SHOULD NOT return a `request_uri` in the
-`redirect_to_web` error response.
+challenge request, the authorization server MUST NOT return a `request_uri` in the
+`redirect_to_web` error response, as that would effectively be the same as a PAR request without PKCE.
 
 
 ## Intermediate Requests {#intermediate_requests}
