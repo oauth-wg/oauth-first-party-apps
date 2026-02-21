@@ -89,8 +89,7 @@ informative:
 --- abstract
 
 This document defines the Authorization Challenge Endpoint, which supports
-a first-party client that wants to control the process of
-obtaining authorization from the user using a native experience.
+clients that want to control the process of obtaining authorization from the user using a native experience.
 
 In many cases, this can provide an entirely browserless OAuth 2.0 experience suited for native
 applications, only delegating to the browser in unexpected, high risk, or error conditions.
@@ -102,7 +101,7 @@ applications, only delegating to the browser in unexpected, high risk, or error 
 
 This document, OAuth for First-Party Apps (FiPA),
 extends the OAuth 2.0 Authorization Framework {{RFC6749}} with
-a new endpoint to support first-party
+a new endpoint to support
 applications that want to control the process of obtaining authorization from
 the user using a native experience.
 
@@ -126,19 +125,17 @@ This draft also extends the token response (typically for use in response to a r
 
 ## Usage and Applicability
 
-This specification MUST only be used by first-party applications, which is when the authorization server and application are controlled by the same entity and the user understands them both as the same entity.
+This specification is designed for the security model of first-party applications. First-party applications are applications that are controlled by the same entity as the authorization server and the user understands them both as the same entity. This specification is designed to be used by first-party native applications, which includes both mobile and desktop applications.
 
-This specification MUST NOT be used by third party applications, and the authorization server SHOULD take measures to prevent use by third party applications. (e.g. only enable this grant for certain client IDs, and take measures to authenticate first-party apps when possible, such as by using app attestations as described in {{I-D.ietf-oauth-attestation-based-client-auth}}.)
+Profiles of this specification that extend the usage to non-first-party use cases MUST describe how their application of this specification avoids the risks associated with third-party apps directly interacting with the user. For example, an extension of this specification that enables federation between native apps never actually asks any third-party app to collect credentials from the user, so avoids these risks.
 
-Using this specification in scenarios other than those described will lead to unintended security and privacy problems for users and service providers.
+Using this specification in scenarios other than those described may lead to unintended security and privacy problems for users and service providers.
 
-This specification is designed to be used by first-party native applications, which includes both mobile and desktop applications.
+If a service provides multiple apps, and expects users to use multiple apps on the same device, there may be better ways of sharing a user's login between the apps other than each app implementing this specification or using an SDK that implements this specification. For example, {{OpenID.Native-SSO}} provides a mechanism for one app to obtain new tokens by exchanging tokens from another app, without any user interaction. See {{multiple-applications}} for more details.
 
-If you provide multiple apps and expect users to use multiple apps on the same device, there may be better ways of sharing a user's login between the apps other than each app implementing this specification or using an SDK that implements this specification. For example, {{OpenID.Native-SSO}} provides a mechanism for one app to obtain new tokens by exchanging tokens from another app, without any user interaction. See {{multiple-applications}} for more details.
+Please review the entirety of {{security-considerations}}, and when more than one first-party application is supported, {{multiple-applications}}.
 
 ## Limitations of this specification
-
-The scope of this specification is limited to first-party applications. Please review the entirety of {{security-considerations}}, and when more than one first-party application is supported, {{multiple-applications}}.
 
 This draft defines the overall framework for delivering a native OAuth user authentication experience. The precise client–server interactions used to authenticate the user (e.g., prompts, challenges, and step sequencing) are intentionally left to individual deployments and are out of scope for this specification. Future profiles may standardize specific interaction patterns.
 
