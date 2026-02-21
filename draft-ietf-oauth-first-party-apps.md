@@ -524,7 +524,7 @@ the error code is set to the following value:
   server is requesting the client take additional steps to
   complete the authorization.
 
-Additionally, the response MAY contain an `auth_session` parameter which the client is expected to include on a subsequent request to the authorization challenge endpoint.
+The response MAY also contain an `auth_session` parameter which the client is expected to include on a subsequent request to the authorization challenge endpoint.
 
 "auth_session":
 :    OPTIONAL.  The optional auth session value allows the authorization server to
@@ -532,6 +532,8 @@ Additionally, the response MAY contain an `auth_session` parameter which the cli
      authorization request sequence. The client MUST include
      the `auth_session` in follow-up requests to the challenge
      endpoint if it receives one along with the error response.
+
+Additionally, the response MAY contain custom values that describe instructions for how the client should proceed to interact with the user.
 
 For example:
 
@@ -541,7 +543,8 @@ For example:
 
     {
       "error": "insufficient_authorization",
-      "auth_session": "uY29tL2F1dGhlbnRpY"
+      "auth_session": "uY29tL2F1dGhlbnRpY",
+      "otp_required": true
     }
 
 
@@ -829,7 +832,7 @@ In addition to the request parameters defined in {{challenge-request}}, the auth
 
 ## Authorization Challenge Response Parameters
 
-In addition to the response parameters defined in {{challenge-response}}, the authorization server defines the additional value for the `error` response below.
+In addition to the response parameters defined in {{challenge-response}}, the authorization server defines the additional parameter below.
 
 "otp_required":
 :     The client should collect an OTP from the user and send the OTP in
@@ -855,8 +858,9 @@ The Authorization Server sends an error response indicating that an OTP is requi
     Cache-Control: no-store
 
     {
-      "error": "otp_required",
-      "auth_session": "ce6772f5e07bc8361572f"
+      "error": "insufficient_authorization",
+      "auth_session": "ce6772f5e07bc8361572f",
+      "otp_required": true
     }
 
 The client prompts the user for an OTP, and sends a new Authorization Challenge Request.
