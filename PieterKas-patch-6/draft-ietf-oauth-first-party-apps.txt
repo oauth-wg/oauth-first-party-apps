@@ -5,10 +5,10 @@
 Web Authorization Protocol                                    A. Parecki
 Internet-Draft                                                      Okta
 Intended status: Standards Track                             G. Fletcher
-Expires: 24 August 2026                            Capital One Financial
+Expires: 27 August 2026                            Capital One Financial
                                                             P. Kasselman
                                                         Defakto Security
-                                                        20 February 2026
+                                                        23 February 2026
 
 
                  OAuth 2.0 for First-Party Applications
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 August 2026.
+   This Internet-Draft will expire on 27 August 2026.
 
 Copyright Notice
 
@@ -143,10 +143,9 @@ Table of Contents
 1.  Introduction
 
    This document, OAuth for First-Party Apps (FiPA), extends the OAuth
-   2.0 Authorization Framework [RFC6749] with a new endpoint,
-   authorization_challenge_endpoint, to support first-party applications
-   that want to control the process of obtaining authorization from the
-   user using a native experience.
+   2.0 Authorization Framework [RFC6749] with a new endpoint to support
+   first-party applications that want to control the process of
+   obtaining authorization from the user using a native experience.
 
    The client collects any initial information from the user and POSTs
    that information as well as information about the client's request to
@@ -165,9 +164,10 @@ Table of Contents
    a mechanism for the client to directly interact with the user.  This
    requires a high degree of trust between the authorization server and
    the client, as there typically is for first-party applications.  It
-   should only be considered when there are usability concerns with a
-   redirect-based approach, such as for native mobile or desktop
-   applications.
+   should be considered only when a redirect-based approach introduces
+   usability issues, for example, when switching context between a
+   native application and the browser, disrupting the user journey and
+   preventing task completion.
 
    This draft also extends the token response (typically for use in
    response to a refresh token request) and resource server response to
@@ -303,22 +303,23 @@ Table of Contents
 
    *  (A) The first-party client starts the flow, by presenting the user
       with a "sign in" button, or collecting information from the user,
-      such as their email address or username.
+      such as their email address or username (see Section 5.
 
    *  (B) The client initiates the authorization request by making a
-      POST request to the Authorization Challenge Endpoint, optionally
-      with information collected from the user (e.g. email or username)
+      POST request to the Authorization Challenge Endpoint (see
+      Section 5.1, optionally with information collected from the user
+      (e.g. email or username)
 
    *  (C) The authorization server determines whether the information
       provided to the Authorization Challenge Endpoint is sufficient to
       grant authorization, and either responds with an authorization
-      code or responds with an error.  In this example, it determines
-      that additional information is needed and responds with an error.
-      The error may contain additional information to guide the Client
-      on what information to collect next.  This pattern of collecting
-      information, submitting it to the Authorization Challenge Endpoint
-      and then receiving an error or authorization code may repeat
-      several times.
+      code or responds with an error (see Section 5.2).  In this
+      example, it determines that additional information is needed and
+      responds with an error.  The error may contain additional
+      information to guide the Client on what information to collect
+      next.  This pattern of collecting information, submitting it to
+      the Authorization Challenge Endpoint and then receiving an error
+      or authorization code may repeat several times.
 
    *  (D) The client gathers additional information (e.g. signed passkey
       challenge, or one-time code from email) and makes a POST request
@@ -328,7 +329,7 @@ Table of Contents
       code.
 
    *  (F) The client sends the authorization code received in step (E)
-      to obtain a token from the Token Endpoint.
+      to obtain a token from the Token Endpoint (see Section 6).
 
    *  (G) The Authorization Server returns an Access Token from the
       Token Endpoint.
@@ -411,7 +412,11 @@ Table of Contents
    information.  The authorization challenge endpoint is a new endpoint
    to collect this login hint and direct the client with the next steps,
    whether that is to do an MFA flow, or perform an OAuth redirect-based
-   flow.
+   flow.  If the authorization server directs the client to complete the
+   flow using a redirect-based authorization request in a browser, the
+   client and authorization server SHOULD follow applicable best current
+   practices for native apps (e.g., RFC 8252 and its successors) for
+   redirect URI selection and external user-agent usage.
 
    In order to preserve the security of this specification, the
    Authorization Server MUST verify the "first-partyness" of the client
@@ -533,11 +538,13 @@ Table of Contents
       The authorization server MAY extend these error codes with custom
       messages based on the requirements of the authorization server.
 
-   "error_description":  OPTIONAL.  Human-readable ASCII [USASCII] text
-      providing additional information, used to assist the client
-      developer in understanding the error that occurred.  Values for
-      the error_description parameter MUST NOT include characters
-      outside the set %x20-21 / %x23-5B / %x5D-7E.
+   "error_description":  OPTIONAL.  Human-readable text providing
+      additional information, used to assist the client developer in
+      understanding the error that occurred.  The value of the
+      error_description parameter MUST be encoded as UTF-8, to support
+      use in a wide range of human languages.  If a language tag is
+      provided (for example, via an error_lang parameter), it SHOULD use
+      a language tag as defined by BCP 47 ([BCP47]).
 
    "error_uri":  OPTIONAL.  A URI identifying a human-readable web page
       with information about the error, used to provide the client
@@ -1037,6 +1044,18 @@ Table of Contents
 11.  References
 
 11.1.  Normative References
+
+   [BCP47]    Best Current Practice 47,
+              <https://www.rfc-editor.org/info/bcp47>.
+              At the time of writing, this BCP comprises the following:
+
+              Phillips, A., Ed. and M. Davis, Ed., "Matching of Language
+              Tags", BCP 47, RFC 4647, DOI 10.17487/RFC4647, September
+              2006, <https://www.rfc-editor.org/info/rfc4647>.
+
+              Phillips, A., Ed. and M. Davis, Ed., "Tags for Identifying
+              Languages", BCP 47, RFC 5646, DOI 10.17487/RFC5646,
+              September 2009, <https://www.rfc-editor.org/info/rfc5646>.
 
    [I-D.ietf-oauth-cross-device-security]
               Kasselman, P., Fett, D., and F. Skokan, "Cross-Device
