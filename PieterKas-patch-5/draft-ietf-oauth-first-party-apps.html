@@ -1057,7 +1057,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Parecki, et al.</td>
-<td class="center">Expires 24 August 2026</td>
+<td class="center">Expires 27 August 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1070,12 +1070,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-oauth-first-party-apps-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-02-20" class="published">20 February 2026</time>
+<time datetime="2026-02-23" class="published">23 February 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-08-24">24 August 2026</time></dd>
+<dd class="expires"><time datetime="2026-08-27">27 August 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1137,7 +1137,7 @@ applications, only delegating to the browser in unexpected, high risk, or error 
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 24 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 27 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1401,7 +1401,7 @@ applications, only delegating to the browser in unexpected, high risk, or error 
       </h2>
 <p id="section-1-1">This document, OAuth for First-Party Apps (FiPA),
 extends the OAuth 2.0 Authorization Framework <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> with
-a new endpoint, <code>authorization_challenge_endpoint</code>, to support first-party
+a new endpoint to support first-party
 applications that want to control the process of obtaining authorization from
 the user using a native experience.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">The client collects any initial information from the user and POSTs that information
@@ -1436,8 +1436,7 @@ It should be considered only when a redirect-based approach introduces usability
 <a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-limitations-of-this-specifi" class="section-name selfRef">Limitations of this specification</a>
         </h3>
 <p id="section-1.2-1">The scope of this specification is limited to first-party applications. Please review the entirety of <a href="#security-considerations" class="auto internal xref">Section 9</a>, and when more than one first-party application is supported, <a href="#multiple-applications" class="auto internal xref">Section 9.7</a>.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
-<p id="section-1.2-2">While this draft provides the framework for a native OAuth experience, each implementation
-will need to define the specific behavior that it expects from OAuth clients interacting with the authorization server. While this lack of clearly defining the details would typically lead to less interoperability, it is acceptable in this case since we intend this specification to be deployed in a tightly coupled environment since it is only applicable to first-party applications.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
+<p id="section-1.2-2">This draft defines the overall framework for delivering a native OAuth user authentication experience. The precise client–server interactions used to authenticate the user (e.g., prompts, challenges, and step sequencing) are intentionally left to individual deployments and are out of scope for this specification. Future profiles may standardize specific interaction patterns.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="user-experience-considerations">
@@ -1523,13 +1522,13 @@ and "Token Endpoint" defined by <span>[<a href="#RFC6749" class="cite xref">RFC6
 <p id="section-3.1-2">Figure: First-Party Client Authorization Code Request<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.1-3.1">
-            <p id="section-3.1-3.1.1">(A) The first-party client starts the flow, by presenting the user with a "sign in" button, or collecting information from the user, such as their email address or username.<a href="#section-3.1-3.1.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-3.1.1">(A) The first-party client starts the flow, by presenting the user with a "sign in" button, or collecting information from the user, such as their email address or username (see <a href="#authorization-initiation" class="auto internal xref">Section 5</a>.<a href="#section-3.1-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-3.2">
-            <p id="section-3.1-3.2.1">(B) The client initiates the authorization request by making a POST request to the Authorization Challenge Endpoint, optionally with information collected from the user (e.g. email or username)<a href="#section-3.1-3.2.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-3.2.1">(B) The client initiates the authorization request by making a POST request to the Authorization Challenge Endpoint (see <a href="#challenge-request" class="auto internal xref">Section 5.1</a>, optionally with information collected from the user (e.g. email or username)<a href="#section-3.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-3.3">
-            <p id="section-3.1-3.3.1">(C) The authorization server determines whether the information provided to the Authorization Challenge Endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error. In this example, it determines that additional information is needed and responds with an error. The error may contain additional information to guide the Client on what information to collect next. This pattern of collecting information, submitting it to the Authorization Challenge Endpoint and then receiving an error or authorization code may repeat several times.<a href="#section-3.1-3.3.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-3.3.1">(C) The authorization server determines whether the information provided to the Authorization Challenge Endpoint is sufficient to grant authorization, and either responds with an authorization code or responds with an error (see <a href="#challenge-response" class="auto internal xref">Section 5.2</a>). In this example, it determines that additional information is needed and responds with an error. The error may contain additional information to guide the Client on what information to collect next. This pattern of collecting information, submitting it to the Authorization Challenge Endpoint and then receiving an error or authorization code may repeat several times.<a href="#section-3.1-3.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-3.4">
             <p id="section-3.1-3.4.1">(D) The client gathers additional information (e.g. signed passkey challenge, or one-time code from email) and makes a POST request to the Authorization Challenge Endpoint.<a href="#section-3.1-3.4.1" class="pilcrow">¶</a></p>
@@ -1538,7 +1537,7 @@ and "Token Endpoint" defined by <span>[<a href="#RFC6749" class="cite xref">RFC6
             <p id="section-3.1-3.5.1">(E) The Authorization Challenge Endpoint returns an authorization code.<a href="#section-3.1-3.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-3.6">
-            <p id="section-3.1-3.6.1">(F) The client sends the authorization code received in step (E) to obtain a token from the Token Endpoint.<a href="#section-3.1-3.6.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-3.6.1">(F) The client sends the authorization code received in step (E) to obtain a token from the Token Endpoint (see <a href="#token-request" class="auto internal xref">Section 6</a>).<a href="#section-3.1-3.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-3.7">
             <p id="section-3.1-3.7.1">(G) The Authorization Server returns an Access Token from the Token Endpoint.<a href="#section-3.1-3.7.1" class="pilcrow">¶</a></p>
@@ -1578,12 +1577,7 @@ and "Token Endpoint" defined by <span>[<a href="#RFC6749" class="cite xref">RFC6
 <p id="section-4.1-2">The authorization challenge endpoint is an HTTP API at the authorization server that accepts HTTP POST requests with parameters in the HTTP request message body using the <code>application/x-www-form-urlencoded</code> format. This format has a character encoding of UTF-8, as described in Appendix B of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>. The authorization challenge endpoint URL <span class="bcp14">MUST</span> use the "https" scheme.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
 <p id="section-4.1-3">If the authorization server requires client authentication for this client on the Token Endpoint, then the authorization server <span class="bcp14">MUST</span> also require client authentication for this client on the Authorization Challenge Endpoint. See <a href="#client-authentication" class="auto internal xref">Section 9.4</a> for more details.<a href="#section-4.1-3" class="pilcrow">¶</a></p>
 <p id="section-4.1-4">Authorization servers supporting this specification <span class="bcp14">SHOULD</span> include the URL of their authorization challenge endpoint in their authorization server metadata document <span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span> using the <code>authorization_challenge_endpoint</code> parameter as defined in <a href="#authorization-server-metadata" class="auto internal xref">Section 8</a>.<a href="#section-4.1-4" class="pilcrow">¶</a></p>
-<p id="section-4.1-5">The endpoint accepts the authorization request parameters defined in <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> for the authorization endpoint as well
-as all applicable extensions defined for the authorization endpoint. Some examples of such extensions include Proof
-Key for Code Exchange (PKCE) <span>[<a href="#RFC7636" class="cite xref">RFC7636</a>]</span>, Resource Indicators <span>[<a href="#RFC8707" class="cite xref">RFC8707</a>]</span>, and OpenID Connect <span>[<a href="#OpenID" class="cite xref">OpenID</a>]</span>. It is
-important to note that some extension parameters have meaning in a web context but don't have meaning in a native
-mechanism (e.g. <code>response_mode=query</code>). It is out of scope as to what the AS does in the case that an extension
-defines a parameter that has no meaning in this use case.<a href="#section-4.1-5" class="pilcrow">¶</a></p>
+<p id="section-4.1-5">The authorization challenge endpoint <span class="bcp14">SHOULD</span> accept the authorization request parameters defined in <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> for the authorization endpoint as well as any authorization endpoint extensions supoprted by the authorization server. Examples of such extensions include Proof Key for Code Exchange (PKCE) <span>[<a href="#RFC7636" class="cite xref">RFC7636</a>]</span>, Resource Indicators <span>[<a href="#RFC8707" class="cite xref">RFC8707</a>]</span>, and OpenID Connect <span>[<a href="#OpenID" class="cite xref">OpenID</a>]</span>. Note that some extension parameters have meaning in a web context but don't have meaning in a native mechanism (e.g. <code>response_mode=query</code>). It is out of scope as to what the authorization server does in the case that an extension defines a parameter that has no meaning in this use case.<a href="#section-4.1-5" class="pilcrow">¶</a></p>
 <p id="section-4.1-6">The client initiates the authorization flow with or without information collected from the user (e.g. a signed passkey challenge or MFA code).<a href="#section-4.1-6" class="pilcrow">¶</a></p>
 <p id="section-4.1-7">The authorization challenge endpoint response is either an authorization code or an error code, and may also contain an <code>auth_session</code> which the client uses on subsequent requests.<a href="#section-4.1-7" class="pilcrow">¶</a></p>
 <p id="section-4.1-8">Further communication between the client and authorization server <span class="bcp14">MAY</span> happen at the Authorization Challenge Endpoint or any other proprietary endpoints at the authorization server.<a href="#section-4.1-8" class="pilcrow">¶</a></p>
@@ -1608,7 +1602,7 @@ server to indicate that further authentication of the user is required.<a href="
       <h2 id="name-authorization-initiation">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-authorization-initiation" class="section-name selfRef">Authorization Initiation</a>
       </h2>
-<p id="section-5-1">A client may wish to initiate an authorization flow by first prompting the user for their user identifier or other account information. The authorization challenge endpoint is a new endpoint to collect this login hint and direct the client with the next steps, whether that is to do an MFA flow, or perform an OAuth redirect-based flow.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">A client may wish to initiate an authorization flow by first prompting the user for their user identifier or other account information. The authorization challenge endpoint is a new endpoint to collect this login hint and direct the client with the next steps, whether that is to do an MFA flow, or perform an OAuth redirect-based flow. If the authorization server directs the client to complete the flow using a redirect-based authorization request in a browser, the client and authorization server <span class="bcp14">SHOULD</span> follow applicable best current practices for native apps (e.g., RFC 8252 and its successors) for redirect URI selection and external user-agent usage.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <p id="section-5-2">In order to preserve the security of this specification, the Authorization Server <span class="bcp14">MUST</span> verify the "first-partyness" of the client before continuing with the authentication flow. Please see <a href="#first-party-applications" class="auto internal xref">Section 9.1</a> for additional considerations.<a href="#section-5-2" class="pilcrow">¶</a></p>
 <div id="challenge-request">
 <section id="section-5.1">
@@ -1859,7 +1853,7 @@ as defined in <span>[<a href="#RFC9126" class="cite xref">RFC9126</a>]</span> Se
 </div>
 </section>
 </div>
-<div id="intermediate-requests">
+<div id="intermediate_requests">
 <section id="section-5.3">
         <h3 id="name-intermediate-requests">
 <a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-intermediate-requests" class="section-name selfRef">Intermediate Requests</a>
