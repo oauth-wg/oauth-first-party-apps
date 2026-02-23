@@ -383,11 +383,12 @@ parameters with the response:
      messages based on the requirements of the authorization server.
 
 "error_description":
-:    OPTIONAL.  Human-readable ASCII {{USASCII}} text providing
-     additional information, used to assist the client developer in
-     understanding the error that occurred.
-     Values for the `error_description` parameter MUST NOT include
-     characters outside the set %x20-21 / %x23-5B / %x5D-7E.
+:    OPTIONAL.  Human-readable text providing additional information,
+     used to assist the client developer in understanding the error that
+     occurred. The value of the error_description parameter MUST be encoded
+     as UTF-8, to support use in a wide range of human languages. If a
+     language tag is provided (for example, via an error_lang parameter),
+     it SHOULD use a language tag as defined by BCP 47 ({{BCP47}}).
 
 "error_uri":
 :    OPTIONAL.  A URI identifying a human-readable web page with
