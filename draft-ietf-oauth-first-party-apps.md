@@ -328,11 +328,11 @@ If the request contains invalid parameters or incorrect data,
 or if the authorization server wishes to interact with the user directly,
 the authorization server responds with an HTTP 400 (Bad Request)
 status code (unless specified otherwise below) and includes the following
-parameters with the response. 
+parameters with the response.
 
 Response parameters `error`, `error_description`,
-and `error_uri` are defined and used according to {{RFC6749}}. `request_uri` and 
-`expires_in` are defined and used according to {{RFC9126}}. This specification 
+and `error_uri` are defined and used according to {{RFC6749}}. `request_uri` and
+`expires_in` are defined and used according to {{RFC9126}}. This specification
 defines the `auth_session` response parameter.
 
 "error":
@@ -396,10 +396,10 @@ is JSON and conforms to `application/<AS-defined>+json`.
 #### Error Codes {#error-codes}
 
 This specification supports the use of error codes defined by {{RFC6749}}
-and other error codes defined by OAuth extensions supported by the 
+and other error codes defined by OAuth extensions supported by the
 Authorization Server.
 
-This specification defines the following error codes.           
+This specification defines the following error codes.
 
 "invalid_session":
      :     The provided `auth_session` is
