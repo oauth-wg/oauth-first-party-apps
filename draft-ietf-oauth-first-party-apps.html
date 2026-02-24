@@ -1057,7 +1057,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Parecki, et al.</td>
-<td class="center">Expires 24 August 2026</td>
+<td class="center">Expires 28 August 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1070,12 +1070,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-oauth-first-party-apps-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-02-20" class="published">20 February 2026</time>
+<time datetime="2026-02-24" class="published">24 February 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-08-24">24 August 2026</time></dd>
+<dd class="expires"><time datetime="2026-08-28">28 August 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1137,7 +1137,7 @@ applications, only delegating to the browser in unexpected, high risk, or error 
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 24 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 28 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1882,7 +1882,7 @@ rather than the Authorization Challenge Endpoint.<a href="#section-5.3-3" class=
 <p id="section-5.3.1-2">The <code>auth_session</code> value is completely opaque to the client, and as such the authorization server <span class="bcp14">MUST</span> adequately protect the value from inspection by the client, for example by using a random string or using a JWE if the authorization server is not maintaining state on the backend.<a href="#section-5.3.1-2" class="pilcrow">¶</a></p>
 <p id="section-5.3.1-3">If the client has an <code>auth_session</code>, the client <span class="bcp14">MUST</span> include it in future requests to the authorization challenge endpoint. The client <span class="bcp14">MUST</span> store the <code>auth_session</code> beyond the issuance of the authorization code to be able to use it in future requests.<a href="#section-5.3.1-3" class="pilcrow">¶</a></p>
 <p id="section-5.3.1-4">Every response defined by this specification may include a new <code>auth_session</code> value. Clients <span class="bcp14">MUST NOT</span> assume that <code>auth_session</code> values are static, and <span class="bcp14">MUST</span> be prepared to update the stored <code>auth_session</code> value if one is received in a response.<a href="#section-5.3.1-4" class="pilcrow">¶</a></p>
-<p id="section-5.3.1-5">To mitigate the risk of session hijacking, the 'auth_session' <span class="bcp14">MUST</span> be bound to the device, and the authorization server <span class="bcp14">MUST</span> reject an 'auth_session' if it is presented from a different device than the one it was bound to.<a href="#section-5.3.1-5" class="pilcrow">¶</a></p>
+<p id="section-5.3.1-5">To mitigate the risk of session hijacking, the <code>auth_session</code> <span class="bcp14">MUST</span> be bound to the device, and the authorization server <span class="bcp14">MUST</span> reject an <code>auth_session</code> if it is presented from a different device than the one it was bound to.<a href="#section-5.3.1-5" class="pilcrow">¶</a></p>
 <p id="section-5.3.1-6">See <a href="#auth-session-security" class="auto internal xref">Section 9.6</a> for additional security considerations.<a href="#section-5.3.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1921,7 +1921,7 @@ Cache-Control: no-store
 </pre><a href="#section-6.1-3" class="pilcrow">¶</a>
 </div>
 <p id="section-6.1-4">The response <span class="bcp14">MAY</span> include an <code>auth_session</code> parameter which the client is expected to include on any subsequent requests to the authorization challenge endpoint, as described in <a href="#auth-session" class="auto internal xref">Section 5.3.1</a>. The <code>auth_session</code> parameter <span class="bcp14">MAY</span> also be included even if the authorization code was obtained through a traditional OAuth authorization code flow rather than the flow defined by this specification.<a href="#section-6.1-4" class="pilcrow">¶</a></p>
-<p id="section-6.1-5">Including the <code>auth_session</code> parameter in the token response enables flows such as step-up authentication <span>[<a href="#RFC9470" class="cite xref">RFC9470</a>]</span>, so that the authorization server can restore the context of a previous session and prompt only for the needed step-up factors. See <a href="#step-up-sms-example" class="auto internal xref">Appendix A.7</a> for an example application.<a href="#section-6.1-5" class="pilcrow">¶</a></p>
+<p id="section-6.1-5">The <code>auth_session</code> mechanism described in <a href="#auth-session" class="auto internal xref">Section 5.3.1</a> is an optional feature the authorization server can leverage in order to enable flows such as step-up authentication <span>[<a href="#RFC9470" class="cite xref">RFC9470</a>]</span>, so that the authorization server can restore the context of a previous session and prompt only for the needed step-up factors. See <a href="#step-up-sms-example" class="auto internal xref">Appendix A.7</a> for an example application.<a href="#section-6.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="token-endpoint-error-response">

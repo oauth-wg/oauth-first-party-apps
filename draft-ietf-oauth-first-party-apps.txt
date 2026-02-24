@@ -5,10 +5,10 @@
 Web Authorization Protocol                                    A. Parecki
 Internet-Draft                                                      Okta
 Intended status: Standards Track                             G. Fletcher
-Expires: 24 August 2026                            Capital One Financial
+Expires: 28 August 2026                            Capital One Financial
                                                             P. Kasselman
                                                         Defakto Security
-                                                        20 February 2026
+                                                        24 February 2026
 
 
                  OAuth 2.0 for First-Party Applications
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 August 2026.
+   This Internet-Draft will expire on 28 August 2026.
 
 Copyright Notice
 
@@ -649,10 +649,10 @@ Table of Contents
    are static, and MUST be prepared to update the stored auth_session
    value if one is received in a response.
 
-   To mitigate the risk of session hijacking, the 'auth_session' MUST be
+   To mitigate the risk of session hijacking, the auth_session MUST be
    bound to the device, and the authorization server MUST reject an
-   'auth_session' if it is presented from a different device than the
-   one it was bound to.
+   auth_session if it is presented from a different device than the one
+   it was bound to.
 
    See Section 9.6 for additional security considerations.
 
@@ -695,7 +695,8 @@ Table of Contents
    code was obtained through a traditional OAuth authorization code flow
    rather than the flow defined by this specification.
 
-   Including the auth_session parameter in the token response enables
+   The auth_session mechanism described in Section 5.3.1 is an optional
+   feature the authorization server can leverage in order to enable
    flows such as step-up authentication [RFC9470], so that the
    authorization server can restore the context of a previous session
    and prompt only for the needed step-up factors.  See Appendix A.7 for
