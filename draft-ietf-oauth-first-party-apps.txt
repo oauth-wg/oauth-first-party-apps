@@ -717,9 +717,9 @@ Table of Contents
       is insufficient, and the authorization server is requesting the
       client take additional steps to complete the authorization.
 
-   Additionally, the response MAY contain an auth_session parameter
-   which the client is expected to include on a subsequent request to
-   the authorization challenge endpoint.
+   The response MAY also contain an auth_session parameter which the
+   client is expected to include on a subsequent request to the
+   authorization challenge endpoint.
 
    "auth_session":  OPTIONAL.  The optional auth session value allows
       the authorization server to associate subsequent requests by this
@@ -727,6 +727,10 @@ Table of Contents
       MUST include the auth_session in follow-up requests to the
       challenge endpoint if it receives one along with the error
       response.
+
+   Additionally, the response MAY contain custom values that describe
+   instructions for how the client should proceed to interact with the
+   user.
 
    For example:
 
@@ -736,7 +740,8 @@ Table of Contents
 
    {
      "error": "insufficient_authorization",
-     "auth_session": "uY29tL2F1dGhlbnRpY"
+     "auth_session": "uY29tL2F1dGhlbnRpY",
+     "otp_required": true
    }
 
 7.  Resource Server Error Response
@@ -1555,8 +1560,7 @@ B.1.  Authorization Challenge Request Parameters
 B.2.  Authorization Challenge Response Parameters
 
    In addition to the response parameters defined in Section 5.2, the
-   authorization server defines the additional value for the error
-   response below.
+   authorization server defines the additional parameter below.
 
    "otp_required":  The client should collect an OTP from the user and
       send the OTP in a second request to the Authorization Challenge
@@ -1584,8 +1588,9 @@ B.3.  Example Sequence
    Cache-Control: no-store
 
    {
-     "error": "otp_required",
-     "auth_session": "ce6772f5e07bc8361572f"
+     "error": "insufficient_authorization",
+     "auth_session": "ce6772f5e07bc8361572f",
+     "otp_required": true
    }
 
    The client prompts the user for an OTP, and sends a new Authorization

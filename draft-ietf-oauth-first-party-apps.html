@@ -1943,7 +1943,7 @@ complete the authorization.<a href="#section-6.2-3.2.1" class="pilcrow">¶</a></
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-6.2-4">Additionally, the response <span class="bcp14">MAY</span> contain an <code>auth_session</code> parameter which the client is expected to include on a subsequent request to the authorization challenge endpoint.<a href="#section-6.2-4" class="pilcrow">¶</a></p>
+<p id="section-6.2-4">The response <span class="bcp14">MAY</span> also contain an <code>auth_session</code> parameter which the client is expected to include on a subsequent request to the authorization challenge endpoint.<a href="#section-6.2-4" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="section-6.2-5">
           <dt id="section-6.2-5.1">"auth_session":</dt>
           <dd style="margin-left: 1.5em" id="section-6.2-5.2">
@@ -1955,8 +1955,9 @@ endpoint if it receives one along with the error response.<a href="#section-6.2-
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-6.2-6">For example:<a href="#section-6.2-6" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-6.2-7">
+<p id="section-6.2-6">Additionally, the response <span class="bcp14">MAY</span> contain custom values that describe instructions for how the client should proceed to interact with the user.<a href="#section-6.2-6" class="pilcrow">¶</a></p>
+<p id="section-6.2-7">For example:<a href="#section-6.2-7" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6.2-8">
 <pre>
 HTTP/1.1 403 Forbidden
 Content-Type: application/json
@@ -1964,9 +1965,10 @@ Cache-Control: no-store
 
 {
   "error": "insufficient_authorization",
-  "auth_session": "uY29tL2F1dGhlbnRpY"
+  "auth_session": "uY29tL2F1dGhlbnRpY",
+  "otp_required": true
 }
-</pre><a href="#section-6.2-7" class="pilcrow">¶</a>
+</pre><a href="#section-6.2-8" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -2656,7 +2658,7 @@ an authorization request and eventually obtain an authorization code.<a href="#s
         <h3 id="name-authorization-challenge-resp">
 <a href="#appendix-B.2" class="section-number selfRef">B.2. </a><a href="#name-authorization-challenge-resp" class="section-name selfRef">Authorization Challenge Response Parameters</a>
         </h3>
-<p id="appendix-B.2-1">In addition to the response parameters defined in <a href="#challenge-response" class="auto internal xref">Section 5.2</a>, the authorization server defines the additional value for the <code>error</code> response below.<a href="#appendix-B.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-B.2-1">In addition to the response parameters defined in <a href="#challenge-response" class="auto internal xref">Section 5.2</a>, the authorization server defines the additional parameter below.<a href="#appendix-B.2-1" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="appendix-B.2-2">
           <dt id="appendix-B.2-2.1">"otp_required":</dt>
           <dd style="margin-left: 1.5em" id="appendix-B.2-2.2">
@@ -2693,8 +2695,9 @@ Content-Type: application/json
 Cache-Control: no-store
 
 {
-  "error": "otp_required",
-  "auth_session": "ce6772f5e07bc8361572f"
+  "error": "insufficient_authorization",
+  "auth_session": "ce6772f5e07bc8361572f",
+  "otp_required": true
 }
 </pre><a href="#appendix-B.3-4" class="pilcrow">¶</a>
 </div>
