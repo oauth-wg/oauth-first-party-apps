@@ -476,7 +476,7 @@ If the client has an `auth_session`, the client MUST include it in future reques
 
 Every response defined by this specification may include a new `auth_session` value. Clients MUST NOT assume that `auth_session` values are static, and MUST be prepared to update the stored `auth_session` value if one is received in a response.
 
-To mitigate the risk of session hijacking, the 'auth_session' MUST be bound to the device, and the authorization server MUST reject an 'auth_session' if it is presented from a different device than the one it was bound to.
+To mitigate the risk of session hijacking, the 'auth_session' MUST be bound to the device, and the authorization server MUST reject an 'auth_session' if it is presented from a different device than the one it was bound to. DPoP is one mechanism that MAY be used to bind the 'auth_session' value to a device as described in {{auth-session-security}}, but other mechanisms MAY also be used.
 
 See {{auth-session-security}} for additional security considerations.
 
