@@ -104,7 +104,8 @@ This document, OAuth for First-Party Apps (FiPA),
 extends the OAuth 2.0 Authorization Framework {{RFC6749}} with
 a new endpoint to support first-party
 applications that want to control the process of obtaining authorization from
-the user using a native experience.
+the user using a native experience, with browser redirection as described in
+OAuth 2.0 for Native Apps {{RFC8252}} used only as a fallback when needed.
 
 The client collects any initial information from the user and POSTs that information
 as well as information about the client's request to the Authorization Challenge Endpoint,
@@ -258,7 +259,7 @@ server to indicate that further authentication of the user is required.
 
 # Authorization Initiation {#authorization-initiation}
 
-A client may wish to initiate an authorization flow by first prompting the user for their user identifier or other account information. The authorization challenge endpoint is a new endpoint to collect this login hint and direct the client with the next steps, whether that is to do an MFA flow, or perform an OAuth redirect-based flow. If the authorization server directs the client to complete the flow using a redirect-based authorization request in a browser, the client and authorization server SHOULD follow applicable best current practices for native apps (e.g., RFC 8252 and its successors) for redirect URI selection and external user-agent usage.
+A client may wish to initiate an authorization flow by first prompting the user for their user identifier or other account information. The authorization challenge endpoint is a new endpoint to collect this login hint and direct the client with the next steps, whether that is to do an MFA flow, or perform an OAuth redirect-based flow. If the authorization server directs the client to complete the flow using a redirect-based authorization request in a browser, the client and authorization server SHOULD follow applicable best current practices for native apps (e.g., {{RFC8252}} and its successors) for redirect URI selection and external user-agent usage.
 
 In order to preserve the security of this specification, the Authorization Server MUST verify the "first-partyness" of the client before continuing with the authentication flow. Please see {{first-party-applications}} for additional considerations.
 
