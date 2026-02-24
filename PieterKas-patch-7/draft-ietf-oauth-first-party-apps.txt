@@ -5,10 +5,10 @@
 Web Authorization Protocol                                    A. Parecki
 Internet-Draft                                                      Okta
 Intended status: Standards Track                             G. Fletcher
-Expires: 24 August 2026                            Capital One Financial
+Expires: 28 August 2026                            Capital One Financial
                                                             P. Kasselman
                                                         Defakto Security
-                                                        20 February 2026
+                                                        24 February 2026
 
 
                  OAuth 2.0 for First-Party Applications
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 August 2026.
+   This Internet-Draft will expire on 28 August 2026.
 
 Copyright Notice
 
@@ -143,10 +143,9 @@ Table of Contents
 1.  Introduction
 
    This document, OAuth for First-Party Apps (FiPA), extends the OAuth
-   2.0 Authorization Framework [RFC6749] with a new endpoint,
-   authorization_challenge_endpoint, to support first-party applications
-   that want to control the process of obtaining authorization from the
-   user using a native experience.
+   2.0 Authorization Framework [RFC6749] with a new endpoint to support
+   first-party applications that want to control the process of
+   obtaining authorization from the user using a native experience.
 
    The client collects any initial information from the user and POSTs
    that information as well as information about the client's request to
@@ -165,9 +164,10 @@ Table of Contents
    a mechanism for the client to directly interact with the user.  This
    requires a high degree of trust between the authorization server and
    the client, as there typically is for first-party applications.  It
-   should only be considered when there are usability concerns with a
-   redirect-based approach, such as for native mobile or desktop
-   applications.
+   should be considered only when a redirect-based approach introduces
+   usability issues, for example, when switching context between a
+   native application and the browser, disrupting the user journey and
+   preventing task completion.
 
    This draft also extends the token response (typically for use in
    response to a refresh token request) and resource server response to
@@ -211,14 +211,12 @@ Table of Contents
    applications.  Please review the entirety of Section 9, and when more
    than one first-party application is supported, Section 9.7.
 
-   While this draft provides the framework for a native OAuth
-   experience, each implementation will need to define the specific
-   behavior that it expects from OAuth clients interacting with the
-   authorization server.  While this lack of clearly defining the
-   details would typically lead to less interoperability, it is
-   acceptable in this case since we intend this specification to be
-   deployed in a tightly coupled environment since it is only applicable
-   to first-party applications.
+   This draft defines the overall framework for delivering a native
+   OAuth user authentication experience.  The precise client–server
+   interactions used to authenticate the user (e.g., prompts,
+   challenges, and step sequencing) are intentionally left to individual
+   deployments and are out of scope for this specification.  Future
+   profiles may standardize specific interaction patterns.
 
 1.3.  User Experience Considerations
 
@@ -414,7 +412,11 @@ Table of Contents
    information.  The authorization challenge endpoint is a new endpoint
    to collect this login hint and direct the client with the next steps,
    whether that is to do an MFA flow, or perform an OAuth redirect-based
-   flow.
+   flow.  If the authorization server directs the client to complete the
+   flow using a redirect-based authorization request in a browser, the
+   client and authorization server SHOULD follow applicable best current
+   practices for native apps (e.g., RFC 8252 and its successors) for
+   redirect URI selection and external user-agent usage.
 
    In order to preserve the security of this specification, the
    Authorization Server MUST verify the "first-partyness" of the client
@@ -650,7 +652,9 @@ Table of Contents
    To mitigate the risk of session hijacking, the 'auth_session' MUST be
    bound to the device, and the authorization server MUST reject an
    'auth_session' if it is presented from a different device than the
-   one it was bound to.
+   one it was bound to.  DPoP is one mechanism that MAY be used to bind
+   the 'auth_session' value to a device as described in Section 9.6, but
+   other mechanisms MAY also be used.
 
    See Section 9.6 for additional security considerations.
 

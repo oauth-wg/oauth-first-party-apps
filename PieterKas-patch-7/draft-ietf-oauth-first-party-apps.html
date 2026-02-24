@@ -1057,7 +1057,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Parecki, et al.</td>
-<td class="center">Expires 24 August 2026</td>
+<td class="center">Expires 28 August 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1070,12 +1070,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-oauth-first-party-apps-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-02-20" class="published">20 February 2026</time>
+<time datetime="2026-02-24" class="published">24 February 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-08-24">24 August 2026</time></dd>
+<dd class="expires"><time datetime="2026-08-28">28 August 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1137,7 +1137,7 @@ applications, only delegating to the browser in unexpected, high risk, or error 
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 24 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 28 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1401,7 +1401,7 @@ applications, only delegating to the browser in unexpected, high risk, or error 
       </h2>
 <p id="section-1-1">This document, OAuth for First-Party Apps (FiPA),
 extends the OAuth 2.0 Authorization Framework <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> with
-a new endpoint, <code>authorization_challenge_endpoint</code>, to support first-party
+a new endpoint to support first-party
 applications that want to control the process of obtaining authorization from
 the user using a native experience.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">The client collects any initial information from the user and POSTs that information
@@ -1416,8 +1416,7 @@ or launching a browser to the authorization endpoint.<a href="#section-1-3" clas
 preferred, this draft provides a mechanism for the client to directly interact
 with the user. This requires a high degree of trust between the authorization server
 and the client, as there typically is for first-party applications.
-It should only be considered when there are usability
-concerns with a redirect-based approach, such as for native mobile or desktop applications.<a href="#section-1-4" class="pilcrow">¶</a></p>
+It should be considered only when a redirect-based approach introduces usability issues, for example, when switching context between a native application and the browser, disrupting the user journey and preventing task completion.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">This draft also extends the token response (typically for use in response to a refresh token request) and resource server response to allow the authorization server or resource server to indicate that the client should re-request authorization from the user. This can include requesting step-up authentication by including parameters defined in <span>[<a href="#RFC9470" class="cite xref">RFC9470</a>]</span> as well.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <div id="usage-and-applicability">
 <section id="section-1.1">
@@ -1437,8 +1436,7 @@ concerns with a redirect-based approach, such as for native mobile or desktop ap
 <a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-limitations-of-this-specifi" class="section-name selfRef">Limitations of this specification</a>
         </h3>
 <p id="section-1.2-1">The scope of this specification is limited to first-party applications. Please review the entirety of <a href="#security-considerations" class="auto internal xref">Section 9</a>, and when more than one first-party application is supported, <a href="#multiple-applications" class="auto internal xref">Section 9.7</a>.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
-<p id="section-1.2-2">While this draft provides the framework for a native OAuth experience, each implementation
-will need to define the specific behavior that it expects from OAuth clients interacting with the authorization server. While this lack of clearly defining the details would typically lead to less interoperability, it is acceptable in this case since we intend this specification to be deployed in a tightly coupled environment since it is only applicable to first-party applications.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
+<p id="section-1.2-2">This draft defines the overall framework for delivering a native OAuth user authentication experience. The precise client–server interactions used to authenticate the user (e.g., prompts, challenges, and step sequencing) are intentionally left to individual deployments and are out of scope for this specification. Future profiles may standardize specific interaction patterns.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="user-experience-considerations">
@@ -1609,7 +1607,7 @@ server to indicate that further authentication of the user is required.<a href="
       <h2 id="name-authorization-initiation">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-authorization-initiation" class="section-name selfRef">Authorization Initiation</a>
       </h2>
-<p id="section-5-1">A client may wish to initiate an authorization flow by first prompting the user for their user identifier or other account information. The authorization challenge endpoint is a new endpoint to collect this login hint and direct the client with the next steps, whether that is to do an MFA flow, or perform an OAuth redirect-based flow.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">A client may wish to initiate an authorization flow by first prompting the user for their user identifier or other account information. The authorization challenge endpoint is a new endpoint to collect this login hint and direct the client with the next steps, whether that is to do an MFA flow, or perform an OAuth redirect-based flow. If the authorization server directs the client to complete the flow using a redirect-based authorization request in a browser, the client and authorization server <span class="bcp14">SHOULD</span> follow applicable best current practices for native apps (e.g., RFC 8252 and its successors) for redirect URI selection and external user-agent usage.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <p id="section-5-2">In order to preserve the security of this specification, the Authorization Server <span class="bcp14">MUST</span> verify the "first-partyness" of the client before continuing with the authentication flow. Please see <a href="#first-party-applications" class="auto internal xref">Section 9.1</a> for additional considerations.<a href="#section-5-2" class="pilcrow">¶</a></p>
 <div id="challenge-request">
 <section id="section-5.1">
@@ -1884,7 +1882,7 @@ rather than the Authorization Challenge Endpoint.<a href="#section-5.3-3" class=
 <p id="section-5.3.1-2">The <code>auth_session</code> value is completely opaque to the client, and as such the authorization server <span class="bcp14">MUST</span> adequately protect the value from inspection by the client, for example by using a random string or using a JWE if the authorization server is not maintaining state on the backend.<a href="#section-5.3.1-2" class="pilcrow">¶</a></p>
 <p id="section-5.3.1-3">If the client has an <code>auth_session</code>, the client <span class="bcp14">MUST</span> include it in future requests to the authorization challenge endpoint. The client <span class="bcp14">MUST</span> store the <code>auth_session</code> beyond the issuance of the authorization code to be able to use it in future requests.<a href="#section-5.3.1-3" class="pilcrow">¶</a></p>
 <p id="section-5.3.1-4">Every response defined by this specification may include a new <code>auth_session</code> value. Clients <span class="bcp14">MUST NOT</span> assume that <code>auth_session</code> values are static, and <span class="bcp14">MUST</span> be prepared to update the stored <code>auth_session</code> value if one is received in a response.<a href="#section-5.3.1-4" class="pilcrow">¶</a></p>
-<p id="section-5.3.1-5">To mitigate the risk of session hijacking, the 'auth_session' <span class="bcp14">MUST</span> be bound to the device, and the authorization server <span class="bcp14">MUST</span> reject an 'auth_session' if it is presented from a different device than the one it was bound to.<a href="#section-5.3.1-5" class="pilcrow">¶</a></p>
+<p id="section-5.3.1-5">To mitigate the risk of session hijacking, the 'auth_session' <span class="bcp14">MUST</span> be bound to the device, and the authorization server <span class="bcp14">MUST</span> reject an 'auth_session' if it is presented from a different device than the one it was bound to. DPoP is one mechanism that <span class="bcp14">MAY</span> be used to bind the 'auth_session' value to a device as described in <a href="#auth-session-security" class="auto internal xref">Section 9.6</a>, but other mechanisms <span class="bcp14">MAY</span> also be used.<a href="#section-5.3.1-5" class="pilcrow">¶</a></p>
 <p id="section-5.3.1-6">See <a href="#auth-session-security" class="auto internal xref">Section 9.6</a> for additional security considerations.<a href="#section-5.3.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
