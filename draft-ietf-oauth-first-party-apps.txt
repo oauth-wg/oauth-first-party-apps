@@ -1187,9 +1187,8 @@ A.1.  Passkey
    3.  The Authorization Server verifies the username and returns a
        challenge
 
-   4.  The Client signs the challenge using the platform authenticator,
-       which results in the user being prompted for verification with
-       biometrics or a PIN.
+   4.  The user is prompted for verification with biometrics or a PIN,
+       enabling the Client to sign the challenge using the passkey.
 
    5.  The Client sends the signed challenge, username, and credential
        ID to the Authorization Challenge Endpoint (Section 4.1).
