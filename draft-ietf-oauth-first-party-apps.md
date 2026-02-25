@@ -812,7 +812,7 @@ This example describes how to use the mechanisms defined in this draft to create
 
 # Example Implementations
 
-In order to successfully implement this specification, the Authorization Server will need to define its own specific profile for what values clients are expected to send in the Authorization Challenge Request ({{challenge-request}}), as well as AS defined specific error codes in the Authorization Challenge Response ({{challenge-response}}).
+In order to successfully implement this specification, the Authorization Server will need to define its own specific profile for what values clients are expected to send in the Authorization Challenge Request ({{challenge-request}}), as well as AS-defined specific error codes in the Authorization Challenge Response ({{challenge-response}}).
 
 Below is an example profile that allows for a successful implementation that enables the user to log in with a
 username and OTP. This example is included for illustration purposes only to help AS developers define the profile
