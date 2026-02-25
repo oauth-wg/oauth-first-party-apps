@@ -2630,7 +2630,8 @@ an authorization request and eventually obtain an authorization code.<a href="#s
 <a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-example-implementations" class="section-name selfRef">Example Implementations</a>
       </h2>
 <p id="appendix-B-1">In order to successfully implement this specification, the Authorization Server will need to define its own specific requirements for what values clients are expected to send in the Authorization Challenge Request (<a href="#challenge-request" class="auto internal xref">Section 5.1</a>), as well as its own specific error codes in the Authorization Challenge Response (<a href="#challenge-response" class="auto internal xref">Section 5.2</a>).<a href="#appendix-B-1" class="pilcrow">¶</a></p>
-<p id="appendix-B-2">Below is an example of parameters required for a complete implementation that enables the user to log in with a username and OTP.<a href="#appendix-B-2" class="pilcrow">¶</a></p>
+<p id="appendix-B-2">It is expected that service providers will wrap the implementation of this specification in an SDK which will be used by application developers, removing the need for application develeopers to implement the specification themselves.<a href="#appendix-B-2" class="pilcrow">¶</a></p>
+<p id="appendix-B-3">Below is an example of parameters required for a complete implementation that enables the user to log in with a username and OTP.<a href="#appendix-B-3" class="pilcrow">¶</a></p>
 <div id="authorization-challenge-request-parameters">
 <section id="appendix-B.1">
         <h3 id="name-authorization-challenge-requ">
