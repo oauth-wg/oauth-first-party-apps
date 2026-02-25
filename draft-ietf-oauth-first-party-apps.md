@@ -760,7 +760,7 @@ A user may be required to provide a confirmation code as part of an authenticati
 1. The Client sends the Authorization Code in a Token Request ({{token-request}}) to the Token Endpoint.
 1. The Authorization Server verifies the Authorization Code and issues the Access Token and Refresh Token.
 
-## Re-authenticating to an app a week later using OTP
+## Re-authenticating to an app a week later using OTP {#refresh-token-example}
 
 A client may be in possession of an Access and Refresh Token as the result of a previous succesful user authentication. The user returns to the app a week later and accesses the app. The Client presents the Access Token, but receives an error indicating the Access Token is no longer valid. The Client presents a Refresh Token to the Authorization Server to obtain a new Access Token. If the Authorization Server requires user interaction for reasons based on its own policies, it rejects the Refresh Token and the Client re-starts the user authentication flow to obtain new Access and Refresh Tokens.
 
@@ -839,7 +839,7 @@ In addition to the response parameters defined in {{challenge-response}}, the au
       a second request to the Authorization Challenge Endpoint. The HTTP
       response code to use with this error value is `401 Unauthorized`.
 
-## Example Sequence
+## Example Sequence - Initial Authorization (No Refresh Token)
 
 The client prompts the user to enter their username, and sends the username in an initial Authorization Challenge Request.
 
@@ -874,7 +874,6 @@ The client prompts the user for an OTP, and sends a new Authorization Challenge 
 
 The Authorization Server validates the `auth_session` to find the expected user, then validates the OTP for that user, and responds with an authorization code.
 
-
     HTTP/1.1 200 OK
     Content-Type: application/json
     Cache-Control: no-store
@@ -904,6 +903,74 @@ The Authorization Server responds with an access token and refresh token.
       "expires_in": 3600,
       "access_token": "d41c0692f1187fd9b326c63d",
       "refresh_token": "e090366ac1c448b8aed84cbc07"
+    }
+
+## Example Sequence - Refresh Token Request Triggering Additional Authorization
+
+This example illustrates the use case described in {refresh-token-example}. 
+
+The client sends a refresh token request to obtain a new access token.
+
+    POST /token HTTP/1.1
+    Host: server.example.com
+    Content-Type: application/x-www-form-urlencoded
+
+    grant_type=refresh_token
+    &client_id=bb16c14c73415
+    &refresh_token=e090366ac1c448b8aed84cbc07
+
+The Authorization Server determines that additional authorization is required (for example, step-up or re-verification) before the refresh token can be used, and returns an authorization challenge error response.
+
+    HTTP/1.1 403 Forbidden
+    Content-Type: application/json
+    Cache-Control: no-store
+
+    {
+      "error": "insufficient_authorization",
+      "auth_session": "ce6772f5e07bc8361572f",
+      "otp_required": true
+    }
+
+The client prompts the user for an OTP, and sends an Authorization Challenge Request to continue the authorization session identified by `auth_session`.
+
+    POST /authorize-challenge HTTP/1.1
+    Host: server.example.com
+    Content-Type: application/x-www-form-urlencoded
+
+    auth_session=ce6772f5e07bc8361572f
+    &otp=555121
+
+The Authorization Server validates the `auth_session` to find the expected user, then validates the OTP for that user, and responds with an authorization code.
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    Cache-Control: no-store
+
+    {
+      "authorization_code": "uY29tL2F1dGhlbnRpY"
+    }
+
+The client sends the authorization code to the token endpoint.
+
+    POST /token HTTP/1.1
+    Host: server.example.com
+    Content-Type: application/x-www-form-urlencoded
+
+    grant_type=authorization_code
+    &client_id=bb16c14c73415
+    &code=uY29tL2F1dGhlbnRpY
+
+The Authorization Server responds with an access token and new refresh token.
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    Cache-Control: no-store
+
+    {
+      "token_type": "Bearer",
+      "expires_in": 3600,
+      "access_token": "d41c0692f1187fd9b326c63d",
+      "refresh_token": "f2b0f7d9a41f4d59a8c1e9b3ab"
     }
 
 # Design Goals
