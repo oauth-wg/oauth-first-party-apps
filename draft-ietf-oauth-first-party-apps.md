@@ -815,6 +815,8 @@ This example describes how to use the mechanisms defined in this draft to create
 
 In order to successfully implement this specification, the Authorization Server will need to define its own specific requirements for what values clients are expected to send in the Authorization Challenge Request ({{challenge-request}}), as well as its own specific error codes in the Authorization Challenge Response ({{challenge-response}}).
 
+It is expected that service providers will wrap the implementation of this specification in an SDK which will be used by application developers, removing the need for application develeopers to implement the specification themselves.
+
 Below is an example of parameters required for a complete implementation that enables the user to log in with a username and OTP.
 
 ## Authorization Challenge Request Parameters
