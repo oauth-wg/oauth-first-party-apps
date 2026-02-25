@@ -108,7 +108,7 @@ the user using a native experience.
 
 The client collects any initial information from the user and POSTs that information
 as well as information about the client's request to the Authorization Challenge Endpoint,
-and receives either an authorization code (as defined in section 1.3.1 of {{RFC6749}} or an
+and receives either an authorization code (as defined in {{Section 1.3.1 of RFC6749}} or an
 error code in response. The error code
 may indicate that the client can continue to prompt the user for more information,
 or can indicate that the client needs to launch a browser to have the user complete
