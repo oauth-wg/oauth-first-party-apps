@@ -907,7 +907,7 @@ The Authorization Server responds with an access token and refresh token.
 
 ## Example Sequence - Refresh Token Request Triggering Additional Authorization
 
-This example illustrates the use case described in {refresh-token-example}. 
+This example illustrates the use case described in {refresh-token-example}.
 
 The client sends a refresh token request to obtain a new access token.
 
