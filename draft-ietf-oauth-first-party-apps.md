@@ -370,7 +370,7 @@ parameters with the response:
      "redirect_to_web":
      :     The request is not able to be fulfilled with any further
            direct interaction with the user. Instead, the client
-           should initiate a new authorization code flow so that the
+           should initiate a new authorization request so that the
            user interacts with the authorization server in a web browser.
            See {{redirect-to-web}} for details.
 
@@ -436,16 +436,19 @@ in the application, or to handle an exception flow like account recovery.
 To indicate this error to the client, the authorization server returns an
 error response as defined above with the `redirect_to_web` error code.
 
-In this case, the client is expected to initiate a new OAuth
+The response MAY include a `request_uri`, in which case the client is expected
+to use it to initiate an authorization request as described in {{Section 4 of RFC9126}}.
+
+If no `request_uri` is returned, the client is expected to initiate a new OAuth
 Authorization Code flow with PKCE according to {{RFC6749}} and {{RFC7636}}.
 
 If the client expects the frequency of this error response to be high,
-the client MAY include a PKCE {{RFC7636}} `code_challenge` in the initial authorization
-challenge request. This enables the authorization server to essentially treat
-the authorization challenge request as a PAR {{RFC9126}} request, and
-return the `request_uri` and `expires_in` as defined by {{RFC9126}} in the error response.
-The client then uses the `request_uri` value to build an authorization request
-as defined in {{RFC9126}} Section 4.
+the client SHOULD include a PKCE {{RFC7636}} `code_challenge` in the initial authorization
+challenge request.
+
+If the client does not include a PKCE `code_challenge` in the initial authorization
+challenge request, the authorization server MUST NOT return a `request_uri` in the
+`redirect_to_web` error response, as that would effectively be the same as a PAR request without PKCE.
 
 
 ## Intermediate Requests {#intermediate_requests}
