@@ -267,7 +267,7 @@ following parameters, as well as parameters from any extensions, using the `appl
 format with a character encoding of UTF-8 in the HTTP request body:
 
 "client_id":
-: REQUIRED, unless the client is authenticating to the authorization server in a manner that unambiguously identifies the client, or the request includes an `auth_session` value associated with an existing session from which the authorization server can determine the client identity. The client MAY include `client_id` even when one of these conditions applies and the authorization server MAY validate that it is consistent with the identified client.
+: REQUIRED, unless the client is authenticating to the authorization server in a manner that unambiguously identifies the client, or the request includes an `auth_session` value associated with an existing session from which the authorization server can determine the client identity. The client MAY include the `client_id` even when one of these conditions applies. If it does, the authorization server MUST verify that the `client_id` identifies the same client as otherwise determined for the request, and MUST reject the request if it does not.
 
 "scope":
 : OPTIONAL. The OAuth scope defined in {{RFC6749}}.
