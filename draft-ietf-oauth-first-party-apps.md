@@ -217,7 +217,7 @@ When the client uses a refresh token to obtain a new access token, the authoriza
 
 When making a resource request to a resource server, the resource server MAY respond with an error according to OAuth 2.0 Step-Up Authentication Challenge Protocol {{RFC9470}}, indicating that re-authentication of the user is required.
 
-The use of {{RFC9470}} in this specification is for interoperability with its defined error signaling and does not propose changes to {{RFC9740}} itself.
+The use of {{RFC9470}} in this specification is for interoperability with its defined error signaling and does not propose changes to {{RFC9470}} itself.
 
 # Protocol Endpoints
 
