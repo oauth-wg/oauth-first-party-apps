@@ -549,7 +549,7 @@ For example:
 
 # Resource Server Error Response
 
-Step-Up Authentication {{RFC9470}} defines error code values that a resource server can use to tell the client to start a new authorization request including `acr_values` and `max_age` from {{OpenID}}. This specification reuses the Step-Up Authentication {{RFC9470}} error response to initiate a first party authorization flow to satisfy the step-up authentication request. 
+Step-Up Authentication {{RFC9470}} defines error code values that a resource server can use to tell the client to start a new authorization request including `acr_values` and `max_age` from {{OpenID}}. This specification reuses the Step-Up Authentication {{RFC9470}} error response to initiate a first party authorization flow to satisfy the step-up authentication request.
 
 Upon receiving this error response, the client starts a new first-party authorization request at the authorization challenge endpoint, and includes the `acr_values`, `max_age` and `scope` that were returned in the error response.
 
