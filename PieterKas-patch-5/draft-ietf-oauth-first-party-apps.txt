@@ -5,10 +5,10 @@
 Web Authorization Protocol                                    A. Parecki
 Internet-Draft                                                      Okta
 Intended status: Standards Track                             G. Fletcher
-Expires: 27 August 2026                            Capital One Financial
+Expires: 30 August 2026                            Capital One Financial
                                                             P. Kasselman
                                                         Defakto Security
-                                                        23 February 2026
+                                                        26 February 2026
 
 
                  OAuth 2.0 for First-Party Applications
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 August 2026.
+   This Internet-Draft will expire on 30 August 2026.
 
 Copyright Notice
 
@@ -372,9 +372,9 @@ Table of Contents
    authorization server metadata document [RFC8414] using the
    authorization_challenge_endpoint parameter as defined in Section 8.
 
-   The authorization challenge endpoint SHOULD accept the authorization
-   request parameters defined in [RFC6749] for the authorization
-   endpoint as well as any authorization endpoint extensions supoprted
+   The authorization challenge endpoint MUST accept the authorization
+   request parameters as defined in [RFC6749] for the authorization
+   endpoint as well as any authorization endpoint extensions supported
    by the authorization server.  Examples of such extensions include
    Proof Key for Code Exchange (PKCE) [RFC7636], Resource Indicators
    [RFC8707], and OpenID Connect [OpenID].  Note that some extension
