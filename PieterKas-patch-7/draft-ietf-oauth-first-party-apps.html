@@ -10,8 +10,7 @@
 <meta content="Pieter Kasselman" name="author">
 <meta content="
        This document defines the Authorization Challenge Endpoint, which supports
-a first-party client that wants to control the process of
-obtaining authorization from the user using a native experience. 
+clients that want to control the process of obtaining authorization from the user using a native experience. 
        In many cases, this can provide an entirely browserless OAuth 2.0 experience suited for native
 applications, only delegating to the browser in unexpected, high risk, or error conditions. 
     " name="description">
@@ -1057,7 +1056,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Parecki, et al.</td>
-<td class="center">Expires 28 August 2026</td>
+<td class="center">Expires 30 August 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1070,12 +1069,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-oauth-first-party-apps-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-02-24" class="published">24 February 2026</time>
+<time datetime="2026-02-26" class="published">26 February 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-08-28">28 August 2026</time></dd>
+<dd class="expires"><time datetime="2026-08-30">30 August 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1097,8 +1096,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">This document defines the Authorization Challenge Endpoint, which supports
-a first-party client that wants to control the process of
-obtaining authorization from the user using a native experience.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+clients that want to control the process of obtaining authorization from the user using a native experience.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 <p id="section-abstract-2">In many cases, this can provide an entirely browserless OAuth 2.0 experience suited for native
 applications, only delegating to the browser in unexpected, high risk, or error conditions.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 </section>
@@ -1137,7 +1135,7 @@ applications, only delegating to the browser in unexpected, high risk, or error 
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 28 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 30 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1401,9 +1399,10 @@ applications, only delegating to the browser in unexpected, high risk, or error 
       </h2>
 <p id="section-1-1">This document, OAuth for First-Party Apps (FiPA),
 extends the OAuth 2.0 Authorization Framework <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> with
-a new endpoint to support first-party
+a new endpoint to support
 applications that want to control the process of obtaining authorization from
-the user using a native experience.<a href="#section-1-1" class="pilcrow">¶</a></p>
+the user using a native experience, with browser redirection as described in
+OAuth 2.0 for Native Apps <span>[<a href="#RFC8252" class="cite xref">RFC8252</a>]</span> used only as a fallback when needed.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">The client collects any initial information from the user and POSTs that information
 as well as information about the client's request to the Authorization Challenge Endpoint,
 and receives either an authorization code or an error code in response. The error code
@@ -1423,11 +1422,11 @@ It should be considered only when a redirect-based approach introduces usability
         <h3 id="name-usage-and-applicability">
 <a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-usage-and-applicability" class="section-name selfRef">Usage and Applicability</a>
         </h3>
-<p id="section-1.1-1">This specification <span class="bcp14">MUST</span> only be used by first-party applications, which is when the authorization server and application are controlled by the same entity and the user understands them both as the same entity.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
-<p id="section-1.1-2">This specification <span class="bcp14">MUST NOT</span> be used by third party applications, and the authorization server <span class="bcp14">SHOULD</span> take measures to prevent use by third party applications. (e.g. only enable this grant for certain client IDs, and take measures to authenticate first-party apps when possible, such as by using app attestations as described in <span>[<a href="#I-D.ietf-oauth-attestation-based-client-auth" class="cite xref">I-D.ietf-oauth-attestation-based-client-auth</a>]</span>.)<a href="#section-1.1-2" class="pilcrow">¶</a></p>
-<p id="section-1.1-3">Using this specification in scenarios other than those described will lead to unintended security and privacy problems for users and service providers.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
-<p id="section-1.1-4">This specification is designed to be used by first-party native applications, which includes both mobile and desktop applications.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
-<p id="section-1.1-5">If you provide multiple apps and expect users to use multiple apps on the same device, there may be better ways of sharing a user's login between the apps other than each app implementing this specification or using an SDK that implements this specification. For example, <span>[<a href="#OpenID.Native-SSO" class="cite xref">OpenID.Native-SSO</a>]</span> provides a mechanism for one app to obtain new tokens by exchanging tokens from another app, without any user interaction. See <a href="#multiple-applications" class="auto internal xref">Section 9.7</a> for more details.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
+<p id="section-1.1-1">This specification is designed for the security model of first-party applications. First-party applications are applications that are controlled by the same entity as the authorization server and the user understands them both as the same entity. This specification is designed to be used by first-party native applications, which includes both mobile and desktop applications.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-2">Profiles of this specification that extend the usage to non-first-party use cases <span class="bcp14">MUST</span> describe how their application of this specification avoids the risks associated with third-party apps directly interacting with the user. For example, an extension of this specification that enables federation between native apps never actually asks any third-party app to collect credentials from the user, so avoids these risks.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.1-3">Using this specification in scenarios other than those described may lead to unintended security and privacy problems for users and service providers.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
+<p id="section-1.1-4">If a service provides multiple apps, and expects users to use multiple apps on the same device, there may be better ways of sharing a user's login between the apps other than each app implementing this specification or using an SDK that implements this specification. For example, <span>[<a href="#OpenID.Native-SSO" class="cite xref">OpenID.Native-SSO</a>]</span> provides a mechanism for one app to obtain new tokens by exchanging tokens from another app, without any user interaction. See <a href="#multiple-applications" class="auto internal xref">Section 9.7</a> for more details.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
+<p id="section-1.1-5">Please review the entirety of <a href="#security-considerations" class="auto internal xref">Section 9</a>, and when more than one first-party application is supported, <a href="#multiple-applications" class="auto internal xref">Section 9.7</a>.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="limitations-of-this-specification">
@@ -1435,8 +1434,7 @@ It should be considered only when a redirect-based approach introduces usability
         <h3 id="name-limitations-of-this-specifi">
 <a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-limitations-of-this-specifi" class="section-name selfRef">Limitations of this specification</a>
         </h3>
-<p id="section-1.2-1">The scope of this specification is limited to first-party applications. Please review the entirety of <a href="#security-considerations" class="auto internal xref">Section 9</a>, and when more than one first-party application is supported, <a href="#multiple-applications" class="auto internal xref">Section 9.7</a>.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
-<p id="section-1.2-2">This draft defines the overall framework for delivering a native OAuth user authentication experience. The precise client–server interactions used to authenticate the user (e.g., prompts, challenges, and step sequencing) are intentionally left to individual deployments and are out of scope for this specification. Future profiles may standardize specific interaction patterns.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
+<p id="section-1.2-1">This draft defines the overall framework for delivering a native OAuth user authentication experience. The precise client–server interactions used to authenticate the user (e.g., prompts, challenges, and step sequencing) are intentionally left to individual deployments and are out of scope for this specification. Future profiles may standardize specific interaction patterns.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="user-experience-considerations">
@@ -1607,7 +1605,7 @@ server to indicate that further authentication of the user is required.<a href="
       <h2 id="name-authorization-initiation">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-authorization-initiation" class="section-name selfRef">Authorization Initiation</a>
       </h2>
-<p id="section-5-1">A client may wish to initiate an authorization flow by first prompting the user for their user identifier or other account information. The authorization challenge endpoint is a new endpoint to collect this login hint and direct the client with the next steps, whether that is to do an MFA flow, or perform an OAuth redirect-based flow. If the authorization server directs the client to complete the flow using a redirect-based authorization request in a browser, the client and authorization server <span class="bcp14">SHOULD</span> follow applicable best current practices for native apps (e.g., RFC 8252 and its successors) for redirect URI selection and external user-agent usage.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">A client may wish to initiate an authorization flow by first prompting the user for their user identifier or other account information. The authorization challenge endpoint is a new endpoint to collect this login hint and direct the client with the next steps, whether that is to do an MFA flow, or perform an OAuth redirect-based flow. If the authorization server directs the client to complete the flow using a redirect-based authorization request in a browser, the client and authorization server <span class="bcp14">SHOULD</span> follow applicable best current practices for native apps (e.g., <span>[<a href="#RFC8252" class="cite xref">RFC8252</a>]</span> and its successors) for redirect URI selection and external user-agent usage.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <p id="section-5-2">In order to preserve the security of this specification, the Authorization Server <span class="bcp14">MUST</span> verify the "first-partyness" of the client before continuing with the authentication flow. Please see <a href="#first-party-applications" class="auto internal xref">Section 9.1</a> for additional considerations.<a href="#section-5-2" class="pilcrow">¶</a></p>
 <div id="challenge-request">
 <section id="section-5.1">
@@ -1921,7 +1919,7 @@ Cache-Control: no-store
 </pre><a href="#section-6.1-3" class="pilcrow">¶</a>
 </div>
 <p id="section-6.1-4">The response <span class="bcp14">MAY</span> include an <code>auth_session</code> parameter which the client is expected to include on any subsequent requests to the authorization challenge endpoint, as described in <a href="#auth-session" class="auto internal xref">Section 5.3.1</a>. The <code>auth_session</code> parameter <span class="bcp14">MAY</span> also be included even if the authorization code was obtained through a traditional OAuth authorization code flow rather than the flow defined by this specification.<a href="#section-6.1-4" class="pilcrow">¶</a></p>
-<p id="section-6.1-5">Including the <code>auth_session</code> parameter in the token response enables flows such as step-up authentication <span>[<a href="#RFC9470" class="cite xref">RFC9470</a>]</span>, so that the authorization server can restore the context of a previous session and prompt only for the needed step-up factors. See <a href="#step-up-sms-example" class="auto internal xref">Appendix A.7</a> for an example application.<a href="#section-6.1-5" class="pilcrow">¶</a></p>
+<p id="section-6.1-5">The <code>auth_session</code> mechanism described in <a href="#auth-session" class="auto internal xref">Section 5.3.1</a> is an optional feature the authorization server can leverage in order to enable flows such as step-up authentication <span>[<a href="#RFC9470" class="cite xref">RFC9470</a>]</span>, so that the authorization server can restore the context of a previous session and prompt only for the needed step-up factors. See <a href="#step-up-sms-example" class="auto internal xref">Appendix A.7</a> for an example application.<a href="#section-6.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="token-endpoint-error-response">
@@ -1943,7 +1941,7 @@ complete the authorization.<a href="#section-6.2-3.2.1" class="pilcrow">¶</a></
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-6.2-4">Additionally, the response <span class="bcp14">MAY</span> contain an <code>auth_session</code> parameter which the client is expected to include on a subsequent request to the authorization challenge endpoint.<a href="#section-6.2-4" class="pilcrow">¶</a></p>
+<p id="section-6.2-4">The response <span class="bcp14">MAY</span> also contain an <code>auth_session</code> parameter which the client is expected to include on a subsequent request to the authorization challenge endpoint.<a href="#section-6.2-4" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="section-6.2-5">
           <dt id="section-6.2-5.1">"auth_session":</dt>
           <dd style="margin-left: 1.5em" id="section-6.2-5.2">
@@ -1955,8 +1953,9 @@ endpoint if it receives one along with the error response.<a href="#section-6.2-
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-6.2-6">For example:<a href="#section-6.2-6" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-6.2-7">
+<p id="section-6.2-6">Additionally, the response <span class="bcp14">MAY</span> contain custom values that describe instructions for how the client should proceed to interact with the user.<a href="#section-6.2-6" class="pilcrow">¶</a></p>
+<p id="section-6.2-7">For example:<a href="#section-6.2-7" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6.2-8">
 <pre>
 HTTP/1.1 403 Forbidden
 Content-Type: application/json
@@ -1964,9 +1963,10 @@ Cache-Control: no-store
 
 {
   "error": "insufficient_authorization",
-  "auth_session": "uY29tL2F1dGhlbnRpY"
+  "auth_session": "uY29tL2F1dGhlbnRpY",
+  "otp_required": true
 }
-</pre><a href="#section-6.2-7" class="pilcrow">¶</a>
+</pre><a href="#section-6.2-8" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -2346,7 +2346,7 @@ an authorization request and eventually obtain an authorization code.<a href="#s
             <p id="appendix-A.1-2.3.1">The Authorization Server verifies the username and returns a challenge<a href="#appendix-A.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
           <li id="appendix-A.1-2.4">
-            <p id="appendix-A.1-2.4.1">The Client signs the challenge using the platform authenticator, which results in the user being prompted for verification with biometrics or a PIN.<a href="#appendix-A.1-2.4.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-2.4.1">The user is prompted for verification with biometrics or a PIN, enabling the Client to sign the challenge using the passkey.<a href="#appendix-A.1-2.4.1" class="pilcrow">¶</a></p>
 </li>
           <li id="appendix-A.1-2.5">
             <p id="appendix-A.1-2.5.1">The Client sends the signed challenge, username, and credential ID to the Authorization Challenge Endpoint (<a href="#authorization-challenge-endpoint" class="auto internal xref">Section 4.1</a>).<a href="#appendix-A.1-2.5.1" class="pilcrow">¶</a></p>
@@ -2630,7 +2630,8 @@ an authorization request and eventually obtain an authorization code.<a href="#s
 <a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-example-implementations" class="section-name selfRef">Example Implementations</a>
       </h2>
 <p id="appendix-B-1">In order to successfully implement this specification, the Authorization Server will need to define its own specific requirements for what values clients are expected to send in the Authorization Challenge Request (<a href="#challenge-request" class="auto internal xref">Section 5.1</a>), as well as its own specific error codes in the Authorization Challenge Response (<a href="#challenge-response" class="auto internal xref">Section 5.2</a>).<a href="#appendix-B-1" class="pilcrow">¶</a></p>
-<p id="appendix-B-2">Below is an example of parameters required for a complete implementation that enables the user to log in with a username and OTP.<a href="#appendix-B-2" class="pilcrow">¶</a></p>
+<p id="appendix-B-2">It is expected that service providers will wrap the implementation of this specification in an SDK which will be used by application developers, removing the need for application develeopers to implement the specification themselves.<a href="#appendix-B-2" class="pilcrow">¶</a></p>
+<p id="appendix-B-3">Below is an example of parameters required for a complete implementation that enables the user to log in with a username and OTP.<a href="#appendix-B-3" class="pilcrow">¶</a></p>
 <div id="authorization-challenge-request-parameters">
 <section id="appendix-B.1">
         <h3 id="name-authorization-challenge-requ">
@@ -2656,7 +2657,7 @@ an authorization request and eventually obtain an authorization code.<a href="#s
         <h3 id="name-authorization-challenge-resp">
 <a href="#appendix-B.2" class="section-number selfRef">B.2. </a><a href="#name-authorization-challenge-resp" class="section-name selfRef">Authorization Challenge Response Parameters</a>
         </h3>
-<p id="appendix-B.2-1">In addition to the response parameters defined in <a href="#challenge-response" class="auto internal xref">Section 5.2</a>, the authorization server defines the additional value for the <code>error</code> response below.<a href="#appendix-B.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-B.2-1">In addition to the response parameters defined in <a href="#challenge-response" class="auto internal xref">Section 5.2</a>, the authorization server defines the additional parameter below.<a href="#appendix-B.2-1" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="appendix-B.2-2">
           <dt id="appendix-B.2-2.1">"otp_required":</dt>
           <dd style="margin-left: 1.5em" id="appendix-B.2-2.2">
@@ -2693,8 +2694,9 @@ Content-Type: application/json
 Cache-Control: no-store
 
 {
-  "error": "otp_required",
-  "auth_session": "ce6772f5e07bc8361572f"
+  "error": "insufficient_authorization",
+  "auth_session": "ce6772f5e07bc8361572f",
+  "otp_required": true
 }
 </pre><a href="#appendix-B.3-4" class="pilcrow">¶</a>
 </div>
