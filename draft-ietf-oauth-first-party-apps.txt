@@ -5,10 +5,10 @@
 Web Authorization Protocol                                    A. Parecki
 Internet-Draft                                                      Okta
 Intended status: Standards Track                             G. Fletcher
-Expires: 29 August 2026                            Capital One Financial
+Expires: 30 August 2026                            Capital One Financial
                                                             P. Kasselman
                                                         Defakto Security
-                                                        25 February 2026
+                                                        26 February 2026
 
 
                  OAuth 2.0 for First-Party Applications
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 August 2026.
+   This Internet-Draft will expire on 30 August 2026.
 
 Copyright Notice
 
@@ -529,9 +529,9 @@ Table of Contents
 
       "redirect_to_web":  The request is not able to be fulfilled with
          any further direct interaction with the user.  Instead, the
-         client should initiate a new authorization code flow so that
-         the user interacts with the authorization server in a web
-         browser.  See Section 5.2.2.1 for details.
+         client should initiate a new authorization request so that the
+         user interacts with the authorization server in a web browser.
+         See Section 5.2.2.1 for details.
 
       Values for the error parameter MUST NOT include characters outside
       the set %x20-21 / %x23-5B / %x5D-7E.
@@ -594,18 +594,22 @@ Table of Contents
    the client, the authorization server returns an error response as
    defined above with the redirect_to_web error code.
 
-   In this case, the client is expected to initiate a new OAuth
-   Authorization Code flow with PKCE according to [RFC6749] and
-   [RFC7636].
+   The response MAY include a request_uri, in which case the client is
+   expected to use it to initiate an authorization request as described
+   in Section 4 of [RFC9126].
+
+   If no request_uri is returned, the client is expected to initiate a
+   new OAuth Authorization Code flow with PKCE according to [RFC6749]
+   and [RFC7636].
 
    If the client expects the frequency of this error response to be
-   high, the client MAY include a PKCE [RFC7636] code_challenge in the
-   initial authorization challenge request.  This enables the
-   authorization server to essentially treat the authorization challenge
-   request as a PAR [RFC9126] request, and return the request_uri and
-   expires_in as defined by [RFC9126] in the error response.  The client
-   then uses the request_uri value to build an authorization request as
-   defined in [RFC9126] Section 4.
+   high, the client SHOULD include a PKCE [RFC7636] code_challenge in
+   the initial authorization challenge request.
+
+   If the client does not include a PKCE code_challenge in the initial
+   authorization challenge request, the authorization server MUST NOT
+   return a request_uri in the redirect_to_web error response, as that
+   would effectively be the same as a PAR request without PKCE.
 
 5.3.  Intermediate Requests
 
