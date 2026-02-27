@@ -1573,20 +1573,20 @@ A.8.  Registration
 Appendix B.  Example Implementations
 
    In order to successfully implement this specification, the
-   Authorization Server will need to define its own specific
-   requirements for what values clients are expected to send in the
-   Authorization Challenge Request (Section 5.1), as well as its own
-   specific error codes in the Authorization Challenge Response
-   (Section 5.2).
+   Authorization Server will need to define its own specific profile for
+   what values clients are expected to send in the Authorization
+   Challenge Request (Section 5.1), as well as AS-defined specific error
+   codes in the Authorization Challenge Response (Section 5.2).
 
    It is expected that service providers will wrap the implementation of
    this specification in an SDK which will be used by application
-   developers, removing the need for application develeopers to
-   implement the specification themselves.
+   developers, removing the need for application developers to implement
+   the specification themselves.
 
-   Below is an example of parameters required for a complete
+   Below is an example profile that allows for a successful
    implementation that enables the user to log in with a username and
-   OTP.
+   OTP.  This example is included for illustration purposes only to help
+   AS developers define the profile for their deployment and ecosystem.
 
 B.1.  Authorization Challenge Request Parameters
 
