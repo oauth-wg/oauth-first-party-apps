@@ -280,7 +280,7 @@ format with a character encoding of UTF-8 in the HTTP request body:
   See {{redirect-to-web}} for details.
 
 "response_type":
-: REQUIRED. Per section 3.1.1 of {{RFC6749}} `response_type` is required and for this specification MUST contain the value of `code`.
+: REQUIRED. Per section 3.1.1 of {{RFC6749}} `response_type` is required, and for this specification MUST contain the value of `code`.
 
 Specific implementations as well as extensions to this specification MAY define additional parameters to be used at this endpoint.
 
