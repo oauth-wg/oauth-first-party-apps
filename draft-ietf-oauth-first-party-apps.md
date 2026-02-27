@@ -138,7 +138,7 @@ Please review the entirety of {{security-considerations}}, and when more than on
 
 ## Limitations of this specification
 
-This draft defines the overall framework for delivering a native OAuth user authentication experience. The precise client–server interactions used to authenticate the user (e.g., prompts, challenges, and step sequencing) are intentionally left to individual deployments and are out of scope for this specification. 
+This draft defines the overall framework for delivering a native OAuth user authentication experience. The precise client–server interactions used to authenticate the user (e.g., prompts, challenges, and step sequencing) are intentionally left to individual deployments and are out of scope for this specification.
 
 This specification is intended to be profiled to standardize specific interaction patterns enabling a complete interoperable solution.
 
