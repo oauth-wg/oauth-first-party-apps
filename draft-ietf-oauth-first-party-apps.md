@@ -231,12 +231,7 @@ If the authorization server requires client authentication for this client on th
 
 Authorization servers supporting this specification SHOULD include the URL of their authorization challenge endpoint in their authorization server metadata document {{RFC8414}} using the `authorization_challenge_endpoint` parameter as defined in {{authorization-server-metadata}}.
 
-The endpoint accepts the authorization request parameters defined in {{RFC6749}} for the authorization endpoint as well
-as all applicable extensions defined for the authorization endpoint. Some examples of such extensions include Proof
-Key for Code Exchange (PKCE) {{RFC7636}}, Resource Indicators {{RFC8707}}, and OpenID Connect {{OpenID}}. It is
-important to note that some extension parameters have meaning in a web context but don't have meaning in a native
-mechanism (e.g. `response_mode=query`). It is out of scope as to what the AS does in the case that an extension
-defines a parameter that has no meaning in this use case.
+The authorization challenge endpoint MUST accept the authorization request parameters as defined in {{RFC6749}} for the authorization endpoint as well as any authorization endpoint extensions supported by the authorization server. Examples of such extensions include Proof Key for Code Exchange (PKCE) {{RFC7636}}, Resource Indicators {{RFC8707}}, and OpenID Connect {{OpenID}}. Note that some extension parameters have meaning in a web context but don't have meaning in a native mechanism (e.g. `response_mode=query`). It is out of scope as to what the authorization server does in the case that an extension defines a parameter that has no meaning in this use case.
 
 The client initiates the authorization flow with or without information collected from the user (e.g. a signed passkey challenge or MFA code).
 
