@@ -29,8 +29,8 @@ author:
     organization: Okta
     email: aaron@parecki.com
  -  fullname: George Fletcher
-    organization: Capital One Financial
-    email: george.fletcher@capitalone.com
+    organization: Practical Identity LLC
+    email: george@practicalidentity.com
  -  fullname: Pieter Kasselman
     organization: Defakto Security
     email: pieter@defakto.security
@@ -328,53 +328,16 @@ If the request contains invalid parameters or incorrect data,
 or if the authorization server wishes to interact with the user directly,
 the authorization server responds with an HTTP 400 (Bad Request)
 status code (unless specified otherwise below) and includes the following
-parameters with the response:
+parameters with the response.
+
+Response parameters `error`, `error_description`,
+and `error_uri` are defined and used according to {{RFC6749}}. `request_uri` and
+`expires_in` are defined and used according to {{RFC9126}}. This specification
+defines the `auth_session` response parameter.
 
 "error":
-:    REQUIRED.  A single ASCII {{USASCII}} error code from the following:
-
-     "invalid_request":
-     :     The request is missing a required parameter, includes an
-           unsupported parameter value,
-           repeats a parameter, includes multiple credentials,
-           utilizes more than one mechanism for authenticating the
-           client, or is otherwise malformed.
-
-     "invalid_client":
-     :     Client authentication failed (e.g., unknown client, no
-           client authentication included, or unsupported
-           authentication method).  The authorization server MAY
-           return an HTTP 401 (Unauthorized) status code to indicate
-           which HTTP authentication schemes are supported.  If the
-           client attempted to authenticate via the `Authorization`
-           request header field, the authorization server MUST
-           respond with an HTTP 401 (Unauthorized) status code and
-           include the `WWW-Authenticate` response header field
-           matching the authentication scheme used by the client.
-
-     "unauthorized_client":
-     :     The authenticated client is not authorized to use this
-           endpoint.
-
-     "invalid_session":
-     :     The provided `auth_session` is
-           invalid, expired, revoked, or is otherwise invalid.
-
-     "invalid_scope":
-     :     The requested scope is invalid, unknown, malformed, or
-           exceeds the scope granted by the resource owner.
-
-     "insufficient_authorization":
-     :     The presented authorization is insufficient, and the authorization
-           server is requesting the client take additional steps to
-           complete the authorization.
-
-     "redirect_to_web":
-     :     The request is not able to be fulfilled with any further
-           direct interaction with the user. Instead, the client
-           should initiate a new authorization request so that the
-           user interacts with the authorization server in a web browser.
-           See {{redirect-to-web}} for details.
+:    REQUIRED.  A single ASCII {{USASCII}} error code as described in
+     in section {{error-codes}}
 
      Values for the `error` parameter MUST NOT include characters
      outside the set %x20-21 / %x23-5B / %x5D-7E.
@@ -430,7 +393,32 @@ depending on the implementation. The authorization server MAY also define
 more specific content types for the error responses as long as the response
 is JSON and conforms to `application/<AS-defined>+json`.
 
-#### Redirect to Web Error Response {#redirect-to-web}
+#### Error Codes {#error-codes}
+
+This specification supports the use of error codes defined by {{RFC6749}}
+and other error codes defined by OAuth extensions supported by the
+Authorization Server.
+
+This specification defines the following error codes.
+
+"invalid_session":
+     :     The provided `auth_session` is
+           invalid, expired, revoked, or is otherwise invalid.
+
+"insufficient_authorization":
+     :     The presented authorization is insufficient, and the authorization
+           server is requesting the client to take additional steps to
+           complete the authorization.
+
+"redirect_to_web":
+     :     The request is not able to be fulfilled with any further
+           direct interaction with the user. Instead, the client
+           should initiate a new authorization code flow so that the
+           user interacts with the authorization server in a web browser.
+           See {{redirect-to-web}} for details.
+
+
+##### Redirect to Web Error Response {#redirect-to-web}
 
 The authorization server may choose to interact directly with the user based on a risk
 assesment, the introduction of a new authentication method not supported
