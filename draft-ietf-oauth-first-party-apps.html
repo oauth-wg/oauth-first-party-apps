@@ -1405,7 +1405,8 @@ the user using a native experience, with browser redirection as described in
 OAuth 2.0 for Native Apps <span>[<a href="#RFC8252" class="cite xref">RFC8252</a>]</span> used only as a fallback when needed.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">The client collects any initial information from the user and POSTs that information
 as well as information about the client's request to the Authorization Challenge Endpoint,
-and receives either an authorization code or an error code in response. The error code
+and receives either an authorization code (as defined in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-1.3.1" class="relref">Section 1.3.1</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> or an
+error code in response. The error code
 may indicate that the client can continue to prompt the user for more information,
 or can indicate that the client needs to launch a browser to have the user complete
 the flow in a browser.<a href="#section-1-2" class="pilcrow">¶</a></p>
@@ -2749,28 +2750,34 @@ Cache-Control: no-store
       <h2 id="name-document-history">
 <a href="#appendix-D" class="section-number selfRef">Appendix D. </a><a href="#name-document-history" class="section-name selfRef">Document History</a>
       </h2>
-<p id="appendix-D-1">-02<a href="#appendix-D-1" class="pilcrow">¶</a></p>
+<p id="appendix-D-1">-03<a href="#appendix-D-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-2.1">
-          <p id="appendix-D-2.1.1">Updated affiliations and acks<a href="#appendix-D-2.1.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-2.2">
-          <p id="appendix-D-2.2.1">Editorial clarifications<a href="#appendix-D-2.2.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-2.3">
-          <p id="appendix-D-2.3.1">Added reference to Attestation-Based Client Authentication<a href="#appendix-D-2.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-2.1.1">Pointed definition of authorization code to section 1.3.1 of RFC 6749<a href="#appendix-D-2.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-D-3">-01<a href="#appendix-D-3" class="pilcrow">¶</a></p>
+<p id="appendix-D-3">-02<a href="#appendix-D-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-4.1">
-          <p id="appendix-D-4.1.1">Corrected "re-authorization of the user" to "re-authentication of the user"<a href="#appendix-D-4.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-4.1.1">Updated affiliations and acks<a href="#appendix-D-4.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-4.2">
+          <p id="appendix-D-4.2.1">Editorial clarifications<a href="#appendix-D-4.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-4.3">
+          <p id="appendix-D-4.3.1">Added reference to Attestation-Based Client Authentication<a href="#appendix-D-4.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-D-5">-00<a href="#appendix-D-5" class="pilcrow">¶</a></p>
+<p id="appendix-D-5">-01<a href="#appendix-D-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-6.1">
-          <p id="appendix-D-6.1.1">Adopted into the OAuth WG, no changes from previous individual draft<a href="#appendix-D-6.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-6.1.1">Corrected "re-authorization of the user" to "re-authentication of the user"<a href="#appendix-D-6.1.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-D-7">-00<a href="#appendix-D-7" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-D-8.1">
+          <p id="appendix-D-8.1.1">Adopted into the OAuth WG, no changes from previous individual draft<a href="#appendix-D-8.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>
