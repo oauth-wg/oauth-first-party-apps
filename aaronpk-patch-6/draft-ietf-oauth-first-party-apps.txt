@@ -837,8 +837,7 @@ Table of Contents
    authorization server that the request is originating from an
    application owned by the same party.
 
-   For low-entropy inputs like OTPs, implementors SHOULD rate-limit
-   requests from the same auth_session.
+   Implementors SHOULD rate-limit requests from the same auth_session.
 
 9.4.  Client Authentication
 
