@@ -246,6 +246,13 @@ Table of Contents
    in Cross-Device Flows: Security Best Current Practice
    [I-D.ietf-oauth-cross-device-security].
 
+   This specification also allows for the Authorization Server (AS) to
+   direct the user to a web browser based authorization experience if
+   the AS is not able to authorize the user via the requesting client
+   app.  This "redirect-to-web" experience is necessary to allow the AS
+   to manage the security and privacy risks associated with any specific
+   authorization requested by the user's client.
+
 2.  Conventions and Definitions
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
