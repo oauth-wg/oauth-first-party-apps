@@ -216,8 +216,10 @@ Table of Contents
    OAuth user authentication experience.  The precise client–server
    interactions used to authenticate the user (e.g., prompts,
    challenges, and step sequencing) are intentionally left to individual
-   deployments and are out of scope for this specification.  Future
-   profiles may standardize specific interaction patterns.
+   deployments and are out of scope for this specification.
+
+   This specification is intended to be profiled to standardize specific
+   interaction patterns enabling a complete interoperable solution.
 
 1.3.  User Experience Considerations
 
