@@ -839,7 +839,7 @@ In addition to the response parameters defined in {{challenge-response}}, the au
       a second request to the Authorization Challenge Endpoint. The HTTP
       response code to use with this error value is `401 Unauthorized`.
 
-## Example Sequence - Initial Authorization (No Refresh Token)
+## Example Sequence - Initial Authorization
 
 The client prompts the user to enter their username, and sends the username in an initial Authorization Challenge Request.
 
