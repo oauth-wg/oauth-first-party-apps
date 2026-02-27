@@ -666,10 +666,11 @@ Table of Contents
    are static, and MUST be prepared to update the stored auth_session
    value if one is received in a response.
 
-   To mitigate the risk of session hijacking, the auth_session MUST be
-   bound to the device, and the authorization server MUST reject an
+   To mitigate the risk of session hijacking, the auth_session SHOULD be
+   bound to the device, and the authorization server SHOULD reject an
    auth_session if it is presented from a different device than the one
-   it was bound to.
+   it was bound to.  One method of binding the auth_session to the
+   device is described in Section 9.6.1.
 
    The AS MUST ensure that the auth_session value is unique to the
    session and protected from accidental collisions.  For example, if
