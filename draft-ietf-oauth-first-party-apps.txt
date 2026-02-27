@@ -5,7 +5,7 @@
 Web Authorization Protocol                                    A. Parecki
 Internet-Draft                                                      Okta
 Intended status: Standards Track                             G. Fletcher
-Expires: 31 August 2026                            Capital One Financial
+Expires: 31 August 2026                           Practical Identity LLC
                                                             P. Kasselman
                                                         Defakto Security
                                                         27 February 2026
@@ -460,10 +460,10 @@ Table of Contents
       auth session, described in Section 5.3.1.
 
    "code_challenge":  OPTIONAL.  The code challenge as defined by
-      [RFC7636].  See Section 5.2.2.1 for details.
+      [RFC7636].  See Section 5.2.2.1.1 for details.
 
    "code_challenge_method":  OPTIONAL.  The code challenge method as
-      defined by [RFC7636].  See Section 5.2.2.1 for details.
+      defined by [RFC7636].  See Section 5.2.2.1.1 for details.
 
    Specific implementations as well as extensions to this specification
    MAY define additional parameters to be used at this endpoint.
@@ -513,45 +513,15 @@ Table of Contents
    the authorization server wishes to interact with the user directly,
    the authorization server responds with an HTTP 400 (Bad Request)
    status code (unless specified otherwise below) and includes the
-   following parameters with the response:
+   following parameters with the response.
 
-   "error":  REQUIRED.  A single ASCII [USASCII] error code from the
-      following:
+   Response parameters error, error_description, and error_uri are
+   defined and used according to [RFC6749]. request_uri and expires_in
+   are defined and used according to [RFC9126].  This specification
+   defines the auth_session response parameter.
 
-      "invalid_request":  The request is missing a required parameter,
-         includes an unsupported parameter value, repeats a parameter,
-         includes multiple credentials, utilizes more than one mechanism
-         for authenticating the client, or is otherwise malformed.
-
-      "invalid_client":  Client authentication failed (e.g., unknown
-         client, no client authentication included, or unsupported
-         authentication method).  The authorization server MAY return an
-         HTTP 401 (Unauthorized) status code to indicate which HTTP
-         authentication schemes are supported.  If the client attempted
-         to authenticate via the Authorization request header field, the
-         authorization server MUST respond with an HTTP 401
-         (Unauthorized) status code and include the WWW-Authenticate
-         response header field matching the authentication scheme used
-         by the client.
-
-      "unauthorized_client":  The authenticated client is not authorized
-         to use this endpoint.
-
-      "invalid_session":  The provided auth_session is invalid, expired,
-         revoked, or is otherwise invalid.
-
-      "invalid_scope":  The requested scope is invalid, unknown,
-         malformed, or exceeds the scope granted by the resource owner.
-
-      "insufficient_authorization":  The presented authorization is
-         insufficient, and the authorization server is requesting the
-         client take additional steps to complete the authorization.
-
-      "redirect_to_web":  The request is not able to be fulfilled with
-         any further direct interaction with the user.  Instead, the
-         client should initiate a new authorization request so that the
-         user interacts with the authorization server in a web browser.
-         See Section 5.2.2.1 for details.
+   "error":  REQUIRED.  A single ASCII [USASCII] error code as described
+      in in section Section 5.2.2.1
 
       Values for the error parameter MUST NOT include characters outside
       the set %x20-21 / %x23-5B / %x5D-7E.
@@ -605,7 +575,28 @@ Table of Contents
    as long as the response is JSON and conforms to application/<AS-
    defined>+json.
 
-5.2.2.1.  Redirect to Web Error Response
+5.2.2.1.  Error Codes
+
+   This specification supports the use of error codes defined by
+   [RFC6749] and other error codes defined by OAuth extensions supported
+   by the Authorization Server.
+
+   This specification defines the following error codes.
+
+   "invalid_session": : The provided auth_session is invalid, expired,
+   revoked, or is otherwise invalid.
+
+   "insufficient_authorization": : The presented authorization is
+   insufficient, and the authorization server is requesting the client
+   to take additional steps to complete the authorization.
+
+   "redirect_to_web": : The request is not able to be fulfilled with any
+   further direct interaction with the user.  Instead, the client should
+   initiate a new authorization code flow so that the user interacts
+   with the authorization server in a web browser.  See
+   Section 5.2.2.1.1 for details.
+
+5.2.2.1.1.  Redirect to Web Error Response
 
    The authorization server may choose to interact directly with the
    user based on a risk assesment, the introduction of a new
@@ -1779,8 +1770,8 @@ Authors' Addresses
 
 
    George Fletcher
-   Capital One Financial
-   Email: george.fletcher@capitalone.com
+   Practical Identity LLC
+   Email: george@practicalidentity.com
 
 
    Pieter Kasselman
