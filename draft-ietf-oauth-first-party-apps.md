@@ -478,6 +478,9 @@ Every response defined by this specification may include a new `auth_session` va
 
 To mitigate the risk of session hijacking, the `auth_session` MUST be bound to the device, and the authorization server MUST reject an `auth_session` if it is presented from a different device than the one it was bound to.
 
+The AS MUST ensure that the `auth_session` value is unique to the session and protected from accidental collisions.
+For example, if the AS is using a random string for the `auth_session` value, the value SHOULD have a minimum of 256 bits of entropy.
+
 See {{auth-session-security}} for additional security considerations.
 
 # Token Request {#token-request}
