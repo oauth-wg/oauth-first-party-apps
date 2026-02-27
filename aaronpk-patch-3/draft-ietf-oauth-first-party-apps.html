@@ -2062,17 +2062,16 @@ an authorization request and eventually obtain an authorization code.<a href="#s
           <h4 id="name-auth-session-dpop-binding">
 <a href="#section-9.6.1" class="section-number selfRef">9.6.1. </a><a href="#name-auth-session-dpop-binding" class="section-name selfRef">Auth Session DPoP Binding</a>
           </h4>
-<p id="section-9.6.1-1">Binding the <code>auth_session</code> to the device requesting authorization is important to prevent session hijacking and replay of the <code>auth_session</code> value. Without the device binding a captured <code>auth_session</code> could be replayed from another device. The following section describes one way to bind the <code>auth_session</code> to the requesting device. Other device binding methods are available and useable to prevent this potential security exposure.<a href="#section-9.6.1-1" class="pilcrow">¶</a></p>
-<p id="section-9.6.1-2">If the client and authorization server are using DPoP binding of access tokens and/or authorization codes, then the <code>auth_session</code> value <span class="bcp14">SHOULD</span> be protected as well. The authorization server <span class="bcp14">SHOULD</span> associate the <code>auth_session</code> value with the DPoP public key. This removes the need for the authorization server to include additional claims in the DPoP proof, while still benefitting from the assurance that the client presenting the proof has control over the DPoP key. To associate the <code>auth_session</code> value with the DPoP public key, the authorization server:<a href="#section-9.6.1-2" class="pilcrow">¶</a></p>
+<p id="section-9.6.1-1">If the client and authorization server are using DPoP binding of access tokens and/or authorization codes, then the <code>auth_session</code> value <span class="bcp14">SHOULD</span> be protected as well. The authorization server <span class="bcp14">SHOULD</span> associate the <code>auth_session</code> value with the DPoP public key. This removes the need for the authorization server to include additional claims in the DPoP proof, while still benefitting from the assurance that the client presenting the proof has control over the DPoP key. To associate the <code>auth_session</code> value with the DPoP public key, the authorization server:<a href="#section-9.6.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-9.6.1-3.1">
-              <p id="section-9.6.1-3.1.1"><span class="bcp14">MUST</span> check that the same DPoP public key is being used when the client presents the DPoP proof.<a href="#section-9.6.1-3.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-9.6.1-2.1">
+              <p id="section-9.6.1-2.1.1"><span class="bcp14">MUST</span> check that the same DPoP public key is being used when the client presents the DPoP proof.<a href="#section-9.6.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-9.6.1-3.2">
-              <p id="section-9.6.1-3.2.1"><span class="bcp14">MUST</span> verify the DPoP proof to ensure the client controls the corresponding private key whenever the client includes the <code>auth_session</code> in an Authorization Challenge Request as described in <a href="#challenge-request" class="auto internal xref">Section 5.1</a>.<a href="#section-9.6.1-3.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-9.6.1-2.2">
+              <p id="section-9.6.1-2.2.1"><span class="bcp14">MUST</span> verify the DPoP proof to ensure the client controls the corresponding private key whenever the client includes the <code>auth_session</code> in an Authorization Challenge Request as described in <a href="#challenge-request" class="auto internal xref">Section 5.1</a>.<a href="#section-9.6.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-9.6.1-4">DPoP binding of the <code>auth_session</code> value ensures that the context referenced by the <code>auth_session</code> cannot be stolen and reused by another device.<a href="#section-9.6.1-4" class="pilcrow">¶</a></p>
+<p id="section-9.6.1-3">DPoP binding of the <code>auth_session</code> value ensures that the context referenced by the <code>auth_session</code> cannot be stolen and reused by another device.<a href="#section-9.6.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="auth-session-lifetime">
