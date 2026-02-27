@@ -134,7 +134,9 @@ Table of Contents
    Appendix B.  Example Implementations
      B.1.  Authorization Challenge Request Parameters
      B.2.  Authorization Challenge Response Parameters
-     B.3.  Example Sequence
+     B.3.  Example Sequence - Initial Authorization
+     B.4.  Example Sequence - Refresh Token Request Triggering
+           Additional Authorization
    Appendix C.  Design Goals
    Appendix D.  Document History
    Acknowledgments
@@ -1615,7 +1617,7 @@ B.2.  Authorization Challenge Response Parameters
       Endpoint.  The HTTP response code to use with this error value is
       401 Unauthorized.
 
-B.3.  Example Sequence
+B.3.  Example Sequence - Initial Authorization
 
    The client prompts the user to enter their username, and sends the
    username in an initial Authorization Challenge Request.
@@ -1685,6 +1687,84 @@ B.3.  Example Sequence
      "expires_in": 3600,
      "access_token": "d41c0692f1187fd9b326c63d",
      "refresh_token": "e090366ac1c448b8aed84cbc07"
+   }
+
+B.4.  Example Sequence - Refresh Token Request Triggering Additional
+      Authorization
+
+   This example illustrates the use case described in Appendix A.6.
+
+   The client sends a refresh token request to obtain a new access
+   token.
+
+   POST /token HTTP/1.1
+   Host: server.example.com
+   Content-Type: application/x-www-form-urlencoded
+
+   grant_type=refresh_token
+   &client_id=bb16c14c73415
+   &refresh_token=e090366ac1c448b8aed84cbc07
+
+   The Authorization Server determines that additional authorization is
+   required (for example, step-up or re-verification) before the refresh
+   token can be used, and returns an authorization challenge error
+   response.
+
+   HTTP/1.1 403 Forbidden
+   Content-Type: application/json
+   Cache-Control: no-store
+
+   {
+     "error": "insufficient_authorization",
+     "auth_session": "ce6772f5e07bc8361572f",
+     "otp_required": true
+   }
+
+   The client prompts the user for an OTP, and sends an Authorization
+   Challenge Request to continue the authorization session identified by
+   auth_session.
+
+   POST /authorize-challenge HTTP/1.1
+   Host: server.example.com
+   Content-Type: application/x-www-form-urlencoded
+
+   auth_session=ce6772f5e07bc8361572f
+   &otp=555121
+
+   The Authorization Server validates the auth_session to find the
+   expected user, then validates the OTP for that user, and responds
+   with an authorization code.
+
+   HTTP/1.1 200 OK
+   Content-Type: application/json
+   Cache-Control: no-store
+
+   {
+     "authorization_code": "uY29tL2F1dGhlbnRpY"
+   }
+
+   The client sends the authorization code to the token endpoint.
+
+   POST /token HTTP/1.1
+   Host: server.example.com
+   Content-Type: application/x-www-form-urlencoded
+
+   grant_type=authorization_code
+   &client_id=bb16c14c73415
+   &code=uY29tL2F1dGhlbnRpY
+
+   The Authorization Server responds with an access token and new
+   refresh token.
+
+   HTTP/1.1 200 OK
+   Content-Type: application/json
+   Cache-Control: no-store
+
+   {
+     "token_type": "Bearer",
+     "expires_in": 3600,
+     "access_token": "d41c0692f1187fd9b326c63d",
+     "refresh_token": "f2b0f7d9a41f4d59a8c1e9b3ab"
    }
 
 Appendix C.  Design Goals

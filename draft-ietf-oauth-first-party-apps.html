@@ -1372,7 +1372,10 @@ applications, only delegating to the browser in unexpected, high risk, or error 
                 <p id="section-toc.1-1.13.2.2.1"><a href="#appendix-B.2" class="auto internal xref">B.2</a>.  <a href="#name-authorization-challenge-resp" class="internal xref">Authorization Challenge Response Parameters</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13.2.3">
-                <p id="section-toc.1-1.13.2.3.1"><a href="#appendix-B.3" class="auto internal xref">B.3</a>.  <a href="#name-example-sequence" class="internal xref">Example Sequence</a></p>
+                <p id="section-toc.1-1.13.2.3.1"><a href="#appendix-B.3" class="auto internal xref">B.3</a>.  <a href="#name-example-sequence-initial-au" class="internal xref">Example Sequence - Initial Authorization</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13.2.4">
+                <p id="section-toc.1-1.13.2.4.1"><a href="#appendix-B.4" class="auto internal xref">B.4</a>.  <a href="#name-example-sequence-refresh-to" class="internal xref">Example Sequence - Refresh Token Request Triggering Additional Authorization</a></p>
 </li>
             </ul>
 </li>
@@ -2466,7 +2469,7 @@ an authorization request and eventually obtain an authorization code.<a href="#s
         </ol>
 </section>
 </div>
-<div id="re-authenticating-to-an-app-a-week-later-using-otp">
+<div id="refresh-token-example">
 <section id="appendix-A.6">
         <h3 id="name-re-authenticating-to-an-app">
 <a href="#appendix-A.6" class="section-number selfRef">A.6. </a><a href="#name-re-authenticating-to-an-app" class="section-name selfRef">Re-authenticating to an app a week later using OTP</a>
@@ -2653,10 +2656,10 @@ response code to use with this error value is <code>401 Unauthorized</code>.<a h
 </dl>
 </section>
 </div>
-<div id="example-sequence">
+<div id="example-sequence-initial-authorization">
 <section id="appendix-B.3">
-        <h3 id="name-example-sequence">
-<a href="#appendix-B.3" class="section-number selfRef">B.3. </a><a href="#name-example-sequence" class="section-name selfRef">Example Sequence</a>
+        <h3 id="name-example-sequence-initial-au">
+<a href="#appendix-B.3" class="section-number selfRef">B.3. </a><a href="#name-example-sequence-initial-au" class="section-name selfRef">Example Sequence - Initial Authorization</a>
         </h3>
 <p id="appendix-B.3-1">The client prompts the user to enter their username, and sends the username in an initial Authorization Challenge Request.<a href="#appendix-B.3-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.3-2">
@@ -2733,6 +2736,90 @@ Cache-Control: no-store
   "refresh_token": "e090366ac1c448b8aed84cbc07"
 }
 </pre><a href="#appendix-B.3-12" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="example-sequence-refresh-token-request-triggering-additional-authorization">
+<section id="appendix-B.4">
+        <h3 id="name-example-sequence-refresh-to">
+<a href="#appendix-B.4" class="section-number selfRef">B.4. </a><a href="#name-example-sequence-refresh-to" class="section-name selfRef">Example Sequence - Refresh Token Request Triggering Additional Authorization</a>
+        </h3>
+<p id="appendix-B.4-1">This example illustrates the use case described in <a href="#refresh-token-example" class="auto internal xref">Appendix A.6</a>.<a href="#appendix-B.4-1" class="pilcrow">¶</a></p>
+<p id="appendix-B.4-2">The client sends a refresh token request to obtain a new access token.<a href="#appendix-B.4-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.4-3">
+<pre>
+POST /token HTTP/1.1
+Host: server.example.com
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token
+&amp;client_id=bb16c14c73415
+&amp;refresh_token=e090366ac1c448b8aed84cbc07
+</pre><a href="#appendix-B.4-3" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.4-4">The Authorization Server determines that additional authorization is required (for example, step-up or re-verification) before the refresh token can be used, and returns an authorization challenge error response.<a href="#appendix-B.4-4" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.4-5">
+<pre>
+HTTP/1.1 403 Forbidden
+Content-Type: application/json
+Cache-Control: no-store
+
+{
+  "error": "insufficient_authorization",
+  "auth_session": "ce6772f5e07bc8361572f",
+  "otp_required": true
+}
+</pre><a href="#appendix-B.4-5" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.4-6">The client prompts the user for an OTP, and sends an Authorization Challenge Request to continue the authorization session identified by <code>auth_session</code>.<a href="#appendix-B.4-6" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.4-7">
+<pre>
+POST /authorize-challenge HTTP/1.1
+Host: server.example.com
+Content-Type: application/x-www-form-urlencoded
+
+auth_session=ce6772f5e07bc8361572f
+&amp;otp=555121
+</pre><a href="#appendix-B.4-7" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.4-8">The Authorization Server validates the <code>auth_session</code> to find the expected user, then validates the OTP for that user, and responds with an authorization code.<a href="#appendix-B.4-8" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.4-9">
+<pre>
+HTTP/1.1 200 OK
+Content-Type: application/json
+Cache-Control: no-store
+
+{
+  "authorization_code": "uY29tL2F1dGhlbnRpY"
+}
+</pre><a href="#appendix-B.4-9" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.4-10">The client sends the authorization code to the token endpoint.<a href="#appendix-B.4-10" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.4-11">
+<pre>
+POST /token HTTP/1.1
+Host: server.example.com
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code
+&amp;client_id=bb16c14c73415
+&amp;code=uY29tL2F1dGhlbnRpY
+</pre><a href="#appendix-B.4-11" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.4-12">The Authorization Server responds with an access token and new refresh token.<a href="#appendix-B.4-12" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.4-13">
+<pre>
+HTTP/1.1 200 OK
+Content-Type: application/json
+Cache-Control: no-store
+
+{
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "access_token": "d41c0692f1187fd9b326c63d",
+  "refresh_token": "f2b0f7d9a41f4d59a8c1e9b3ab"
+}
+</pre><a href="#appendix-B.4-13" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
