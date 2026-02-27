@@ -652,9 +652,7 @@ Table of Contents
 
    The auth_session value is completely opaque to the client, and as
    such the authorization server MUST adequately protect the value from
-   inspection by the client, for example by using a random string or
-   using a JWE if the authorization server is not maintaining state on
-   the backend.
+   inspection by the client.
 
    If the client has an auth_session, the client MUST include it in
    future requests to the authorization challenge endpoint.  The client
