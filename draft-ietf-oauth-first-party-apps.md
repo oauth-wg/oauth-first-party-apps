@@ -468,7 +468,7 @@ If the client has an `auth_session`, the client MUST include it in future reques
 
 Every response defined by this specification may include a new `auth_session` value. Clients MUST NOT assume that `auth_session` values are static, and MUST be prepared to update the stored `auth_session` value if one is received in a response.
 
-To mitigate the risk of session hijacking, the `auth_session` MUST be bound to the device, and the authorization server MUST reject an `auth_session` if it is presented from a different device than the one it was bound to.
+To mitigate the risk of session hijacking, the `auth_session` SHOULD be bound to the device, and the authorization server SHOULD reject an `auth_session` if it is presented from a different device than the one it was bound to. One method of binding the `auth_session` to the device is described in {{auth-session-dpop}}.
 
 The AS MUST ensure that the `auth_session` value is unique to the session and protected from accidental collisions.
 For example, if the AS is using a random string for the `auth_session` value, the value SHOULD have a minimum of 256 bits of entropy.
@@ -616,9 +616,11 @@ It may be possible to use other proof of possession mechanisms to sender constra
 
 ## Auth Session {#auth-session-security}
 
+
 Binding the `auth_session` to the device requesting authorization is important to prevent session hijacking and replay of the `auth_session` value. Without the device binding a captured `auth_session` could be replayed from another device. The following section describes one way to bind the `auth_session` to the requesting device. Other device binding methods are available and useable to prevent this potential security exposure.
 
-### Auth Session DPoP Binding
+### Auth Session DPoP Binding {#auth-session-dpop}
+
 
 If the client and authorization server are using DPoP binding of access tokens and/or authorization codes, then the `auth_session` value SHOULD be protected as well. The authorization server SHOULD associate the `auth_session` value with the DPoP public key. This removes the need for the authorization server to include additional claims in the DPoP proof, while still benefitting from the assurance that the client presenting the proof has control over the DPoP key. To associate the `auth_session` value with the DPoP public key, the authorization server:
 
