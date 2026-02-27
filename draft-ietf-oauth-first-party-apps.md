@@ -89,8 +89,7 @@ informative:
 --- abstract
 
 This document defines the Authorization Challenge Endpoint, which supports
-a first-party client that wants to control the process of
-obtaining authorization from the user using a native experience.
+clients that want to control the process of obtaining authorization from the user using a native experience.
 
 In many cases, this can provide an entirely browserless OAuth 2.0 experience suited for native
 applications, only delegating to the browser in unexpected, high risk, or error conditions.
@@ -102,9 +101,10 @@ applications, only delegating to the browser in unexpected, high risk, or error 
 
 This document, OAuth for First-Party Apps (FiPA),
 extends the OAuth 2.0 Authorization Framework {{RFC6749}} with
-a new endpoint to support first-party
+a new endpoint to support
 applications that want to control the process of obtaining authorization from
-the user using a native experience.
+the user using a native experience, with browser redirection as described in
+OAuth 2.0 for Native Apps {{RFC8252}} used only as a fallback when needed.
 
 The client collects any initial information from the user and POSTs that information
 as well as information about the client's request to the Authorization Challenge Endpoint,
@@ -126,21 +126,21 @@ This draft also extends the token response (typically for use in response to a r
 
 ## Usage and Applicability
 
-This specification MUST only be used by first-party applications, which is when the authorization server and application are controlled by the same entity and the user understands them both as the same entity.
+This specification is designed for the security model of first-party applications. First-party applications are applications that are controlled by the same entity as the authorization server and the user understands them both as the same entity. This specification is designed to be used by first-party native applications, which includes both mobile and desktop applications.
 
-This specification MUST NOT be used by third party applications, and the authorization server SHOULD take measures to prevent use by third party applications. (e.g. only enable this grant for certain client IDs, and take measures to authenticate first-party apps when possible, such as by using app attestations as described in {{I-D.ietf-oauth-attestation-based-client-auth}}.)
+Profiles of this specification that extend the usage to non-first-party use cases MUST describe how their application of this specification avoids the risks associated with third-party apps directly interacting with the user. For example, an extension of this specification that enables federation between native apps never actually asks any third-party app to collect credentials from the user, so avoids these risks.
 
-Using this specification in scenarios other than those described will lead to unintended security and privacy problems for users and service providers.
+Using this specification in scenarios other than those described may lead to unintended security and privacy problems for users and service providers.
 
-This specification is designed to be used by first-party native applications, which includes both mobile and desktop applications.
+If a service provides multiple apps, and expects users to use multiple apps on the same device, there may be better ways of sharing a user's login between the apps other than each app implementing this specification or using an SDK that implements this specification. For example, {{OpenID.Native-SSO}} provides a mechanism for one app to obtain new tokens by exchanging tokens from another app, without any user interaction. See {{multiple-applications}} for more details.
 
-If you provide multiple apps and expect users to use multiple apps on the same device, there may be better ways of sharing a user's login between the apps other than each app implementing this specification or using an SDK that implements this specification. For example, {{OpenID.Native-SSO}} provides a mechanism for one app to obtain new tokens by exchanging tokens from another app, without any user interaction. See {{multiple-applications}} for more details.
+Please review the entirety of {{security-considerations}}, and when more than one first-party application is supported, {{multiple-applications}}.
 
 ## Limitations of this specification
 
-The scope of this specification is limited to first-party applications. Please review the entirety of {{security-considerations}}, and when more than one first-party application is supported, {{multiple-applications}}.
+This draft defines the overall framework for delivering a native OAuth user authentication experience. The precise client–server interactions used to authenticate the user (e.g., prompts, challenges, and step sequencing) are intentionally left to individual deployments and are out of scope for this specification.
 
-This draft defines the overall framework for delivering a native OAuth user authentication experience. The precise client–server interactions used to authenticate the user (e.g., prompts, challenges, and step sequencing) are intentionally left to individual deployments and are out of scope for this specification. Future profiles may standardize specific interaction patterns.
+This specification is intended to be profiled to standardize specific interaction patterns enabling a complete interoperable solution.
 
 ## User Experience Considerations
 
@@ -219,6 +219,7 @@ When the client uses a refresh token to obtain a new access token, the authoriza
 
 When making a resource request to a resource server, the resource server MAY respond with an error according to OAuth 2.0 Step-Up Authentication Challenge Protocol {{RFC9470}}, indicating that re-authentication of the user is required.
 
+The use of {{RFC9470}} in this specification is for interoperability with its defined error signaling and does not propose changes to {{RFC9470}} itself.
 
 # Protocol Endpoints
 
@@ -232,12 +233,7 @@ If the authorization server requires client authentication for this client on th
 
 Authorization servers supporting this specification SHOULD include the URL of their authorization challenge endpoint in their authorization server metadata document {{RFC8414}} using the `authorization_challenge_endpoint` parameter as defined in {{authorization-server-metadata}}.
 
-The endpoint accepts the authorization request parameters defined in {{RFC6749}} for the authorization endpoint as well
-as all applicable extensions defined for the authorization endpoint. Some examples of such extensions include Proof
-Key for Code Exchange (PKCE) {{RFC7636}}, Resource Indicators {{RFC8707}}, and OpenID Connect {{OpenID}}. It is
-important to note that some extension parameters have meaning in a web context but don't have meaning in a native
-mechanism (e.g. `response_mode=query`). It is out of scope as to what the AS does in the case that an extension
-defines a parameter that has no meaning in this use case.
+The authorization challenge endpoint MUST accept the authorization request parameters as defined in {{RFC6749}} for the authorization endpoint as well as any authorization endpoint extensions supported by the authorization server. Examples of such extensions include Proof Key for Code Exchange (PKCE) {{RFC7636}}, Resource Indicators {{RFC8707}}, and OpenID Connect {{OpenID}}. Note that some extension parameters have meaning in a web context but don't have meaning in a native mechanism (e.g. `response_mode=query`). It is out of scope as to what the authorization server does in the case that an extension defines a parameter that has no meaning in this use case.
 
 The client initiates the authorization flow with or without information collected from the user (e.g. a signed passkey challenge or MFA code).
 
@@ -258,7 +254,7 @@ server to indicate that further authentication of the user is required.
 
 # Authorization Initiation {#authorization-initiation}
 
-A client may wish to initiate an authorization flow by first prompting the user for their user identifier or other account information. The authorization challenge endpoint is a new endpoint to collect this login hint and direct the client with the next steps, whether that is to do an MFA flow, or perform an OAuth redirect-based flow. If the authorization server directs the client to complete the flow using a redirect-based authorization request in a browser, the client and authorization server SHOULD follow applicable best current practices for native apps (e.g., RFC 8252 and its successors) for redirect URI selection and external user-agent usage.
+A client may wish to initiate an authorization flow by first prompting the user for their user identifier or other account information. The authorization challenge endpoint is a new endpoint to collect this login hint and direct the client with the next steps, whether that is to do an MFA flow, or perform an OAuth redirect-based flow. If the authorization server directs the client to complete the flow using a redirect-based authorization request in a browser, the client and authorization server SHOULD follow applicable best current practices for native apps (e.g., {{RFC8252}} and its successors) for redirect URI selection and external user-agent usage.
 
 In order to preserve the security of this specification, the Authorization Server MUST verify the "first-partyness" of the client before continuing with the authentication flow. Please see {{first-party-applications}} for additional considerations.
 
@@ -269,8 +265,7 @@ following parameters, as well as parameters from any extensions, using the `appl
 format with a character encoding of UTF-8 in the HTTP request body:
 
 "client_id":
-: REQUIRED if the client is not authenticating with the
-  authorization server and if no `auth_session` is included.
+: REQUIRED, unless the client is authenticating to the authorization server in a manner that unambiguously identifies the client, or the request includes an `auth_session` value associated with an existing session from which the authorization server can determine the client identity. The client MAY include the `client_id` even when one of these conditions applies. If it does, the authorization server MUST verify that the `client_id` identifies the same client as otherwise determined for the request, and MUST reject the request if it does not.
 
 "scope":
 : OPTIONAL. The OAuth scope defined in {{RFC6749}}.
@@ -372,7 +367,7 @@ parameters with the response:
      "redirect_to_web":
      :     The request is not able to be fulfilled with any further
            direct interaction with the user. Instead, the client
-           should initiate a new authorization code flow so that the
+           should initiate a new authorization request so that the
            user interacts with the authorization server in a web browser.
            See {{redirect-to-web}} for details.
 
@@ -438,16 +433,19 @@ in the application, or to handle an exception flow like account recovery.
 To indicate this error to the client, the authorization server returns an
 error response as defined above with the `redirect_to_web` error code.
 
-In this case, the client is expected to initiate a new OAuth
+The response MAY include a `request_uri`, in which case the client is expected
+to use it to initiate an authorization request as described in {{Section 4 of RFC9126}}.
+
+If no `request_uri` is returned, the client is expected to initiate a new OAuth
 Authorization Code flow with PKCE according to {{RFC6749}} and {{RFC7636}}.
 
 If the client expects the frequency of this error response to be high,
-the client MAY include a PKCE {{RFC7636}} `code_challenge` in the initial authorization
-challenge request. This enables the authorization server to essentially treat
-the authorization challenge request as a PAR {{RFC9126}} request, and
-return the `request_uri` and `expires_in` as defined by {{RFC9126}} in the error response.
-The client then uses the `request_uri` value to build an authorization request
-as defined in {{RFC9126}} Section 4.
+the client SHOULD include a PKCE {{RFC7636}} `code_challenge` in the initial authorization
+challenge request.
+
+If the client does not include a PKCE `code_challenge` in the initial authorization
+challenge request, the authorization server MUST NOT return a `request_uri` in the
+`redirect_to_web` error response, as that would effectively be the same as a PAR request without PKCE.
 
 
 ## Intermediate Requests {#intermediate_requests}
@@ -476,7 +474,10 @@ If the client has an `auth_session`, the client MUST include it in future reques
 
 Every response defined by this specification may include a new `auth_session` value. Clients MUST NOT assume that `auth_session` values are static, and MUST be prepared to update the stored `auth_session` value if one is received in a response.
 
-To mitigate the risk of session hijacking, the 'auth_session' MUST be bound to the device, and the authorization server MUST reject an 'auth_session' if it is presented from a different device than the one it was bound to.
+To mitigate the risk of session hijacking, the `auth_session` MUST be bound to the device, and the authorization server MUST reject an `auth_session` if it is presented from a different device than the one it was bound to.
+
+The AS MUST ensure that the `auth_session` value is unique to the session and protected from accidental collisions.
+For example, if the AS is using a random string for the `auth_session` value, the value SHOULD have a minimum of 256 bits of entropy.
 
 See {{auth-session-security}} for additional security considerations.
 
@@ -507,7 +508,7 @@ An example successful token response is below:
 
 The response MAY include an `auth_session` parameter which the client is expected to include on any subsequent requests to the authorization challenge endpoint, as described in {{auth-session}}. The `auth_session` parameter MAY also be included even if the authorization code was obtained through a traditional OAuth authorization code flow rather than the flow defined by this specification.
 
-Including the `auth_session` parameter in the token response enables flows such as step-up authentication {{RFC9470}}, so that the authorization server can restore the context of a previous session and prompt only for the needed step-up factors. See {{step-up-sms-example}} for an example application.
+The `auth_session` mechanism described in {{auth-session}} is an optional feature the authorization server can leverage in order to enable flows such as step-up authentication {{RFC9470}}, so that the authorization server can restore the context of a previous session and prompt only for the needed step-up factors. See {{step-up-sms-example}} for an example application.
 
 
 ## Token Endpoint Error Response
@@ -524,7 +525,7 @@ the error code is set to the following value:
   server is requesting the client take additional steps to
   complete the authorization.
 
-Additionally, the response MAY contain an `auth_session` parameter which the client is expected to include on a subsequent request to the authorization challenge endpoint.
+The response MAY also contain an `auth_session` parameter which the client is expected to include on a subsequent request to the authorization challenge endpoint.
 
 "auth_session":
 :    OPTIONAL.  The optional auth session value allows the authorization server to
@@ -532,6 +533,8 @@ Additionally, the response MAY contain an `auth_session` parameter which the cli
      authorization request sequence. The client MUST include
      the `auth_session` in follow-up requests to the challenge
      endpoint if it receives one along with the error response.
+
+Additionally, the response MAY contain custom values that describe instructions for how the client should proceed to interact with the user.
 
 For example:
 
@@ -541,15 +544,18 @@ For example:
 
     {
       "error": "insufficient_authorization",
-      "auth_session": "uY29tL2F1dGhlbnRpY"
+      "auth_session": "uY29tL2F1dGhlbnRpY",
+      "otp_required": true
     }
 
 
 # Resource Server Error Response
 
-Step-Up Authentication {{RFC9470}} defines new error code values that a resource server can use to tell the client to start a new authorization request including `acr_values` and `max_age` from {{OpenID}}. Upon receiving this error response, the client starts a new first-party authorization request at the authorization challenge endpoint, and includes the `acr_values`, `max_age` and `scope` that were returned in the error response.
+Step-Up Authentication {{RFC9470}} defines error code values that a resource server can use to tell the client to start a new authorization request including `acr_values` and `max_age` from {{OpenID}}. This specification reuses the Step-Up Authentication {{RFC9470}} error response to initiate a first party authorization flow to satisfy the step-up authentication request.
 
-This specification does not define any new parameters for the resource server error response beyond those defined in {{RFC9470}} and {{RFC6750}}.
+Upon receiving this error response, the client starts a new first-party authorization request at the authorization challenge endpoint, and includes the `acr_values`, `max_age` and `scope` that were returned in the error response.
+
+This specification does not update or alter {{RFC9470}} resource server error behaviour and does not define any new parameters for the resource server error response beyond those defined in {{RFC9470}} and {{RFC6750}}. It only defines first party client behavior for continuing authorization at the authorization challenge endpoint when such an error is received.
 
 # Authorization Server Metadata {#authorization-server-metadata}
 
@@ -615,6 +621,8 @@ The above mechanism simplifies the implementation of the client, as it can attac
 It may be possible to use other proof of possession mechanisms to sender constrain access and refresh tokens. Defining these mechanisms are out of scope for this specification.
 
 ## Auth Session {#auth-session-security}
+
+Binding the `auth_session` to the device requesting authorization is important to prevent session hijacking and replay of the `auth_session` value. Without the device binding a captured `auth_session` could be replayed from another device. The following section describes one way to bind the `auth_session` to the requesting device. Other device binding methods are available and useable to prevent this potential security exposure.
 
 ### Auth Session DPoP Binding
 
@@ -703,7 +711,7 @@ A user may log in with a passkey (without a password).
 1. The Client collects the username from the user.
 1. The Client sends an Authorization Challenge Request ({{challenge-request}}) to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}) including the username.
 1. The Authorization Server verifies the username and returns a challenge
-1. The Client signs the challenge using the platform authenticator, which results in the user being prompted for verification with biometrics or a PIN.
+1. The user is prompted for verification with biometrics or a PIN, enabling the Client to sign the challenge using the passkey.
 1. The Client sends the signed challenge, username, and credential ID to the Authorization Challenge Endpoint ({{authorization-challenge-endpoint}}).
 1. The Authorization Server verifies the signed challenge and returns an Authorization Code.
 1. The Client requests an Access Token and Refresh Token by issuing a Token Request ({{token-request}}) to the Token Endpoint.
@@ -814,6 +822,8 @@ This example describes how to use the mechanisms defined in this draft to create
 
 In order to successfully implement this specification, the Authorization Server will need to define its own specific profile for what values clients are expected to send in the Authorization Challenge Request ({{challenge-request}}), as well as AS-defined specific error codes in the Authorization Challenge Response ({{challenge-response}}).
 
+It is expected that service providers will wrap the implementation of this specification in an SDK which will be used by application developers, removing the need for application developers to implement the specification themselves.
+
 Below is an example profile that allows for a successful implementation that enables the user to log in with a
 username and OTP. This example is included for illustration purposes only to help AS developers define the profile
 for their deployment and ecosystem.
@@ -831,7 +841,7 @@ In addition to the request parameters defined in {{challenge-request}}, the auth
 
 ## Authorization Challenge Response Parameters
 
-In addition to the response parameters defined in {{challenge-response}}, the authorization server defines the additional value for the `error` response below.
+In addition to the response parameters defined in {{challenge-response}}, the authorization server defines the additional parameter below.
 
 "otp_required":
 :     The client should collect an OTP from the user and send the OTP in
@@ -857,8 +867,9 @@ The Authorization Server sends an error response indicating that an OTP is requi
     Cache-Control: no-store
 
     {
-      "error": "otp_required",
-      "auth_session": "ce6772f5e07bc8361572f"
+      "error": "insufficient_authorization",
+      "auth_session": "ce6772f5e07bc8361572f",
+      "otp_required": true
     }
 
 The client prompts the user for an OTP, and sends a new Authorization Challenge Request.
