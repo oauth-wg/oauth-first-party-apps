@@ -2080,6 +2080,7 @@ an authorization request and eventually obtain an authorization code.<a href="#s
         <h3 id="name-auth-session-2">
 <a href="#section-9.6" class="section-number selfRef">9.6. </a><a href="#name-auth-session-2" class="section-name selfRef">Auth Session</a>
         </h3>
+<p id="section-9.6-1">Binding the <code>auth_session</code> to the device requesting authorization is important to prevent session hijacking and replay of the <code>auth_session</code> value. Without the device binding a captured <code>auth_session</code> could be replayed from another device. The following section describes one way to bind the <code>auth_session</code> to the requesting device. Other device binding methods are available and useable to prevent this potential security exposure.<a href="#section-9.6-1" class="pilcrow">¶</a></p>
 <div id="auth-session-dpop-binding">
 <section id="section-9.6.1">
           <h4 id="name-auth-session-dpop-binding">
