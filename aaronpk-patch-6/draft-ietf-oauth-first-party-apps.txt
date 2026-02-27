@@ -5,10 +5,10 @@
 Web Authorization Protocol                                    A. Parecki
 Internet-Draft                                                      Okta
 Intended status: Standards Track                             G. Fletcher
-Expires: 25 August 2026                            Capital One Financial
+Expires: 31 August 2026                            Capital One Financial
                                                             P. Kasselman
                                                         Defakto Security
-                                                        21 February 2026
+                                                        27 February 2026
 
 
                  OAuth 2.0 for First-Party Applications
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 August 2026.
+   This Internet-Draft will expire on 31 August 2026.
 
 Copyright Notice
 
@@ -823,10 +823,10 @@ Table of Contents
 9.3.  Credential Stuffing Attacks
 
    The authorization challenge endpoint is capable of directly receiving
-   user credentials and/or low-entropy values like OTPs.  This exposes a
-   new vector to perform credential stuffing or brute force attacks if
-   additional measures are not taken to ensure the authenticity of the
-   application.
+   user credentials and other authentication material like OTPs.  This
+   exposes a new vector to perform credential stuffing or brute force
+   attacks if additional measures are not taken to ensure the
+   authenticity of the application.
 
    An authorization server may already have a combination of built-in or
    3rd party security tools in place to monitor and reduce this risk in
