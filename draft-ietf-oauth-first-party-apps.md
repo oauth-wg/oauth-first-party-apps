@@ -150,6 +150,11 @@ For example, requesting a user to enter a password on a limited-input device (e.
 
 The Authorization Server SHOULD consider the user's device when presenting authentication challenges and developers SHOULD consider whether the device implementing this specification can provide a good experience for the user. If the combination of user device and authentication challenge methods creates a lot of friction or security risk, consider using a specification like OAuth 2.0 Device Authorization Grant {{RFC8628}}. If selecting OAuth 2.0 Device Authorization Grant {{RFC8628}} which uses a cross-device authorization mechanism, please incorporate the security best practices identified in Cross-Device Flows: Security Best Current Practice {{I-D.ietf-oauth-cross-device-security}}.
 
+This specification also allows for the Authorization Server (AS) to direct the user to a web browser based authorization
+experience if the AS is not able to authorize the user via the requesting client app. This "redirect-to-web" experience
+is necessary to allow the AS to manage the security and privacy risks associated with any specific authorization requested
+by the user's client.
+
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
