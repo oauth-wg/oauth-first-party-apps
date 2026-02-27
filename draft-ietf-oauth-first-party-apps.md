@@ -587,7 +587,7 @@ The authorization challenge endpoint is capable of directly receiving user crede
 
 An authorization server may already have a combination of built-in or 3rd party security tools in place to monitor and reduce this risk in browser-based authentication flows. Implementors SHOULD consider similar security measures to reduce this risk in the authorization challenge endpoint. Additionally, the attestation APIs SHOULD be used when possible to assert a level of confidence to the authorization server that the request is originating from an application owned by the same party.
 
-For low-entropy inputs like OTPs, implementors SHOULD rate-limit requests from the same `auth_session`.
+Implementors SHOULD rate-limit requests from the same `auth_session`.
 
 ## Client Authentication {#client-authentication}
 
