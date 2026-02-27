@@ -620,6 +620,8 @@ It may be possible to use other proof of possession mechanisms to sender constra
 
 ## Auth Session {#auth-session-security}
 
+Binding the `auth_session` to the device requesting authorization is important to prevent session hijacking and replay of the `auth_session` value. Without the device binding a captured `auth_session` could be replayed from another device. The following section describes one way to bind the `auth_session` to the requesting device. Other device binding methods are available and useable to prevent this potential security exposure.
+
 ### Auth Session DPoP Binding
 
 If the client and authorization server are using DPoP binding of access tokens and/or authorization codes, then the `auth_session` value SHOULD be protected as well. The authorization server SHOULD associate the `auth_session` value with the DPoP public key. This removes the need for the authorization server to include additional claims in the DPoP proof, while still benefitting from the assurance that the client presenting the proof has control over the DPoP key. To associate the `auth_session` value with the DPoP public key, the authorization server:
