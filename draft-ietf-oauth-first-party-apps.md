@@ -217,6 +217,7 @@ When the client uses a refresh token to obtain a new access token, the authoriza
 
 When making a resource request to a resource server, the resource server MAY respond with an error according to OAuth 2.0 Step-Up Authentication Challenge Protocol {{RFC9470}}, indicating that re-authentication of the user is required.
 
+The use of {{RFC9470}} in this specification is for interoperability with its defined error signaling and does not propose changes to {{RFC9470}} itself.
 
 # Protocol Endpoints
 
@@ -553,9 +554,11 @@ For example:
 
 # Resource Server Error Response
 
-Step-Up Authentication {{RFC9470}} defines new error code values that a resource server can use to tell the client to start a new authorization request including `acr_values` and `max_age` from {{OpenID}}. Upon receiving this error response, the client starts a new first-party authorization request at the authorization challenge endpoint, and includes the `acr_values`, `max_age` and `scope` that were returned in the error response.
+Step-Up Authentication {{RFC9470}} defines error code values that a resource server can use to tell the client to start a new authorization request including `acr_values` and `max_age` from {{OpenID}}. This specification reuses the Step-Up Authentication {{RFC9470}} error response to initiate a first party authorization flow to satisfy the step-up authentication request.
 
-This specification does not define any new parameters for the resource server error response beyond those defined in {{RFC9470}} and {{RFC6750}}.
+Upon receiving this error response, the client starts a new first-party authorization request at the authorization challenge endpoint, and includes the `acr_values`, `max_age` and `scope` that were returned in the error response.
+
+This specification does not update or alter {{RFC9470}} resource server error behaviour and does not define any new parameters for the resource server error response beyond those defined in {{RFC9470}} and {{RFC6750}}. It only defines first party client behavior for continuing authorization at the authorization challenge endpoint when such an error is received.
 
 # Authorization Server Metadata {#authorization-server-metadata}
 
