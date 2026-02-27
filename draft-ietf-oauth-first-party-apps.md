@@ -108,7 +108,8 @@ OAuth 2.0 for Native Apps {{RFC8252}} used only as a fallback when needed.
 
 The client collects any initial information from the user and POSTs that information
 as well as information about the client's request to the Authorization Challenge Endpoint,
-and receives either an authorization code or an error code in response. The error code
+and receives either an authorization code (as defined in {{Section 1.3.1 of RFC6749}} or an
+error code in response. The error code
 may indicate that the client can continue to prompt the user for more information,
 or can indicate that the client needs to launch a browser to have the user complete
 the flow in a browser.
@@ -924,6 +925,10 @@ These design decisions should enable authorization server implementations to iso
 
 
 # Document History
+
+-03
+
+* Pointed definition of authorization code to section 1.3.1 of RFC 6749
 
 -02
 
