@@ -1002,7 +1002,11 @@ These design decisions should enable authorization server implementations to iso
 
 -03
 
+* Editorial clarifications and improvements
 * Pointed definition of authorization code to section 1.3.1 of RFC 6749
+* Updated `auth_session` binding requirements to SHOULD, and added a reference to DPoP
+* Revised introduction and context to clarify this draft is intended for first-party applications but can be extended for third-party in some situations
+* Added `response_type=code` as a required parameter to match RFC 6749
 
 -02
 
@@ -1024,6 +1028,6 @@ These design decisions should enable authorization server implementations to iso
 
 The authors would like to thank the attendees of the OAuth Security Workshop 2023 session in which this was discussed, as well as the following individuals who contributed ideas, feedback, and wording that shaped and formed the final specification:
 
-Alejo Fernandez, Brian Campbell, Dean Saxe, Dick Hardt, Dmitry Telegin, Janak Amarasena, Jeff Corrigan, John Bradley, Justin Richer, Mike Jones, Orie Steele, Tim Cappalli, Tobias Looker, Yaron Sheffer.
+Alejo Fernandez, Brian Campbell, Dean Saxe, Dick Hardt, Dmitry Telegin, Evert Pot, Janak Amarasena, Jeff Corrigan, John Bradley, Justin Richer, Kristina Yasuda, Martin Besozzi, Matt MacAdam, Mike Jones, Orie Steele, Tim Cappalli, Tobias Looker, Yaron Sheffer, Yaron Zehavi.
 
 
