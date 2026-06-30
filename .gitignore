@@ -21,3 +21,4 @@ draft-parecki-oauth-first-party-native-apps.xml
 package-lock.json
 report.xml
 !requirements.txt
+.DS_Store
