@@ -404,16 +404,16 @@ authorization server.
 
 This specification defines the following error codes.
 
-"invalid_session":
+`invalid_session`:
      :     The provided `auth_session` is
            invalid, expired, revoked, or otherwise not acceptable.
 
-"insufficient_authorization":
+`insufficient_authorization`:
      :     The presented authorization is insufficient, and the authorization
            server is requesting the client to take additional steps to
            complete the authorization.
 
-"redirect_to_web":
+`redirect_to_web`:
      :     The request is not able to be fulfilled with any further
            direct interaction with the user. Instead, the client
            should initiate a new authorization code flow so that the
