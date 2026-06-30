@@ -477,13 +477,15 @@ rather than the Authorization Challenge Endpoint.
 
 ### Auth Session {#auth-session}
 
-The `auth_session` is a value that the authorization server issues in order to be able to associate subsequent requests from the same client. It is intended to be analogous to how a browser cookie associates multiple requests by the same browser to the authorization server.
+The `auth_session` is a value that the authorization server issues in order to be able to associate subsequent requests from the same client instance. It is intended to be analogous to how a browser cookie associates multiple requests by the same browser to the authorization server.
 
 The `auth_session` value is completely opaque to the client, and as such the authorization server MUST adequately protect the value from inspection by the client.
 
 If the client has an `auth_session`, the client MUST include it in future requests to the authorization challenge endpoint. The client MUST store the `auth_session` beyond the issuance of the authorization code to be able to use it in future requests.
 
 Every response defined by this specification may include a new `auth_session` value. Clients MUST NOT assume that `auth_session` values are static, and MUST be prepared to update the stored `auth_session` value if one is received in a response.
+
+Clients SHOULD discard the `auth_session` when the user logs out of the app.
 
 To mitigate the risk of session hijacking, the `auth_session` SHOULD be bound to the device, and the authorization server SHOULD reject an `auth_session` if it is presented from a different device than the one it was bound to. One method of binding the `auth_session` to the device is described in {{auth-session-dpop}}.
 
@@ -1046,4 +1048,4 @@ These design decisions should enable authorization server implementations to iso
 
 The authors would like to thank the attendees of the OAuth Security Workshop 2023 session in which this was discussed, as well as the following individuals who contributed ideas, feedback, and wording that shaped and formed the final specification:
 
-Alejo Fernandez, Brian Campbell, Dean Saxe, Dick Hardt, Dmitry Telegin, Evert Pot, Filip Skokan, Janak Amarasena, Jeff Corrigan, John Bradley, Justin Richer, Kristina Yasuda, Martin Besozzi, Matt MacAdam, Mike Jones, Orie Steele, Tim Cappalli, Tobias Looker, Yaron Sheffer, Yaron Zehavi.
+Alejo Fernandez, Brian Campbell, Dean Saxe, Dick Hardt, Dmitry Telegin, Evert Pot, Filip Skokan, Janak Amarasena, Jeff Corrigan, John Bradley, Joseph Heenan, Justin Richer, Kristina Yasuda, Martin Besozzi, Matt MacAdam, Mike Jones, Orie Steele, Tim Cappalli, Tobias Looker, Yaron Sheffer, Yaron Zehavi.
