@@ -454,6 +454,10 @@ If the client does not include a PKCE `code_challenge` in the initial authorizat
 challenge request, the authorization server MUST NOT return a `request_uri` in the
 `redirect_to_web` error response, as that would effectively be the same as a PAR request without PKCE.
 
+Clients and authorization servers using the `redirect_to_web` method SHOULD follow
+current best practices of redirect-based OAuth flows, especially those defined in {{RFC9700}},
+including mechanisms such as the `iss` response parameter defined in {{RFC9207}}.
+
 
 ## Intermediate Requests {#intermediate_requests}
 
