@@ -432,6 +432,17 @@ error response as defined above with the `redirect_to_web` error code.
 The response MAY include a `request_uri`, in which case the client is expected
 to use it to initiate an authorization request as described in {{Section 4 of RFC9126}}.
 
+An example of the response including a `request_uri` is given below:
+
+    HTTP/1.1 201 Created
+    Content-Type: application/json
+    Cache-Control: no-store
+
+    {
+      "error": "redirect_to_web",
+      "request_uri": "urn:ietf:params:oauth:request_uri:6esc_11ACC5bwc014ltc14eY22c"
+    }
+
 If no `request_uri` is returned, the client is expected to initiate a new OAuth
 Authorization Code flow with PKCE according to {{RFC6749}} and {{RFC7636}}.
 
