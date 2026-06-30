@@ -330,8 +330,8 @@ For example,
 If the request contains invalid parameters or incorrect data,
 or if the authorization server wishes to interact with the user directly,
 the authorization server responds with an HTTP 400 (Bad Request)
-status code (unless specified otherwise below) and includes the following
-parameters with the response.
+status code (unless specified otherwise by a particular error code)
+and includes the following parameters with the response.
 
 Response parameters `error`, `error_description`,
 and `error_uri` are defined and used according to {{RFC6749}}. `request_uri` and
@@ -845,8 +845,7 @@ In addition to the response parameters defined in {{challenge-response}}, the au
 
 "otp_required":
 :     The client should collect an OTP from the user and send the OTP in
-      a second request to the Authorization Challenge Endpoint. The HTTP
-      response code to use with this error value is `401 Unauthorized`.
+      a second request to the Authorization Challenge Endpoint.
 
 ## Example Sequence - Initial Authorization
 
@@ -930,7 +929,7 @@ The client sends a refresh token request to obtain a new access token.
 
 The Authorization Server determines that additional authorization is required (for example, step-up or re-verification) before the refresh token can be used, and returns an authorization challenge error response.
 
-    HTTP/1.1 403 Forbidden
+    HTTP/1.1 401 Unauthorized
     Content-Type: application/json
     Cache-Control: no-store
 
@@ -998,6 +997,11 @@ These design decisions should enable authorization server implementations to iso
 
 
 # Document History
+
+-04
+
+* Editorial clarifications and improvements
+* Updated HTTP codes in examples for consistency
 
 -03
 
