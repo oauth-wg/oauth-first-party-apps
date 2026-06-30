@@ -298,8 +298,10 @@ given the user's phone number, line breaks shown for illustration purposes only:
     Host: server.example.com
     Content-Type: application/x-www-form-urlencoded
 
-    login_hint=%2B1-310-123-4567&scope=profile
+    login_hint=%2B1-310-123-4567
+    &scope=profile
     &client_id=bb16c14c73415
+    &response_type=code
 
 ## Authorization Challenge Response {#challenge-response}
 
