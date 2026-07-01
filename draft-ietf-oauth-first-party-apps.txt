@@ -5,10 +5,10 @@
 Web Authorization Protocol                                    A. Parecki
 Internet-Draft                                                      Okta
 Intended status: Standards Track                             G. Fletcher
-Expires: 31 December 2026                         Practical Identity LLC
+Expires: 2 January 2027                           Practical Identity LLC
                                                             P. Kasselman
                                                         Defakto Security
-                                                            29 June 2026
+                                                             1 July 2026
 
 
                  OAuth 2.0 for First-Party Applications
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 31 December 2026.
+   This Internet-Draft will expire on 2 January 2027.
 
 Copyright Notice
 
@@ -483,8 +483,10 @@ Table of Contents
    Host: server.example.com
    Content-Type: application/x-www-form-urlencoded
 
-   login_hint=%2B1-310-123-4567&scope=profile
+   login_hint=%2B1-310-123-4567
+   &scope=profile
    &client_id=bb16c14c73415
+   &response_type=code
 
 5.2.  Authorization Challenge Response
 
@@ -519,8 +521,8 @@ Table of Contents
    If the request contains invalid parameters or incorrect data, or if
    the authorization server wishes to interact with the user directly,
    the authorization server responds with an HTTP 400 (Bad Request)
-   status code (unless specified otherwise below) and includes the
-   following parameters with the response.
+   status code (unless specified otherwise by a particular error code)
+   and includes the following parameters with the response.
 
    Response parameters error, error_description, and error_uri are
    defined and used according to [RFC6749]. request_uri and expires_in
@@ -590,14 +592,14 @@ Table of Contents
 
    This specification defines the following error codes.
 
-   "invalid_session": : The provided auth_session is invalid, expired,
+   invalid_session: : The provided auth_session is invalid, expired,
    revoked, or otherwise not acceptable.
 
-   "insufficient_authorization": : The presented authorization is
+   insufficient_authorization: : The presented authorization is
    insufficient, and the authorization server is requesting the client
    to take additional steps to complete the authorization.
 
-   "redirect_to_web": : The request is not able to be fulfilled with any
+   redirect_to_web: : The request is not able to be fulfilled with any
    further direct interaction with the user.  Instead, the client should
    initiate a new authorization code flow so that the user interacts
    with the authorization server in a web browser.  See
@@ -616,6 +618,17 @@ Table of Contents
    expected to use it to initiate an authorization request as described
    in Section 4 of [RFC9126].
 
+   An example of the response including a request_uri is given below:
+
+HTTP/1.1 201 Created
+Content-Type: application/json
+Cache-Control: no-store
+
+{
+  "error": "redirect_to_web",
+  "request_uri": "urn:ietf:params:oauth:request_uri:6esc_11ACC5bwc014ltc14eY22c"
+}
+
    If no request_uri is returned, the client is expected to initiate a
    new OAuth Authorization Code flow with PKCE according to [RFC6749]
    and [RFC7636].
@@ -628,6 +641,11 @@ Table of Contents
    authorization challenge request, the authorization server MUST NOT
    return a request_uri in the redirect_to_web error response, as that
    would effectively be the same as a PAR request without PKCE.
+
+   Clients and authorization servers using the redirect_to_web method
+   SHOULD follow current best practices of redirect-based OAuth flows,
+   especially those defined in [RFC9700], including mechanisms such as
+   the iss response parameter defined in [RFC9207].
 
 5.3.  Intermediate Requests
 
@@ -652,9 +670,9 @@ Table of Contents
 
    The auth_session is a value that the authorization server issues in
    order to be able to associate subsequent requests from the same
-   client.  It is intended to be analogous to how a browser cookie
-   associates multiple requests by the same browser to the authorization
-   server.
+   client instance.  It is intended to be analogous to how a browser
+   cookie associates multiple requests by the same browser to the
+   authorization server.
 
    The auth_session value is completely opaque to the client, and as
    such the authorization server MUST adequately protect the value from
@@ -669,6 +687,9 @@ Table of Contents
    auth_session value.  Clients MUST NOT assume that auth_session values
    are static, and MUST be prepared to update the stored auth_session
    value if one is received in a response.
+
+   Clients SHOULD discard the auth_session when the user logs out of the
+   app.
 
    To mitigate the risk of session hijacking, the auth_session SHOULD be
    bound to the device, and the authorization server SHOULD reject an
@@ -1216,6 +1237,16 @@ Table of Contents
               BCP 212, RFC 8252, DOI 10.17487/RFC8252, October 2017,
               <https://www.rfc-editor.org/rfc/rfc8252>.
 
+   [RFC9207]  Meyer zu Selhausen, K. and D. Fett, "OAuth 2.0
+              Authorization Server Issuer Identification", RFC 9207,
+              DOI 10.17487/RFC9207, March 2022,
+              <https://www.rfc-editor.org/rfc/rfc9207>.
+
+   [RFC9700]  Lodderstedt, T., Bradley, J., Labunets, A., and D. Fett,
+              "Best Current Practice for OAuth 2.0 Security", BCP 240,
+              RFC 9700, DOI 10.17487/RFC9700, January 2025,
+              <https://www.rfc-editor.org/rfc/rfc9700>.
+
 Appendix A.  Example User Experiences
 
    This section provides non-normative examples of how this
@@ -1610,8 +1641,7 @@ B.2.  Authorization Challenge Response Parameters
 
    "otp_required":  The client should collect an OTP from the user and
       send the OTP in a second request to the Authorization Challenge
-      Endpoint.  The HTTP response code to use with this error value is
-      401 Unauthorized.
+      Endpoint.
 
 B.3.  Example Sequence - Initial Authorization
 
@@ -1706,7 +1736,7 @@ B.4.  Example Sequence - Refresh Token Request Triggering Additional
    token can be used, and returns an authorization challenge error
    response.
 
-   HTTP/1.1 403 Forbidden
+   HTTP/1.1 401 Unauthorized
    Content-Type: application/json
    Cache-Control: no-store
 
@@ -1816,6 +1846,12 @@ Appendix C.  Design Goals
 
 Appendix D.  Document History
 
+   -04
+
+   *  Editorial clarifications and improvements
+
+   *  Updated HTTP codes in examples for consistency
+
    -03
 
    *  Editorial clarifications and improvements
@@ -1859,9 +1895,9 @@ Acknowledgments
 
    Alejo Fernandez, Brian Campbell, Dean Saxe, Dick Hardt, Dmitry
    Telegin, Evert Pot, Filip Skokan, Janak Amarasena, Jeff Corrigan,
-   John Bradley, Justin Richer, Kristina Yasuda, Martin Besozzi, Matt
-   MacAdam, Mike Jones, Orie Steele, Tim Cappalli, Tobias Looker, Yaron
-   Sheffer, Yaron Zehavi.
+   John Bradley, Joseph Heenan, Justin Richer, Kristina Yasuda, Martin
+   Besozzi, Matt MacAdam, Mike Jones, Orie Steele, Tim Cappalli, Tobias
+   Looker, Yaron Sheffer, Yaron Zehavi.
 
 Authors' Addresses
 

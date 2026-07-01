@@ -1051,11 +1051,11 @@ svg {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">OAuth for First-Party Apps</td>
-<td class="right">June 2026</td>
+<td class="right">July 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Parecki, et al.</td>
-<td class="center">Expires 31 December 2026</td>
+<td class="center">Expires 2 January 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1068,12 +1068,12 @@ svg {
 <dd class="internet-draft">draft-ietf-oauth-first-party-apps-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-06-29" class="published">29 June 2026</time>
+<time datetime="2026-07-01" class="published">1 July 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-12-31">31 December 2026</time></dd>
+<dd class="expires"><time datetime="2027-01-02">2 January 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1134,7 +1134,7 @@ applications, only delegating to the browser in unexpected, high-risk, or error 
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 31 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 2 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1662,8 +1662,10 @@ POST /authorize-challenge HTTP/1.1
 Host: server.example.com
 Content-Type: application/x-www-form-urlencoded
 
-login_hint=%2B1-310-123-4567&amp;scope=profile
+login_hint=%2B1-310-123-4567
+&amp;scope=profile
 &amp;client_id=bb16c14c73415
+&amp;response_type=code
 </pre><a href="#section-5.1-5" class="pilcrow">¶</a>
 </div>
 </section>
@@ -1712,8 +1714,8 @@ Cache-Control: no-store
 <p id="section-5.2.2-1">If the request contains invalid parameters or incorrect data,
 or if the authorization server wishes to interact with the user directly,
 the authorization server responds with an HTTP 400 (Bad Request)
-status code (unless specified otherwise below) and includes the following
-parameters with the response.<a href="#section-5.2.2-1" class="pilcrow">¶</a></p>
+status code (unless specified otherwise by a particular error code)
+and includes the following parameters with the response.<a href="#section-5.2.2-1" class="pilcrow">¶</a></p>
 <p id="section-5.2.2-2">Response parameters <code>error</code>, <code>error_description</code>,
 and <code>error_uri</code> are defined and used according to <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>. <code>request_uri</code> and
 <code>expires_in</code> are defined and used according to <span>[<a href="#RFC9126" class="cite xref">RFC9126</a>]</span>. This specification
@@ -1794,14 +1796,14 @@ is JSON and conforms to <code>application/&lt;AS-defined&gt;+json</code>.<a href
 and other error codes defined by OAuth extensions supported by the
 authorization server.<a href="#section-5.2.2.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.2.2.1-2">This specification defines the following error codes.<a href="#section-5.2.2.1-2" class="pilcrow">¶</a></p>
-<p id="section-5.2.2.1-3">"invalid_session":
+<p id="section-5.2.2.1-3"><code>invalid_session</code>:
      :     The provided <code>auth_session</code> is
            invalid, expired, revoked, or otherwise not acceptable.<a href="#section-5.2.2.1-3" class="pilcrow">¶</a></p>
-<p id="section-5.2.2.1-4">"insufficient_authorization":
+<p id="section-5.2.2.1-4"><code>insufficient_authorization</code>:
      :     The presented authorization is insufficient, and the authorization
            server is requesting the client to take additional steps to
            complete the authorization.<a href="#section-5.2.2.1-4" class="pilcrow">¶</a></p>
-<p id="section-5.2.2.1-5">"redirect_to_web":
+<p id="section-5.2.2.1-5"><code>redirect_to_web</code>:
      :     The request is not able to be fulfilled with any further
            direct interaction with the user. Instead, the client
            should initiate a new authorization code flow so that the
@@ -1819,14 +1821,30 @@ To indicate this error to the client, the authorization server returns an
 error response as defined above with the <code>redirect_to_web</code> error code.<a href="#section-5.2.2.1.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.2.2.1.1-2">The response <span class="bcp14">MAY</span> include a <code>request_uri</code>, in which case the client is expected
 to use it to initiate an authorization request as described in <span><a href="https://rfc-editor.org/rfc/rfc9126#section-4" class="relref">Section 4</a> of [<a href="#RFC9126" class="cite xref">RFC9126</a>]</span>.<a href="#section-5.2.2.1.1-2" class="pilcrow">¶</a></p>
-<p id="section-5.2.2.1.1-3">If no <code>request_uri</code> is returned, the client is expected to initiate a new OAuth
-Authorization Code flow with PKCE according to <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> and <span>[<a href="#RFC7636" class="cite xref">RFC7636</a>]</span>.<a href="#section-5.2.2.1.1-3" class="pilcrow">¶</a></p>
-<p id="section-5.2.2.1.1-4">If the client expects the frequency of this error response to be high,
+<p id="section-5.2.2.1.1-3">An example of the response including a <code>request_uri</code> is given below:<a href="#section-5.2.2.1.1-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.2.2.1.1-4">
+<pre>
+HTTP/1.1 201 Created
+Content-Type: application/json
+Cache-Control: no-store
+
+{
+  "error": "redirect_to_web",
+  "request_uri": "urn:ietf:params:oauth:request_uri:6esc_11ACC5bwc014ltc14eY22c"
+}
+</pre><a href="#section-5.2.2.1.1-4" class="pilcrow">¶</a>
+</div>
+<p id="section-5.2.2.1.1-5">If no <code>request_uri</code> is returned, the client is expected to initiate a new OAuth
+Authorization Code flow with PKCE according to <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> and <span>[<a href="#RFC7636" class="cite xref">RFC7636</a>]</span>.<a href="#section-5.2.2.1.1-5" class="pilcrow">¶</a></p>
+<p id="section-5.2.2.1.1-6">If the client expects the frequency of this error response to be high,
 the client <span class="bcp14">SHOULD</span> include a PKCE <span>[<a href="#RFC7636" class="cite xref">RFC7636</a>]</span> <code>code_challenge</code> in the initial authorization
-challenge request.<a href="#section-5.2.2.1.1-4" class="pilcrow">¶</a></p>
-<p id="section-5.2.2.1.1-5">If the client does not include a PKCE <code>code_challenge</code> in the initial authorization
+challenge request.<a href="#section-5.2.2.1.1-6" class="pilcrow">¶</a></p>
+<p id="section-5.2.2.1.1-7">If the client does not include a PKCE <code>code_challenge</code> in the initial authorization
 challenge request, the authorization server <span class="bcp14">MUST NOT</span> return a <code>request_uri</code> in the
-<code>redirect_to_web</code> error response, as that would effectively be the same as a PAR request without PKCE.<a href="#section-5.2.2.1.1-5" class="pilcrow">¶</a></p>
+<code>redirect_to_web</code> error response, as that would effectively be the same as a PAR request without PKCE.<a href="#section-5.2.2.1.1-7" class="pilcrow">¶</a></p>
+<p id="section-5.2.2.1.1-8">Clients and authorization servers using the <code>redirect_to_web</code> method <span class="bcp14">SHOULD</span> follow
+current best practices of redirect-based OAuth flows, especially those defined in <span>[<a href="#RFC9700" class="cite xref">RFC9700</a>]</span>,
+including mechanisms such as the <code>iss</code> response parameter defined in <span>[<a href="#RFC9207" class="cite xref">RFC9207</a>]</span>.<a href="#section-5.2.2.1.1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1855,14 +1873,15 @@ rather than the Authorization Challenge Endpoint.<a href="#section-5.3-3" class=
           <h4 id="name-auth-session">
 <a href="#section-5.3.1" class="section-number selfRef">5.3.1. </a><a href="#name-auth-session" class="section-name selfRef">Auth Session</a>
           </h4>
-<p id="section-5.3.1-1">The <code>auth_session</code> is a value that the authorization server issues in order to be able to associate subsequent requests from the same client. It is intended to be analogous to how a browser cookie associates multiple requests by the same browser to the authorization server.<a href="#section-5.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.3.1-1">The <code>auth_session</code> is a value that the authorization server issues in order to be able to associate subsequent requests from the same client instance. It is intended to be analogous to how a browser cookie associates multiple requests by the same browser to the authorization server.<a href="#section-5.3.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.3.1-2">The <code>auth_session</code> value is completely opaque to the client, and as such the authorization server <span class="bcp14">MUST</span> adequately protect the value from inspection by the client.<a href="#section-5.3.1-2" class="pilcrow">¶</a></p>
 <p id="section-5.3.1-3">If the client has an <code>auth_session</code>, the client <span class="bcp14">MUST</span> include it in future requests to the authorization challenge endpoint. The client <span class="bcp14">MUST</span> store the <code>auth_session</code> beyond the issuance of the authorization code to be able to use it in future requests.<a href="#section-5.3.1-3" class="pilcrow">¶</a></p>
 <p id="section-5.3.1-4">Every response defined by this specification may include a new <code>auth_session</code> value. Clients <span class="bcp14">MUST NOT</span> assume that <code>auth_session</code> values are static, and <span class="bcp14">MUST</span> be prepared to update the stored <code>auth_session</code> value if one is received in a response.<a href="#section-5.3.1-4" class="pilcrow">¶</a></p>
-<p id="section-5.3.1-5">To mitigate the risk of session hijacking, the <code>auth_session</code> <span class="bcp14">SHOULD</span> be bound to the device, and the authorization server <span class="bcp14">SHOULD</span> reject an <code>auth_session</code> if it is presented from a different device than the one it was bound to. One method of binding the <code>auth_session</code> to the device is described in <a href="#auth-session-dpop" class="auto internal xref">Section 9.6.1</a>.<a href="#section-5.3.1-5" class="pilcrow">¶</a></p>
-<p id="section-5.3.1-6">The AS <span class="bcp14">MUST</span> ensure that the <code>auth_session</code> value is unique to the session and protected from accidental collisions.
-For example, if the AS is using a random string for the <code>auth_session</code> value, the value <span class="bcp14">SHOULD</span> have a minimum of 256 bits of entropy.<a href="#section-5.3.1-6" class="pilcrow">¶</a></p>
-<p id="section-5.3.1-7">See <a href="#auth-session-security" class="auto internal xref">Section 9.6</a> for additional security considerations.<a href="#section-5.3.1-7" class="pilcrow">¶</a></p>
+<p id="section-5.3.1-5">Clients <span class="bcp14">SHOULD</span> discard the <code>auth_session</code> when the user logs out of the app.<a href="#section-5.3.1-5" class="pilcrow">¶</a></p>
+<p id="section-5.3.1-6">To mitigate the risk of session hijacking, the <code>auth_session</code> <span class="bcp14">SHOULD</span> be bound to the device, and the authorization server <span class="bcp14">SHOULD</span> reject an <code>auth_session</code> if it is presented from a different device than the one it was bound to. One method of binding the <code>auth_session</code> to the device is described in <a href="#auth-session-dpop" class="auto internal xref">Section 9.6.1</a>.<a href="#section-5.3.1-6" class="pilcrow">¶</a></p>
+<p id="section-5.3.1-7">The AS <span class="bcp14">MUST</span> ensure that the <code>auth_session</code> value is unique to the session and protected from accidental collisions.
+For example, if the AS is using a random string for the <code>auth_session</code> value, the value <span class="bcp14">SHOULD</span> have a minimum of 256 bits of entropy.<a href="#section-5.3.1-7" class="pilcrow">¶</a></p>
+<p id="section-5.3.1-8">See <a href="#auth-session-security" class="auto internal xref">Section 9.6</a> for additional security considerations.<a href="#section-5.3.1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2295,8 +2314,16 @@ an authorization request and eventually obtain an authorization code.<a href="#s
 <span class="refAuthor">Jones, M.</span> and <span class="refAuthor">D. Hardt</span>, <span class="refTitle">"The OAuth 2.0 Authorization Framework: Bearer Token Usage"</span>, <span class="seriesInfo">RFC 6750</span>, <span class="seriesInfo">DOI 10.17487/RFC6750</span>, <time datetime="2012-10" class="refDate">October 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6750">https://www.rfc-editor.org/rfc/rfc6750</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8252">[RFC8252]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Denniss, W.</span> and <span class="refAuthor">J. Bradley</span>, <span class="refTitle">"OAuth 2.0 for Native Apps"</span>, <span class="seriesInfo">BCP 212</span>, <span class="seriesInfo">RFC 8252</span>, <span class="seriesInfo">DOI 10.17487/RFC8252</span>, <time datetime="2017-10" class="refDate">October 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8252">https://www.rfc-editor.org/rfc/rfc8252</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9207">[RFC9207]</dt>
+        <dd>
+<span class="refAuthor">Meyer zu Selhausen, K.</span> and <span class="refAuthor">D. Fett</span>, <span class="refTitle">"OAuth 2.0 Authorization Server Issuer Identification"</span>, <span class="seriesInfo">RFC 9207</span>, <span class="seriesInfo">DOI 10.17487/RFC9207</span>, <time datetime="2022-03" class="refDate">March 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9207">https://www.rfc-editor.org/rfc/rfc9207</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9700">[RFC9700]</dt>
+      <dd>
+<span class="refAuthor">Lodderstedt, T.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Labunets, A.</span>, and <span class="refAuthor">D. Fett</span>, <span class="refTitle">"Best Current Practice for OAuth 2.0 Security"</span>, <span class="seriesInfo">BCP 240</span>, <span class="seriesInfo">RFC 9700</span>, <span class="seriesInfo">DOI 10.17487/RFC9700</span>, <time datetime="2025-01" class="refDate">January 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9700">https://www.rfc-editor.org/rfc/rfc9700</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -2644,8 +2671,7 @@ for their deployment and ecosystem.<a href="#appendix-B-3" class="pilcrow">¶</a
           <dt id="appendix-B.2-2.1">"otp_required":</dt>
           <dd style="margin-left: 1.5em" id="appendix-B.2-2.2">
             <p id="appendix-B.2-2.2.1">The client should collect an OTP from the user and send the OTP in
-a second request to the Authorization Challenge Endpoint. The HTTP
-response code to use with this error value is <code>401 Unauthorized</code>.<a href="#appendix-B.2-2.2.1" class="pilcrow">¶</a></p>
+a second request to the Authorization Challenge Endpoint.<a href="#appendix-B.2-2.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
@@ -2755,7 +2781,7 @@ grant_type=refresh_token
 <p id="appendix-B.4-4">The Authorization Server determines that additional authorization is required (for example, step-up or re-verification) before the refresh token can be used, and returns an authorization challenge error response.<a href="#appendix-B.4-4" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-B.4-5">
 <pre>
-HTTP/1.1 403 Forbidden
+HTTP/1.1 401 Unauthorized
 Content-Type: application/json
 Cache-Control: no-store
 
@@ -2838,46 +2864,55 @@ Cache-Control: no-store
       <h2 id="name-document-history">
 <a href="#appendix-D" class="section-number selfRef">Appendix D. </a><a href="#name-document-history" class="section-name selfRef">Document History</a>
       </h2>
-<p id="appendix-D-1">-03<a href="#appendix-D-1" class="pilcrow">¶</a></p>
+<p id="appendix-D-1">-04<a href="#appendix-D-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-2.1">
           <p id="appendix-D-2.1.1">Editorial clarifications and improvements<a href="#appendix-D-2.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-2.2">
-          <p id="appendix-D-2.2.1">Pointed definition of authorization code to section 1.3.1 of RFC 6749<a href="#appendix-D-2.2.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-2.3">
-          <p id="appendix-D-2.3.1">Updated <code>auth_session</code> binding requirements to <span class="bcp14">SHOULD</span>, and added a reference to DPoP<a href="#appendix-D-2.3.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-2.4">
-          <p id="appendix-D-2.4.1">Revised introduction and context to clarify this draft is intended for first-party applications but can be extended for third-party in some situations<a href="#appendix-D-2.4.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-2.5">
-          <p id="appendix-D-2.5.1">Added <code>response_type=code</code> as a required parameter to match RFC 6749<a href="#appendix-D-2.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-2.2.1">Updated HTTP codes in examples for consistency<a href="#appendix-D-2.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-D-3">-02<a href="#appendix-D-3" class="pilcrow">¶</a></p>
+<p id="appendix-D-3">-03<a href="#appendix-D-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-4.1">
-          <p id="appendix-D-4.1.1">Updated affiliations and acks<a href="#appendix-D-4.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-4.1.1">Editorial clarifications and improvements<a href="#appendix-D-4.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-4.2">
-          <p id="appendix-D-4.2.1">Editorial clarifications<a href="#appendix-D-4.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-4.2.1">Pointed definition of authorization code to section 1.3.1 of RFC 6749<a href="#appendix-D-4.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-4.3">
-          <p id="appendix-D-4.3.1">Added reference to Attestation-Based Client Authentication<a href="#appendix-D-4.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-4.3.1">Updated <code>auth_session</code> binding requirements to <span class="bcp14">SHOULD</span>, and added a reference to DPoP<a href="#appendix-D-4.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-4.4">
+          <p id="appendix-D-4.4.1">Revised introduction and context to clarify this draft is intended for first-party applications but can be extended for third-party in some situations<a href="#appendix-D-4.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-4.5">
+          <p id="appendix-D-4.5.1">Added <code>response_type=code</code> as a required parameter to match RFC 6749<a href="#appendix-D-4.5.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-D-5">-01<a href="#appendix-D-5" class="pilcrow">¶</a></p>
+<p id="appendix-D-5">-02<a href="#appendix-D-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-6.1">
-          <p id="appendix-D-6.1.1">Corrected "re-authorization of the user" to "re-authentication of the user"<a href="#appendix-D-6.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-6.1.1">Updated affiliations and acks<a href="#appendix-D-6.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-6.2">
+          <p id="appendix-D-6.2.1">Editorial clarifications<a href="#appendix-D-6.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-6.3">
+          <p id="appendix-D-6.3.1">Added reference to Attestation-Based Client Authentication<a href="#appendix-D-6.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-D-7">-00<a href="#appendix-D-7" class="pilcrow">¶</a></p>
+<p id="appendix-D-7">-01<a href="#appendix-D-7" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-8.1">
-          <p id="appendix-D-8.1.1">Adopted into the OAuth WG, no changes from previous individual draft<a href="#appendix-D-8.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-8.1.1">Corrected "re-authorization of the user" to "re-authentication of the user"<a href="#appendix-D-8.1.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-D-9">-00<a href="#appendix-D-9" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-D-10.1">
+          <p id="appendix-D-10.1.1">Adopted into the OAuth WG, no changes from previous individual draft<a href="#appendix-D-10.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>
@@ -2888,7 +2923,7 @@ Cache-Control: no-store
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
 <p id="appendix-E-1">The authors would like to thank the attendees of the OAuth Security Workshop 2023 session in which this was discussed, as well as the following individuals who contributed ideas, feedback, and wording that shaped and formed the final specification:<a href="#appendix-E-1" class="pilcrow">¶</a></p>
-<p id="appendix-E-2">Alejo Fernandez, Brian Campbell, Dean Saxe, Dick Hardt, Dmitry Telegin, Evert Pot, Filip Skokan, Janak Amarasena, Jeff Corrigan, John Bradley, Justin Richer, Kristina Yasuda, Martin Besozzi, Matt MacAdam, Mike Jones, Orie Steele, Tim Cappalli, Tobias Looker, Yaron Sheffer, Yaron Zehavi.<a href="#appendix-E-2" class="pilcrow">¶</a></p>
+<p id="appendix-E-2">Alejo Fernandez, Brian Campbell, Dean Saxe, Dick Hardt, Dmitry Telegin, Evert Pot, Filip Skokan, Janak Amarasena, Jeff Corrigan, John Bradley, Joseph Heenan, Justin Richer, Kristina Yasuda, Martin Besozzi, Matt MacAdam, Mike Jones, Orie Steele, Tim Cappalli, Tobias Looker, Yaron Sheffer, Yaron Zehavi.<a href="#appendix-E-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
