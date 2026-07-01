@@ -415,14 +415,16 @@ This specification defines the following error codes.
 `insufficient_authorization`:
      :     The presented authorization is insufficient, and the authorization
            server is requesting the client to take additional steps to
-           complete the authorization.
+           complete the authorization. The authorization server MUST respond
+           with the HTTP 403 (Forbidden) status code.
 
 `redirect_to_web`:
      :     The request is not able to be fulfilled with any further
            direct interaction with the user. Instead, the client
            should initiate a new authorization code flow so that the
            user interacts with the authorization server in a web browser.
-           See {{redirect-to-web}} for details.
+           See {{redirect-to-web}} for details. The authorization server MUST
+           respond with the HTTP 403 (Forbidden) status code.
 
 
 ##### Redirect to Web Error Response {#redirect-to-web}
@@ -438,7 +440,7 @@ to use it to initiate an authorization request as described in {{Section 4 of RF
 
 An example of the response including a `request_uri` is given below:
 
-    HTTP/1.1 201 Created
+    HTTP/1.1 403 Forbidden
     Content-Type: application/json
     Cache-Control: no-store
 
@@ -882,7 +884,7 @@ The client prompts the user to enter their username, and sends the username in a
 
 The Authorization Server sends an error response indicating that an OTP is required.
 
-    HTTP/1.1 401 Unauthorized
+    HTTP/1.1 403 Forbidden
     Content-Type: application/json
     Cache-Control: no-store
 
@@ -950,7 +952,7 @@ The client sends a refresh token request to obtain a new access token.
 
 The Authorization Server determines that additional authorization is required (for example, step-up or re-verification) before the refresh token can be used, and returns an authorization challenge error response.
 
-    HTTP/1.1 401 Unauthorized
+    HTTP/1.1 403 Forbidden
     Content-Type: application/json
     Cache-Control: no-store
 
@@ -1022,7 +1024,7 @@ These design decisions should enable authorization server implementations to iso
 -04
 
 * Editorial clarifications and improvements
-* Updated HTTP codes in examples for consistency
+* Updated HTTP response codes for consistency
 
 -03
 
