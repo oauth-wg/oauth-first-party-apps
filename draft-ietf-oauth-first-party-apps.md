@@ -82,6 +82,8 @@ normative:
 informative:
   RFC6750:
   RFC8252:
+  RFC9700:
+  RFC9207:
   I-D.ietf-oauth-browser-based-apps:
   I-D.ietf-oauth-attestation-based-client-auth:
 
