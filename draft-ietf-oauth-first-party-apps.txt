@@ -597,13 +597,16 @@ Table of Contents
 
    insufficient_authorization: : The presented authorization is
    insufficient, and the authorization server is requesting the client
-   to take additional steps to complete the authorization.
+   to take additional steps to complete the authorization.  The
+   authorization server MUST respond with the HTTP 403 (Forbidden)
+   status code.
 
    redirect_to_web: : The request is not able to be fulfilled with any
    further direct interaction with the user.  Instead, the client should
    initiate a new authorization code flow so that the user interacts
    with the authorization server in a web browser.  See
-   Section 5.2.2.1.1 for details.
+   Section 5.2.2.1.1 for details.  The authorization server MUST respond
+   with the HTTP 403 (Forbidden) status code.
 
 5.2.2.1.1.  Redirect to Web Error Response
 
@@ -620,7 +623,7 @@ Table of Contents
 
    An example of the response including a request_uri is given below:
 
-HTTP/1.1 201 Created
+HTTP/1.1 403 Forbidden
 Content-Type: application/json
 Cache-Control: no-store
 
@@ -1659,7 +1662,7 @@ B.3.  Example Sequence - Initial Authorization
    The Authorization Server sends an error response indicating that an
    OTP is required.
 
-   HTTP/1.1 401 Unauthorized
+   HTTP/1.1 403 Forbidden
    Content-Type: application/json
    Cache-Control: no-store
 
@@ -1736,7 +1739,7 @@ B.4.  Example Sequence - Refresh Token Request Triggering Additional
    token can be used, and returns an authorization challenge error
    response.
 
-   HTTP/1.1 401 Unauthorized
+   HTTP/1.1 403 Forbidden
    Content-Type: application/json
    Cache-Control: no-store
 
@@ -1850,7 +1853,7 @@ Appendix D.  Document History
 
    *  Editorial clarifications and improvements
 
-   *  Updated HTTP codes in examples for consistency
+   *  Updated HTTP response codes for consistency
 
    -03
 
