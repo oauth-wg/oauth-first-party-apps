@@ -3,7 +3,7 @@ title: "OAuth Authorization Challenge Endpoint"
 abbrev: "OAuth Authorization Challenge Endpoint"
 category: std
 
-docname: draft-ietf-oauth-first-party-apps-latest
+docname: draft-ietf-oauth-authorization-challenge-endpoint-latest
 submissiontype: IETF
 number:
 date:
@@ -21,7 +21,7 @@ venue:
   mail: "oauth@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/oauth/"
   github: "oauth-wg/oauth-first-party-apps"
-  latest: "https://drafts.oauth.net/oauth-first-party-apps/draft-ietf-oauth-first-party-apps.html"
+  latest: "https://drafts.oauth.net/oauth-first-party-apps/draft-ietf-oauth-authorization-challenge-endpoint.html"
 
 author:
  -
