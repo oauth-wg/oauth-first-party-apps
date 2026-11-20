@@ -48,7 +48,7 @@ normative:
   RFC9126:
   RFC9449:
   RFC9470:
-  I-D.ietf-oauth-cross-device-security:
+  RFC10027:
   OpenID.Native-SSO:
     title: OpenID Connect Native SSO for Mobile Apps
     target: https://openid.net/specs/openid-connect-native-sso-1_0.html
@@ -84,7 +84,7 @@ informative:
   RFC8252:
   RFC9700:
   RFC9207:
-  I-D.ietf-oauth-browser-based-apps:
+  RFC10017:
   I-D.ietf-oauth-attestation-based-client-auth:
 
 --- abstract
@@ -150,7 +150,7 @@ It is important to consider the user experience implications of different authen
 
 For example, requesting a user to enter a password on a limited-input device (e.g., a TV) creates a lot of user friction while also exposing the user's password to anyone else in the room. On the other hand, a challenge method that uses, for example, a fingerprint reader on the TV remote for FIDO2 passkey authentication would be a good experience.
 
-The Authorization Server SHOULD consider the user's device when presenting authentication challenges and developers SHOULD consider whether the device implementing this specification can provide a good experience for the user. If the combination of user device and authentication challenge methods creates a lot of friction or security risk, consider using a specification like OAuth 2.0 Device Authorization Grant {{RFC8628}}. If the OAuth 2.0 Device Authorization Grant {{RFC8628}} is selected, which uses a cross-device authorization mechanism, please incorporate the security best practices identified in Cross-Device Flows: Security Best Current Practice {{I-D.ietf-oauth-cross-device-security}}.
+The Authorization Server SHOULD consider the user's device when presenting authentication challenges and developers SHOULD consider whether the device implementing this specification can provide a good experience for the user. If the combination of user device and authentication challenge methods creates a lot of friction or security risk, consider using a specification like OAuth 2.0 Device Authorization Grant {{RFC8628}}. If the OAuth 2.0 Device Authorization Grant {{RFC8628}} is selected, which uses a cross-device authorization mechanism, please incorporate the security best practices identified in Cross-Device Flows: Security Best Current Practice {{RFC10027}}.
 
 This specification also allows for the Authorization Server (AS) to direct the user to a browser-based authorization
 experience if the AS is not able to authorize the user via the requesting client app. This "redirect-to-web" experience
@@ -688,7 +688,7 @@ Single Page Applications (SPAs) run in a scripting language inside the context o
 * Significant attack vectors due to the possibility of Cross-Site Scripting (XSS) attacks
 * Fewer options to securely attest to the first-partyness of a browser-based application
 
-See {{I-D.ietf-oauth-browser-based-apps}} for a detailed discussion of the risks of XSS attacks in browsers.
+See {{RFC10017}} for a detailed discussion of the risks of XSS attacks in browsers.
 
 Additionally, the nature of a Single-Page App means the user is already in a browser context, so the user experience cost of doing a full-page redirect or a popup window for the traditional OAuth Authorization Code Flow is much less than the cost of doing so in a native application. The complexity and risk of implementing this specification in a browser likely does not outweigh the user experience benefits that would be gained in that context.
 
@@ -1020,6 +1020,10 @@ These design decisions should enable authorization server implementations to iso
 
 
 # Document History
+
+-05
+
+* Updated references to new RFCs
 
 -04
 
