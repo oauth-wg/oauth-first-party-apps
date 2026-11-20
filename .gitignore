@@ -17,7 +17,7 @@
 /versioned/
 Gemfile.lock
 archive.json
-draft-parecki-oauth-first-party-native-apps.xml
+draft-ietf-oauth-authorization-challenge-endpoint.xml
 package-lock.json
 report.xml
 !requirements.txt

@@ -1,10 +1,10 @@
-# OAuth 2.0 for First-Party Applications
+# OAuth Authorization Challenge Endpoint
 
-This is the working area for the IETF OAuth Working Group Internet-Draft, "OAuth 2.0 for First-Party Applications".
+This is the working area for the IETF OAuth Working Group Internet-Draft, "OAuth Authorization Challenge Endpoint".
 
-* [Editor's Copy](https://drafts.oauth.net/oauth-first-party-apps/draft-ietf-oauth-first-party-apps.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-oauth-first-party-apps)
-* [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-first-party-apps)
+* [Editor's Copy](https://drafts.oauth.net/oauth-first-party-apps/draft-ietf-oauth-authorization-challenge-endpoint.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-oauth-authorization-challenge-endpoint)
+* [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-authorization-challenge-endpoint)
 
 
 ## Contributing

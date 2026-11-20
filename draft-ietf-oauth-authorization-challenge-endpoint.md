@@ -1,9 +1,9 @@
 ---
-title: "OAuth 2.0 for First-Party Applications"
-abbrev: "OAuth for First-Party Apps"
+title: "OAuth Authorization Challenge Endpoint"
+abbrev: "OAuth Authorization Challenge Endpoint"
 category: std
 
-docname: draft-ietf-oauth-first-party-apps-latest
+docname: draft-ietf-oauth-authorization-challenge-endpoint-latest
 submissiontype: IETF
 number:
 date:
@@ -21,7 +21,7 @@ venue:
   mail: "oauth@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/oauth/"
   github: "oauth-wg/oauth-first-party-apps"
-  latest: "https://drafts.oauth.net/oauth-first-party-apps/draft-ietf-oauth-first-party-apps.html"
+  latest: "https://drafts.oauth.net/oauth-first-party-apps/draft-ietf-oauth-authorization-challenge-endpoint.html"
 
 author:
  -
@@ -100,7 +100,7 @@ applications, only delegating to the browser in unexpected, high-risk, or error 
 
 # Introduction
 
-This document, OAuth for First-Party Apps (FiPA),
+This document, OAuth Authorization Challenge Endpoint,
 extends the OAuth 2.0 Authorization Framework {{RFC6749}} with
 a new endpoint to support
 applications that want to control the process of obtaining authorization from
