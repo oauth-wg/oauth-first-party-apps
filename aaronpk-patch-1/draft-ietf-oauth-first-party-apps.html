@@ -14,25 +14,25 @@ clients that want to control the process of obtaining authorization from the use
        In many cases, this can provide an entirely browserless OAuth 2.0 experience suited for native
 applications, only delegating to the browser in unexpected, high-risk, or error conditions. 
     " name="description">
-<meta content="xml2rfc 3.34.0" name="generator">
+<meta content="xml2rfc 3.35.0" name="generator">
 <meta content="native apps" name="keyword">
 <meta content="first-party" name="keyword">
 <meta content="oauth" name="keyword">
 <meta content="draft-ietf-oauth-first-party-apps-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.34.0
-    Python 3.14.5
-    ConfigArgParse 1.7.5
+  xml2rfc 3.35.0
+    Python 3.14.10
+    ConfigArgParse 1.10.1
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
     lxml 6.1.1
     natsort 8.4.0
-    platformdirs 4.10.0
+    platformdirs 4.14.7
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.33.1
-    wcwidth 0.8.1
+    wcwidth 0.9.4
 -->
 <link href="draft-ietf-oauth-first-party-apps.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -68,7 +68,6 @@ applications, only delegating to the browser in unexpected, high-risk, or error 
   src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-
 @font-face {
   font-family: 'Lora';
   font-style: italic;
@@ -117,7 +116,6 @@ applications, only delegating to the browser in unexpected, high-risk, or error 
   src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-
 @font-face {
   font-family: 'Lora';
   font-style: normal;
@@ -182,7 +180,6 @@ applications, only delegating to the browser in unexpected, high-risk, or error 
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
 }
 
 @font-face {
@@ -1036,7 +1033,7 @@ svg {
   & :is([stroke="white"], [stroke^="#fff"]) {
     stroke: var(--background-color);
   }
-  & :is([fill="black"], [fill^="#000"], :not([fill])) {
+  & :is([fill="black"], [fill^="#000"], :not([fill], [fill] *)) {
     fill: var(--text-color);
   }
   & :is([fill="white"], [fill^="#fff"]) {
@@ -1051,11 +1048,11 @@ svg {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">OAuth for First-Party Apps</td>
-<td class="right">July 2026</td>
+<td class="right">November 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Parecki, et al.</td>
-<td class="center">Expires 2 January 2027</td>
+<td class="center">Expires 24 May 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1068,12 +1065,12 @@ svg {
 <dd class="internet-draft">draft-ietf-oauth-first-party-apps-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-07-01" class="published">1 July 2026</time>
+<time datetime="2026-11-20" class="published">20 November 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-01-02">2 January 2027</time></dd>
+<dd class="expires"><time datetime="2027-05-24">24 May 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1134,7 +1131,7 @@ applications, only delegating to the browser in unexpected, high-risk, or error 
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 2 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 24 May 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1448,7 +1445,7 @@ It should be considered only when a redirect-based approach introduces usability
         </h3>
 <p id="section-1.3-1">It is important to consider the user experience implications of different authentication challenges as well as the device with which the user is attempting to authorize.<a href="#section-1.3-1" class="pilcrow">¶</a></p>
 <p id="section-1.3-2">For example, requesting a user to enter a password on a limited-input device (e.g., a TV) creates a lot of user friction while also exposing the user's password to anyone else in the room. On the other hand, a challenge method that uses, for example, a fingerprint reader on the TV remote for FIDO2 passkey authentication would be a good experience.<a href="#section-1.3-2" class="pilcrow">¶</a></p>
-<p id="section-1.3-3">The Authorization Server <span class="bcp14">SHOULD</span> consider the user's device when presenting authentication challenges and developers <span class="bcp14">SHOULD</span> consider whether the device implementing this specification can provide a good experience for the user. If the combination of user device and authentication challenge methods creates a lot of friction or security risk, consider using a specification like OAuth 2.0 Device Authorization Grant <span>[<a href="#RFC8628" class="cite xref">RFC8628</a>]</span>. If the OAuth 2.0 Device Authorization Grant <span>[<a href="#RFC8628" class="cite xref">RFC8628</a>]</span> is selected, which uses a cross-device authorization mechanism, please incorporate the security best practices identified in Cross-Device Flows: Security Best Current Practice <span>[<a href="#I-D.ietf-oauth-cross-device-security" class="cite xref">I-D.ietf-oauth-cross-device-security</a>]</span>.<a href="#section-1.3-3" class="pilcrow">¶</a></p>
+<p id="section-1.3-3">The Authorization Server <span class="bcp14">SHOULD</span> consider the user's device when presenting authentication challenges and developers <span class="bcp14">SHOULD</span> consider whether the device implementing this specification can provide a good experience for the user. If the combination of user device and authentication challenge methods creates a lot of friction or security risk, consider using a specification like OAuth 2.0 Device Authorization Grant <span>[<a href="#RFC8628" class="cite xref">RFC8628</a>]</span>. If the OAuth 2.0 Device Authorization Grant <span>[<a href="#RFC8628" class="cite xref">RFC8628</a>]</span> is selected, which uses a cross-device authorization mechanism, please incorporate the security best practices identified in Cross-Device Flows: Security Best Current Practice <span>[<a href="#RFC10027" class="cite xref">RFC10027</a>]</span>.<a href="#section-1.3-3" class="pilcrow">¶</a></p>
 <p id="section-1.3-4">This specification also allows for the Authorization Server (AS) to direct the user to a browser-based authorization
 experience if the AS is not able to authorize the user via the requesting client app. This "redirect-to-web" experience
 is necessary to allow the AS to manage the security and privacy risks associated with any specific authorization requested
@@ -2161,7 +2158,7 @@ an authorization request and eventually obtain an authorization code.<a href="#s
             <p id="section-9.8-2.2.1">Fewer options to securely attest to the first-partyness of a browser-based application<a href="#section-9.8-2.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-9.8-3">See <span>[<a href="#I-D.ietf-oauth-browser-based-apps" class="cite xref">I-D.ietf-oauth-browser-based-apps</a>]</span> for a detailed discussion of the risks of XSS attacks in browsers.<a href="#section-9.8-3" class="pilcrow">¶</a></p>
+<p id="section-9.8-3">See <span>[<a href="#RFC10017" class="cite xref">RFC10017</a>]</span> for a detailed discussion of the risks of XSS attacks in browsers.<a href="#section-9.8-3" class="pilcrow">¶</a></p>
 <p id="section-9.8-4">Additionally, the nature of a Single-Page App means the user is already in a browser context, so the user experience cost of doing a full-page redirect or a popup window for the traditional OAuth Authorization Code Flow is much less than the cost of doing so in a native application. The complexity and risk of implementing this specification in a browser likely does not outweigh the user experience benefits that would be gained in that context.<a href="#section-9.8-4" class="pilcrow">¶</a></p>
 <p id="section-9.8-5">For these reasons, it is <span class="bcp14">NOT RECOMMENDED</span> to use this specification in browser-based applications.<a href="#section-9.8-5" class="pilcrow">¶</a></p>
 </section>
@@ -2210,10 +2207,6 @@ an authorization request and eventually obtain an authorization code.<a href="#s
 <a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
-<dt id="I-D.ietf-oauth-cross-device-security">[I-D.ietf-oauth-cross-device-security]</dt>
-        <dd>
-<span class="refAuthor">Kasselman, P.</span>, <span class="refAuthor">Fett, D.</span>, and <span class="refAuthor">F. Skokan</span>, <span class="refTitle">"Cross-Device Flows: Security Best Current Practice"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-cross-device-security-16</span>, <time datetime="2026-03-02" class="refDate">2 March 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-cross-device-security-16">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-cross-device-security-16</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="IANA.JWT">[IANA.JWT]</dt>
         <dd>
 <span class="refTitle">"*** BROKEN REFERENCE ***"</span>. </dd>
@@ -2286,6 +2279,10 @@ an authorization request and eventually obtain an authorization code.<a href="#s
         <dd>
 <span class="refAuthor">Bertocci, V.</span> and <span class="refAuthor">B. Campbell</span>, <span class="refTitle">"OAuth 2.0 Step Up Authentication Challenge Protocol"</span>, <span class="seriesInfo">RFC 9470</span>, <span class="seriesInfo">DOI 10.17487/RFC9470</span>, <time datetime="2023-09" class="refDate">September 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9470">https://www.rfc-editor.org/rfc/rfc9470</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC10027">[RFC10027]</dt>
+        <dd>
+<span class="refAuthor">Kasselman, P.</span>, <span class="refAuthor">Fett, D.</span>, and <span class="refAuthor">F. Skokan</span>, <span class="refTitle">"Best Current Practice for Security of Cross-Device Flows"</span>, <span class="seriesInfo">BCP 247</span>, <span class="seriesInfo">RFC 10027</span>, <span class="seriesInfo">DOI 10.17487/RFC10027</span>, <time datetime="2026-08" class="refDate">August 2026</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc10027">https://www.rfc-editor.org/rfc/rfc10027</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="SHS">[SHS]</dt>
         <dd>
 <span class="refAuthor">Technology, N. I. of S. and.</span>, <span class="refTitle">""Secure Hash Standard (SHS)", FIPS PUB 180-4, DOI 10.6028/NIST.FIPS.180-4"</span>, <time datetime="2015-08" class="refDate">August 2015</time>, <span>&lt;<a href="http://dx.doi.org/10.6028/NIST.FIPS.180-4">http://dx.doi.org/10.6028/NIST.FIPS.180-4</a>&gt;</span>. </dd>
@@ -2305,11 +2302,7 @@ an authorization request and eventually obtain an authorization code.<a href="#s
 <dl class="references">
 <dt id="I-D.ietf-oauth-attestation-based-client-auth">[I-D.ietf-oauth-attestation-based-client-auth]</dt>
         <dd>
-<span class="refAuthor">Looker, T.</span>, <span class="refAuthor">Bastian, P.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"OAuth 2.0 Attestation-Based Client Authentication"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-attestation-based-client-auth-09</span>, <time datetime="2026-05-25" class="refDate">25 May 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-attestation-based-client-auth-09">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-attestation-based-client-auth-09</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="I-D.ietf-oauth-browser-based-apps">[I-D.ietf-oauth-browser-based-apps]</dt>
-        <dd>
-<span class="refAuthor">Parecki, A.</span>, <span class="refAuthor">De Ryck, P.</span>, and <span class="refAuthor">D. Waite</span>, <span class="refTitle">"OAuth 2.0 for Browser-Based Applications"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-browser-based-apps-26</span>, <time datetime="2025-12-03" class="refDate">3 December 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps-26">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps-26</a>&gt;</span>. </dd>
+<span class="refAuthor">Looker, T.</span>, <span class="refAuthor">Bastian, P.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"OAuth 2.0 Attestation-Based Client Authentication"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-attestation-based-client-auth-12</span>, <time datetime="2026-10-12" class="refDate">12 October 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-attestation-based-client-auth-12">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-attestation-based-client-auth-12</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6750">[RFC6750]</dt>
         <dd>
@@ -2324,8 +2317,12 @@ an authorization request and eventually obtain an authorization code.<a href="#s
 <span class="refAuthor">Meyer zu Selhausen, K.</span> and <span class="refAuthor">D. Fett</span>, <span class="refTitle">"OAuth 2.0 Authorization Server Issuer Identification"</span>, <span class="seriesInfo">RFC 9207</span>, <span class="seriesInfo">DOI 10.17487/RFC9207</span>, <time datetime="2022-03" class="refDate">March 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9207">https://www.rfc-editor.org/rfc/rfc9207</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9700">[RFC9700]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Lodderstedt, T.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Labunets, A.</span>, and <span class="refAuthor">D. Fett</span>, <span class="refTitle">"Best Current Practice for OAuth 2.0 Security"</span>, <span class="seriesInfo">BCP 240</span>, <span class="seriesInfo">RFC 9700</span>, <span class="seriesInfo">DOI 10.17487/RFC9700</span>, <time datetime="2025-01" class="refDate">January 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9700">https://www.rfc-editor.org/rfc/rfc9700</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC10017">[RFC10017]</dt>
+      <dd>
+<span class="refAuthor">Parecki, A.</span>, <span class="refAuthor">De Ryck, P.</span>, and <span class="refAuthor">D. Waite</span>, <span class="refTitle">"OAuth 2.0 for Browser-Based Applications"</span>, <span class="seriesInfo">BCP 212</span>, <span class="seriesInfo">RFC 10017</span>, <span class="seriesInfo">DOI 10.17487/RFC10017</span>, <time datetime="2026-08" class="refDate">August 2026</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc10017">https://www.rfc-editor.org/rfc/rfc10017</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -2866,55 +2863,61 @@ Cache-Control: no-store
       <h2 id="name-document-history">
 <a href="#appendix-D" class="section-number selfRef">Appendix D. </a><a href="#name-document-history" class="section-name selfRef">Document History</a>
       </h2>
-<p id="appendix-D-1">-04<a href="#appendix-D-1" class="pilcrow">¶</a></p>
+<p id="appendix-D-1">-05<a href="#appendix-D-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-2.1">
-          <p id="appendix-D-2.1.1">Editorial clarifications and improvements<a href="#appendix-D-2.1.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-2.2">
-          <p id="appendix-D-2.2.1">Updated HTTP response codes for consistency<a href="#appendix-D-2.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-2.1.1">Updated references to new RFCs<a href="#appendix-D-2.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-D-3">-03<a href="#appendix-D-3" class="pilcrow">¶</a></p>
+<p id="appendix-D-3">-04<a href="#appendix-D-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-4.1">
           <p id="appendix-D-4.1.1">Editorial clarifications and improvements<a href="#appendix-D-4.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-4.2">
-          <p id="appendix-D-4.2.1">Pointed definition of authorization code to section 1.3.1 of RFC 6749<a href="#appendix-D-4.2.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-4.3">
-          <p id="appendix-D-4.3.1">Updated <code>auth_session</code> binding requirements to <span class="bcp14">SHOULD</span>, and added a reference to DPoP<a href="#appendix-D-4.3.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-4.4">
-          <p id="appendix-D-4.4.1">Revised introduction and context to clarify this draft is intended for first-party applications but can be extended for third-party in some situations<a href="#appendix-D-4.4.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-D-4.5">
-          <p id="appendix-D-4.5.1">Added <code>response_type=code</code> as a required parameter to match RFC 6749<a href="#appendix-D-4.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-4.2.1">Updated HTTP response codes for consistency<a href="#appendix-D-4.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-D-5">-02<a href="#appendix-D-5" class="pilcrow">¶</a></p>
+<p id="appendix-D-5">-03<a href="#appendix-D-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-6.1">
-          <p id="appendix-D-6.1.1">Updated affiliations and acks<a href="#appendix-D-6.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-6.1.1">Editorial clarifications and improvements<a href="#appendix-D-6.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-6.2">
-          <p id="appendix-D-6.2.1">Editorial clarifications<a href="#appendix-D-6.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-6.2.1">Pointed definition of authorization code to section 1.3.1 of RFC 6749<a href="#appendix-D-6.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-D-6.3">
-          <p id="appendix-D-6.3.1">Added reference to Attestation-Based Client Authentication<a href="#appendix-D-6.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-6.3.1">Updated <code>auth_session</code> binding requirements to <span class="bcp14">SHOULD</span>, and added a reference to DPoP<a href="#appendix-D-6.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-6.4">
+          <p id="appendix-D-6.4.1">Revised introduction and context to clarify this draft is intended for first-party applications but can be extended for third-party in some situations<a href="#appendix-D-6.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-6.5">
+          <p id="appendix-D-6.5.1">Added <code>response_type=code</code> as a required parameter to match RFC 6749<a href="#appendix-D-6.5.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-D-7">-01<a href="#appendix-D-7" class="pilcrow">¶</a></p>
+<p id="appendix-D-7">-02<a href="#appendix-D-7" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-8.1">
-          <p id="appendix-D-8.1.1">Corrected "re-authorization of the user" to "re-authentication of the user"<a href="#appendix-D-8.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-8.1.1">Updated affiliations and acks<a href="#appendix-D-8.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-8.2">
+          <p id="appendix-D-8.2.1">Editorial clarifications<a href="#appendix-D-8.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-D-8.3">
+          <p id="appendix-D-8.3.1">Added reference to Attestation-Based Client Authentication<a href="#appendix-D-8.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-D-9">-00<a href="#appendix-D-9" class="pilcrow">¶</a></p>
+<p id="appendix-D-9">-01<a href="#appendix-D-9" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-10.1">
-          <p id="appendix-D-10.1.1">Adopted into the OAuth WG, no changes from previous individual draft<a href="#appendix-D-10.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-10.1.1">Corrected "re-authorization of the user" to "re-authentication of the user"<a href="#appendix-D-10.1.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-D-11">-00<a href="#appendix-D-11" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-D-12.1">
+          <p id="appendix-D-12.1.1">Adopted into the OAuth WG, no changes from previous individual draft<a href="#appendix-D-12.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>
