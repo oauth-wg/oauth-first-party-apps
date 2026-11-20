@@ -5,10 +5,10 @@
 Web Authorization Protocol                                    A. Parecki
 Internet-Draft                                                      Okta
 Intended status: Standards Track                             G. Fletcher
-Expires: 2 January 2027                           Practical Identity LLC
+Expires: 24 May 2027                              Practical Identity LLC
                                                             P. Kasselman
                                                         Defakto Security
-                                                             1 July 2026
+                                                        20 November 2026
 
 
                  OAuth 2.0 for First-Party Applications
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 January 2027.
+   This Internet-Draft will expire on 24 May 2027.
 
 Copyright Notice
 
@@ -246,8 +246,7 @@ Table of Contents
    Authorization Grant [RFC8628].  If the OAuth 2.0 Device Authorization
    Grant [RFC8628] is selected, which uses a cross-device authorization
    mechanism, please incorporate the security best practices identified
-   in Cross-Device Flows: Security Best Current Practice
-   [I-D.ietf-oauth-cross-device-security].
+   in Cross-Device Flows: Security Best Current Practice [RFC10027].
 
    This specification also allows for the Authorization Server (AS) to
    direct the user to a browser-based authorization experience if the AS
@@ -1070,8 +1069,8 @@ Cache-Control: no-store
    *  Fewer options to securely attest to the first-partyness of a
       browser-based application
 
-   See [I-D.ietf-oauth-browser-based-apps] for a detailed discussion of
-   the risks of XSS attacks in browsers.
+   See [RFC10017] for a detailed discussion of the risks of XSS attacks
+   in browsers.
 
    Additionally, the nature of a Single-Page App means the user is
    already in a browser context, so the user experience cost of doing a
@@ -1118,13 +1117,6 @@ Cache-Control: no-store
 11.  References
 
 11.1.  Normative References
-
-   [I-D.ietf-oauth-cross-device-security]
-              Kasselman, P., Fett, D., and F. Skokan, "Cross-Device
-              Flows: Security Best Current Practice", Work in Progress,
-              Internet-Draft, draft-ietf-oauth-cross-device-security-16,
-              2 March 2026, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-oauth-cross-device-security-16>.
 
    [IANA.JWT] "*** BROKEN REFERENCE ***".
 
@@ -1206,6 +1198,11 @@ Cache-Control: no-store
               DOI 10.17487/RFC9470, September 2023,
               <https://www.rfc-editor.org/rfc/rfc9470>.
 
+   [RFC10027] Kasselman, P., Fett, D., and F. Skokan, "Best Current
+              Practice for Security of Cross-Device Flows", BCP 247,
+              RFC 10027, DOI 10.17487/RFC10027, August 2026,
+              <https://www.rfc-editor.org/rfc/rfc10027>.
+
    [SHS]      Technology, N. I. of S. and., ""Secure Hash Standard
               (SHS)", FIPS PUB 180-4, DOI 10.6028/NIST.FIPS.180-4",
               August 2015, <http://dx.doi.org/10.6028/NIST.FIPS.180-4>.
@@ -1220,16 +1217,9 @@ Cache-Control: no-store
               Looker, T., Bastian, P., and C. Bormann, "OAuth 2.0
               Attestation-Based Client Authentication", Work in
               Progress, Internet-Draft, draft-ietf-oauth-attestation-
-              based-client-auth-09, 25 May 2026,
+              based-client-auth-12, 12 October 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              attestation-based-client-auth-09>.
-
-   [I-D.ietf-oauth-browser-based-apps]
-              Parecki, A., De Ryck, P., and D. Waite, "OAuth 2.0 for
-              Browser-Based Applications", Work in Progress, Internet-
-              Draft, draft-ietf-oauth-browser-based-apps-26, 3 December
-              2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              oauth-browser-based-apps-26>.
+              attestation-based-client-auth-12>.
 
    [RFC6750]  Jones, M. and D. Hardt, "The OAuth 2.0 Authorization
               Framework: Bearer Token Usage", RFC 6750,
@@ -1249,6 +1239,11 @@ Cache-Control: no-store
               "Best Current Practice for OAuth 2.0 Security", BCP 240,
               RFC 9700, DOI 10.17487/RFC9700, January 2025,
               <https://www.rfc-editor.org/rfc/rfc9700>.
+
+   [RFC10017] Parecki, A., De Ryck, P., and D. Waite, "OAuth 2.0 for
+              Browser-Based Applications", BCP 212, RFC 10017,
+              DOI 10.17487/RFC10017, August 2026,
+              <https://www.rfc-editor.org/rfc/rfc10017>.
 
 Appendix A.  Example User Experiences
 
@@ -1848,6 +1843,10 @@ Appendix C.  Design Goals
    support this specification.
 
 Appendix D.  Document History
+
+   -05
+
+   *  Updated references to new RFCs
 
    -04
 
