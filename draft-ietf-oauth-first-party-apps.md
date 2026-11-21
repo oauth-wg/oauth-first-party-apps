@@ -33,7 +33,7 @@ author:
     email: george@practicalidentity.com
  -  fullname: Pieter Kasselman
     organization: Defakto Security
-    email: pieter@defakto.security
+    email: prkasselman@gmail.com
 
 normative:
   RFC6749:
@@ -1020,6 +1020,10 @@ These design decisions should enable authorization server implementations to iso
 
 
 # Document History
+
+-06
+
+* Updated contact details
 
 -05
 
