@@ -5,10 +5,10 @@
 Web Authorization Protocol                                    A. Parecki
 Internet-Draft                                                      Okta
 Intended status: Standards Track                             G. Fletcher
-Expires: 24 May 2027                              Practical Identity LLC
+Expires: 25 May 2027                              Practical Identity LLC
                                                             P. Kasselman
                                                         Defakto Security
-                                                        20 November 2026
+                                                        21 November 2026
 
 
                  OAuth 2.0 for First-Party Applications
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 May 2027.
+   This Internet-Draft will expire on 25 May 2027.
 
 Copyright Notice
 
@@ -1844,6 +1844,10 @@ Appendix C.  Design Goals
 
 Appendix D.  Document History
 
+   -06
+
+   *  Updated contact details
+
    -05
 
    *  Updated references to new RFCs
@@ -1915,4 +1919,4 @@ Authors' Addresses
 
    Pieter Kasselman
    Defakto Security
-   Email: pieter@defakto.security
+   Email: prkasselman@gmail.com
